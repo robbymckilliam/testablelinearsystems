@@ -1,0 +1,98 @@
+% travelingwave.tex
+\documentclass[tikz]{standalone}
+%\documentclass[mathserif]{beamer}
+%\setbeamertemplate{navigation symbols}{}%
+%\documentclass{article}
+%\usepackage{pgfplots}
+%\usepackage[tightpage,active]{preview}
+\usepackage{multido}
+\usetikzlibrary{calc,patterns,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+% \usepackage{animate}
+% % Define a the counter cnt. Used to identify files generated for use
+% % with Gnuplot.
+% \newcounter{cnt}
+% \setcounter{cnt}{0}
+% \makeatletter
+% \newcommand{\gettikzxy}[3]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+%   \edef#3{\the\pgf@y}%
+% }
+% %\usepackage{pgfplots}
+% %\usepgflibrary{fpu}
+% \makeatother
+
+% %turn animations on/off
+% \newif\ifanimated %default is on
+% \animatedtrue %uncomment to turn animations on.
+
+\newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
+\newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}
+
+\newcommand{\background}{
+  \draw[->] (-3.5,0) -- (3.5,0) node[above] {$t$};
+    \draw[->] (0,-1.6) -- (0,2.2);
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{exp(-x*x)};
+    \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{exp(-x*x)*(4*x*x-2*x-1)};
+    \vtick{-3} node[pos=0.5,below] {$-3$};
+    \vtick{-2} node[pos=0.5,below] {$-2$};
+    \vtick{-1} node[pos=0.5,below] {$-1$};
+    \vtick{1} node[pos=0.5,below] {$1$};
+    \vtick{2} node[pos=0.5,below] {$2$};
+    \vtick{3} node[pos=0.5,below] {$3$};
+    \htick{2} node[pos=0.5,right] {$2$};
+    \htick{-1} node[pos=0.5,left] {$-1$};
+    \node at (-1.6,1.8) {$f(t)$};
+    \node at (0.6,1.1) {$p(t)$};
+}
+\newcommand{\animations}[1]{
+    \pgfmathparse{exp(-#1*#1)}\pgfmathresult \let\p\pgfmathresult
+    %draw animated line
+    \begin{scope}
+      \clip (-3.5,-1.5) rectangle (3.5,2.2);
+      %\draw[thick] (#1,-0.2)--(#1,0.2);
+      \node[draw,circle,inner sep=2pt,fill] at (#1,0) {};
+    \end{scope}
+    %draw animated mass spring damper
+    \begin{scope}[xshift=6cm,yshift=0cm]
+      \tikzstyle{spring}=[thick,decorate,decoration={coil,pre length=0.3cm,post length=0.3cm,segment length=6,aspect=0.9}]
+      \tikzstyle{damper}=[thick,decoration={markings,  
+        mark connection node=dmp,
+        mark=at position 0.5 with 
+        {
+          \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+          \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+          \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+        }
+      }, decorate]
+      \tikzstyle{ground}=[fill,pattern=north east lines,draw=none,minimum width=0.75cm,minimum height=0.3cm]
+
+      \node (M) [minimum width=1.75cm,minimum height=0.9cm,style={draw,outer sep=0pt,thick},yshift=-\p cm] {mass $M$};
+      
+      \node (ground1) at (M.north) [ground,yshift=1.5cm+\p cm,xshift=-0.65cm,anchor=north] {};
+      \draw (ground1.south west) -- (ground1.south east);
+      \draw [spring] (ground1.south) -- ($(M.north east)!(ground1.south)!(M.north west)$) node[pos=.5,left,minimum width=20pt] {$K$};
+
+      \node (ground3) at (M.north) [ground,yshift=1.5cm+\p cm,xshift=0.65cm,anchor=north] {};
+      \draw (ground3.south west) -- (ground3.south east);
+      \draw [damper] (ground3.south) -- ($(M.north east)!(ground3.south)!(M.north west)$) node[pos=.5,right,minimum width=30pt] {$B$};
+
+      \draw [latex-,thick] (M.east) ++(0.5cm,-0.5cm) -- +(0cm,1.0cm) node[pos=0.5,right] {$p(t)$};
+      \draw [latex-,thick] (M.west) ++(-0.5cm,-0.5cm) -- +(0cm,1.0cm) node[pos=0.5,left] {$f(t)$};
+    \end{scope}
+}
+
+\begin{document}
+\multido{\rtime=-4+0.0625}{128}
+% \multido{\rtime=-1.5+2}{6}
+{
+  \begin{tikzpicture}
+    \background
+    \animations{\rtime}
+  \end{tikzpicture}
+}
+
+\end{document}

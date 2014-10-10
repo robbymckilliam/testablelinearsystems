@@ -1,0 +1,70 @@
+% $Id: mpfig.sty,v 0.1 1997/03/11 15:49:36 tjchol01 Exp tjchol01 $
+
+\def\filedate{1996/11/14}\def\fileversion{v0.1}
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mpfig}%
+   [\filedate\space \fileversion\space MetaPost figure environment and file handling]
+\typeout{Package: `mpfig' \fileversion \space <\filedate>: writing
+  MetaPost output to \jobname.mp.}
+
+\RequirePackage{verbatim}
+\RequirePackage{epsfig}
+
+% when [draft] set draft:=1
+\DeclareOption{draft}{\mpfig@drafttrue}
+\DeclareOption{final}{\mpfig@draftfalse}
+\newif\ifmpfig@draft
+\mpfig@draftfalse                               % default
+
+% define and open output file
+
+\newwrite\mpfig@out
+\def\@mpwrite#1{\immediate\write\mpfig@out{#1}}
+
+% figure files counter
+\newcounter{mpfig}
+
+% mpfile environment
+
+\newenvironment{mpfile}{%
+  \@bsphack
+  \let\do\@makeother\dospecials
+  \catcode`\^^M\active
+  \def\verbatim@processline{%
+    \@mpwrite{\the\verbatim@line}}%
+  \verbatim@start}%
+{\@esphack}
+
+% mpfig environment
+
+\newenvironment{mpfig}[1][]{%
+  \@mpwrite{beginfig(\arabic{mpfig}); "Figure \arabic{mpfig}
+    on line \the\inputlineno";}%
+  \epsfig{figure=\jobname.\arabic{mpfig},#1}%
+  \addtocounter{mpfig}{1}%
+  \@bsphack
+  \let\do\@makeother\dospecials
+  \catcode`\^^M\active
+  \def\verbatim@processline{%
+    \@mpwrite{\the\verbatim@line}}%
+  \verbatim@start}%
+{\@mpwrite{endfig;}\@esphack}
+
+% close file at \end{document}
+
+\AtEndDocument{\@mpwrite{end}%
+  \immediate\closeout\mpfig@out}
+
+% INITIALIZATION
+% open output file
+
+\immediate\openout\mpfig@out\jobname.mp
+\ifmpfig@draft\@mpwrite{draft:=1;}\fi
+
+\endinput
+
+% $Log: mpfig.sty,v $
+% Revision 0.1  1997/03/11 15:49:36  tjchol01
+% *** empty log message ***
+%

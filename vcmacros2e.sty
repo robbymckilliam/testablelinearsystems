@@ -1,0 +1,66 @@
+% My personal macros for LaTeX - Vaughan Clarkson, August 1990
+% Added \shalf January 1993
+% Added \naturals April 1993
+% Added \refappendix May 1993
+% Added \reftable June 1993
+% Added \sgn March 1994
+% Fixed \refeqn September 1994
+% Changed \mod to \magn December 1994
+% Made alternatives array {ll} from {cl} July 1995
+% Lots of mods for LaTeX 2e + \round, September 1995
+% Removed \shalf and various other mods for LaTeX 2e, October 1995
+% Added \refchapter October 1996
+% Changed \half to be a \providecommand and added package header, March 1997
+%
+
+\ProvidesPackage{vcmacros2e}%
+	[1997/03/06 Vaughan Clarkson's macros for LaTeX 2e]
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\newcommand{\reals}{{\mathbb R}}
+\newcommand{\integers}{{\mathbb Z}}
+\newcommand{\complex}{{\mathbb C}}
+\newcommand{\rationals}{{\mathbb Q}}
+\newcommand{\naturals}{{\mathbb N}}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+%
+% The alternatives environment is superceded in the amstex package
+%
+%\newenvironment{alternatives}% Alternative values for a function
+%  {\renewcommand{\arraystretch}{2} \left\{ \begin{array}{ll}}{\end{array}
+%  \right.}
+%\newcommand{\choice}[2]{{\displaystyle #1} & \hspace{1em} {#2}}
+%
+\newcommand{\br}[1]{{\left( #1 \right)}}
+\newcommand{\sqbr}[1]{{\left[ #1 \right]}}
+\newcommand{\cubr}[1]{{\left\{ #1 \right\}}}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceiling}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\round}[1]{{\left\lfloor #1 \right\rceil}}
+\newcommand{\magn}[1]{\left\| #1 \right\|}
+\newcommand{\fn}[2]{{#1} \br{#2}}
+\newcommand{\fnr}[2]{\text{#1} \br{#2}}
+\newcommand{\fnrb}[2]{\text{#1} \sqbr{#2}}
+\newcommand{\fnb}[2]{{#1} \sqbr{#2}}
+%
+% \ncr superceded in amstex
+%
+%\newcommand{\ncr}[2]{{\setlength{\arraycolsep}{0 mm}
+%  \renewcommand{\arraystretch}{0.6} \br{\begin{array}{c} {#1} \\ {#2}
+%  \end{array}}}}
+%
+\newcommand{\refeqn}[1]{\eqref{#1}}
+\newcommand{\reffig}[1]{Figure~\ref{#1}}
+\newcommand{\reftable}[1]{Table~\ref{#1}}
+\newcommand{\refsec}[1]{Section~\ref{#1}}
+\newcommand{\refappendix}[1]{Appendix~\ref{#1}}
+\newcommand{\refchapter}[1]{Chapter~\ref{#1}}
+\newcommand{\sfrac}[2]{{\scriptstyle \frac{#1}{#2}}}
+\providecommand{\half}{\tfrac{1}{2}}
+\newcommand{\expl}{\text{e}}
+\newcommand{\deriv}[2]{\frac{\text{d} #1}{\text{d} #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\sgn}{\operatorname{sgn}}
+

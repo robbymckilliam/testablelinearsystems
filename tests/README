@@ -1,0 +1,39 @@
+This folder contains scripts for running the Tests in the signals and systems lecture notes.  The software runs on the java virtual machine and uses the Scala programing language (available at http://www.scala-lang.org/).  You will need a working java virtual machine and Scala 2.10.x installed.  Plotting is done with gnuplot (available at http://www.gnuplot.info/).
+
+List of directories:
+
+invertingamplifier:
+Corresponds with the inverting amplifier test in the lecture notes
+
+loopback:
+Contains a script loopback.scala for playing a sinusiod out the soundcard and recording it with the soundcard.  This is primarily to test that you have the software functioning correctly.
+
+voltagedivider:
+Corresponds with the voltage divider test in the lecture notes
+
+lib:
+Contains a build of the sounder library (https://github.com/robbymckilliam/sounder) and dependencies. This is used for accessing the soundcard with the java virtual machine.
+
+multipler:
+Contains a script multiplier.scala for testing opamps configured as non-inverting amplifiers
+
+activeRC:
+Corresponds with active RC test in the lecture notes
+
+butterworth:
+Corresponds with test of the butterworth filter spectrum the lecture notes
+
+spectrumactiveRC:
+Corresponds with spectrum of the active RC circuit test in the lecture notes
+
+fouriertransformlecturevideo:
+Constains scripts and audio.wav for the test "The Fourier transform of a lecture recording"
+
+fftbenchmarks:
+Contains scripts for the test "Benchmarking the fast Fourier transform"
+
+butterworthfilteredlecturerecording:
+Contains scripts to the test "Butterworth filtered lecture recording"
+
+fftlecturevideo:
+Contains scripts for the test "Filtering a lecture recording by fast Fourier transform".

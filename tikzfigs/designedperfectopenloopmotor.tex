@@ -1,0 +1,105 @@
+% travelingwave.tex
+\documentclass[tikz]{standalone}
+%\documentclass[mathserif]{beamer}
+%\setbeamertemplate{navigation symbols}{}%
+%\documentclass{article}
+%\usepackage{pgfplots}
+%\usepackage[tightpage,active]{preview}
+\usepackage{multido}
+\usetikzlibrary{calc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+% \usepackage{animate}
+% % Define a the counter cnt. Used to identify files generated for use
+% % with Gnuplot.
+% \newcounter{cnt}
+% \setcounter{cnt}{0}
+% \makeatletter
+% \newcommand{\gettikzxy}[3]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+%   \edef#3{\the\pgf@y}%
+% }
+% %\usepackage{pgfplots}
+% %\usepgflibrary{fpu}
+% \makeatother
+
+% %turn animations on/off
+% \newif\ifanimated %default is on
+% \animatedtrue %uncomment to turn animations on.
+
+\newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
+\newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}
+
+\newcommand{\arcdegree}{45}
+\def\xmax{4.5}
+\def\scalex{1}
+\def\scaley{(1.0/4.0)}
+\def\Pie{3.14159265359}
+\def\cosr(#1){cos(180/pi*#1)}
+\def\sinr(#1){sin(180/pi*#1)}
+\def\step(#1){ifthenelse(#1>0,1,0)} %step function
+\def\thetafunc(#1){((\step(#1) - \step(#1-pi))*(pi-pi*\cosr(#1))+(\step(#1-pi)*2.0*pi))}
+\def\v(#1){(2*pi*(\step(#1) - \step(#1-pi))*(\sinr(#1) + \cosr(#1)))}
+
+%draws the background plot
+\newcommand{\background}[1]{
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[thick,line cap=round] (-0.5,0)--(0,0)--(0,2*\Pie);
+    \draw[thick,line cap=round] (\Pie,-2*\Pie)--(\Pie,0)--(\xmax,0);
+    %\draw[thick,line cap=round] (\Pie,2*\Pie)--(\xmax,2*\Pie);
+    \draw[color=black,thick,line cap=round] plot[domain=0.0001:\xmax,samples=81,smooth] (\x,{\thetafunc(\x)});
+    \draw[color=black,thick,line cap=round] plot[domain=0.0001:\Pie,samples=51,smooth] (\x,{\v(\x)});
+    \draw[->] (-1,0) -- (\xmax+0.5,0) node[above] {$t$};
+    \draw[->] (0,-7) -- (0,11) {};
+    \node at (4,7.1) {$\theta$};
+    \node at (0.8,9.6) {$v$};
+    \begin{scope}[xscale=1/\scalex]
+      \htick{\Pie} node[pos=0.5,left] {$\pi$};
+      \htick{-\Pie} node[pos=0.5,left] {$-\pi$};
+      \htick{2*\Pie} node[pos=0.5,left] {$2\pi$};
+      \htick{3*\Pie} node[pos=0.5,left] {$3\pi$};
+      \htick{-2*\Pie} node[pos=0.5,left] {$-2\pi$};
+    \end{scope}
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{3} node[pos=0.5,below] {$3$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+  \end{scope}
+  \begin{scope}
+    \clip (-1,-1) rectangle (\xmax+0.5,1);
+    \node[draw,circle,inner sep=2pt,fill] at (#1,0) {};
+  \end{scope}      
+}
+
+  \newcommand{\animations}[1]{
+    \pgfmathparse{(180.0/pi)*\thetafunc(#1)}\pgfmathresult \let\motorangle\pgfmathresult
+    %draw animated angular motor
+    \begin{scope}[xshift=7.5cm,yshift=0.3cm]
+      \node (C) [circle,minimum width=2.5cm] {};
+      \draw[thick] (C.east)++(-0.075cm,0cm) -- +(0.15cm,0cm) node[pos=0.5,right] {0};
+      \draw[thick] (C.north)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,above] {$\tfrac{1}{2}\pi$};
+      \draw[thick] (C.west)++(-0.075cm,0) -- +(0.15cm,0) node[pos=0.5,left] {$\pi$};
+      \draw[thick] (C.south)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,below] {$\tfrac{3}{2}\pi$};
+      \draw [-latex,thick] (0:1.8) arc (0:\arcdegree:1.8);
+      \node at (\arcdegree/2:1.8) [above right] {$\theta(t)$};
+      \begin{scope}[rotate=\motorangle, every node/.style={transform shape}]
+        \node (M) [circle,style={draw,thick}] {motor};
+        \draw[thick] (M.east)++(-0.1cm,0cm) -- +(0.2cm,0cm);
+      \end{scope}
+    \end{scope}
+  }
+
+\begin{document}
+\multido{\rtime=-1.5+0.0625}{120}
+%\multido{\rtime=-1.5+2}{6}
+{
+\begin{tikzpicture}
+\background{\rtime}
+\animations{\rtime}
+\end{tikzpicture}
+}
+
+\end{document}

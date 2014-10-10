@@ -1,0 +1,48 @@
+%& -shell-escape
+
+% Author: Till Tantau
+% Source: The PGF/TikZ manual
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb, amsthm} % this is handy for mathematicians and physicists
+			      % see http://www.ams.org/tex/amslatex.html
+
+\usepackage[latin1]{inputenc}
+
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+
+% GNUPLOT required
+\begin{document}
+\pagestyle{empty}
+
+
+\begin{tikzpicture}[domain=0:3]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-0.2,0) -- (5,0) node[right] {$x$};
+    \draw[->] (0,-1.2) -- (0,3) node[above] {$f(x)$};
+    \draw[color=red] plot[id=x] function{x} 
+        node[right] {$f(x) =x$};
+    \draw[color=blue] plot[id=sin] function{sin(x)} 
+        node[right] {$f(x) = \sin x$};
+    \draw[color=orange] plot[id=exp] function{0.05*exp(x)} 
+        node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[<->] (-3.2,0) -- (3.2,0) node[right] {$x$};
+    \draw[->] (0,-1.2) -- (0,1.2) node[above] {$\sin(\pi x)$};
+    \draw[color=blue] plot[id=sinc,domain=-3:3,samples=500] function{sin(pi*x)};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[<->] (-3.2,0) -- (3.2,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,1.2) node[above] {$\operatorname{sinc}(x)$};
+    \draw[color=blue] plot[id=sinc,domain=-3:3,samples=500] function{sin(pi*x)/(pi*x)};
+\end{tikzpicture}
+
+
+\end{document}

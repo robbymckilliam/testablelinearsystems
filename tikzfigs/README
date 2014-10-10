@@ -1,0 +1,5 @@
+The default in signalsandsystems.pdf supposes that animations run at 16 frames per second.  This corresponds with a line such as
+
+\multido{\rtime=-1.5+0.0625}{216}
+
+in the animation tex file (the 0.0625 being relevant).  You can use different frame rates but it will require using something other than \defaultframerate for that particular figure in signalsandsystems.tex

@@ -1,0 +1,127 @@
+% travelingwave.tex
+\documentclass[tikz]{standalone}
+%\documentclass[mathserif]{beamer}
+%\setbeamertemplate{navigation symbols}{}%
+%\documentclass{article}
+%\usepackage{pgfplots}
+%\usepackage[tightpage,active]{preview}
+\usepackage{multido}
+\usetikzlibrary{calc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+% \usepackage{animate}
+% % Define a the counter cnt. Used to identify files generated for use
+% % with Gnuplot.
+% \newcounter{cnt}
+% \setcounter{cnt}{0}
+% \makeatletter
+% \newcommand{\gettikzxy}[3]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+%   \edef#3{\the\pgf@y}%
+% }
+% %\usepackage{pgfplots}
+% %\usepgflibrary{fpu}
+% \makeatother
+
+% %turn animations on/off
+% \newif\ifanimated %default is on
+% \animatedtrue %uncomment to turn animations on.
+
+\newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
+\newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}
+
+\newcommand{\plotyscale}{1}
+\newcommand{\arcdegree}{45}
+\def\step(#1){ifthenelse(#1>0,1,0)} %step function
+\def\a{0.25}
+\def\b{0.25}
+\def\beta{(-\b/\a)}
+\def\h(#1){ \step(#1)*(1-exp(\beta*#1))/\a }
+\def\Hu(#1){ \step(#1)*(#1*\beta-exp(\beta*#1)+1)/\a/\beta }
+\newcommand{\background}[1]{
+  \begin{scope}[yscale=\plotyscale]
+    \draw[->] (-0.8,0) -- (5.5,0) node[above] {$t$};
+    \draw[->] (0,-0.5) -- (0,4.5) node[below right] {$h(t)$};
+    \draw[thick] (-0.5,0)--(0,0);
+    \draw[smooth,color=black,thick] plot[domain=0:5.2,samples=101] (\x,{\h(\x)});
+    \htick{2} node[pos=0.5,left] {$2$};
+    \htick{4} node[pos=0.5,left] {$4$};
+    \begin{scope}
+      \clip (-0.8,-1) rectangle (5.5,1);
+      % \draw[thick] (#1,-0.2)--(#1,0.2);
+      \node[draw,circle,inner sep=2pt,fill] at (#1,0) {};
+    \end{scope}      
+  \end{scope}
+  \vtick{1} node[pos=0.5,below] {$1$};
+  \vtick{2} node[pos=0.5,below] {$2$};
+  \vtick{3} node[pos=0.5,below] {$3$};
+  \vtick{4} node[pos=0.5,below] {$4$};  
+  \vtick{5} node[pos=0.5,below] {$5$};
+%start step response plot
+\begin{scope}[yshift=-6cm]
+  \begin{scope}[yscale=0.25]
+    \draw[->] (-0.8,0) -- (5.5,0) node[above] {$t$};
+    \draw[->] (0,-0.5) -- (0,20) node[below right] {$h(t)$};
+    \draw[thick] (-0.5,0)--(0,0);
+    \draw[smooth,color=black,thick] plot[domain=0:5.2,samples=101] (\x,{\Hu(\x)});
+    \htick{8} node[pos=0.5,left] {$8$};
+    \htick{16} node[pos=0.5,left] {$16$};
+    \begin{scope}
+      \clip (-0.8,-1) rectangle (5.5,1);
+      % \draw[thick] (#1,-0.2)--(#1,0.2);
+      \node[draw,circle,inner sep=2pt,fill] at (#1,0) {};
+    \end{scope}      
+  \end{scope}
+  \vtick{1} node[pos=0.5,below] {$1$};
+  \vtick{2} node[pos=0.5,below] {$2$};
+  \vtick{3} node[pos=0.5,below] {$3$};
+  \vtick{4} node[pos=0.5,below] {$4$};  
+  \vtick{5} node[pos=0.5,below] {$5$};  
+\end{scope}
+}
+\newcommand{\animations}[1]{
+  \pgfmathparse{180/3.14159*\h(#1)}\pgfmathresult \let\motorangle\pgfmathresult
+  \pgfmathparse{180/3.14159*\Hu(#1)}\pgfmathresult \let\motoranglestep\pgfmathresult
+  %draw animated angular motor
+  \begin{scope}[xshift=8.2cm,yshift=2cm]
+    \node (C) [circle,minimum width=2.5cm] {};
+    \draw[thick] (C.east)++(-0.075cm,0cm) -- +(0.15cm,0cm) node[pos=0.5,right] {0};
+    \draw[thick] (C.north)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,above] {$\tfrac{1}{2}\pi$};
+    \draw[thick] (C.west)++(-0.075cm,0) -- +(0.15cm,0) node[pos=0.5,left] {$\pi$};
+    \draw[thick] (C.south)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,below] {$\tfrac{3}{2}\pi$};
+    \draw [-latex,thick] (0:1.8) arc (0:\arcdegree:1.8);
+    \node at (\arcdegree/2:1.8) [above right] {$\theta(t)$};
+    \begin{scope}[rotate=\motorangle, every node/.style={transform shape}]
+      \node (M) [circle,style={draw,thick}] {motor};
+      \draw[thick] (M.east)++(-0.1cm,0cm) -- +(0.2cm,0cm);
+    \end{scope}
+  \end{scope}
+%start step response animation
+\begin{scope}[yshift=-6cm]
+  \begin{scope}[xshift=8.2cm,yshift=2cm]
+    \node (C) [circle,minimum width=2.5cm] {};
+    \draw[thick] (C.east)++(-0.075cm,0cm) -- +(0.15cm,0cm) node[pos=0.5,right] {0};
+    \draw[thick] (C.north)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,above] {$\tfrac{1}{2}\pi$};
+    \draw[thick] (C.west)++(-0.075cm,0) -- +(0.15cm,0) node[pos=0.5,left] {$\pi$};
+    \draw[thick] (C.south)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,below] {$\tfrac{3}{2}\pi$};
+    \draw [-latex,thick] (0:1.8) arc (0:\arcdegree:1.8);
+    \node at (\arcdegree/2:1.8) [above right] {$\theta(t)$};
+    \begin{scope}[rotate=\motoranglestep, every node/.style={transform shape}]
+      \node (M) [circle,style={draw,thick}] {motor};
+      \draw[thick] (M.east)++(-0.1cm,0cm) -- +(0.2cm,0cm);
+    \end{scope}
+  \end{scope}
+\end{scope}
+}
+
+\begin{document}
+\multido{\rtime=-1.5+0.0625}{140}
+% \multido{\rtime=-1.5+2}{6}
+{
+  \begin{tikzpicture}
+    \background{\rtime}
+    \animations{\rtime}
+  \end{tikzpicture}
+}
+
+\end{document}

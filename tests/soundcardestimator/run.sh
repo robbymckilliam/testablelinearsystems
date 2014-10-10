@@ -1,0 +1,1 @@
+scala -cp ../lib/Sounder.jar soundcardestimator.scala

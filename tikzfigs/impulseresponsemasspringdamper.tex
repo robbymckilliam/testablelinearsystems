@@ -1,0 +1,150 @@
+% travelingwave.tex
+\documentclass[tikz]{standalone}
+%\documentclass[mathserif]{beamer}
+%\setbeamertemplate{navigation symbols}{}%
+%\documentclass{article}
+%\usepackage{pgfplots}
+%\usepackage[tightpage,active]{preview}
+\usepackage{multido}
+\usetikzlibrary{calc,patterns,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+% \usepackage{animate}
+% % Define a the counter cnt. Used to identify files generated for use
+% % with Gnuplot.
+% \newcounter{cnt}
+% \setcounter{cnt}{0}
+% \makeatletter
+% \newcommand{\gettikzxy}[3]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+%   \edef#3{\the\pgf@y}%
+% }
+% %\usepackage{pgfplots}
+% %\usepgflibrary{fpu}
+% \makeatother
+
+% %turn animations on/off
+% \newif\ifanimated %default is on
+% \animatedtrue %uncomment to turn animations on.
+
+\newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
+\newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}
+
+%mass and spring constant
+\def\M{1}
+\def\K{(pi*pi/4)}
+\def\Bcd{sqrt(4*\K*\M)} %crtical damping
+\def\step(#1){ifthenelse(#1>0,1,0)} %step function
+
+%underdamped
+ \def\Bud{(\Bcd/3)}
+ \def\alphaud{(\Bud/\M/2)}
+ \def\theta{(sqrt(4*\K*\M - (\Bud*\Bud))/\M/2)}
+ \def\hud(#1){\step(#1)*exp(-\alphaud*#1)*sin(\theta*#1 r)/\M/\theta}
+
+%critically damped
+ \def\alphacd{(\Bcd/\M/2)}
+ \def\hcd(#1){\step(#1)*#1*exp(-\alphacd*#1)/\M}
+
+%over damped
+\def\Bod{(\Bcd*2)}
+\def\alphaod{(\Bod/\M/2)}
+\def\betaod{(sqrt((\Bod*\Bod) - 4*\K*\M)/\M/2.0)}
+\def\hod(#1){ifthenelse(#1>0,(exp((\betaod-\alphaod)*#1)-exp(-(\betaod+\alphaod)*#1))/\M/\betaod/2, 0)}
+
+%undamped
+\def\natfreq{(\Bcd/\M/2.0)}
+\def\hnat(#1){\step(#1)*sin(\natfreq*#1 r)/\M/\natfreq}
+
+\newcommand{\massspringdamp}[2]{
+\tikzstyle{spring}=[thick,decorate,decoration={coil,pre length=0.3cm,post length=0.3cm,segment length=6,aspect=0.9}]
+    \tikzstyle{damper}=[thick,decoration={markings,  
+      mark connection node=dmp,
+      mark=at position 0.5 with 
+      {
+        \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+          \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+          \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+        }
+      }, decorate]
+      \tikzstyle{ground}=[fill,pattern=north east lines,draw=none,minimum width=0.75cm,minimum height=0.3cm]
+
+      \node (M) [minimum width=1.75cm,minimum height=0.9cm,style={draw,outer sep=0pt,thick},yshift=-#1 cm] {mass $M$};
+      
+      \node (ground1) at (M.north) [ground,yshift=2.4cm+#1 cm,xshift=-0.65cm,anchor=north] {};
+      \draw (ground1.south west) -- (ground1.south east);
+      \draw [spring] (ground1.south) -- ($(M.north east)!(ground1.south)!(M.north west)$) node[pos=.5,left,minimum width=20pt] {$K$};
+
+      \node (ground3) at (M.north) [ground,yshift=2.4cm+#1 cm,xshift=0.65cm,anchor=north] {};
+      \draw (ground3.south west) -- (ground3.south east);
+      \draw [damper] (ground3.south) -- ($(M.north east)!(ground3.south)!(M.north west)$) node[pos=.5,right,minimum width=30pt] {#2};
+
+      %\draw [latex-,thick] (M.east) ++(0.5cm,-0.5cm) -- +(0cm,1.0cm) node[pos=0.5,right] {$p(t)$};
+      %\draw [latex-,thick] (M.west) ++(-0.5cm,-0.5cm) -- +(0cm,1.0cm) node[pos=0.5,left] {$f(t)$};
+}
+
+\newcommand{\animations}[1]{
+  % draw animated line
+  \begin{scope}[yscale=9]
+    \draw[->] (-1,0) -- (8.5,0) node[above] {$t$};
+    \draw[->] (0,-0.17) -- (0,0.47) node[right] {$h(t)$};
+    \draw[thick] (-0.5,0) -- (0,0) {};
+    % \draw[color=black,thick] plot[domain=-1:10,samples=201] (\x,{\step(\x)});
+    \draw[color=black,thick] plot[domain=0:8.2,samples=101,smooth] (\x,{\hud(\x)});
+    \pgfmathparse{\hud(1)}\pgfmathresult \let\pudoneval\pgfmathresult
+    \node[right] at (1,\pudoneval) {$\tfrac{\pi}{3}$};
+    \draw[color=black,thick] plot[domain=0:8.2,samples=101,smooth] (\x,{\hod(\x)});
+    \pgfmathparse{\hod(0.8)}\pgfmathresult \let\podoneval\pgfmathresult
+    \node[below] at (0.8,\podoneval) {$2\pi$};
+    \draw[color=black,thick] plot[domain=0:8.2,samples=101,smooth] (\x,{\hcd(\x)});
+    \pgfmathparse{\hcd(0.9)}\pgfmathresult \let\pcdoneval\pgfmathresult
+    \node[right] at (0.9,\pcdoneval) {$\pi$};
+    % \draw[color=black,thick] plot[domain=0.001:8,samples=101] (\x,{\hnat(\x)});
+    \htick{0.4} node[pos=0.5,left] {$0.4$};
+    \htick{0.2} node[pos=0.5,left] {$0.2$};
+    \htick{-0.1} node[pos=0.5,left] {$-0.1$};
+    \begin{scope}
+      \clip (-1,-0.5) rectangle (8.5,0.3);
+      % \draw[thick] (#1,-0.2)--(#1,0.2);
+      \node[draw,circle,inner sep=2pt,fill] at (#1,0) {};
+    \end{scope}
+  \end{scope}
+  \vtick{1} node[pos=0.5,below] {$1$};
+  \vtick{5} node[pos=0.5,below] {$5$};
+  % \vtick{6} node[pos=0.5,below] {$6$};
+  \vtick{8} node[pos=0.5,below] {$8$};
+
+  % draw animated mass spring damper
+  \pgfmathparse{\hud(#1)*6}\pgfmathresult \let\pudval\pgfmathresult
+  \pgfmathparse{\hcd(#1)*6}\pgfmathresult \let\pcdval\pgfmathresult
+  \pgfmathparse{\hod(#1)*6}\pgfmathresult \let\podval\pgfmathresult
+  \begin{scope}[yshift=-5cm,xshift=1cm]
+    \massspringdamp{\pudval}{$\tfrac{\pi}{3}$}
+    \begin{scope}[xshift=3.5cm]
+      \massspringdamp{\pcdval}{$\pi$}
+    \end{scope}
+    \begin{scope}[xshift=7cm]
+      \massspringdamp{\podval}{$2\pi$}
+    \end{scope}
+    \begin{scope}[xshift=-2cm,yscale=-6]
+      \draw (0,-0.25) -- (0,0.56);
+      %\htick{0.6} node[pos=0.5,left] {$0.6$};
+      \htick{0.4} node[pos=0.5,left] {$0.4$};
+      \htick{0.2} node[pos=0.5,left] {$0.2$};
+      \htick{0} node[pos=0.5,left] {$0$};
+      \htick{-0.2} node[pos=0.5,left] {$-0.2$};
+    \end{scope}
+  \end{scope}
+
+}
+
+\begin{document}
+\multido{\rtime=-1.5+0.0625}{170}
+% \multido{\rtime=-1.5+2}{6}
+{
+  \begin{tikzpicture}
+    \animations{\rtime}
+  \end{tikzpicture}
+}
+
+\end{document}

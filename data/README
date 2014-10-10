@@ -1,0 +1,1 @@
+Some funtions are just too painful to write in Tikz.  For these I use some other program, Mathematica, python, scala etc to generate a data file.  These files get read by tikz.
