@@ -4741,8 +4741,7 @@ The Fourier transform is a function of the real number $f$. We indicate its valu
 \begin{align}
 \calF(\rect) &= \int_{-\infty}^\infty \rect(t) e^{-j2\pi ft} dt \nonumber \\
 &= \int_{-1/2}^{1/2} e^{-j2\pi ft} dt \nonumber  \\
-&= \frac{e^{j\pi f} - e^{-j\pi f}}{j 2 \pi f} \nonumber \\
-&= \frac{\sin(\pi f)}{\pi f} = \sinc(f). \label{eq:sincandrect}
+&= \frac{e^{j\pi f} - e^{-j\pi f}}{j 2 \pi f} = \frac{\sin(\pi f)}{\pi f} = \sinc(f). \label{eq:sincandrect}
 \end{align}
 The $\sinc$ function is plotted in Figure~\ref{fig:sincfunction1}.  %As we will see in Section~\ref{sec:square-integr-sign}, square integrable signals also have Fourier transforms.  
 
@@ -4752,9 +4751,9 @@ The Fourier transform is closely related to the Laplace transform because
 \]
 for those signals $x$ with region of convergence containing the imaginary axis, that is, for absolutely integrable $x$.  The Fourier transform inherits the properties of the Laplace transform that were described in Section~\ref{sec:transf-funct-lapl}.  For example, if $H$ is a stable regular system with absolutely integrable impulse response $h$ having Fourier transform $\calF(h)$, then the spectrum of $H$ satisfies
 \[
-\Lambda(H, f) = \lambda(H,j2\pi f) = \calL(h,j2\pi f) = \calF(h,f)
+\Lambda(H, f) = \lambda(H,j2\pi f) = \calL(h,j2\pi f) = \calF(h,f),
 \]
-That is, the spectrum of a stable regular system is given by the Fourier transform of its impulse response.  
+that is, the spectrum of a stable regular system is given by the Fourier transform of its impulse response.  
 % The spectrum of the time-shifter and differentiator can be obtained by inspection.  From~\eqref{eq:timeshiftertransferfunction}, the spectrum of the time shifter $T_\tau$ satisfies
 % \[
 % \Lambda(T_\tau,f) = \lambda(T_\tau,j 2\pi f) = e^{-j2\pi f \tau}
@@ -5402,7 +5401,7 @@ A \term{sequence} is a function with domain given by the integers $\ints$.  The 
 \sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad e^{-\sabs{n}/2}
 \]
 each denote a real valued sequence.  In what follows the term~\term{sequence} will always mean a real or complex valued sequence unless otherwise stated.  Real and complex valued sequences are commonly called~\term{discrete time signals} and the $n$th element in the sequence is denoted by $x[n]$ using squared brackets~\citep{Oppenheiim_sigs_sys_1996}.  Here, we use the subscript notation $x_n$. This notation is also common~\citep{vetterli_fund_sig_proc,Rudin_real_and_complex_analysis}.
-Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fig:realvaluedsequence}. Sequences have a number of properties analogous to the properties of signals (Section~\ref{sec:properties-signals}).
+Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fig:realvaluedsequence} and have a number of properties analogous to the properties of signals (Section~\ref{sec:properties-signals}).
 
 \begin{figure}[tp]
 \centering
@@ -5508,7 +5507,7 @@ f + 1 & -1 \leq f < 0 \\
 \]
 that is bandlimited with bandwidth $b \geq 1$.  The corresponding time domain signal is given by the square of the sinc function $\sinc^2(t)$ (Exercises~\ref{exer:triangle_pulse_ft}).  These bandlimited signals and their Fourier transforms are plotted in Figure~\ref{fig:bandlimittedsignals}.
 
-It happens that bandlimited signals are always unbounded in time (Section~\ref{sec:properties-signals}) and that signals that are finite in time are never bandlimited.  We can reasonably suppose that all signals ever encountered in practice are finite in time and so no signals encountered in practice are truely bandlimited.  However, many practically occuring signals are approximately bandlimited, that is, their Fourier transform is small for frequencies larger than some positive number $b$.  For example, in Test~\ref{test:ftlecturerec} the Fourier transform of an audio signal taken from a lecture recording is plotted  (Figure~\ref{fig:test:fouriertransformlecturevideo}).  This signal appears approximately bandlimited with bandwidth a little larger than \SI{8}{\kilo\hertz}.
+It happens that bandlimited signals are always unbounded in time and so signals that are finite in time are never bandlimited.  We can reasonably suppose that all signals ever encountered in practice are finite in time and so no signals encountered in practice are truely bandlimited.  However, many practically occuring signals are approximately bandlimited, that is, their Fourier transform is small for frequencies larger than some positive number $b$.  For example, in Test~\ref{test:ftlecturerec} the Fourier transform of an audio signal taken from a lecture recording is plotted  (Figure~\ref{fig:test:fouriertransformlecturevideo}).  This signal appears approximately bandlimited with bandwidth a little larger than \SI{8}{\kilo\hertz}.
 
 % If $x$ is a bandlimited signal with bandwith $b$ then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has bandwidth $\abs{\alpha} b$ because, from the time scaling property of the Fourier transform,
 % \[
@@ -5540,7 +5539,7 @@ where $c$ is a square integrable complex valued sequence and $F = 2b$.  This is 
 \[
 x(\ell P) = \sum_{n \in \ints} c_n \sinc( \ell - n ) = c_\ell
 \]
-because $\sinc( \ell - n)$ is equal to $1$ when $\ell = n$ and $0$ otherwise.  Thus, the elements of the sequence $c$ correspond with samples of the signal $x$ taken at integer multiples of $P = \tfrac{1}{F} = \tfrac{1}{2b}$, that is, $c_n = x(nP)$.  The positive real number $P$ is called the \term{sampling period} and its reciprical $F$ the \term{sampling rate}.  It follows that every square integrable bandlimited signal $x$ with bandwidth $b$ can be reconstructed from samples taken at rate $F = 2b$, that is,
+because $\sinc( \ell - n)$ is equal to $1$ when $\ell = n$ and $0$ otherwise.  So, the elements of the sequence $c$ correspond with samples of the signal $x$ taken at integer multiples of $P = \tfrac{1}{F} = \tfrac{1}{2b}$, that is, $c_n = x(nP)$.  The positive real number $P$ is called the \term{sampling period} and its reciprical $F$ the \term{sampling rate}.  It follows that every square integrable bandlimited signal $x$ with bandwidth $b$ can be reconstructed from samples taken at rate $F = 2b$, that is,
 \[
 x(t) = \sum_{n \in \ints} x( n P ) \sinc(F t - n).
 \]
@@ -5649,7 +5648,7 @@ This theorem motivated use of this recontruction method in Tests~\ref{test:volta
 
 \newcommand{\calD}{{\mathcal D}}
 
-Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  By~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is
+Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  By~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
 \begin{align}
 \hat{x}(f) = \calF(x,f) &= \sum_{n \in \ints} c_n \calF\big(\sinc(F t - n) \big)  \nonumber \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
@@ -5659,7 +5658,7 @@ where
 \[
 \calD(c, f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \]
-is the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD(c)$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD(c)$ is a periodic signal with period $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.
+is the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD(c)$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD(c)$ is a periodic signal with period $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
 
 The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}
@@ -5673,7 +5672,7 @@ We obtain the following relationship between the square integrable sequence $c$ 
 c_n = \int_{-1/2}^{1/2} \hat{c}(f) e^{j 2\pi f n } df.
 \]
 The right hand side of this expression is called the~\term{inverse discrete time Fourier transform}.  %The inverse discrete Fourier transform is a sequence, that is, a function from $\ints$ to $\complex$.  
-The element $c_{-n}$ is also called the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$ with period $1$.
+The element $c_{-n}$ is also called the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$.
 
 \begin{test}\label{test:ftlecturerec}
 (\textbf{The Fourier transform of a lecture recording})
@@ -5713,7 +5712,7 @@ that is, from \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz} in steps of \SI{20}{
 \]
 to compute each term.   The computer used is an Intel Core 2 running at \SI{2.4}{\giga\hertz} and the software is written in the \href{http://scala-lang.org/}{\texttt{Scala}} programming language.
 
-The audio recording contains human voice that primarily resides at the lower frequencies below \SI{5}{\kilo\hertz}.  Audible in the recording is a faint high pitched hum.  The cause of this is unknown.  For example, it might, be a feature of the (probably low quality) webcam microphone used to record the audio.  This hum is represented in Figure~\ref{fig:test:fouriertransformlecturevideo} by the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and also by the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude of the Fourier transform is elevated.  Figure~\ref{fig:test:fouriertransformlecturevideozoomed} is a plot of the Fourier transform for frequencies from \SI{7998}{\hertz} to \SI{8002}{\hertz} in steps of \SI{5}{\milli\hertz}.  This gives a high resolution view of the spike that occurs nears \SI{8}{\kilo\hertz}.  The magnitude of the Fourier transform is precisely zero for frequencies $\abs{f} > F/2 = \SI{11025}{\hertz}$ due to $\rect(Pf)$ occurring in the definition of $\hat{x}$.  However, in Figure~\ref{fig:test:fouriertransformlecturevideo} it is apparent that the Fourier transform is small if $\abs{f}$ is a little larger than $\SI{8}{\kilo\hertz}$.  This audio signal appears approximately bandlimited with bandwidth a little larger $\SI{8}{\kilo\hertz}$.
+The audio recording contains human voice that primarily resides at lower frequencies below \SI{5}{\kilo\hertz}.  Audible in the recording is a faint high pitched hum.  The cause of this is unknown.  It might be a feature of the (probably low quality) webcam microphone used to record the audio.  This hum is represented in Figure~\ref{fig:test:fouriertransformlecturevideo} by the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and also by the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude of the Fourier transform is elevated.  Figure~\ref{fig:test:fouriertransformlecturevideozoomed} is a plot of the Fourier transform for frequencies from \SI{7998}{\hertz} to \SI{8002}{\hertz} in steps of \SI{5}{\milli\hertz}.  This gives a high resolution view of the spike that occurs near \SI{8}{\kilo\hertz}.  The magnitude of the Fourier transform is precisely zero for frequencies $\abs{f} > F/2 = \SI{11025}{\hertz}$ due to $\rect(Pf)$ occurring in the definition of $\hat{x}$.  However, in Figure~\ref{fig:test:fouriertransformlecturevideo} it is apparent that the Fourier transform is small if $\abs{f}$ is a little larger than $\SI{8}{\kilo\hertz}$.  This audio signal appears approximately bandlimited with bandwidth a little larger $\SI{8}{\kilo\hertz}$.
 
 % \begin{center}
 % \captionsetup{type=figure}
@@ -5762,7 +5761,7 @@ The audio recording contains human voice that primarily resides at the lower fre
 \begin{test}\label{test:butterworthfilteredlecturerec}
 (\textbf{Butterworth filtered lecture recording})
 
-We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlecturerec}.  In this test we pass this signal through the second order Butterworth filter from Test~\ref{test:butterworthfilter} with cuttoff frequency approximately \SI{3041}{\hertz}.  The output of the Butterworth filter is fed back to the soundcard input and recorded at \SI{22050}{\hertz}.  The recorded samples are written to the file \texttt{filtered.wav}.  Listening to \texttt{filtered.wav} confirms that the high pitched hum is weaker than it is in the original audio signal contained in the file \texttt{audio.wav} from Test~\ref{test:ftlecturerec}.  The Fourier transform of the Butterworth filtered signal is plotted in Figure~\ref{fig:test:butterworthedfouriertransformlecturevideo}.  This figure is constructed by the same procedure as used for Figure~\ref{fig:test:fouriertransformlecturevideo} from Test~\ref{test:ftlecturerec}.  Observe that the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ are less prominent in Figure~\ref{fig:test:butterworthedfouriertransformlecturevideo} than in Figure~\ref{fig:test:fouriertransformlecturevideo}.
+We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlecturerec}.  In this test we pass this signal through the second order Butterworth filter from Test~\ref{test:butterworthfilter} with cuttoff frequency approximately \SI{3041}{\hertz}.  The output of the Butterworth filter is fed back to the soundcard input and recorded at \SI{22050}{\hertz}.  The recorded samples are written to the file \texttt{filtered.wav}.  Listening to \texttt{filtered.wav} confirms that the high pitched hum is weaker than it is in the original audio signal contained in the file \texttt{audio.wav} from Test~\ref{test:ftlecturerec}.  The Fourier transform of the Butterworth filtered signal is plotted in Figure~\ref{fig:test:butterworthedfouriertransformlecturevideo}.  This figure is constructed by the same procedure as used for Figure~\ref{fig:test:fouriertransformlecturevideo} from Test~\ref{test:ftlecturerec}.  Observe that the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ are less prominent than in Figure~\ref{fig:test:fouriertransformlecturevideo}.
 
 \begin{center}
 %\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
@@ -5788,7 +5787,7 @@ With this assumption the discrete time Fourier transform of the sequence $c$ is 
 \]
 The values of $\hat{c}(f)$ for $f$ a multiple of $\tfrac{1}{N}$ have a number of convenient properties.  Denote these values by
 \begin{equation}\label{eq:dftdefn}
-\calD_N(c, k) = \calD\left(c, \frac{k}{N} \right) = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n k/N} \quad k \in \ints. 
+\calD_N(c, k) = \calD\left(c, \frac{k}{N} \right) = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n k/N} \qquad k \in \ints. 
 \end{equation}
 This is called the~\term{discrete Fourier transform} (as opposed to the discrete \emph{time} Fourier transform).  The discrete Fourier transform $\calD_N(c)$ is a sequence (a function of $k \in \ints$) with elements given by the discrete time Fourier transform $\calD(c)$ evaluated at multiples of $\tfrac{1}{N}$.  We write either $\calD_N(c,k)$ or $\calD_N(c)(k)$ to denote the value of $\calD_N(c)$ at $k \in \ints$.  The positive integer $N$ is called the~\term{length} of the transform.  In practical applications $N$ often corresponds with the number of samples of a signal that have been obtained.
 
@@ -5821,7 +5820,7 @@ N^2 \times \SI{260}{\nano\second} \approx \SI{50614}{\second} \approx 14 \; \tex
 \end{equation}
 will be required to compute $\calD_N(c)$ for this \SI{20}{\second} audio signal!  A primary cause of this lengthy computation time is the quadratic term $N^2$ that occurs in the expression above.  The amount of time required grows proportionally with the square of the length of the transform.  Suppose that instead of \SI{20}{\second} of audio we have $1$ hour and $N = 60 \times 60 \times 22050 = 79380000$ samples.  The amount of time required in this case is approximated by $N^2 \times \SI{260}{\nano\second}  \approx 52$ years!
 
-Computing the discrete Fourier transform by direct application of the formula~\eqref{eq:dftdefn} is too slow when $N$ is large.  Fortunately, much faster algorithms exist.  The algorithms are appropriately called \term{fast Fourier transforms}.  The type of algorithm used depends on $N$.  The simplest case is when $N = 2^m$ is a power of $2$.  In this case an algorithm attributed to~\citet{Cooley_tukey_1965} can be used.  %The algorithm is called the \term{radix-2 decimation in time} fast Fourier transform.  
+Computing the discrete Fourier transform by direct application of the formula~\eqref{eq:dftdefn} is too slow when $N$ is large.  Fortunately, much faster algorithms exist.  The algorithms are appropriately called \term{fast Fourier transforms}.  The specific algorithm used depends on $N$.  The simplest case is when $N = 2^m$ is a power of $2$.  In this case an algorithm attributed to~\citet{Cooley_tukey_1965} can be used.  %The algorithm is called the \term{radix-2 decimation in time} fast Fourier transform.  
 When $N = 2^m$ is divisible by $2$ the sum in~\eqref{eq:dftdefn} can be split into two parts corresponding with $n$ being even or odd,
 \begin{equation}\label{eq:DNsplitevenodd}
 \calD_N(c, k) =  \sum_{n = 0}^{N/2-1} c_{2n} e^{-j 2\pi (2n)k/N} +  \sum_{n = 0}^{N/2-1} c_{2n+1} e^{-j 2\pi (2n+1) k/N}.
@@ -5853,7 +5852,8 @@ Because $\calD_1(c,k) = c_0$ we have $C_1 = 0$, that is, computing a discrete Fo
 \[
 a_0 = C_1 = 0 \qquad a_m = 2 a_{m-1} + 2^{m+1} \;\;\; m \geq 1.
 \]
-This type of recursive equation is called a~\term{difference equation}.  We will learn how to solve such equations in Section~\ref{sec:difference-equations}.  For now we simply state the solution.  The number of complex operations required to compute a discrete Fourier transform of length $N=2^m$ is 
+This type of recursive equation is called a~\term{difference equation}.  %We will learn how to solve such equations in Section~\ref{sec:difference-equations}.  For now we simply state the solution.  
+Exercise~\ref{exer:fftcomplexity} shows that
 \[
 C_{N} = a_{m} = 2^{m+1}m = 2N\log_2 N.
 \]
@@ -5861,8 +5861,8 @@ C_{N} = a_{m} = 2^{m+1}m = 2N\log_2 N.
 Observe that the number of operations (and hence the amount of time required) grows proportionally to $N\log_2 N$ rather than $N^2$.  Suppose that each complex operation requires no more than \SI{260}{\nano\second}.  For the \SI{20}{\second} audio signal consisting of $N = 441216$ samples the amount of time required will be less than
 \begin{equation}\label{eq:runtimefftcooleytukeyapprox}
 2N \log_2 N \times \SI{260}{\nano\second} \approx \SI{4.3}{\second}.
-\end{equation}
-This is more attractive than 14 hours!  If instead we have 1 hour of audio and $N = 79380000$ samples the amount of time required is hypothesised to be less than $\SI{1084}{\second} \approx \SI{18}{\minute}$.  This is very reasonable when compared with the $52$ years hypothesised to be required by direct application of the formula~\eqref{eq:dftdefn}.  In practice the computation time will vary based on the computer used and the specific algorithm implementation.  Nevertheless, these numbers indicate that a fast Fourier transform of large length can be computed within a reasonable amount of time.  This is not possible by direct application of formula~\eqref{eq:dftdefn}.  Test~\ref{test:fastftbenchmarks} compares the practical running time of various discrete Fourier transform implementations.
+\end{equation} 
+This is more reasonable than 14 hours!  If instead we have 1 hour of audio and $N = 79380000$ samples the amount of time required is hypothesised to be less than $\SI{1084}{\second} \approx \SI{18}{\minute}$.  This is very reasonable when compared with the $52$ years hypothesised to be required by direct application of formula~\eqref{eq:dftdefn}.  In practice the computation time will vary based on the computer used and the specific algorithm implementation.  Nevertheless, these numbers indicate that a fast Fourier transform of large length can be computed within a reasonable amount of time.  This is not possible by direct application of formula~\eqref{eq:dftdefn}.  Test~\ref{test:fastftbenchmarks} compares the practical running time of various discrete Fourier transform implementations.
 
 In the above computation of run times we have neglected that the fast Fourier transform we have described required the length $N$ to be a power of two.  Other algorithms exist for the case when $N$ is not a power of two~\citep{Rader_fft_prime_1968,Bluestein_fft_prime_1968,FrigoJohnson_fftw_2005}.  These algorithms deliver similarly dramatic computational savings.  Even so, the restriction of the length to a power of $2$ is often not a significant drawback in practical applications.  Consider again the example from Test~\ref{test:ftlecturerec} with $N=441216$ samples.  Denote by 
 \[
@@ -6854,7 +6854,9 @@ is developed for analysing the complexity of the Cooley-Tukey radix 2 fast Fouri
 
 \begin{excersizelist}
 
-\item 
+\item \label{exer:fftcomplexity} Let $c_n$ be a sequence satisfying $c_n = 2 c_{n-1} + 2^{n+1}$ and suppose that $c_0 = 0$.  Show that $c_n = 2^{m+1}m$ for $m = 1,2,\dots$.
+
+\item \label{exer:fibonacci} The Fibonacci sequence $0,1,1,2,3,5,8,13,\dots$ statifies the recursive equation $c_0 = 0, c_1 = 1$, and $c_n = c_{n-1} + c_{n-2}$ for $n \geq 2$.  Find a closed form expression for the $n$th Fibonacci number.
 
 % \item \label{excer:sumsqreexp} Show that $\sum_{n \in \ints} e^{\alpha n^2} = ?$ if $\alpha < 0$ (Hint: solve Excersize~\ref{excer:sumgeomeabsn} first).
 % \begin{solution}
