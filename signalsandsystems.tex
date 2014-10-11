@@ -6705,115 +6705,26 @@ as required.
 
 \chapter{Discrete time systems} \label{cha:discr-time-syst}
 
-We have shown that a number of electrical and mechanical devices can be modelled using linear differential equations with constant coefficient.  These equations themselves can be using to describe linear time invariant systems.  By using the Laplace transform the transfer function of these systems can be found.  One particular linear time invariant system has so far been absent. This is the time shifter $T_\tau$ with non zero time shift $\tau \neq 0$.  These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
+We have so far studied linear time invariant systems and inparticular those systems described by a linear differential equation with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  One particular linear time invariant system has so far been absent. This is the time shifter $T_\tau$ with non zero time shift $\tau \neq 0$.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
 
-We now consider systems constructed from combinations of time shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period}.  Such systems are called \term{discrete time systems}.  We will actually only be interested in a particular type of discrete time system that takes the form
+We now consider systems constructed from combinations of time shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period}.  That is, we consider systems of the form
 \[
-H(x) = \sum_{n \in \ints} h_n T_{ P n}(x).
+H(x) = \sum_{n \in \ints} h_n T_{ P n}(x)
 \]
-where $h$ is a sequence of real or complex numbers with elements denoted by $h_n$ for $n \in \ints$.
+where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find tha the sequence $h$ play a role analogous to that of the impulse of a regular systems.  For this reason $h$  is called the~\term{discrete impulse response} of $H$.
 
-Let $h$ be a sequence of complex numbers indexed by $\ints$.  The $n$th element in the seqence is denoted by $h_n$.  Such a sequence is called a \term{discrete time signal}.  Let $P$ be a positive real number.  A system of the form
-\[
-H(x) = \sum_{n \in \ints} h_n T_{ P n}(x).
-\]
-is called a \term{discrete time system} with period $P$.  %Provided that at least one element $h_n \neq 0$ then the system $H$ is not regular because it consists of time shifters $T_{Pn}$.  Thus, $H$ does not have an impulse respone.  However, we will find that the discrete time signal $h$ will behave somewhat like and impulse response.
-The discrete time signal $h$ is called the~\term{discrete impulse response} of $H$.
-
-
-\section{Discrete time signals (complex valued sequences)} 
-
-A \term{sequence} $x$ is a function with domain given by the integers $\ints$.  The value of the sequence corresponding with the integer $n$ could be denoted by $x(n)$ but we will prefer the common notation $x_n$.  A~\term{discrete time signal} is a sequence that takes real or complex values, that is, $x_n \in \reals$ or $x_n \in \complex$.  For example,  
-\[
-\sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad \qquad e^{-\sabs{n}/2}
-\]
-both represent discrete time signals.  Discrete time signals are plotted using vertical lines with dotted ends as in Figure~\ref{fig:realvaluedsequence}.  It is common to use square bracket notation $x[n]$ to represent the value at or $x$ at $n$, but  we will prefer the subscript notation $x_n$.  This notation is also common~\citep{vetterli_fund_sig_proc,Rudin_real_and_complex_analysis}.  Discrete time signals have a number of properties analogous to the properties of (continuous time) signals that were described in Section~\ref{sec:properties-signals}.
-
-\begin{figure}[tp]
-\centering
-\def\minn{-4}
-\def\maxn{4}
-\def\scalex{0.6}
-\begin{tikzpicture}[domain=\minn:\maxn]
-  \begin{scope}[xscale=\scalex]
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
-    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\sin\big(\tfrac{\pi}{4} n\big)$};
-    %\draw[color=black] plot[id=x] function{1/x^2} 
-    %    node[right] {$f(t) = t^{-2}$};
-    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{sin(3.14159265359*x/4)};
-    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-  \end{scope}
-\end{tikzpicture} \;\;
-\begin{tikzpicture}[domain=\minn:\maxn]
-  \begin{scope}[xscale=\scalex]
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
-    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$e^{-\sabs{n}/2}$};
-    \draw[color=black,ycomb,thick,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{exp(-abs(x)/2)};
-  \end{scope}
-\end{tikzpicture}
-\caption{1-dimensional real valued sequences (discrete time signals).} \label{fig:realvaluedsequence}
-
-\end{figure}
-
-A discrete time signal $x$ is bounded if there exists a real number $M$ such that 
-\[
-\sabs{x_n} \leq M \qquad \text{for all $n \in \ints$} 
-\]
-Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded discrete time signals, but, $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin. 
-
-A discrete time signal $x$ is periodic if there exists a positive integer $T$ such that
-\[
-x_n = x_{n + kT} \qquad \text{for all integers $k$ and $n$.}
-\] 
-The smallest such positive $T$ is called the period.  The discrete time signal $\sin( \tfrac{\pi}{4} n )$ is periodic with period $T=8$.  Neither $n^3$ or $e^{-n^2/4}$ are periodic.  
-
-A discrete time signal $x$ is even (or symmetric) if $x_n = x_{-n}$ for all $n \in \ints$ and odd (or antisymmetric) if $x_n = -x_{-n}$ for all $n \in \int$.  Both $\sin(\frac{\pi}{4} n)$ and $n^3$ are odd and $e^{-\sabs{n}/2}$ is even.  
-%%% BLERG, might also want conjugate symmetic?
-%Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
-% \[
-% x_e(t) = \tfrac{1}{2}\big( x(t) + x(-t) \big)
-% \]
-% is an even signal called the \term{even part} of $x$ and 
-% \[
-% x_o(t) = \tfrac{1}{2}\big( x(t) - x(-t) \big)
-% \] 
-% is an odd signal called the \term{odd part} of $x$.  For example, put $x(t) = e^{-t^2} + \sin(\pi t)$.  The even part of $x$ is $x_e(t) = e^{-t^2}$ and the odd part is $x_o(t) = \sin(\pi t)$.
-%A complex valued sequence is \term{conjugate symmetric} if $x_n = x_-t)^* \qquad \text{for all $t \in \reals$,}
-%\]
-%where $*$ denotes the complex conjugate of a complex number.  Equivalently, $x$ is conjugate symetric if its real part is an even signal and its imaginary part is an odd signal.  Conversely, $x$ is \term{conjugate antisymmetric} if  
-%\[
-%x(t) = -x(-t)^* \qquad \text{for all $t \in \reals$,}
-%\]  
-%that is, if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
-
-A discrete time signal $x$ is \term{absolutely summable} if
-\[
-\|x\|_1 = \sum_{n \in \ints} \sabs{x_n} < \infty,
-\]
-that is, if the sum of absolute values of the elements converges to a finite number.  The real number $\|x\|_1$ is commonly called the $\ell^1$-norm of $x$.  The discrete time signals $\sin(\tfrac{\pi}{4} n)$ and $n^3$ are not absolutely summable, but $e^{-\abs{n}/2}$ is because (Exersize~\ref{excer:sumgeomeabsn})
-\[
-\sum_{n \in \ints} \sabs{e^{-\sabs{n}/2}} = \sum_{n \in \ints} e^{-\sabs{n}/2} = 1 + \frac{2}{\sqrt{e} - 1}.
-\]
-It is common to denote the set of absolutely summable discrete time signals by $\ell^1$.  So, $e^{-\sabs{n}/2} \in \ell^1$ and $\sin(\tfrac{\pi}{4} n) \notin \ell^1$.
-
-A discrete time signal $x$ is \term{square summable} if
-\[
-\|x\|_2^2 = \sum_{n \in \ints} \sabs{x_n} < \infty,
-\]
-that is, if the sum of squared magnitudes of the elements converges to a finite number.  The real number $\|x\|_2$ is commonly called the $\ell^2$-norm or $\term{energy}$ of $x$.  The discrete time signals $\sin(\tfrac{\pi}{4} n)$ and $n^3$ are not square summable, but $e^{-\abs{n}/2}$ is because (Excersize~\ref{excer:sumgeomeabsn})
-\[
-\sum_{n \in \ints} \sabs{e^{-\sabs{n}/2}}^2 = \sum_{n \in \ints} e^{-\abs{n}} = 1 + \frac{2}{e - 1}.
-\]
-It is common to denote the set of square summable discrete time signals by $\ell^2$.  So, $e^{-\sabs{n}/2} \in \ell^2$ and $\sin(\tfrac{\pi}{4} n) \notin \ell^2$.  If a discrete time signal is absolutely summable then is is also square summable (Exersize~\ref{excer:sumsqreexp}).  The corresponding property is not true of (continuous time) signals, that is, absolutely integrable signals are not necessarily square integrable (Excersize~\ref{excer:absintnotsquareint}).
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-Discrete time systems are linear combinations of time shifters $T_{Pn}$.  Because the time shifter is linear and time invariant it follows that discrete time systems are also linear and time invariant.  The time shifter is not a regular system and so discrete time systems are not regular, they do not have an impulse response.  However, many of the properties  
-
-Let $H_1$ and $H_2$ be linear time invariant discrete time systems with discrete impulse responses $h_1$ and $h_2$.
+Let $H_1$ and $H_2$ be discrete time systems with discrete impulse responses $h_1$ and $h_2$ and equal sampling periods $P$.  Let 
+\[
+H = a H_1 + b H_2
+\]
+be formed by a linear combination of $H_1$ and $H_2$.  Then
+\[
+H(x) = \sum_{n \in \ints} a h_{1,n} T_{ P n}(x) + sum_{n \in \ints} b h_{2,n} T_{ P n}(x) =  \sum_{n \in \ints} a h_{1,n} + b h_{2,n} T_{ P n}(x),
+\]
+and so, $H$ is a discrete time system with discrete impulse response $ah_1 + ah_2$.
 
 composition
 
@@ -6821,19 +6732,19 @@ discrete convolution
 
 System is stable if and only if discrete impulse response $h_n$ is absolutely summable.
 
-\section{The z-transform and the discrete time Fourier transform}
+\section{The z-transform}
 
 \newcommand{\calZ}{{\mathcal Z}}
 
-From~\eqref{eq:timeshiftertransferfunction} the transfer function of the linear time invariant discrete time system $H$ is
+Let $H$ be a discrete time system with discrete impulse response $h$.  The transfer function $H$ is
 \[
-\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
+\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}
 \]
-It is convenient define the complex number $z = e^{Ps}$ and define
-\[
+where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  It is convenient put $z = e^{Ps}$ and
+\begin{equation}\label{eq:}
 \calZ(h,z) = \lambda(H)(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
-\]
-This is called the \term{z-transform} of the discrete time signal $h$.  Thus, the transfer function of a discrete time signal is related with z-transform of its discrete impulse response.  This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system.
+\end{equation}
+This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system is related with z-transform of its discrete time impulse response by .  This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system.
 
 The spectrum of the linear time invariant discrete time system $H$ is
 \[
