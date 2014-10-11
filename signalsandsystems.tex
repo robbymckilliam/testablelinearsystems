@@ -6711,7 +6711,7 @@ We now consider systems constructed from combinations of time shifters of the fo
 \[
 H(x) = \sum_{n \in \ints} h_n T_{ P n}(x)
 \]
-where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find tha the sequence $h$ play a role analogous to that of the impulse of a regular systems.  For this reason $h$  is called the~\term{discrete impulse response} of $H$.
+where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse of a regular systems.  For this reason $h$  is called the~\term{discrete impulse response} of $H$.
 
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
@@ -6736,25 +6736,32 @@ System is stable if and only if discrete impulse response $h_n$ is absolutely su
 
 \newcommand{\calZ}{{\mathcal Z}}
 
-Let $H$ be a discrete time system with discrete impulse response $h$.  The transfer function $H$ is
+Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  The transfer function $H$ is
 \[
 \lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}
 \]
 where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  It is convenient put $z = e^{Ps}$ and
-\begin{equation}\label{eq:}
+\[
 \calZ(h,z) = \lambda(H)(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
-\end{equation}
-This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system is related with z-transform of its discrete time impulse response by .  This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system.
+\]
+This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete time impulse response by the equation above or equivalently by
+\[
+\lambda(H,s) = \calZ(h,e^{-Ps}).
+\]  
+This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system.
 
 The spectrum of the linear time invariant discrete time system $H$ is
 \[
-\Lambda(H,f) = \lambda(H, j2\pi f) =  \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
+\Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-The spectrum is periodic with period $\tfrac{1}{P}$.  Define
+Observe that the spectrum of a discrete time system is related to the discrete time Fourier transform of its discrete impuile response by
 \[
-\calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}
+\calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
-This is called the discrete time Fourier transform of the discrete time signal $h$.
+We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform
+\[
+\lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{-2\pi j P f}).
+\]
 
 \section{Finite impulse response filters}
 
