@@ -5968,7 +5968,7 @@ d_k = \calD(b,k/L) = \begin{cases}
 \calD_L(c,k) = \hat{c}(k/L) & \text{otherwise}.
 \end{cases}
 \]
-We do not necessarily have $d = \calD_L(b)$ becasue $b_n$ is not necessarily equal to zero for $n < 0$ and $n \geq L$.  Nevertheless, we will suppose that $d \approx \calD_L(b)$.  In this case, application of the inverse discrete Fourier transform yeilds the periodic sequence $\tilde{b} = \calD_L^{-1}(d)$ and we expect the first $L$ elements of $\tilde{b}$ to be an approximation of the first $L$ elements of $b$, that is, 
+We do not necessarily have $d = \calD_L(b)$ because $b_n$ is not necessarily equal to zero for $n < 0$ and $n \geq L$.  Nevertheless, we will suppose that $d \approx \calD_L(b)$.  In this case, application of the inverse discrete Fourier transform yeilds the periodic sequence $\tilde{b} = \calD_L^{-1}(d)$ and we expect the first $L$ elements of $\tilde{b}$ to be an approximation of the first $L$ elements of $b$, that is, 
 \[
 \tilde{b}_n \approx b_n = y(nP) \qquad \text{for $n = 0, \dots, L-1$}.
 \]  
@@ -6440,7 +6440,11 @@ This signal is not bandlimited.
 %\item \label{excer:periodicnolaplace} Show that periodic signals do not have Laplace transforms.
 
 
-\item \label{excer:sumgeomeabsn} Show that $\sum_{n \in \ints} e^{\alpha \sabs{n}} = 1 + 2/(e^{-\alpha} - 1)$ if $\alpha < 0$ (Hint: solve Exercise~\ref{excer:sumgeomeebeta} first).
+\item \label{excer:sumgeomeabsn} Show that 
+\[
+\sum_{n \in \ints} e^{\alpha \sabs{n}} = 1 + \frac{2}{e^{-\alpha} - 1}
+\]
+if $\alpha < 0$ (Hint: solve Exercise~\ref{excer:sumgeomeebeta} first).
 \begin{solution}
 Put $r = e^\alpha$.  Because $\alpha < 0$ the series $r + r^2 + r^3 + \dots$ converges absolutely and so
 \[
@@ -6696,7 +6700,7 @@ as required.
 
 
 
-\begin{comment}
+%\begin{comment}
 
 
 \chapter{Discrete time systems} \label{cha:discr-time-syst}
@@ -6870,7 +6874,7 @@ is developed for analysing the complexity of the Cooley-Tukey radix 2 fast Fouri
 
 
 
-\end{comment}
+%\end{comment}
 
 
 
