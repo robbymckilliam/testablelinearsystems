@@ -6716,21 +6716,45 @@ where $h$ is a real or complex valued sequence.  Such systems are called \term{d
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-Let $H_1$ and $H_2$ be discrete time systems with discrete impulse responses $h_1$ and $h_2$ and equal sampling periods $P$.  Let 
+Let $F$ and $G$ be discrete time systems with discrete impulse responses $f$ and $g$ and equal sampling periods $P$.  Let 
 \[
-H = a H_1 + b H_2
+H = a F + b G
 \]
-be formed by a linear combination of $H_1$ and $H_2$.  Then
+be formed by a linear combination of $F$ and $G$.  Then
+\begin{align*}
+H(x) &= \sum_{n \in \ints} a f_{n} T_{ P n}(x) + \sum_{n \in \ints} b g_{n} T_{ P n}(x) \\
+&=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}(x),
+\end{align*}
+and so, $H$ is a discrete time system with discrete impulse response $af + ag$.
+
+Now suppose that
 \[
-H(x) = \sum_{n \in \ints} a h_{1,n} T_{ P n}(x) + sum_{n \in \ints} b h_{2,n} T_{ P n}(x) =  \sum_{n \in \ints} a h_{1,n} + b h_{2,n} T_{ P n}(x),
+H = G\big( F(x) \big) 
 \]
-and so, $H$ is a discrete time system with discrete impulse response $ah_1 + ah_2$.
+is formed by the composition of discrete time systems $F$ and $G$.  Now %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
+\begin{align*}
+H(x) &= G \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} g_m T_{Pm} \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} g_m f_n T_{Pm}\big( T_{Pn}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} g_m f_n T_{P(m+n)}(x) 
+\end{align*}
+and by putting $k = m+n$ we have
+\begin{align*}
+H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} g_m f_{k-m} T_{Pk}(x) \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} g_m f_{k-m} T_{Pk}(x) \\
+&= \sum_{k \in \ints} h_k T_{Pk}(x)
+\end{align*}
+where $h$ is the sequence with elements given by
+\[
+h_n = \sum_{m \in \ints} g_m f_{n-m}.
+\]
+The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution, that is,
+\[
+h = f * g.
+\]
+Thus, the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
 
-composition
-
-discrete convolution
-
-System is stable if and only if discrete impulse response $h_n$ is absolutely summable.
+A discrete time system is stable if and only discrete impulse response is absolutely summable.  This is analagously to the property of regular systems, that are stable if an im
 
 \section{The z-transform}
 
@@ -6740,7 +6764,7 @@ Let $H$ be a discrete time system with discrete impulse response $h$ and period 
 \[
 \lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}
 \]
-where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  It is convenient put $z = e^{Ps}$ and
+where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  It is convenient to put $z = e^{Ps}$ and
 \[
 \calZ(h,z) = \lambda(H)(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
 \]
