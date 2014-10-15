@@ -6763,7 +6763,7 @@ Let $H$ be a discrete time system with discrete impulse response $h$ and period 
 \[
 \lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}
 \]
-where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  Put $z = e^{Ps}$ and define
+because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  Put $z = e^{Ps}$ and define
 \[
 \calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
 \]
@@ -6771,7 +6771,7 @@ This is called the \term{z-transform} of the sequence $h$.  The transfer functio
 \[
 \lambda(H,s) = \calZ(h,e^{-Ps}).
 \]  
-This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system.
+This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).
 
 For example, consider the sequence $u$ with elements 
 \[
@@ -6780,17 +6780,19 @@ u_n = \begin{cases}
 0 & n < 0 
 \end{cases}
 \]
-called the \term{step sequence} or sometimes the \term{discrete step function}.  The z-transform of the step sequence is
+called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is
 \[
 \calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n}.
 \]
-This sum converges only if the magnitude of $z$ is greater than one, that is, $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  This region of convergence is plotted in Figure~\ref{fig:rocexampleztrans1}.  
+This sum converges only if the magnitude of $z$ is greater than one, that is, if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  This region of convergence is plotted in Figure~\ref{fig:rocexampleztrans1}. 
 
-Now consider the sequence $c$ with elements $2^{n} u_n$.  The z-transform is 
+Just as the Laplace transform of a signal has an associated region of convergence, the z-transform of a sequence has a region of convergence.  The region of convergence of signals were half planes or vertical strips (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of sequences are circular disks and annular regions in the complex plane.
+
+Consider the sequence with $n$th element $2^{n} u_n$.  The z-transform is 
 \[
 \calZ(2^{n} u_n) = \sum_{n \in \ints} 2^n u_n z^{-n} = \sum_{n=0}^\infty 2^n z^{-n}
 \]
-and converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the subset of complex numbers with magnitude less than $\tfrac{1}{2}$.  Now consider the sequence with elements 
+and converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the subset of complex numbers with magnitude greater than $\tfrac{1}{2}$.  Now consider the sequence with elements 
 \[
 (\tfrac{3}{2})^{n} u_{-n} =  \begin{cases} 
 (\tfrac{3}{2})^{n} & n \leq 0 \\
@@ -6801,7 +6803,7 @@ The z-transform is
 \[
 \calZ\big( (\tfrac{3}{2})^{n} u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{3}{2})^{-n} z^{n}
 \]
-and converges only if $\abs{z} < \tfrac{3}{2}$.
+and converges only if $\abs{z} < \tfrac{3}{2}$.  The region of convergence is the subset of complex numbers with magnitude less than $\tfrac{3}{2}$.
 
 The sequence $\delta$ with elements
 \[
@@ -6810,11 +6812,77 @@ The sequence $\delta$ with elements
 0 & \text{otherwise}
 \end{cases}
 \]  
-is called the \term{dirac delta sequence} or simple \term{delta sequence}.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' that is not a function, but only a notational device.  However, the delta sequence is a well defined sequence.  The z-transform of the delta sequence is
+is called the \term{dirac delta sequence} or simply \term{delta sequence}.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, but only a notational device.  However, the delta sequence is a well defined sequence.  The z-transform of the delta sequence is
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
-The region of convergence is the entire complex plane.  Finally consider the sequence with every element equal to $1$.  In this case $\sum_{n \in \ints} z^{-n}$ does not converge for any $z$ and the region of convergence is the empty set.  The sequence of all $1$'s is said not to have a z-transform.
+The region of convergence is the entire complex plane.  Finally, consider the sequence that has every element equal to $1$.  In this case $\sum_{n \in \ints} z^{-n}$ does not converge for any $z \in \complex$ and the region of convergence is the empty set.  The sequence of all $1$'s is said not to have a z-transform.
+
+{
+\def\minn{-4}
+\def\maxn{4}
+\def\ymax{4}
+\def\ymin{-0.5}
+\def\scalex{0.6}
+\def\step(#1){(#1>=0)} %step function
+\begin{figure}[tp]
+\centering
+\begin{tikzpicture}
+  \def\scaley{2}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{(x>=0)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+  \htick{1*\scaley} node[pos=0.5,left] {$1$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}
+  \def\scaley{0.2}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$2^n u_n$};
+        \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{\step(x)*(2**x)};
+  \end{scope}
+  \htick{4*\scaley} node[pos=0.5,left] {$4$};
+  \htick{8*\scaley} node[pos=0.5,left] {$8$};
+  \htick{16*\scaley} node[pos=0.5,left] {$16$};
+\end{tikzpicture}
+ \\ \vspace{0.5cm}
+\begin{tikzpicture}
+  \def\scaley{3}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$(\tfrac{3}{2})^n u_{-n}$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+        \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{\step(-x)*((3.0/2)**x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+  \htick{1*\scaley} node[pos=0.5,right] {$1$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}
+   \def\scaley{0.2}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$2^n u_n + (\tfrac{3}{2})^n u_{-n}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{\step(x)*(2**x) + \step(-x)*((3.0/2)**x)};
+  \end{scope}
+  \htick{4*\scaley} node[pos=0.5,left] {$4$};
+  \htick{8*\scaley} node[pos=0.5,left] {$8$};
+  \htick{16*\scaley} node[pos=0.5,left] {$16$};
+\end{tikzpicture}
+\caption{1-dimensional real valued sequences.} \label{fig:realvaluedsequencestepetc}
+\end{figure}
+}
 
 {
 \def\xmax{1.75}
@@ -6864,26 +6932,28 @@ The region of convergence is the entire complex plane.  Finally consider the seq
 \end{figure}
 }
 
-The spectrum of the linear time invariant discrete time system $H$ is
+The spectrum of the discrete time system $H$ with discrete impulse response $h$ is
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-Observe that the spectrum of a discrete time system is related to the discrete time Fourier transform of its discrete impuile response by
+Observe that the spectrum of a $H$ is related to the discrete time Fourier transform of $h$ by
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
-We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform
+We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform, of a discrete time system $H$ and its discrete impulse response $h$,
 \[
 \lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{-2\pi j P f}).
 \]
 
+BLERG: Move towards convolution theorem for z-transform and discrete-time Fourier transform?
+
 \section{Difference equations}\label{sec:difference-equations}
 
-In Section~\ref{sec:fast-four-transf} the difference equation 
-\[
-a_m = a_{m-1} + 2^{m+1} \qquad a_0 = 0
-\]
-is developed for analysing the complexity of the Cooley-Tukey radix 2 fast Fourier transform.
+We have previously show that many interesting systems are found by consideration of linear differential equations with constant coefficients.  We have used these system to model electrical and mechanical devices.  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
+\begin{equation}\label{eq:differenceequform}
+\sum_{\ell=0}^{m} a_\ell c_{n - \ell} = \sum_{\ell=0}^{k} b_\ell d_{n - \ell} \qquad n \in \ints
+\end{equation}
+where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex numbers.
 
 
 \section{Finite impulse response filters}
