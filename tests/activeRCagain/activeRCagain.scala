@@ -60,7 +60,8 @@ val C2 = 0
 val RC = 27e-5 //R*C 
 val r = 1/RC
 
-//The impulse response
+//The impulse response.  It's not necessary to include the step function.  It will be incorporated in
+//the trapezoidal intergration performed within the function f. 
 def h(t : Double) = -r*exp(-r*t)
 
 //the function f from the tests.  Requires numerical integration

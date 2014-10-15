@@ -3750,7 +3750,7 @@ From~\eqref{eq:xreconstruct},
 \end{align*}
 where the function
 \[
-g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r\int_{-\infty}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau.
+g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r \int_{0}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau.
 \]
 An approximation of $g(t)$ is made using the trapezoidal sum
 \[
@@ -5057,7 +5057,7 @@ For many engineering purposes it is desirable to construct systems that will \te
 An \term{ideal lowpass filter} with \term{cuttoff frequency} $c$ is the system $L_c$ with spectrum
 \[
 \Lambda(L_c) = \begin{cases}
-1 & -c < f \leq c \\
+1 & \abs{f} < c \\
 0 & \text{otherwise}
 \end{cases}
 = \rect\left(\frac{f}{2c}\right).
@@ -5070,8 +5070,8 @@ We conclude that the ideal lowpass filter $L_c$ is a regular linear time invaria
 
 An \term{ideal highpass filter} with cuttoff frequency $c$ is given by the linear combination $T_0 - L_c$ where $T_0$ is the identity system.  The spectrum is
 \[
-\Lambda(T_0 + L_c) = \Lambda(T_0) + \Lambda(L_c)  = 1 - \rect\left(\frac{f}{2c}\right) = \begin{cases}
-0 & -c < f \leq c \\
+\Lambda(T_0 - L_c) = \Lambda(T_0) - \Lambda(L_c)  = 1 - \rect\left(\frac{f}{2c}\right) = \begin{cases}
+0 &  \abs{f} < c \\
 1 & \text{otherwise}.
 \end{cases}
 \]
@@ -5081,7 +5081,7 @@ An \term{ideal bandpass filter} with upper cuttoff frequency $u$ and lower cutto
 \[
 \Lambda(L_u - L_\ell) = \rect\left(\frac{f}{2u}\right) - \rect\left(\frac{f}{2\ell}\right) = \begin{cases}
 1 &  -u < f \leq -\ell \\
-1 &  u < f \leq \ell \\
+1 &  \ell \leq f < u \\
 0 & \text{otherwise}.
 \end{cases}
 \]
@@ -5321,11 +5321,11 @@ The transfer function is
 \]
 The second order Butterworth filter $B_2^c$ has transfer function
 \[
-\Lambda(B_m^c) = \frac{1}{(\tfrac{1}{2\pi c}s - \beta_1)(\tfrac{1}{2\pi c}s - \beta_2)},
+\Lambda(B_2^c) = \frac{1}{(\tfrac{1}{2\pi c}s - \beta_1)(\tfrac{1}{2\pi c}s - \beta_2)},
 \]
 where $\beta_1 = \beta_2^* = e^{j3\pi/4}$.  Expanding the quadratic on the denominator gives
 \[
-\Lambda(B_m^c) = \frac{1}{1 + \tfrac{1}{\sqrt{2} \pi c} s + \tfrac{1}{4\pi^2 c^2} s^2}.
+\Lambda(B_2^c) = \frac{1}{1 + \tfrac{1}{\sqrt{2} \pi c} s + \tfrac{1}{4\pi^2 c^2} s^2}.
 \]
 Choosing the resistors and capacitors of the Sallen-Key to satisfy 
 \[
@@ -5333,7 +5333,7 @@ C_2(R_1 + R_2) = \frac{1}{ \sqrt{2} \pi c}, \qquad R_1 R_2 C_1 C_2 = \frac{1}{4\
 \]
 leads to a second order Butterworth filter.  A convenient solution is to put $C_1 = 2C_2$ and $R_1 = R_2$.  This gives a second order Butterworth filter with cuttoff
 \[
-c = \frac{1}{\sqrt{2} \pi C_2(R_1+R_2)} =  \frac{1}{\sqrt{2} \pi C_1 R_1}.
+c = \frac{1}{\sqrt{2} \pi C_2(R_1+R_2)} =  \frac{1}{2\sqrt{2} \pi C_2 R_2}.
 \]
 In Test~\ref{test:butterworthfilter} we construct a second order Butterworth filter using a Sallen-Key and measure its spectrum.
 
@@ -5345,11 +5345,11 @@ Butterworth filters of orders larger than $m=2$ can be constructed by concatenat
 
 We construct a second order Butterworth filter using the Sallen-Key circuit from Figure~\ref{elec:sallenkey} with capacitors $C_2 \approx 100\si{\nano\farad}$, $C_1 \approx 2C_2 \approx 200\si{\nano\farad}$ and resistors $R_1 \approx R_2 \approx 330\si{\ohm}$.  The cuttoff frequency is
 \[
-c = \frac{1}{\sqrt{2} \pi C_1 R_1} \approx 3410\si{\hertz}.
+c = \frac{1}{2\sqrt{2} \pi C_2 R_2} \approx 3410\si{\hertz}.
 \]
 Sinusoids of the form
 \[
-\sin( 2 \pi f_k t ), \qquad f_k = \round{110 \times 2^{k/2}}, \;\; k = 0,1,\dots,12
+\sin( 2 \pi f_k t ), \qquad f_k = \round{110 \times 2^{k/2}}, \;\; k = 1,2,\dots,13
 \]
 are input to the filter using a computer soundcard and the magnitude and phase spectrum are measured using the procedure described in Test~\ref{test:activeRCspectrumtest}.  Figure~\ref{fig:test:butterworthspectrum} shows the measurements (dots) plotted alongside the hypothesised magnitude spectrum
 \[
@@ -6716,16 +6716,16 @@ where $h$ is a real or complex valued sequence.  Such systems are called \term{d
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-Let $F$ and $G$ be discrete time systems with discrete impulse responses $f$ and $g$ and equal sampling periods $P$.  Let 
+Let $F$ and $G$ be discrete time systems with equal sampling period $P$ and discrete impulse responses $f$ and $g$.  Let 
 \[
-H = a F + b G
+H = a F + b G \qquad a,b\in\complex
 \]
-be formed by a linear combination of $F$ and $G$.  Then
+be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x$ is
 \begin{align*}
 H(x) &= \sum_{n \in \ints} a f_{n} T_{ P n}(x) + \sum_{n \in \ints} b g_{n} T_{ P n}(x) \\
 &=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}(x),
 \end{align*}
-and so, $H$ is a discrete time system with discrete impulse response $af + ag$.
+and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.
 
 Now suppose that
 \[
@@ -6748,31 +6748,121 @@ where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} g_m f_{n-m}.
 \]
-The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution, that is,
-\[
-h = f * g.
-\]
-Thus, the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
+The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  Thus, the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with discrete impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
 
-A discrete time system is stable if and only discrete impulse response is absolutely summable.  This is analagously to the property of regular systems, that are stable if an im
+Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  %Discrete convolution is associative, that is, if $x$, $y$, and $z$ are sequences that 
+A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
+
 
 \section{The z-transform}
 
+
 \newcommand{\calZ}{{\mathcal Z}}
 
-Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  The transfer function $H$ is
+Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  The transfer function of $H$ is
 \[
 \lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}
 \]
-where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  It is convenient to put $z = e^{Ps}$ and
+where we have used the fact that the transfer function of the time shifter $T_{Pn}$ is $e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  Put $z = e^{Ps}$ and define
 \[
-\calZ(h,z) = \lambda(H)(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
+\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
 \]
 This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete time impulse response by the equation above or equivalently by
 \[
 \lambda(H,s) = \calZ(h,e^{-Ps}).
 \]  
 This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system.
+
+For example, consider the sequence $u$ with elements 
+\[
+u_n = \begin{cases} 
+1 & n \geq 0 \\
+0 & n < 0 
+\end{cases}
+\]
+called the \term{step sequence} or sometimes the \term{discrete step function}.  The z-transform of the step sequence is
+\[
+\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n}.
+\]
+This sum converges only if the magnitude of $z$ is greater than one, that is, $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  This region of convergence is plotted in Figure~\ref{fig:rocexampleztrans1}.  
+
+Now consider the sequence $c$ with elements $2^{n} u_n$.  The z-transform is 
+\[
+\calZ(2^{n} u_n) = \sum_{n \in \ints} 2^n u_n z^{-n} = \sum_{n=0}^\infty 2^n z^{-n}
+\]
+and converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the subset of complex numbers with magnitude less than $\tfrac{1}{2}$.  Now consider the sequence with elements 
+\[
+(\tfrac{3}{2})^{n} u_{-n} =  \begin{cases} 
+(\tfrac{3}{2})^{n} & n \leq 0 \\
+0 & n > 0.
+\end{cases}
+\]
+The z-transform is
+\[
+\calZ\big( (\tfrac{3}{2})^{n} u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{3}{2})^{-n} z^{n}
+\]
+and converges only if $\abs{z} < \tfrac{3}{2}$.
+
+The sequence $\delta$ with elements
+\[
+\delta_n = \begin{cases}
+1 & n = 0 \\\
+0 & \text{otherwise}
+\end{cases}
+\]  
+is called the \term{dirac delta sequence} or simple \term{delta sequence}.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' that is not a function, but only a notational device.  However, the delta sequence is a well defined sequence.  The z-transform of the delta sequence is
+\[
+\calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
+\]
+The region of convergence is the entire complex plane.  Finally consider the sequence with every element equal to $1$.  In this case $\sum_{n \in \ints} z^{-n}$ does not converge for any $z$ and the region of convergence is the empty set.  The sequence of all $1$'s is said not to have a z-transform.
+
+{
+\def\xmax{1.75}
+\def\ymax{1.75}
+\def\zscale{1.5}
+\newcommand{\graybox}{\draw [draw=none,fill=lightgray] (-\xmax,-\ymax) rectangle (\xmax,\ymax);}
+\newcommand{\drawzplane}{
+  \draw [<->] (-\xmax,0) -- (\xmax,0) node [above left]  {$\Re$};
+  \draw [<->] (0,-\ymax) -- (0,\ymax) node [below right] {$\Im$};
+  \draw [dashed] (0,0) circle (1);
+}
+\begin{figure}[tp]
+  \centering
+  \begin{tikzpicture}[scale=\zscale]
+    \path [draw=none,fill=lightgray] (0,0) circle (1) ;
+    \drawzplane
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    \path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture} 
+  \\ \vspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    \graybox
+    \path [draw=none,fill=white] (0,0) circle (3/2);
+    \drawzplane
+     \begin{scope}[yscale=1/\zscale]
+      \vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \;\;\;
+  \begin{tikzpicture}[scale=\zscale]
+    \graybox
+    \path [draw=none,fill=white] (0,0) circle (3/2);
+    \path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      \vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+      \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Regions of convergence (unshaded) for the step sequence $u$ (top left), the sequence $2^{n}u_n$ (top right), the sequence $(\tfrac{3}{2})^{n} u_{-n}$ (bottom left), and the sequence $2^{n}u_n + (\tfrac{3}{2})^{n} u_{-n}$ (bottom right).  The unit circle is indicated by the dashed circle. }\label{fig:rocexampleztrans1}
+\end{figure}
+}
 
 The spectrum of the linear time invariant discrete time system $H$ is
 \[
@@ -6787,9 +6877,6 @@ We have the following relationships between the transfer function, the spectrum,
 \lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{-2\pi j P f}).
 \]
 
-\section{Finite impulse response filters}
-
-
 \section{Difference equations}\label{sec:difference-equations}
 
 In Section~\ref{sec:fast-four-transf} the difference equation 
@@ -6797,6 +6884,11 @@ In Section~\ref{sec:fast-four-transf} the difference equation
 a_m = a_{m-1} + 2^{m+1} \qquad a_0 = 0
 \]
 is developed for analysing the complexity of the Cooley-Tukey radix 2 fast Fourier transform.
+
+
+\section{Finite impulse response filters}
+
+
 
 
 \section{Exercises}
