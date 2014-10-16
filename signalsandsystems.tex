@@ -6932,20 +6932,32 @@ The region of convergence is the entire complex plane.  Finally, consider the se
 \end{figure}
 }
 
+\newcommand{\stirling}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\eulerian}[2]{\genfrac{\langle}{\rangle}{0pt}{}{#1}{#2}}
+
 Given the z-transform of a sequence the $c$ the sequence can be recovered by applications of the inverse z-transform
 \[
 c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
-where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform, direct calculation of the inverse z-transform requires contour integration that we will not consider here.  For our purposes it suffices to remember only the following z-transform pairs
+where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform, direct calculation of the inverse z-transform requires contour integration that we will not consider here.  For our purposes it suffices to remember only the following z-transform pair
 \[
-\calZ(n^k \alpha^n u_n) = \frac{}{(\alpha z - 1)^{n+1}}
+\calZ(n^k u_n) = \frac{1}{(\alpha z - 1)^{n+1}}\sum_{n=0}^k\eulerian{n}{k}z^{n+1} 
 \]
+where
+\[
+\eulerian{n}{k} = \sum_{\ell=0}^{k+1}(-1)^\ell \binom{n+1}{\ell}(k-\ell+1)^n
+\]
+is called an~\term{Eulerian number}~\cite[Sec. 6.2]{concretemath_1994} and
+\[
+\binom{n}{\ell} = \frac{n!}{k!(n-k)!}
+\]
+is the~\term{binomial coefficient}.  
 
 The spectrum of the discrete time system $H$ with discrete impulse response $h$ is
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-Observe that the spectrum of a $H$ is related to the discrete time Fourier transform of $h$ by
+Observe that the spectrum of $H$ is related to the discrete time Fourier transform of $h$ by
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
