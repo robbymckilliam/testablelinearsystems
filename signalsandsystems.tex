@@ -6782,7 +6782,7 @@ u_n = \begin{cases}
 \]
 called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is
 \[
-\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n}.
+\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{1}{1 - z^{-1}} \qquad \abs{z} > 1.
 \]
 This sum converges only if the magnitude of $z$ is greater than one, that is, if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  This region of convergence is plotted in Figure~\ref{fig:rocexampleztrans1}. 
 
@@ -6936,8 +6936,10 @@ Given the z-transform of a sequence the $c$ the sequence can be recovered by app
 \[
 c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
-where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform, direct calculation of the inverse z-transform requires contour integration that we will not consider here.  For our purposes it suffices to remember only the following z-transform pair
+where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform, direct calculation of the inverse z-transform requires contour integration that we will not consider here.  For our purposes it suffices to remember only the following z-transform pairs
 \[
+\calZ(n^k \alpha^n u_n) = \frac{}{(\alpha z - 1)^{n+1}}
+\]
 
 The spectrum of the discrete time system $H$ with discrete impulse response $h$ is
 \[
