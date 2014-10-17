@@ -6722,7 +6722,7 @@ H = a F + b G \qquad a,b\in\complex
 \]
 be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x$ is
 \begin{align*}
-H(x) &= \sum_{n \in \ints} a f_{n} T_{ P n}(x) + \sum_{n \in \ints} b g_{n} T_{ P n}(x) \\
+H(x) &= a \sum_{n \in \ints} f_{n} T_{ P n}(x) + b \sum_{n \in \ints} g_{n} T_{ P n}(x) \\
 &=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}(x),
 \end{align*}
 and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.
@@ -6731,7 +6731,7 @@ Now suppose that
 \[
 H = G\big( F(x) \big) 
 \]
-is formed by the composition of discrete time systems $F$ and $G$.  Now %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
+is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
 H(x) &= G \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
 &= \sum_{m \in \ints} g_m T_{Pm} \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
@@ -6748,10 +6748,17 @@ where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} g_m f_{n-m}.
 \]
-The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  Thus, the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with discrete impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
+The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with discrete impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
 
-Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  %Discrete convolution is associative, that is, if $x$, $y$, and $z$ are sequences that 
-A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
+Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  Discrete convolution is associative, that is, if $f$, $g$, and $h$ are sequences then
+\[
+(f*g)*h = f*(g*h). \qquad \text{(Exercise~\ref{excer:discrconvassociative})}
+\] 
+Discrete convolution distributes with addition and commutes with scalar multiplication, that is,
+\[
+a (f * h) + b (g * h) = (ax + by) * w
+\]
+where $a$ and $b$ are real or complex constants.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
 
 \section{The z-transform}
@@ -6767,43 +6774,45 @@ because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}
 \[
 \calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
 \]
-This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete time impulse response by the equation above or equivalently by
+This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
 \[
-\lambda(H,s) = \calZ(h,e^{-Ps}).
+\lambda(H,s) = \calZ(h,e^{Ps}).
 \]  
 This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).
 
-For example, consider the sequence $u$ with elements 
+Consider the sequence $u$ with elements 
 \[
 u_n = \begin{cases} 
 1 & n \geq 0 \\
 0 & n < 0 
 \end{cases}
 \]
-called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is
+called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is (Exercise~\ref{exer:stepseqZtrans})
 \[
-\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{1}{1 - z^{-1}} \qquad \abs{z} > 1.
+\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{1}{1 - z^{-1}} = \frac{z}{z - 1} \qquad \abs{z} > 1.
 \]
-This sum converges only if the magnitude of $z$ is greater than one, that is, if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  This region of convergence is plotted in Figure~\ref{fig:rocexampleztrans1}. 
+This sum converges only if the magnitude of $z$ is greater than one, that is, if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  Just as the Laplace transform of a signal has an associated region of convergence, the z-transform of a sequence has a region of convergence.  The region of convergence of signals were half planes or vertical strips (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of sequences are circular disks, annular regions in the complex plane, or the complex plane with a disc at the origin removed.
 
-Just as the Laplace transform of a signal has an associated region of convergence, the z-transform of a sequence has a region of convergence.  The region of convergence of signals were half planes or vertical strips (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of sequences are circular disks and annular regions in the complex plane.
-
-Consider the sequence with $n$th element $2^{n} u_n$.  The z-transform is 
+Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
 \[
-\calZ(2^{n} u_n) = \sum_{n \in \ints} 2^n u_n z^{-n} = \sum_{n=0}^\infty 2^n z^{-n}
+\calZ\big(\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} \tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad 
 \]
-and converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the subset of complex numbers with magnitude greater than $\tfrac{1}{2}$.  Now consider the sequence with elements 
+converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the complex plane with a disc of radius $\tfrac{1}{2}$ removed.  Now consider the sequence with elements 
 \[
-(\tfrac{3}{2})^{n} u_{-n} =  \begin{cases} 
-(\tfrac{3}{2})^{n} & n \leq 0 \\
+2^{n} u_{-n} =  \begin{cases} 
+2^{n} & n \leq 0 \\
 0 & n > 0.
 \end{cases}
 \]
-The z-transform is
+The z-transform
 \[
-\calZ\big( (\tfrac{3}{2})^{n} u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{3}{2})^{-n} z^{n}
+\calZ( 2^{n} u_{-n} ) = \sum_{n \in \ints} 2^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (z/2)^{n} = \frac{2}{2 - z} \qquad \abs{z} < 2
 \]
-and converges only if $\abs{z} < \tfrac{3}{2}$.  The region of convergence is the subset of complex numbers with magnitude less than $\tfrac{3}{2}$.
+converges only if $\abs{z} < 2$.  The region of convergence is an open disc of radius $2$ centered at the origin of the complex plane.  Finally, consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n + 2^{n} u_{-n}$.  The z-transform
+\[
+\calZ((\tfrac{1}{2})^{n} u_n + 2^{n} u_{-n}) =  \frac{2z}{2z - 1} + \frac{3}{3 - 2z} \qquad \tfrac{1}{2} < \abs{z} < \tfrac{3}{2}
+\]
+converges only if $\tfrac{1}{2} < \abs{z} < 2$.
 
 The sequence $\delta$ with elements
 \[
@@ -6941,7 +6950,7 @@ c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
 where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform, direct calculation of the inverse z-transform requires contour integration that we will not consider here.  For our purposes it suffices to remember only the following z-transform pair
 \[
-\calZ(n^k u_n) = \frac{1}{(\alpha z - 1)^{n+1}}\sum_{n=0}^k\eulerian{n}{k}z^{n+1} 
+\calZ(n^k u_n) = \frac{1}{(z - 1)^{n+1}}\sum_{n=0}^k\eulerian{n}{k}z^{n+1} 
 \]
 where
 \[
@@ -6985,6 +6994,37 @@ where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex numbers.
 \section{Exercises}
 
 \begin{excersizelist}
+
+
+\item \label{excer:discrconvassociative} Show that discrete convolution is associative.
+\begin{solution}
+Let $f,g,h$ be sequences.  We have
+\begin{align*}
+(f*g)*h &= \sum_{m \in \ints} h_{m} (f*g)_{n-m} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} g_{k} f_{n-m-k}
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} f_{k} g_{n-m-k} \qquad \text{commutivity} \\
+&= \sum_{m \in \ints} \sum_{k \in \ints} f_{k} h_m g_{n-m-k} \\
+&= \sum_{k \in \ints} f_{k} \sum_{m \in \ints}  h_m g_{n-k-m} \\
+&= \sum_{k \in \ints} f_{k} (g*h)_{n-k} \\
+&= f*(g*h).
+\end{align*}
+\end{solution}
+
+\item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
+
+
+\item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $\alpha^nu_n$ is $z/(z-\alpha)$ with region of convergence $\abs{z} > \abs{\alpha}$.
+\begin{solution}
+The z-transform is
+\[
+\calZ(\alpha^nu_n) = \sum_{n \in \ints} \alpha^n u_n z^{-n} = \sum_{n=0}^\infty \left(\frac{z}{\alpha}\right)^{-n}.
+\]
+This sum is a geometric progression that converges to 
+\[
+\frac{1}{1- \alpha z^{-1}} = \frac{z}{ z-\alpha}
+\]
+when $\abs{z/\alpha} > 1$ and diverges otherwise.  The region of convergence is thus $\abs{z} > \abs{\tfrac{1}{\alpha}}$.
+\end{solution}
 
 \item \label{exer:fftcomplexity} Let $c_n$ be a sequence satisfying $c_n = 2 c_{n-1} + 2^{n+1}$ and suppose that $c_0 = 0$.  Show that $c_n = 2^{m+1}m$ for $m = 1,2,\dots$.
 
