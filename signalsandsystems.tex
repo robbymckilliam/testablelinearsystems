@@ -2752,7 +2752,7 @@ This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where 
 %To highlight this we will write $\lambda(H,s)$ which, considered as a function of $s$, is called the \term{transfer function} of $H$.  %For a given system $H$, calculating $\lambda(H,s)$ for each $s$ is one use for the \term{Laplace transform} that we discuss in Section~\ref{sec:laplace-transform}.
 Thus, the transfer function satisfies
 \begin{equation}\label{eq:transfuneigenproperty}
-H(e^{st}) = \lambda(H,s) e^{s\tau}  .
+H(e^{st}) = \lambda(H,s) e^{s\tau}.
 \end{equation}
 
 %%%BLERG.  I think this needs cleaning up.  It's perhaps trying to introduce stuff too early.  Its not obvious at this stage that the system is linear etc.  It might be better to move quickly to the Laplace transform.
@@ -3281,7 +3281,7 @@ Let $x \colon \reals \to \complex$ be a complex valued function of the real line
 \begin{equation}\label{eq:laplace_defn}
 \calL(x) = \int_{-\infty}^{\infty} x(t) e^{-st} dt
 \end{equation}
-is called the \term{Laplace transform} of $x$.  The Laplace transform is a function of the complex parameter $s$, and if we need to indicate this we write $\calL(x)(s)$ or $\calL(x,s)$.  The Laplace transform $\calL(x)$ is not necessarily defined for all values of $s \in \complex$.  
+is called the \term{Laplace transform} of $x$.  The Laplace transform is a function of the complex parameter $s$ and if we need to indicate this we write $\calL(x)(s)$ or $\calL(x,s)$.  The Laplace transform $\calL(x)$ is not necessarily defined for all values of $s \in \complex$.  
 Let $R$ be the set of real numbers such that $x(t) e^{-\sigma t}$ is absolutely integrable if and only if $\sigma \in R$, that is
 \[
 \int_{-\infty}^{\infty} \abs{x(t)} e^{-\sigma t} dt < \infty  \qquad \text{if and only if $\sigma \in R$}.
@@ -6766,19 +6766,11 @@ where $a$ and $b$ are real or complex constants.  A discrete time system is stab
 
 \newcommand{\calZ}{{\mathcal Z}}
 
-Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  The transfer function of $H$ is
+Let $c$ be a sequence.  The function
 \[
-\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}
+\calF(c) = \sum_{n \in \ints} c_n z^{-n}
 \]
-because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction}.  Put $z = e^{Ps}$ and define
-\[
-\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}.
-\]
-This is called the \term{z-transform} of the sequence $h$.  The transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
-\[
-\lambda(H,s) = \calZ(h,e^{Ps}).
-\]  
-This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).
+This is called the \term{z-transform} of $c$. The z-transform $\calZ(h)$ is a function of the complex plane. To indicate the value of $\calZ(h)$ at $z \in \complex$ we write either $\calZ(h,z)$ or $\calZ(h)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.
 
 Consider the sequence $u$ with elements 
 \[
@@ -6791,11 +6783,11 @@ called the \term{step sequence} or sometimes the \term{discrete step function}. 
 \[
 \calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{1}{1 - z^{-1}} = \frac{z}{z - 1} \qquad \abs{z} > 1.
 \]
-This sum converges only if the magnitude of $z$ is greater than one, that is, if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  Just as the Laplace transform of a signal has an associated region of convergence, the z-transform of a sequence has a region of convergence.  The region of convergence of signals were half planes or vertical strips (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of sequences are circular disks, annular regions in the complex plane, or the complex plane with a disc at the origin removed.
+This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  Recall that the region of convergence of the Laplace transform of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
 
 Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
 \[
-\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} \tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad 
+\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} (\tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad 
 \]
 converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the complex plane with a disc of radius $\tfrac{1}{2}$ removed.  Now consider the sequence with elements 
 \[
@@ -6806,7 +6798,7 @@ converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the co
 \]
 The z-transform
 \[
-\calZ\big( (\tfrac{3}{2})^n u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{2}{3} z)^{n} = \frac{3}{3 - 2z} \qquad \abs{z} < 2
+\calZ\big( (\tfrac{3}{2})^n u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{2}{3} z)^{n} = \frac{3}{3 - 2z} \qquad \abs{z} < \tfrac{3}{2}
 \]
 converges only if $\abs{z} < \tfrac{3}{2}$.  The region of convergence is an open disc of radius $\frac{3}{2}$ centered at the origin of the complex plane.  The sequence with $n$th element $(\tfrac{1}{2})^{n} u_n + (\frac{3}{2})^{n} u_{-n}$ has z-transform
 \[
@@ -6892,7 +6884,7 @@ The region of convergence is the entire complex plane.  Finally, consider the se
   %\htick{8*\scaley} node[pos=0.5,left] {$8$};
   %\htick{16*\scaley} node[pos=0.5,left] {$16$};
 \end{tikzpicture}
-\caption{1-dimensional real valued sequences.} \label{fig:realvaluedsequencestepetc}
+\caption{Real valued sequences.  The top left plot show the step sequence $u$.} \label{fig:realvaluedsequencestepetc}
 \end{figure}
 }
 
@@ -6940,7 +6932,7 @@ The region of convergence is the entire complex plane.  Finally, consider the se
       \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Regions of convergence (unshaded) for the step sequence $u$ (top left), the sequence $(\tfrac{1}{2})^{n}u_n$ (top right), the sequence $(\tfrac{3}{2})^{n} u_{-n}$ (bottom left), and the sequence $(\tfrac{1}{2})^{n}u_n + (\tfrac{3}{2})^{n} u_{-n}$ (bottom right).  The unit circle is indicated by the dashed circle. }\label{fig:rocexampleztrans1}
+  \caption{Regions of convergence (unshaded) for the step sequence $u$ (top left), the sequence $(\tfrac{1}{2})^{n}u_n$ (top right), the sequence $(\tfrac{3}{2})^{n} u_{-n}$ (bottom left), and the sequence $(\tfrac{1}{2})^{n}u_n + (\tfrac{3}{2})^{n} u_{-n}$ (bottom right).  The unit circle is indicated by the dashed circle.  The region of convergence takes the form of the complex plane with a disc at the origin removed (top), a disc at the origin (bottom left), an annulus (bottom right), the entire complex plane, or the empty set. }\label{fig:rocexampleztrans1}
 \end{figure}
 }
 
@@ -6951,7 +6943,7 @@ Let $c$ be a sequence.  Given the z-transform $\calZ(c)$ the sequence $c$ can be
 \[
 c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
-where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair
+where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair (Exercise~\ref{exer:fallingfacztransform})
 \[
 \calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1
 \]
@@ -6959,9 +6951,9 @@ where
 \[
 [n]_k = n (n-1) \dots (n-k+1)
 \]
-is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  If $c$ is a sequence with z-transform $\calZ(c)$ and region of convergence $R$ then the sequence with $n$th element $\alpha^nc_n$ for $\alpha \in \complex$ has z-transform 
+is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  If $c$ is a sequence with z-transform $\calZ(c)$ and region of convergence $R_c$ then the sequence with $n$th element $\alpha^nc_n$ for $\alpha \in \complex$ has z-transform 
 \[
-\calZ(\alpha^n c_n) = \sum_{n \in \ints} \alpha^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/\alpha)^{-n} = \calZ(c, z/\alpha) \qquad \frac{z}{\alpha} \in R.
+\calZ(\alpha^n c_n) = \sum_{n \in \ints} \alpha^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/\alpha)^{-n} = \calZ(c, z/\alpha) \qquad \frac{z}{\alpha} \in R_c.
 \]
 Using this property the z-transform of the sequence $\alpha^n [n]_k u_n$ is
 \begin{equation}\label{eeq:onlyztrans}
@@ -6976,31 +6968,89 @@ and in the case that $k=1$ we obtain
 \calZ\big( \alpha^n n u_n \big) = \frac{ \alpha z }{(z - \alpha)^{2}} \qquad \abs{z} > \abs{\alpha}.
 \]
 
-The spectrum of the discrete time system $H$ with discrete impulse response $h$ is
+Let $c$ be a sequence and let $d$ be the sequence with $n$th element $d_n = c_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $d$ is related to that of $c$ by
+\begin{align}
+\calZ(d) &= \sum_{n \in \ints} d_n z^{-n} \nonumber \\
+&= \sum_{n \in \ints} d_{n+\ell} z^{-(n+\ell)} \nonumber \\
+&= z^{-\ell} \sum_{n \in \ints} c_n z^{-n} = z^{-\ell} \calZ(c). \label{eq:timeshiftpropertyztransform}
+\end{align}
+The region of convergence of $d$ is the same as that of $c$.  This is called the \term{time~shift} property of the z-transform.
+
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Denote the regions of convergence of $f$ and $g$ by $R_f$ and $R_g$ respectively.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  The impulse response of $H$ is $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition is given by the product of the transfer functions, that is,
+\[
+\lambda( H ) = \lambda(G)\lambda(F).
+\]
+Because
+\[
+\calZ(f, e^{sP}) = \lambda\big( F ,s \big) , \;\;\; \calZ(g, e^{sP}) = \lambda\big( G ,s \big), \;\;\; \calZ(f * g, e^{sP}) = \lambda( H ,s )
+\]
+we have
+\[
+\calZ( f * g) = \calZ(f) \calZ(g).
+\]
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of 
+
+
+Let $H$ be a discrete time system with discrete impulse response $h$.  The spectrum of $H$ is
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-Observe that the spectrum of $H$ is related to the discrete time Fourier transform of $h$ by
+The spectrum of a discrete time system is periodic with period equal to the reciprocal of the sampling period $F = \frac{1}{P}$ called the \term{sampling rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
 We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform, of a discrete time system $H$ and its discrete impulse response $h$,
 \[
-\lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{-2\pi j P f}).
+\lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{2\pi j P f}).
 \]
-
-BLERG: Move towards convolution theorem for z-transform and discrete-time Fourier transform?
 
 \section{Difference equations}\label{sec:difference-equations}
 
-We have previously show that many interesting systems are found by consideration of linear differential equations with constant coefficients.  We have used these system to model electrical and mechanical devices.  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
+We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices.  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
 \begin{equation}\label{eq:differenceequform}
 \sum_{\ell=0}^{m} a_\ell c_{n - \ell} = \sum_{\ell=0}^{k} b_\ell d_{n - \ell} \qquad n \in \ints
 \end{equation}
-where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex numbers.
+where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex constants.
 
+In order to study this equation it is useful to study the equation
+\begin{equation}\label{eq:differenceequformsystem}
+\sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
+\end{equation}
+that relates two signals $x$ and $y$.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
 
-\section{Finite impulse response filters}
+Let $H$ be a linear time invariant system such that response $y = H(x)$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found by substituting $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\eqref{eq:differenceequformsystem} and solving for $\lambda$.  That is,
+\begin{align*}
+\sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
+\sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
+\sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
+\end{align*}
+Solving for $\lambda$ yeilds the transfer function of $H$,
+\[
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}}
+\]
+where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
+\[
+\calZ(h,z) = \lambda(H,s) = \frac{a_0 + a_1 z^{-1} + \dots + a_m z^{-m}}{b_0 + b_1 z^{-1} + \dots + b_m z^{-k}}.
+\]
+Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This proceedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse  Laplace transform in Section~\ref{sec:poles-zeros-stab}.  Before we describe this proceedure in full generality we first describe some specific examples.
+
+Consider the difference equation
+\[
+c_n = d_n - 2 d_{n-1} \qquad n \in \ints.
+\]
+Let $H$ be a system such that the response $y = H(x)$ to input $x$ satisfies the equation
+\[
+x = y - 2 T_{P}(y).
+\]
+The transfer function of this system is
+\[
+\lambda(H,s) = \frac{1}{1 - 2e^{-sP}} = \frac{1}{1 - 2z^{-1}} = \frac{z}{z - 2}
+\]
+where $z = e^{sP}$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-2)$.  The inverse z-transform is given by puting $k=0$ and $\alpha = 2$ in~\eqref{eeq:onlyztrans}.  The discrete impulse response is found to be the sequence with $n$th element $h_n = 2^n u_n$.
+
+In Section~\ref{sec:fast-four-transf} we found that the number of complex operations required by a fast Fourier transform algorithm of length $2^n$ satisfied the recursive equation $d_n = 2d_{n-1} + 2^{n+1}$ where $d_0 = 0$.  Let $c_n = 2^{m+1}u_{n-1}$.  The 
+
+\section{Digital filters}
 
 
 
@@ -7015,8 +7065,8 @@ where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex numbers.
 Let $f,g,h$ be sequences.  We have
 \begin{align*}
 (f*g)*h &= \sum_{m \in \ints} h_{m} (f*g)_{n-m} \\
-&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} g_{k} f_{n-m-k}
-&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} f_{k} g_{n-m-k} \qquad \text{commutivity} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} g_{k} f_{n-m-k} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} f_{k} g_{n-m-k} \qquad \text{commutivity $f*g=g*f$} \\
 &= \sum_{m \in \ints} \sum_{k \in \ints} f_{k} h_m g_{n-m-k} \\
 &= \sum_{k \in \ints} f_{k} \sum_{m \in \ints}  h_m g_{n-k-m} \\
 &= \sum_{k \in \ints} f_{k} (g*h)_{n-k} \\
@@ -7037,36 +7087,39 @@ This sum is a geometric progression that converges to
 \[
 \frac{1}{1- \alpha z^{-1}} = \frac{z}{ z-\alpha}
 \]
-when $\abs{z/\alpha} > 1$ and diverges otherwise.  The region of convergence is thus $\abs{z} > \abs{\tfrac{1}{\alpha}}$.
+when $\abs{z/\alpha} > 1$ and diverges otherwise.  The region of convergence is thus $\abs{z} > \abs{\alpha}$.
 \end{solution}
 
-\item Show that the z-transform of the sequence $[n]_k u_n$ where $[n]_k = n(n-1)\dots(n-k+1)$ is a falling factorial is
+\item \label{exer:fallingfacztransform} Show that the z-transform of the sequence $[n]_k u_n$ where $[n]_k = n(n-1)\dots(n-k+1)$ is a falling factorial is
 \[
 \calZ\big( [n]_k u_n  \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1.
 \]
 \begin{solution}
-We require the following property of the falling factorial
-\begin{align*}
-[n+1]_k - [n]_k &= \big( (n+1)n(n-1)\dots(n-k+2) \big) \;\;  - \;\; \big(n(n-1)\dots(n-k+1)\big) \\
-&= [n]_{k-1}(n+1 - n+k-1) \\
-&= [n]_{k-1} k.
-\end{align*}
-Now observe that
+Observe that
 \begin{align*}
 \calZ\big( [n]_{k} u_n  \big) &= \sum_{n\in\ints} [n]_k u_n z^{-n} \\ 
 &= \sum_{n=0}^\infty [n]_k z^{-n} \\ 
 &= \sum_{n=-1}^\infty [n+1]_k z^{-(n+1)} \\
-&= z^{-1} \sum_{n=-1}^\infty [n+1]_k z^{-n} 
+&= z^{-1} \sum_{n=-1}^\infty [n+1]_k z^{-n}.
 \end{align*}
-and because $[0]_k = 0 \times -1 \times \dots \times (1-k)= 0$ we have
+Because $[0]_k = 0 \times -1 \times \dots \times (1-k)= 0$ we have
 \[
 z \calZ\big( [n]_{k} u_n  \big) = \sum_{n=0}^\infty [n+1]_k z^{-n}.
 \]  
 Now
 \begin{align*}
 (z - 1) \calZ\big( [n]_{k} u_n  \big) &= \sum_{n=0}^\infty [n+1]_k z^{-n} - \sum_{n=0}^\infty [n]_k u_n z^{-n} \\
-&= \sum_{n=0}^\infty ([n+1]_k - [n]_k) z^{-n} \\
-&= k \sum_{n=0}^\infty  [n]_{k-1} z^{-n} \\
+&= \sum_{n=0}^\infty ([n+1]_k - [n]_k) z^{-n}.
+\end{align*}
+Observe that the falling factorial satisfies
+\begin{align*}
+[n+1]_k - [n]_k &= \big( (n+1)n(n-1)\dots(n-k+2) \big) \;\;  - \;\; \big(n(n-1)\dots(n-k+1)\big) \\
+&= [n]_{k-1}(n+1 - n+k-1) \\
+&= [n]_{k-1} k
+\end{align*}
+and so
+\begin{align*}
+(z - 1) \calZ\big( [n]_{k} u_n  \big) &= k \sum_{n=0}^\infty  [n]_{k-1} z^{-n} \\
 &= k \calZ\big( [n]_{k-1} u_n  \big).
 \end{align*}
 We obtain the following recursive equation for $\calZ\big( [n]_{k} u_n  \big)$,
@@ -7077,7 +7130,7 @@ Unravelling this recursion we obtain
 \[
 \calZ\big( [n]_{k} u_n  \big) = \frac{k}{z-1} \times \frac{k-1}{z-1} \times \frac{k-2}{z-1} \times \dots \times \calZ( [n]_0 u_n ).
 \]
-Because $[n]_0 = 1$ for all $n \in \ints$ we have $\calZ( [n]_0 u_n ) = \calZ( u_n ) = z/(z-1)$ with region of convergence $\abs{z} >1$.  Thus,
+By definition $[n]_0 = 1$ for all $n \in \ints$ and so $\calZ( [n]_0 u_n ) = \calZ( u_n ) = z/(z-1)$ with region of convergence $\abs{z} >1$.  Thus,
 \[
 \calZ\big( [n]_{k} u_n  \big) = \frac{k! z}{(z-1)^{k+1}} \qquad \abs{z} > 1
 \]
