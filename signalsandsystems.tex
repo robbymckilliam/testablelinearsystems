@@ -6770,7 +6770,15 @@ Let $c$ be a sequence.  The function
 \[
 \calF(c) = \sum_{n \in \ints} c_n z^{-n}
 \]
-This is called the \term{z-transform} of $c$. The z-transform $\calZ(h)$ is a function of the complex plane. To indicate the value of $\calZ(h)$ at $z \in \complex$ we write either $\calZ(h,z)$ or $\calZ(h)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.
+This is called the \term{z-transform} of $c$. The z-transform $\calZ(h)$ is a function of the complex plane. To indicate the value of $\calZ(h)$ at $z \in \complex$ we write either $\calZ(h,z)$ or $\calZ(h)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.  Let $R_c$ be the set of nonnegative real numbers such that the sequence $c_n r^{-n}$ is absolutely summable if and only if $r \in R_c$, that is,
+\[
+\sum_{n \in \infty} \abs{c_n} r^{-n} < \infty \qquad \text{if and only if $r \in R_c$}.
+\]
+In this case, $\calZ(c,z)$ is finite for all $z$ with magnitude satisfying $\abs{z} \in R_c$ because 
+\[
+\sabs{\calZ(c,z)} = \leq \sum_{n \in \infty} \abs{c_n z^{-n}} \leq \sum_{n \in \infty} \abs{c_n} r^{-n} < \infty.
+\]
+The subset of the complex plane with magnitude from $R_c$ is called the \term{region of convergence} (ROC) of the sequence $c$.  The region of convergence of a sequence is analogous to the region of convergence of the Laplace transform of a signal.  Recall that the region of convergence of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
 
 Consider the sequence $u$ with elements 
 \[
@@ -6783,7 +6791,7 @@ called the \term{step sequence} or sometimes the \term{discrete step function}. 
 \[
 \calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{1}{1 - z^{-1}} = \frac{z}{z - 1} \qquad \abs{z} > 1.
 \]
-This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The region of the complex plane with magnitude greater than one is called the \term{region of convergence} of the step sequence.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  Recall that the region of convergence of the Laplace transform of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
+This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex number with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
 
 Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
 \[
@@ -6939,7 +6947,7 @@ The region of convergence is the entire complex plane.  Finally, consider the se
 \newcommand{\stirling}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
 \newcommand{\eulerian}[2]{\genfrac{\langle}{\rangle}{0pt}{}{#1}{#2}}
 
-Let $c$ be a sequence.  Given the z-transform $\calZ(c)$ the sequence $c$ can be recovered by the inverse z-transform
+Given the z-transform $\calZ(c)$ the sequence $c$ can be recovered by the inverse z-transform
 \[
 c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
@@ -6968,28 +6976,44 @@ and in the case that $k=1$ we obtain
 \calZ\big( \alpha^n n u_n \big) = \frac{ \alpha z }{(z - \alpha)^{2}} \qquad \abs{z} > \abs{\alpha}.
 \]
 
-Let $c$ be a sequence and let $d$ be the sequence with $n$th element $d_n = c_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $d$ is related to that of $c$ by
-\begin{align}
-\calZ(d) &= \sum_{n \in \ints} d_n z^{-n} \nonumber \\
-&= \sum_{n \in \ints} d_{n+\ell} z^{-(n+\ell)} \nonumber \\
-&= z^{-\ell} \sum_{n \in \ints} c_n z^{-n} = z^{-\ell} \calZ(c). \label{eq:timeshiftpropertyztransform}
-\end{align}
-The region of convergence of $d$ is the same as that of $c$.  This is called the \term{time~shift} property of the z-transform.
+% Let $c$ be a sequence and let $d$ be the sequence with $n$th element $d_n = c_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $d$ is related to that of $c$ by
+% \begin{align}
+% \calZ(d) &= \sum_{n \in \ints} d_n z^{-n} \nonumber \\
+% &= \sum_{n \in \ints} d_{n+\ell} z^{-(n+\ell)} \nonumber \\
+% &= z^{-\ell} \sum_{n \in \ints} c_n z^{-n} = z^{-\ell} \calZ(c). \label{eq:timeshiftpropertyztransform}
+% \end{align}
+% The region of convergence of $d$ is the same as that of $c$.  This is called the \term{time~shift} property of the z-transform.
 
-Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Denote the regions of convergence of $f$ and $g$ by $R_f$ and $R_g$ respectively.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  The impulse response of $H$ is $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition is given by the product of the transfer functions, that is,
+Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
 \[
-\lambda( H ) = \lambda(G)\lambda(F).
+\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
+\]
+Put $z = e^{Ps}$ and define
+\[
+\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in \in R_h
+\]
+where $R_h$ is the region of convergence of $h$.  We see that the transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
+\begin{equation}\label{eq:reltransferfunztrans}
+\lambda(H,s) = \calZ(h,e^{Ps}) \qquad e^{sP} \in R_h.
+\end{equation}
+This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).
+
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Denote the regions of convergence of $f$ and $g$ by $R_f$ and $R_g$ respectively.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  The discrete impulse response of $H$ is $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition is given by the product of the transfer functions, that is,
+\[
+\lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
 \]
 Because
 \[
 \calZ(f, e^{sP}) = \lambda\big( F ,s \big) , \;\;\; \calZ(g, e^{sP}) = \lambda\big( G ,s \big), \;\;\; \calZ(f * g, e^{sP}) = \lambda( H ,s )
 \]
-we have
+when $e^{sP} \in R_f \cap R_g$ we have
 \[
-\calZ( f * g) = \calZ(f) \calZ(g).
+\calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
 \]
-That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of 
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.
+%BLERG needs region of convergence done better.
 
+If $H$ is a discrete time system with period $P$ then the composition $T_{P\ell}(H(x))$ is also a discrete time system
 
 Let $H$ be a discrete time system with discrete impulse response $h$.  The spectrum of $H$ is
 \[
