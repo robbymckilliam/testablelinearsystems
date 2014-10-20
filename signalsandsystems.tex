@@ -24,7 +24,7 @@
 
 %turn animations on/off
 \newif\ifanimations %default is off
-%\animationstrue %uncomment to turn animations on.
+\animationstrue %uncomment to turn animations on.
 \ifanimations
 \newcommand{\defaultframerate}{16}
 \newcommand{\defaultanimation}[1]{\animategraphics[autoplay,loop]{\defaultframerate}{#1}{}{}}
@@ -120,7 +120,7 @@ compat=newest
 
 %turn excersize solutions on/off
 \newif\ifsolutions %default is off
-%\solutionstrue %uncomment to turn solutions on.
+\solutionstrue %uncomment to turn solutions on.
 
 \usepackage{comment}
 \ifsolutions
@@ -297,7 +297,7 @@ In these notes we focus exclusively on 1-dimensional signals such as those in Fi
 
 A signal $x$ is \term{bounded} if there exists a real number $M$ such that 
 \[
-\sabs{x(t)} \leq M \qquad \text{for all $t \in \reals$} 
+\sabs{x(t)} < M \qquad \text{for all $t \in \reals$} 
 \]
 where $\sabs{\cdot}$ denotes the (complex) magnitude.  Both $\sin( \pi t)$ and $e^{-t^2}$ are examples of bounded signals because $\sabs{\sin( \pi t)} \leq 1$ and $\sabs{e^{-t^2}} \leq 1$ for all $t \in \reals$.  However, $\frac{1}{2}t^3$ is not bounded because its magnitude grows indefinitely as $t$ moves away from the origin.  % Similarly a discrete-time signal $x$ is bounded if there exists a real number $M$ such that 
 % \[
@@ -5436,13 +5436,13 @@ Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fi
 
 A sequence $x$ is bounded if there exists a real number $M$ such that 
 \[
-\sabs{x_n} \leq M \qquad \text{for all $n \in \ints$}.
+\sabs{x_n} < M \qquad \text{for all $n \in \ints$}.
 \]
-Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded sequences, but $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin.  A sequence $x$ is periodic if there exists a positive integer $T$ such that
+Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded sequences, but $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin.  A sequence $x$ is periodic if there exists a nonegative integer $T$ such that
 \[
 x_n = x_{n + kT} \qquad \text{for all integers $k$ and $n$.}
 \] 
-The smallest such positive $T$ is called the period.  The sequence $\sin( \tfrac{\pi}{4} n )$ is periodic with period $T=8$.  Neither $n^3$ or $e^{-n^2/4}$ are periodic.  
+The smallest such $T$ is called the period.  The sequence $\sin( \tfrac{\pi}{4} n )$ is periodic with period $T=8$.  Neither $n^3$ or $e^{-n^2/4}$ are periodic.  
 A sequence $x$ is even (or symmetric) if $x_n = x_{-n}$ for all $n \in \ints$ and odd (or antisymmetric) if $x_n = -x_{-n}$ for all $n \in \ints$.  Both $\sin(\frac{\pi}{4} n)$ and $n^3$ are odd and $e^{-\sabs{n}/2}$ is even.  
 %%% BLERG, might also want conjugate symmetic?
 %Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
@@ -5476,9 +5476,9 @@ A sequence $x$ is \term{square summable} if
 \[
 \|x\|_2^2 = \sum_{n \in \ints} \sabs{x_n}^2 < \infty,
 \]
-that is, if the sum of squared magnitudes of elements converge to a finite number.  The real number $\|x\|_2$ is commonly called the $\ell^2$-norm or $\term{energy}$ of $x$.  The sequences $\sin(\tfrac{\pi}{4} n)$ and $n^3$ are not square summable, but $e^{-\abs{n}/2}$ is because (Exercise~\ref{excer:sumgeomeabsn})
+that is, if the sum of squared magnitudes of the elements converges to a finite number.  The real number $\|x\|_2$ is commonly called the $\ell^2$-norm and its square $\|x\|^2_2$ the $\term{energy}$ of $x$.  The sequences $\sin(\tfrac{\pi}{4} n)$ and $n^3$ are not square summable, but $e^{-\abs{n}/2}$ is because 
 \[
-\sum_{n \in \ints} \sabs{e^{-\sabs{n}/2}}^2 = \sum_{n \in \ints} e^{-\abs{n}} = 1 + \frac{2}{e - 1}.
+\sum_{n \in \ints} \sabs{e^{-\sabs{n}/2}}^2 = \sum_{n \in \ints} e^{-\abs{n}} = 1 + \frac{2}{e - 1}. \qquad \text{(Exercise~\ref{excer:sumgeomeabsn})}
 \]
 It is common to denote the set of square summable sequences by $\ell^2$.  So, $e^{-\sabs{n}/2} \in \ell^2$ and $\sin(\tfrac{\pi}{4} n) \notin \ell^2$.  If a sequence is absolutely summable then it is also square summable (Exercise~\ref{excer:sumsqreexp}).  The corresponding property is not true of signals, that is, absolutely integrable signals are not necessarily square integrable (Exercise~\ref{excer:absintnotsquareint}).
 
@@ -5503,7 +5503,7 @@ x(t) = \sinc(t)+\tfrac{1}{2}\sinc(t+1)+\tfrac{1}{2}\sinc(t-1). \qquad \text{(Exe
 Another example is the signal with Fourier transform given by the~\term{triangle pulse}
 \[
 \bigtriangleup(f) = \begin{cases}
-f + 1 & -1 \leq f < 0 \\
+f + 1 & -1 < f < 0 \\
 1 - f & 0 \leq f < 1 \\
 0 & \text{otherwise}
 \end{cases}
@@ -5651,7 +5651,7 @@ This theorem motivated use of this recontruction method in Tests~\ref{test:volta
 
 \newcommand{\calD}{{\mathcal D}}
 
-Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  By~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
+Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
 \begin{align}
 \hat{x}(f) = \calF(x,f) &= \sum_{n \in \ints} c_n \calF\big(\sinc(F t - n) \big)  \nonumber \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
@@ -5661,7 +5661,7 @@ where
 \[
 \calD(c, f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \]
-is the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD(c)$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD(c)$ is a periodic signal with period $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD(c)$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD(c)$ is a periodic signal with period $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
 
 The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}
@@ -5813,7 +5813,7 @@ c_n = \calD_N^{-1}(\calD_N(c),n) = \frac{1}{N}\sum_{k = 0}^{N-1} \calD_N(c,k) e^
 \]
 This is called the \term{inverse discrete Fourier transform} (Excersise~\ref{exer:inversedft}). Taking complex conjugates on both sides gives
 \[
-c_n^* = \frac{1}{N} \sum_{k = 0}^{N-1} \calD_N^*(c,k) e^{-j 2\pi n k / N} = \frac{1}{N} \calD_N^*(\calD_N^*(c), n)  \qquad n = 0, \dots, N-1.
+c_n^* = \frac{1}{N} \sum_{k = 0}^{N-1} \calD_N^*(c,k) e^{-j 2\pi n k / N} = \frac{1}{N} \calD_N(\calD_N^*(c), n)  \qquad n = 0, \dots, N-1.
 \]
 A practical consequence of this is that the inverse discrete Fourier transform can be evaluted by applying the complex conjugate, taking the discrete Fourier transform, applying the complex conjugate again, and finally dividing by $N$.  That is, if $d$ is a sequence, then $\calD_N^{-1}(d) = \tfrac{1}{N}\calD_N^*(d^*)$.
 
@@ -6040,7 +6040,7 @@ Because $\alpha > 0$, the limits as $t\to\infty$ and $t\to-\infty$ go to zero le
 \item \label{exer:triangle_pulse_ft} Plot the signal
 \[
 \bigtriangleup(t) = \begin{cases}
-t + 1 & -1 \leq t < 0 \\
+t + 1 & -1 < t < 0 \\
 1 - t & 0 \leq t < 1 \\
 0 & \text{otherwise}
 \end{cases}
@@ -6070,7 +6070,7 @@ You can do this directly using the formula for the Fourier transform and integra
 (\rect * \rect)(t) = \int_{-\infty}^\infty \rect(\tau)\rect(t - \tau) d\tau = \int_{-1/2}^{1/2} \rect(t - \tau) d\tau
 \] 
 Now $\rect(t - \tau) = 1$ for $\tau$ in the interval $(-\tfrac{1}{2}+ t,\tfrac{1}{2} + t)$ and zero otherwise. 
-Thus, the integral evaluates to zero if $t \geq 1$ or $t \leq -1$.  When $t \in [-1,0)$
+Thus, the integral evaluates to zero if $t \geq 1$ or $t \leq -1$.  When $t \in (-1,0]$
 \[
 (\rect * \rect)(t) = \int_{-1/2}^{1/2+t} d\tau = t + 1
 \]
@@ -6700,7 +6700,7 @@ as required.
 
 
 
-%\begin{comment}
+\begin{comment}
 
 
 \chapter{Discrete time systems} \label{cha:discr-time-syst}
@@ -7174,7 +7174,7 @@ as required.
 
 
 
-%\end{comment}
+\end{comment}
 
 
 
