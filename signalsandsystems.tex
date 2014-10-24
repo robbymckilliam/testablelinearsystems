@@ -6770,7 +6770,7 @@ Let $c$ be a sequence.  The function
 \[
 \calF(c) = \sum_{n \in \ints} c_n z^{-n}
 \]
-This is called the \term{z-transform} of $c$. The z-transform $\calZ(h)$ is a function of the complex plane. To indicate the value of $\calZ(h)$ at $z \in \complex$ we write either $\calZ(h,z)$ or $\calZ(h)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.  Let $R_c$ be the set of nonnegative real numbers such that the sequence $c_n r^{-n}$ is absolutely summable if and only if $r \in R_c$, that is,
+is called the \term{z-transform} of $c$. The z-transform $\calZ(c)$ is a function of the complex plane. To indicate the value of $\calZ(c)$ at $z \in \complex$ we write either $\calZ(c,z)$ or $\calZ(c)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.  Let $R_c$ be the set of nonnegative real numbers such that the sequence $c_n r^{-n}$ is absolutely summable if and only if $r \in R_c$, that is,
 \[
 \sum_{n \in \infty} \abs{c_n} r^{-n} < \infty \qquad \text{if and only if $r \in R_c$}.
 \]
@@ -6787,20 +6787,20 @@ u_n = \begin{cases}
 0 & n < 0 
 \end{cases}
 \]
-called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is (Exercise~\ref{exer:stepseqZtrans})
+called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is 
 \[
-\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{1}{1 - z^{-1}} = \frac{z}{z - 1} \qquad \abs{z} > 1.
+\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad (Exercise~\ref{exer:stepseqZtrans})
 \]
 This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex number with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
 
 Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
 \[
-\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} (\tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad 
+\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} (\tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad \abs{z} > \tfrac{1}{2} 
 \]
 converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the complex plane with a disc of radius $\tfrac{1}{2}$ removed.  Now consider the sequence with elements 
 \[
-(\frac{3}{2})^{n} u_{-n} =  \begin{cases} 
-(\frac{3}{2})^{n} & n \leq 0 \\
+(\tfrac{3}{2})^{n} u_{-n} =  \begin{cases} 
+(\tfrac{3}{2})^{n} & n \leq 0 \\
 0 & n > 0.
 \end{cases}
 \]
@@ -6951,9 +6951,9 @@ Given the z-transform $\calZ(c)$ the sequence $c$ can be recovered by the invers
 \[
 c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
-where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair (Exercise~\ref{exer:fallingfacztransform})
+where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair 
 \[
-\calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1
+\calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1 \qquad (Exercise~\ref{exer:fallingfacztransform})
 \]
 where
 \[
@@ -6976,29 +6976,21 @@ and in the case that $k=1$ we obtain
 \calZ\big( \alpha^n n u_n \big) = \frac{ \alpha z }{(z - \alpha)^{2}} \qquad \abs{z} > \abs{\alpha}.
 \]
 
-% Let $c$ be a sequence and let $d$ be the sequence with $n$th element $d_n = c_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $d$ is related to that of $c$ by
-% \begin{align}
-% \calZ(d) &= \sum_{n \in \ints} d_n z^{-n} \nonumber \\
-% &= \sum_{n \in \ints} d_{n+\ell} z^{-(n+\ell)} \nonumber \\
-% &= z^{-\ell} \sum_{n \in \ints} c_n z^{-n} = z^{-\ell} \calZ(c). \label{eq:timeshiftpropertyztransform}
-% \end{align}
-% The region of convergence of $d$ is the same as that of $c$.  This is called the \term{time~shift} property of the z-transform.
-
-Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
+The z-transform of a sequence is related to the transfer function of a system in the following way.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
 \[
 \lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
 \]
-Put $z = e^{Ps}$ and define
+Putting $z = e^{Ps}$ we have
 \[
-\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in \in R_h
+\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in R_h
 \]
 where $R_h$ is the region of convergence of $h$.  We see that the transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
 \begin{equation}\label{eq:reltransferfunztrans}
 \lambda(H,s) = \calZ(h,e^{Ps}) \qquad e^{sP} \in R_h.
 \end{equation}
-This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).
+This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).  The set of complex numbers $s$ such that $e^{sP} \in R_h$ is called the region of convergence of the system $H$.  In this way, both sequences and discrete time systems have a region of convergence. 
 
-Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Denote the regions of convergence of $f$ and $g$ by $R_f$ and $R_g$ respectively.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  The discrete impulse response of $H$ is $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition is given by the product of the transfer functions, that is,
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Denote the regions of convergence of $f$ and $g$ by $R_f$ and $R_g$ respectively.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  The discrete impulse response of $H$ is given by the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition is given by the product of the transfer functions, that is,
 \[
 \lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
 \]
@@ -7010,10 +7002,29 @@ when $e^{sP} \in R_f \cap R_g$ we have
 \[
 \calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
 \]
-That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
-If $H$ is a discrete time system with period $P$ then the composition $T_{P\ell}(H(x))$ is also a discrete time system
+Let $g$ be a sequence with region of convergence $R_g$ and let $h$ be the sequence with $n$th element $h_n = g_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $h$ is related to that of $g$ by
+\begin{align}
+\calZ(h) &= \sum_{n \in \ints} h_n z^{-n} \nonumber \\
+&= \sum_{n \in \ints} h_{n+\ell} z^{-(n+\ell)} \nonumber \\
+&= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in \R_g. \label{eq:timeshiftpropertyztransform}
+\end{align}
+The region of convergence of $h$ is the same as that of $g$.  This is called the \term{time~shift} property of the z-transform.  The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
+\begin{align*}
+H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
+&= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
+&= \sum_{n \in \ints} g_{n - \ell} T_{Pn}(x) 
+\end{align*}
+and so $h_n = g_{n-\ell}$.  The transfer function of $H$ is
+\[
+\lambda(H) = \lambda(T_{P\ell})\lambda(G) = e^{-sP} \lambda(G) \qquad e^{sP} \in R_g.
+\]
+Puting $z = e^{sP}$ and using we~\eqref{eq:ztranstransfunrel} obtain again obtain the time shift property of the z-transform
+\[
+\calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
+\]
 
 Let $H$ be a discrete time system with discrete impulse response $h$.  The spectrum of $H$ is
 \[
