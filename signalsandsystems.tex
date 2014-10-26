@@ -4775,7 +4775,8 @@ It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system
 \[
 \calF(y) = \Lambda(H) \calF(x).
 \]
-This property also holds for the differentiator system $D$ and the time shifter system $T_\tau$ (Exercise~\ref{eq:transferLaplcetheorem}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy
+This property also holds for the differentiator system $D$ and the time shifter system $T_\tau$ (Exercise~\ref{eq:transferLaplcetheorem}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
+%BLERG, it doesn't hold for the differentiator system all the time, but for certain signals, like those of rapid decent it does
 \[
 \Lambda(T_\tau) = e^{-j2\pi f \tau}, \qquad \Lambda(D^k) = (j2\pi f)^k
 \]
@@ -4811,7 +4812,7 @@ This is sometimes called the \term{modulation property} of the Fourier transform
 % \]
 %  and the following
 
-Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
+Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
 \begin{equation}\label{eq:timescalingpropertryfouriertrans}
 \calF\big( x(\alpha t), f \big) = \frac{1}{\abs{\alpha}} \calF\big( x , f/\alpha \big).
 \end{equation}
