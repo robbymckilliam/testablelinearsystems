@@ -6730,24 +6730,24 @@ and so $H$ is a discrete time system with discrete impulse response given by the
 
 Now suppose that
 \[
-H = G\big( F(x) \big) 
+H(x) = F\big( G(x) \big) 
 \]
 is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
-H(x) &= G \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
-&= \sum_{m \in \ints} g_m T_{Pm} \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} g_m f_n T_{Pm}\big( T_{Pn}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} g_m f_n T_{P(m+n)}(x) 
+H(x) &= F \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}(x) 
 \end{align*}
 and by putting $k = m+n$ we have
 \begin{align*}
-H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} g_m f_{k-m} T_{Pk}(x) \\
-&=  \sum_{k \in \ints} \sum_{m \in \ints} g_m f_{k-m} T_{Pk}(x) \\
+H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \\
 &= \sum_{k \in \ints} h_k T_{Pk}(x)
 \end{align*}
 where $h$ is the sequence with elements given by
 \[
-h_n = \sum_{m \in \ints} g_m f_{n-m}.
+h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_k
 \]
 The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with discrete impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
 
