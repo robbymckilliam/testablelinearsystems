@@ -4775,7 +4775,8 @@ It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system
 \[
 \calF(y) = \Lambda(H) \calF(x).
 \]
-This property also holds for the differentiator system $D$ and the time shifter system $T_\tau$ (Exercise~\ref{eq:transferLaplcetheorem}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy
+This property also holds for the differentiator system $D$ and the time shifter system $T_\tau$ (Exercise~\ref{eq:transferLaplcetheorem}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
+%BLERG, it doesn't hold for the differentiator system all the time, but for certain signals, like those of rapid decent it does
 \[
 \Lambda(T_\tau) = e^{-j2\pi f \tau}, \qquad \Lambda(D^k) = (j2\pi f)^k
 \]
@@ -4811,7 +4812,7 @@ This is sometimes called the \term{modulation property} of the Fourier transform
 % \]
 %  and the following
 
-Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
+Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
 \begin{equation}\label{eq:timescalingpropertryfouriertrans}
 \calF\big( x(\alpha t), f \big) = \frac{1}{\abs{\alpha}} \calF\big( x , f/\alpha \big).
 \end{equation}
@@ -6576,6 +6577,123 @@ as required.
 
 \end{solution}
 
+\item Plot the sequence $\cos(n)$ and determine whether it is bounded or periodic.
+\begin{solution}
+A plot is below.  
+
+\begin{center}
+{
+\def\minn{-15}
+\def\maxn{15}
+\def\scalex{0.3}
+\def\step(#1){(#1>=0)} %step function
+\begin{tikzpicture}[domain=\minn:\maxn]
+  \begin{scope}[xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$2^{-n}u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{cos(x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+\end{tikzpicture}
+}
+\end{center}
+
+The sequence is bounded below any number greater than 1 because $\abs{\cos(x)} \leq 1$ (precisely 1 would also work in this case).  The sequence is not periodic.  To see this, suppose the sequence has period $T \in \ints$ so that $\cos(n) = \cos(n + kT)$ for all $k \in \ints$.  The period of $\cos(x)$ is $2\pi$ and $\cos(x) = \cos(y)$ only if $x = y + 2\pi \ell$ for some $\ell \in \ints$.  Thus, we must have $n = n + kT + 2\pi \ell$ for some $\ell$ and each $k$.  But, now $\pi = \frac{kT}{2\ell}$ which violates the fact that $\pi$ is irrational.  Thus, no such period $T$ exists.
+
+\end{solution}
+
+\item Find the discrete time Fourier transform of the sequence $\alpha^n u_n$ where $\abs{\alpha} < 1$ and $u_n$ is the step sequence.  Plot the sequence and the magnitude of the discrete time Fourier transform when $\alpha = \tfrac{1}{2}, \tfrac{1}{4}, \tfrac{1}{10}$.
+\begin{solution}
+The discrete time Fourier transform is
+\begin{align*}
+\calD( \alpha^n u_n ) &= \sum_{n \in \ints} \alpha^n u_n e^{-j 2\pi n f} \\
+&= \sum_{n = 0}^\infty \alpha^n e^{-j 2\pi n f} \\
+&= \sum_{n = 0}^\infty (\alpha e^{-j 2\pi f})^n = \frac{1}{1 -  \alpha  e^{-j 2\pi f}}
+\end{align*}
+by the formula for the sum of a geometric progression.  The sum converges because $\abs{\alpha} < 1$.  In the case that $\alpha$ is real the magnitude of the discrete time Fourier transform is
+\[
+\abs{\calD( \alpha^n u_n )} = \frac{1}{1 + 2\alpha\cos(2\pi f) + \alpha^2}.
+\]
+Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfrac{1}{2}, \tfrac{1}{4}, \tfrac{1}{10}$ is below.
+
+\begin{center}
+{
+\def\minn{-5}
+\def\maxn{10}
+\def\scalex{0.5}
+\def\step(#1){(#1>=0)} %step function
+\begin{tikzpicture}[domain=\minn:\maxn]
+  \begin{scope}[xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{1}{2})^n u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{(0.5**x)*\step(x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+\end{tikzpicture}
+\\
+\begin{tikzpicture}[domain=\minn:\maxn]
+  \begin{scope}[xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{1}{4})^n u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{(0.25**x)*\step(x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+\end{tikzpicture}
+\\
+\begin{tikzpicture}[domain=\minn:\maxn]
+  \begin{scope}[xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{1}{10})^n u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{(0.1**x)*\step(x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+\end{tikzpicture}
+\;\;
+\newcommand{\dplot}[1]{\draw[thick,samples=200] plot function{1/(1 + 2*#1*cos(2*pi*x) + #1*#1)}}
+\begin{tikzpicture}[domain=-1.5:1.5]
+  \begin{scope}[xscale=3]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$f$};
+    \draw[->] (0,-0.5) -- (0,4.5) node[left] {$\calD\big( \alpha^n u_n \big)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \dplot{0.5};
+    \dplot{0.25};
+    \dplot{0.1};
+    \node[right] at (0.5,4) {$\tfrac{1}{2}$};
+    \node[above] at (0.5,1.8) {$\tfrac{1}{4}$};
+    \node[below] at (0.5,1.2) {$\tfrac{1}{10}$};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+  \htick{1} node[pos=0.5,right] {$1$};
+  \htick{2} node[pos=0.5,right] {$2$};
+  \htick{3} node[pos=0.5,right] {$3$};
+  \htick{4} node[pos=0.5,right] {$4$};
+\end{tikzpicture}
+}
+\end{center}
+
+
+
+\end{solution}
+
 
 %BLERG. I'm pretty sure the exercise below requires the completeness of L^2, that probably too hard!
 %\item \label{excer:sqrintseqtosqrintinterp} Let $\{x_n\}$ be a square summable sequence.  Show that the interpolated signal $x(t) = \sum_{n \in \ints} x_n \sinc(R t - n)$ where $R$ is a positive real number is square integrable. 
@@ -6700,7 +6818,7 @@ as required.
 
 
 
-\begin{comment}
+%\begin{comment}
 
 
 \chapter{Discrete time systems} \label{cha:discr-time-syst}
@@ -6729,24 +6847,24 @@ and so $H$ is a discrete time system with discrete impulse response given by the
 
 Now suppose that
 \[
-H = G\big( F(x) \big) 
+H(x) = F\big( G(x) \big) 
 \]
 is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
-H(x) &= G \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
-&= \sum_{m \in \ints} g_m T_{Pm} \big( \sum_{n \in \ints} f_n T_{ P n}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} g_m f_n T_{Pm}\big( T_{Pn}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} g_m f_n T_{P(m+n)}(x) 
+H(x) &= F \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}(x) 
 \end{align*}
 and by putting $k = m+n$ we have
 \begin{align*}
-H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} g_m f_{k-m} T_{Pk}(x) \\
-&=  \sum_{k \in \ints} \sum_{m \in \ints} g_m f_{k-m} T_{Pk}(x) \\
+H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \\
 &= \sum_{k \in \ints} h_k T_{Pk}(x)
 \end{align*}
 where $h$ is the sequence with elements given by
 \[
-h_n = \sum_{m \in \ints} g_m f_{n-m}.
+h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_k
 \]
 The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with discrete impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
 
@@ -6756,7 +6874,7 @@ Discrete convolution has many properties analogous to that of the convolution of
 \] 
 Discrete convolution distributes with addition and commutes with scalar multiplication, that is,
 \[
-a (f * h) + b (g * h) = (ax + by) * w
+a (f * h) + b (g * h) = (af + bg) * h
 \]
 where $a$ and $b$ are real or complex constants.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
@@ -7039,6 +7157,8 @@ We have the following relationships between the transfer function, the spectrum,
 \lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{2\pi j P f}).
 \]
 
+\begin{comment}
+
 \section{Difference equations}\label{sec:difference-equations}
 
 We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices.  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
@@ -7088,6 +7208,7 @@ In Section~\ref{sec:fast-four-transf} we found that the number of complex operat
 \section{Digital filters}
 
 
+\end{comment}
 
 
 \section{Exercises}
@@ -7185,7 +7306,7 @@ as required.
 
 
 
-\end{comment}
+%\end{comment}
 
 
 
