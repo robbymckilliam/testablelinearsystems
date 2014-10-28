@@ -22,12 +22,10 @@ val fmax=3.1
 /// Format Doubles string to a reasonable number of decimal places
 def fmt(x : Double) = "%f" format x
 
-for(m <- 1 to 4) {
-val filetfun = new java.io.FileWriter("datafftcomplexity" + m + ".csv")
+val filetfun = new java.io.FileWriter("datafftcomplexity.csv")
 (fmin to fmax by 0.05) foreach { f =>
    filetfun.write(fmt(f) + "\t" + fmt(mod2pi(lambda(f).angle)) + "\n")
 }
 filetfun.close
-}
 
 println("Scala finished")
