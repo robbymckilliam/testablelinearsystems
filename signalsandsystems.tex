@@ -7187,7 +7187,7 @@ Let $H$ be discrete time system with discrete impulse response $h$ having region
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-The spectrum of a discrete time system is periodic with period equal to the reciprocal of the sampling period $F = \frac{1}{P}$ called the \term{sampling rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
+The spectrum is periodic with period equal to the reciprocal of the sampling period $F = \frac{1}{P}$ that is called the \term{sampling rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
@@ -7204,11 +7204,11 @@ We have previously shown that interesting systems are found by consideration of 
 \end{equation}
 where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex constants.
 
-In order to study this equation it is useful to study the equation
+In order to study this equation it is useful to study the equation\footnote{\citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the \term{continuous variable case} of a linear difference equation with constant coefficients.}
 \begin{equation}\label{eq:differenceequformsystem}
 \sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
 \end{equation}
-that relates two signals $x$ and $y$\footnote{Zemanian~\cite[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the continuous variable case of a linear difference equation with constant coefficients}.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
+that relates two signals $x$ and $y$.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
 
 Let $H$ be a linear time invariant system such that response $y = H(x)$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
 \[
@@ -7236,7 +7236,15 @@ where $z = e^{sP}$.  It follows that $H$ is a discrete time system with discrete
 \[
 \Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - \alpha}.
 \]
-The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresystem1} in the case that $\alpha = \tfrac{1}{2}, \tfrac{1}{4}, \tfrac{1}{10}$.
+The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresystem1} in the case that $\alpha = \tfrac{1}{2}, \tfrac{1}{10}$.
+
+When $\alpha = 2$, the sample period $P=1$, and the input signal is $x(t) = 2^{t+1}u(t)$, the response is
+\begin{align*}
+y = H(x) &= \sum_{n \in \ints} h_n T_{n}(x) \\
+&= \sum_{n = 0}^\infty 2^n 2^{t-n+1}u(t-n) \\
+&= 2^{t+1} \floor{t}.
+\end{align*}
+Put $c_n = x(nP) = 2^{n+1}u_{n-1}$ and $d_n = y(nP) = 2^{n+1}n$.
 
 \begin{figure}[tp]
 \centering
@@ -7245,13 +7253,17 @@ The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresy
   \begin{tikzpicture}[domain=-5:5,samples=200]
     % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \begin{scope}[yscale=2]
-      \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$};
-      \draw[->] (0,-0.3) -- (0,1.5) node[right] {$\abs{\Lambda(H, f)}$};
+      \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$}; 
+      \draw[->] (0,-0.3) -- (0,2.5) node[right] {$\abs{\Lambda(H, f)}$};
       % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
-      \draw[smooth,color=black,thick] plot function{1.0/sqrt(5 + 4*cos(2*pi*x*\P))};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityabs2.csv};
+      \node[above] at (-\F,2) {$\tfrac{1}{2}$};
+      %\draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityabs4.csv};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityabs10.csv};
+      \node at (-\F,0.95) {$\tfrac{1}{10}$};
       % \node at (9.3,-1) {$0$};
       % \htick{2} node[pos=0.5,left] {$2$};
-      \htick{1} node[pos=0.5,above left] {$1$};
+      \htick{2} node[pos=0.5,above left] {$2$};
     \end{scope}
     \vtick{-\F} node[pos=0.5,below] {$-F$};
     \vtick{\F} node[pos=0.5,below] {$F$};
@@ -7259,23 +7271,28 @@ The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresy
 \medskip
   \begin{tikzpicture}[domain=-5:5,samples=200]
     % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \begin{scope}[yscale=0.5]
+    \begin{scope}[yscale=3]
       \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$};
-      \draw[->] (0,-0.5) -- (0,7.5) node[right] {$\angle{\Lambda(H, f)}$};
+      \draw[->] (0,-0.75) -- (0,0.75) node[right] {$\angle{\Lambda(H, f)}$};
       % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
-      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexity.csv};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityangle2.csv};
+      \node[above] at (-\F-0.333,pi/6) {$\tfrac{1}{2}$};
+      %\draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityangle4.csv};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityangle10.csv};
+      \node at (-\F-0.5,0.2) {$\tfrac{1}{10}$};
       % \node at (9.3,-1) {$0$};
       % \htick{2} node[pos=0.5,left] {$2$};
-      \htick{pi} node[pos=0.5,left] {$\pi$};
-      \htick{2*pi} node[pos=0.5,left] {$2\pi$};
+      \htick{pi/6} node[pos=0.5,right] {$\tfrac{\pi}{6}$};
+      \htick{-pi/6} node[pos=0.5,left] {$-\tfrac{\pi}{6}$};
+      %\htick{2*pi} node[pos=0.5,left] {$2\pi$};
       %\htick{pi/2} node[pos=0.5,left] {$\tfrac{\pi}{2}$};
       %\htick{3*pi/2} node[pos=0.5,left] {$\tfrac{3\pi}{2}$}; 
       %\htick{-3.14159265359} node[pos=0.5,left] {$-\pi$};
     \end{scope}
-    \vtick{-\F} node[pos=0.5,below] {$-F$};
-    \vtick{\F} node[pos=0.5,below] {$F$};
+    %\vtick{-\F} node[pos=0.5,below] {$-F$};
+    \vtick{\F} node[pos=0.5,above right] {$F$};
   \end{tikzpicture}
-\caption{Magnitude and phase spectrum of the discrete time system $H$ with discrete implulse response $h_n = 2^nu_n$ and period $P = \tfrac{1}{F}$.  The principal component of the phase spectrum in the interval $[0,2\pi)$ is plotted.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
+\caption{Magnitude and phase spectrum of the discrete time system $H$ with discrete implulse response $h_n = \alpha^nu_n$ for $\alpha=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The principal component of the phase spectrum in the interval $[-\pi,\pi)$ is plotted.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
 \end{figure}
 
 \begin{comment}
