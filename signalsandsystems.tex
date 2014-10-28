@@ -24,7 +24,7 @@
 
 %turn animations on/off
 \newif\ifanimations %default is off
-\animationstrue %uncomment to turn animations on.
+%\animationstrue %uncomment to turn animations on.
 \ifanimations
 \newcommand{\defaultframerate}{16}
 \newcommand{\defaultanimation}[1]{\animategraphics[autoplay,loop]{\defaultframerate}{#1}{}{}}
@@ -120,7 +120,7 @@ compat=newest
 
 %turn excersize solutions on/off
 \newif\ifsolutions %default is off
-\solutionstrue %uncomment to turn solutions on.
+%\solutionstrue %uncomment to turn solutions on.
 
 \usepackage{comment}
 \ifsolutions
@@ -324,14 +324,14 @@ u(t) = \begin{cases}
 0 & t < 0
 \end{cases}
 \end{equation}
-is right-sided.  Its reflection in time $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is called \term{finite in time} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  A signal is called \term{unbounded in time} if it is neither left nor right sided.  For example, the signals $\sin( \pi t)$ and $e^{-t^2}$ are unbounded in time, but the \term{rectangular pulse}
+is right-sided.  Its reflection in time $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to be \term{finite} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ are not finite, but the \term{rectangular pulse}
 \begin{equation}\label{eq:rectfuncdefn}
 \rect(t) = \begin{cases} 
 1 & \abs{t} < \frac{1}{2}\\
 0 & \text{otherwise}
 \end{cases}
 \end{equation}
-is finite in time.  %The definitions left sided, right sided, finite in time, and unbounded in time apply also to discrete-time signals.
+is finite.  %The definitions left sided, right sided, finite, and unbounded in time apply also to discrete-time signals.
 
 \begin{figure}[tp]
 \centering
@@ -391,7 +391,7 @@ is finite in time.  %The definitions left sided, right sided, finite in time, an
 %       \draw plot[ycomb,mark=*] (\n,0);
 %     }
 % \end{tikzpicture}
-\caption{The right sided step function $u(t)$, its left sided reflection $u(-t)$, the finite in time rectangular pulse $\Pi(t)$ and the unbounded in time signal $\tfrac{1}{2} + \tfrac{1}{2}\cos(x)$.  %The definition of left and right sided applies to both continuous and discrete-time signals.
+\caption{The right sided step function $u(t)$, its left sided reflection $u(-t)$, the finite rectangular pulse $\Pi(t)$ and the signal $\tfrac{1}{2} + \tfrac{1}{2}\cos(x)$ that is not finite.  %The definition of left and right sided applies to both continuous and discrete-time signals.
 } 
 \label{fig:stepsided}
 \end{figure}
@@ -2488,7 +2488,7 @@ if finite for all $t$.  % The convolution $x * y$ always exists if both $x$ and 
 % \[
 % z(t) = x * y = \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau = \int_{t-T}^Tx(\tau) y(t - \tau) d\tau.
 % \]
-% This integral exists because both $x$ and $y$ are locally integrable (see Section~\ref{sec:properties-signals}).  Similarly $x*y$ exists if both $x$ and $y$ are left sided or if one of $x$ or $y$ is finite in time.
+% This integral exists because both $x$ and $y$ are locally integrable (see Section~\ref{sec:properties-signals}).  Similarly $x*y$ exists if both $x$ and $y$ are left sided or if one of $x$ or $y$ is finite.
 
 We have already shown in~\eqref{eq:regsystemislinear} that convolution commutes with scalar multiplication and is distributive with addition, that is, for signals $x,y,w$ and complex numbers $a,b$,
 \[
@@ -4449,7 +4449,7 @@ The assumption that we make is that
 \[
 \lim_{t\to\infty} x(t) e^{-st} = 0 \qquad \text{and} \qquad \lim_{t\to-\infty} x(t) e^{-st} = 0
 \]
-whenever $s$ is in the region of convergence of both $x$ and $y$.  In this case $\calL(y) = s\calL(x)$ as required.  Observe that our assumption is true if, for example, $x(t)$ is finite in time.
+whenever $s$ is in the region of convergence of both $x$ and $y$.  In this case $\calL(y) = s\calL(x)$ as required.  Observe that our assumption is true if, for example, $x(t)$ is finite.
 
 The result follows for the $k$th differentiator $D^k$ because
 \[
@@ -4865,7 +4865,7 @@ x(t) = \int_{-\infty}^\infty \rect(f) e^{j2\pi ft} df = \sinc(-t) = \sinc(t).
 %because $\sinc$ is an even function.  
 We are lead to the conclusion that the Fourier transform of $\sinc$ is the rectangular pulse $\rect$.
 
-The rectangular pulse $\rect$ is finite in time and absolutely integrable.  The $\sinc$ function is not absolutely integrable (Exercise~\ref{exer:sincnotabsint}). Because of this the integral equation that we have used to define the Fourier transform~\eqref{eq:fouriertransform} cannot be directly applied to the $\sinc$ function.  %The inverse transform provides a method for assigning Fourier transforms to signals even when the formula~\eqref{eq:fouriertransform} does not apply.  
+The rectangular pulse $\rect$ is finite and absolutely integrable.  The $\sinc$ function is not absolutely integrable (Exercise~\ref{exer:sincnotabsint}). Because of this the integral equation that we have used to define the Fourier transform~\eqref{eq:fouriertransform} cannot be directly applied to the $\sinc$ function.  %The inverse transform provides a method for assigning Fourier transforms to signals even when the formula~\eqref{eq:fouriertransform} does not apply.  
 Although $\sinc$ is not absolutely integrable, it is square integrable (Exercise~\ref{exer:sincnotabsint}).  It happens that all square integrable signals can be assigned a Fourier transform by interpreting the integral in~\eqref{eq:fouriertransform} as what is called its~\term{Cauchy principal value}.  That is, for $x$ a square integrable signal, we assign the Fourier transform
 \[
 \hat{x} = \calF(x) = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
@@ -5398,9 +5398,9 @@ Let $x$ be a signal with Fourier transform $\hat{x} = \calF(x)$.  The signal $x$
 \hat{x}(f) = \calF(x,f) = 0 \qquad \text{for all $\abs{f} > b$}.
 \]  
 The value $b$ is called the \term{bandwidth} of the signal $x$.  For example, the $\sinc$ function is bandlimited with bandwidth $\tfrac{1}{2}$ because its Fourier transform $\calF(\sinc,f) = \rect(f) = 0$ for all $\abs{f} > \tfrac{1}{2}$.
-Bandlimited signals have a number of properties that make them suitable for respresentation and manipulation by a computer.  They are of particular importance for this reason.  Before we can study bandlimitted signals we first require some properties of real and complex valued~\term{sequences}.
+Bandlimited signals have a number of properties that make them suitable for representation and manipulation by a computer.  They are of particular importance for this reason.  Before we can study bandlimited signals we first require some properties of real and complex valued~\term{sequences}.
 
-A \term{sequence} is a function with domain given by the integers $\ints$.  The value of the sequence corresponding with the integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take real or complex values, that is, $x_n \in \reals$ or $x_n \in \complex$.  For example,  the expressions
+A \term{sequence} is a function with domain given by the integers $\ints$.  The value of the sequence corresponding with the integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take real or complex values, that is, $x_n \in \reals$ or $x_n \in \complex$.  For example,
 \[
 \sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad e^{-\sabs{n}/2}
 \]
@@ -5412,6 +5412,8 @@ Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fi
 \def\minn{-4}
 \def\maxn{4}
 \def\scalex{0.6}
+\def\step(#1){(#1>=0)} %step function
+\def\deltaseq(#1){(#1==0)} %step function
 \begin{tikzpicture}[domain=\minn:\maxn]
   \begin{scope}[xscale=\scalex]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
@@ -5432,14 +5434,35 @@ Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fi
     \draw[color=black,ycomb,thick,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{exp(-abs(x)/2)};
   \end{scope}
 \end{tikzpicture}
-\caption{Real valued sequences.} \label{fig:realvaluedsequence}
+\\ \vspace{0.5cm}
+\begin{tikzpicture}[domain=\minn:\maxn]
+  \begin{scope}[xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,-0.75) -- (0,1.75) node[left] {$u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{\step(x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+\end{tikzpicture} \;\;
+\begin{tikzpicture}[domain=\minn:\maxn]
+  \begin{scope}[xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,-0.75) -- (0,1.75) node[left] {$\delta_n$};
+    \draw[color=black,ycomb,thick,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{\deltaseq(x)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Real valued sequences.  The bottom plots show that step sequence $u$ and the delta sequence $\delta$.} \label{fig:realvaluedsequence}
 \end{figure}
 
 A sequence $x$ is bounded if there exists a real number $M$ such that 
 \[
 \sabs{x_n} < M \qquad \text{for all $n \in \ints$}.
 \]
-Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded sequences, but $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin.  A sequence $x$ is periodic if there exists a nonegative integer $T$ such that
+Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded sequences, but $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin.  A sequence $x$ is periodic if there exists a nonnegative integer $T$ such that
 \[
 x_n = x_{n + kT} \qquad \text{for all integers $k$ and $n$.}
 \] 
@@ -5462,6 +5485,22 @@ A sequence $x$ is even (or symmetric) if $x_n = x_{-n}$ for all $n \in \ints$ an
 %x(t) = -x(-t)^* \qquad \text{for all $t \in \reals$,}
 %\]  
 %that is, if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
+
+A sequence $x$ is \term{right sided} if there exists a $T \in \reals$ such that $x_n = 0$ for all $t < T$.  Correspondingly $x$ is \term{left sided} if $x_n = 0$ for all $T > t$.  For example, the \term{step sequence} $u$ with $n$th element 
+\begin{equation} \label{eq:stepsequence}
+u_n = \begin{cases} 
+1 & n \geq 0 \\
+0 & n < 0 
+\end{cases}
+\end{equation}
+is right sided  (Figure~\ref{fig:stepsided}).  The reflected sequence $u_{-n}$ is left sided.  A sequence is said to be \term{finite} if it is both left and right sided.  For example the sequence $\delta$ with $n$th element 
+\begin{equation} \label{eq:deltasequence}
+\delta_n = \begin{cases}
+1 & n = 0 \\
+0 & \text{otherwise},
+\end{cases}
+\end{equation}
+called the \term{delta sequence}, is finite.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, but only a notational device.  Contrastingly, the delta sequence is a well defined sequence.
 
 A sequence $x$ is \term{absolutely summable} if
 \[
@@ -5511,7 +5550,7 @@ f + 1 & -1 < f < 0 \\
 \]
 that is bandlimited with bandwidth $b \geq 1$.  The corresponding time domain signal is given by the square of the sinc function $\sinc^2(t)$ (Exercises~\ref{exer:triangle_pulse_ft}).  These bandlimited signals and their Fourier transforms are plotted in Figure~\ref{fig:bandlimittedsignals}.
 
-It happens that bandlimited signals are always unbounded in time and so signals that are finite in time are never bandlimited.  We can reasonably suppose that all signals ever encountered in practice are finite in time and so no signals encountered in practice are truely bandlimited.  However, many practically occuring signals are approximately bandlimited, that is, their Fourier transform is small for frequencies larger than some positive number $b$.  For example, in Test~\ref{test:ftlecturerec} the Fourier transform of an audio signal taken from a lecture recording is plotted  (Figure~\ref{fig:test:fouriertransformlecturevideo}).  This signal appears approximately bandlimited with bandwidth a little larger than \SI{8}{\kilo\hertz}.
+It happens that bandlimited signals are not finite.  We can reasonably suppose that all signals ever encountered in practice are finite and so no signals encountered in practice are truely bandlimited.  However, many practically occuring signals are approximately bandlimited, that is, their Fourier transform is small for frequencies larger than some positive number $b$.  For example, in Test~\ref{test:ftlecturerec} the Fourier transform of an audio signal taken from a lecture recording is plotted  (Figure~\ref{fig:test:fouriertransformlecturevideo}).  This signal appears approximately bandlimited with bandwidth a little larger than \SI{8}{\kilo\hertz}.
 
 % If $x$ is a bandlimited signal with bandwith $b$ then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has bandwidth $\abs{\alpha} b$ because, from the time scaling property of the Fourier transform,
 % \[
@@ -6616,7 +6655,7 @@ The discrete time Fourier transform is
 \end{align*}
 by the formula for the sum of a geometric progression.  The sum converges because $\abs{\alpha} < 1$.  In the case that $\alpha$ is real the magnitude of the discrete time Fourier transform is
 \[
-\abs{\calD( \alpha^n u_n )} = \frac{1}{1 + 2\alpha\cos(2\pi f) + \alpha^2}.
+\abs{\calD( \alpha^n u_n )} = \sqrt{\frac{1}{1 + 2\alpha\cos(2\pi f) + \alpha^2}}.
 \]
 Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfrac{1}{2}, \tfrac{1}{4}, \tfrac{1}{10}$ is below.
 
@@ -6665,7 +6704,7 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
   \end{scope}
 \end{tikzpicture}
 \;\;
-\newcommand{\dplot}[1]{\draw[thick,samples=200] plot function{1/(1 + 2*#1*cos(2*pi*x) + #1*#1)}}
+\newcommand{\dplot}[1]{\draw[thick,samples=200] plot function{1/sqrt(1 + 2*#1*cos(2*pi*x) + #1*#1)}}
 \begin{tikzpicture}[domain=-1.5:1.5]
   \begin{scope}[xscale=3]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
@@ -6890,24 +6929,24 @@ Let $c$ be a sequence.  The function
 \]
 is called the \term{z-transform} of $c$. The z-transform $\calZ(c)$ is a function of the complex plane. To indicate the value of $\calZ(c)$ at $z \in \complex$ we write either $\calZ(c,z)$ or $\calZ(c)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.  Let $R_c$ be the set of nonnegative real numbers such that the sequence $c_n r^{-n}$ is absolutely summable if and only if $r \in R_c$, that is,
 \[
-\sum_{n \in \infty} \abs{c_n} r^{-n} < \infty \qquad \text{if and only if $r \in R_c$}.
+\sum_{n \in \ints} \abs{c_n} r^{-n} < \infty \qquad \text{if and only if $r \in R_c$}.
 \]
 In this case, $\calZ(c,z)$ is finite for all $z$ with magnitude satisfying $\abs{z} \in R_c$ because 
 \[
-\sabs{\calZ(c,z)} = \leq \sum_{n \in \infty} \abs{c_n z^{-n}} \leq \sum_{n \in \infty} \abs{c_n} r^{-n} < \infty.
+\sabs{\calZ(c,z)} \leq \sum_{n \in \ints} \abs{c_n z^{-n}} \leq \sum_{n \in \ints} \abs{c_n} r^{-n} < \infty.
 \]
-The subset of the complex plane with magnitude from $R_c$ is called the \term{region of convergence} (ROC) of the sequence $c$.  The region of convergence of a sequence is analogous to the region of convergence of the Laplace transform of a signal.  Recall that the region of convergence of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
+The subset of the complex plane with magnitude from $R_c$ is called the \term{region of convergence} of the sequence $c$.  The region of convergence of a sequence is analogous to the region of convergence of a signal when considering its Laplace transform.  Recall that the region of convergence of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
 
-Consider the sequence $u$ with elements 
+The step sequence $u$ with elements
 \[
 u_n = \begin{cases} 
 1 & n \geq 0 \\
 0 & n < 0 
 \end{cases}
 \]
-called the \term{step sequence} or sometimes the \term{discrete step function}.  The step sequence is plotted in Figure~\ref{fig:realvaluedsequencestepetc}.  The z-transform of the step sequence is 
+has z-transform
 \[
-\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad (Exercise~\ref{exer:stepseqZtrans})
+\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
 \]
 This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex number with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
 
@@ -6932,14 +6971,14 @@ converges only if $\abs{z} < \tfrac{3}{2}$.  The region of convergence is an ope
 \]
 that converges only if $\tfrac{1}{2} < \abs{z} < \tfrac{3}{2}$.  The region of convergence is an annulus in the complex plane with inner radius $\tfrac{1}{2}$ and outer radius $\tfrac{3}{2}$.
 
-The sequence $\delta$ with elements
+The delta sequence $\delta$ with elements
 \[
 \delta_n = \begin{cases}
-1 & n = 0 \\\
+1 & n = 0 \\
 0 & \text{otherwise}
 \end{cases}
 \]  
-is called the \term{Dirac delta sequence} or simply \term{delta sequence}.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, but only a notational device.  Contrastingly, the delta sequence is a well defined sequence.  The z-transform of the delta sequence is
+has z-transform
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
@@ -7071,7 +7110,7 @@ c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
 \]
 where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair 
 \[
-\calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1 \qquad (Exercise~\ref{exer:fallingfacztransform})
+\calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1 \qquad \text{(Exercise~\ref{exer:fallingfacztransform})}
 \]
 where
 \[
@@ -7094,7 +7133,7 @@ and in the case that $k=1$ we obtain
 \calZ\big( \alpha^n n u_n \big) = \frac{ \alpha z }{(z - \alpha)^{2}} \qquad \abs{z} > \abs{\alpha}.
 \]
 
-The z-transform of a sequence is related to the transfer function of a system in the following way.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
+The z-transform of a sequence is related to the transfer function of a discrete time system.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
 \[
 \lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
 \]
@@ -7108,7 +7147,7 @@ where $R_h$ is the region of convergence of $h$.  We see that the transfer funct
 \end{equation}
 This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).  The set of complex numbers $s$ such that $e^{sP} \in R_h$ is called the region of convergence of the system $H$.  In this way, both sequences and discrete time systems have a region of convergence. 
 
-Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Denote the regions of convergence of $f$ and $g$ by $R_f$ and $R_g$ respectively.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  The discrete impulse response of $H$ is given by the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition is given by the product of the transfer functions, that is,
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$ having regions of convergence $R_f$ and $R_g$.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
 \[
 \lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
 \]
@@ -7120,14 +7159,14 @@ when $e^{sP} \in R_f \cap R_g$ we have
 \[
 \calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
 \]
-That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  This is called the \term{convolution property} of the z-transform.
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of the convolution is the intersection of the regions of convergence.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
 Let $g$ be a sequence with region of convergence $R_g$ and let $h$ be the sequence with $n$th element $h_n = g_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $h$ is related to that of $g$ by
 \begin{align}
 \calZ(h) &= \sum_{n \in \ints} h_n z^{-n} \nonumber \\
 &= \sum_{n \in \ints} h_{n+\ell} z^{-(n+\ell)} \nonumber \\
-&= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in \R_g. \label{eq:timeshiftpropertyztransform}
+&= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in R_g. \label{eq:timeshiftpropertyztransform}
 \end{align}
 The region of convergence of $h$ is the same as that of $g$.  This is called the \term{time~shift} property of the z-transform.  The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
 \begin{align*}
@@ -7139,12 +7178,12 @@ and so $h_n = g_{n-\ell}$.  The transfer function of $H$ is
 \[
 \lambda(H) = \lambda(T_{P\ell})\lambda(G) = e^{-sP} \lambda(G) \qquad e^{sP} \in R_g.
 \]
-Puting $z = e^{sP}$ and using we~\eqref{eq:ztranstransfunrel} obtain again obtain the time shift property of the z-transform
+Puting $z = e^{sP}$ we again obtain the time shift property of the z-transform
 \[
 \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
 \]
 
-Let $H$ be a discrete time system with discrete impulse response $h$.  The spectrum of $H$ is
+Let $H$ be discrete time system with discrete impulse response $h$ having region of convergence containing the complex unit circle.  The spectrum of $H$ is
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
@@ -7152,12 +7191,10 @@ The spectrum of a discrete time system is periodic with period equal to the reci
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
-We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform, of a discrete time system $H$ and its discrete impulse response $h$,
+We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform, of the discrete time system $H$ and its discrete impulse response $h$,
 \[
 \lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{2\pi j P f}).
 \]
-
-\begin{comment}
 
 \section{Difference equations}\label{sec:difference-equations}
 
@@ -7171,29 +7208,23 @@ In order to study this equation it is useful to study the equation
 \begin{equation}\label{eq:differenceequformsystem}
 \sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
 \end{equation}
-that relates two signals $x$ and $y$.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
+that relates two signals $x$ and $y$\footnote{Zemanian~\cite[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the continuous variable case of a linear difference equation with constant coefficients}.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
 
-Let $H$ be a linear time invariant system such that response $y = H(x)$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found by substituting $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\eqref{eq:differenceequformsystem} and solving for $\lambda$.  That is,
-\begin{align*}
-\sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
-\sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
-\sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
-\end{align*}
-Solving for $\lambda$ yeilds the transfer function of $H$,
+Let $H$ be a linear time invariant system such that response $y = H(x)$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
 \[
-\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}}
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
 \]
 where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
 \calZ(h,z) = \lambda(H,s) = \frac{a_0 + a_1 z^{-1} + \dots + a_m z^{-m}}{b_0 + b_1 z^{-1} + \dots + b_m z^{-k}}.
 \]
-Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This proceedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse  Laplace transform in Section~\ref{sec:poles-zeros-stab}.  Before we describe this proceedure in full generality we first describe some specific examples.
+Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This proceedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse  Laplace transform in Section~\ref{sec:poles-zeros-stab}.  Before we describe this proceedure in full generality we first consider some specific examples.
 
 Consider the difference equation
 \[
 c_n = d_n - 2 d_{n-1} \qquad n \in \ints.
 \]
-Let $H$ be a system such that the response $y = H(x)$ to input $x$ satisfies the equation
+Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
 \[
 x = y - 2 T_{P}(y).
 \]
@@ -7201,9 +7232,55 @@ The transfer function of this system is
 \[
 \lambda(H,s) = \frac{1}{1 - 2e^{-sP}} = \frac{1}{1 - 2z^{-1}} = \frac{z}{z - 2}
 \]
-where $z = e^{sP}$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-2)$.  The inverse z-transform is given by puting $k=0$ and $\alpha = 2$ in~\eqref{eeq:onlyztrans}.  The discrete impulse response is found to be the sequence with $n$th element $h_n = 2^n u_n$.
+where $z = e^{sP}$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-2)$.  The inverse z-transform is given by puting $k=0$ and $\alpha = 2$ in~\eqref{eeq:onlyztrans}.  The discrete impulse response is found to be the sequence with $n$th element $h_n = 2^n u_n$.  The region of convergence is the set of complex numbers with magnitude greater than two.  The spectrum of this system is
+\[
+\Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - 2}.
+\]
+The magnitude and phase spectrum are 
+\[
+\abs{\Lambda(H,f)} = \sqrt{\frac{1}{5 - 4\cos(2\pi P f)}} \qquad \angle{\Lambda(H,f)} =  -\atan\left(\frac{2\sin(2\pi P f)}{1-2\cos(2\pi P f)} \right)
+\]
+and is plotted in Figure~\ref{fig:spectrumdiscresystem1}.
 
-In Section~\ref{sec:fast-four-transf} we found that the number of complex operations required by a fast Fourier transform algorithm of length $2^n$ satisfied the recursive equation $d_n = 2d_{n-1} + 2^{n+1}$ where $d_0 = 0$.  Let $c_n = 2^{m+1}u_{n-1}$.  The 
+\begin{figure}[tp]
+\centering
+  \begin{tikzpicture}[domain=-5:5,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \begin{scope}[yscale=2]
+      \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$};
+      \draw[->] (0,-0.3) -- (0,1.5) node[right] {$\abs{\Lambda(H, f)}$};
+      % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
+      \draw[smooth,color=black,thick] plot function{1.0/sqrt(5 + 2*cos(2*pi*x))};
+      % \node at (9.3,-1) {$0$};
+      % \htick{2} node[pos=0.5,left] {$2$};
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+    \vtick{-1} node[pos=0.5,below] {$-P$};
+    \vtick{1} node[pos=0.5,below] {$P$};
+  \end{tikzpicture}
+
+\medskip
+  \begin{tikzpicture}[domain=-5:5,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \begin{scope}[yscale=0.5]
+      \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$};
+      \draw[->] (0,-0.5) -- (0,6) node[right] {$\angle{\Lambda(H, f)}$};
+      % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
+      \draw[smooth,color=black,thick,domain=-5:5] plot function{2*pi*x-atan(sin(2*pi*x)/(cos(2*pi*x)-2))};
+      % \node at (9.3,-1) {$0$};
+      % \htick{2} node[pos=0.5,left] {$2$};
+      \htick{3.14159265359} node[pos=0.5,left] {$\pi$};
+      \htick{pi/2} node[pos=0.5,left] {$\tfrac{\pi}{2}$};
+      \htick{3*pi/2} node[pos=0.5,left] {$\tfrac{3\pi}{2}$};
+      %\htick{-3.14159265359} node[pos=0.5,left] {$-\pi$};
+    \end{scope}
+    \vtick{-1} node[pos=0.5,below] {$-P$};
+    \vtick{1} node[pos=0.5,below] {$P$};
+  \end{tikzpicture}
+\caption{Magnitude and phase spectrum of the discrete time system $H$ with discrete implulse response $h_n = 2^nu_n$ and period $P$.  The principal component of the phase spectrum in the interval $[0,2\pi)$ is plotted.} \label{fig:spectrumdiscresystem1}
+\end{figure}
+
+\begin{comment}
 
 \section{Digital filters}
 
@@ -7232,6 +7309,19 @@ Let $f,g,h$ be sequences.  We have
 
 \item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
 
+\item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\eqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
+\begin{solution}
+Substitute $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\eqref{eq:differenceequformsystem},
+\begin{align*}
+\sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
+\sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
+\sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
+\end{align*}
+Solving for $\lambda$ yeilds the transfer function of $H$,
+\[
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
+\]
+\end{solution}
 
 \item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $\alpha^nu_n$ is $z/(z-\alpha)$ with region of convergence $\abs{z} > \abs{\alpha}$.
 \begin{solution}
@@ -7293,9 +7383,18 @@ By definition $[n]_0 = 1$ for all $n \in \ints$ and so $\calZ( [n]_0 u_n ) = \ca
 as required.
 \end{solution}
 
-\item \label{exer:fftcomplexity} Let $c_n$ be a sequence satisfying $c_n = 2 c_{n-1} + 2^{n+1}$ and suppose that $c_0 = 0$.  Show that $c_n = 2^{m+1}m$ for $m = 1,2,\dots$.
+\item \label{exer:fftcomplexity} Let $d_n$ be a sequence satisfying $d_n = 2 d_{n-1} + 2^{n+1}$ and suppose that $d_0 = 0$.  Show that $d_n = 2^{n+1}n$ for $n = 1,2,\dots$.
+\begin{solution}
+This equation is in the form~\eqref{eq:differenceequform} if we put $c_n = 2^{n+1} u_{n-1}$.
+The response of the discrete time system $H$ with discrete impulse response $h_n = 2^n u_n$ and period $P=1$ to the input signal $x(t) = 2^{t+1}u(t-1)$ is
+\begin{align*}
+y = H(x) = \sum_{n\in\ints} h_n T_{n}(x) = \sum_{n=0}^\infty 2^n 2^{t-n+1}u(t-n-1) = 2^{t+1} (\floor{t-1} + 1).
+\end{align*}
+Observe that $y(0) = H(x,0) = 0$ and that $x(n) = 2^{n+1} u_{n-1}$and so putting $d_n = y(n) = 2^{n+1} n$ yeilds a solution for the recursive equation.
+%Consider the response of the discrete time system $H$ with discrete impulse response $h_n = 2^n u_n$ to the signal $x(t) = 2^{t+1}u(t-1)$.  The 
+\end{solution}
 
-\item \label{exer:fibonacci} The Fibonacci sequence $0,1,1,2,3,5,8,13,\dots$ satisfies the recursive equation $c_0 = 0, c_1 = 1$, and $c_n = c_{n-1} + c_{n-2}$ for $n \geq 2$.  Find a closed form expression for the $n$th Fibonacci number.
+\item \label{exer:fibonacci} The Fibonacci sequence $0,1,1,2,3,5,8,13,\dots$ satisfies the recursive equation $d_0 = 0, d_1 = 1$, and $d_n = d_{n-1} + d_{n-2}$ for $n \geq 2$.  Find a closed form expression for the $n$th Fibonacci number.
 
 % \item \label{excer:sumsqreexp} Show that $\sum_{n \in \ints} e^{\alpha n^2} = ?$ if $\alpha < 0$ (Hint: solve Excersize~\ref{excer:sumgeomeabsn} first).
 % \begin{solution}
