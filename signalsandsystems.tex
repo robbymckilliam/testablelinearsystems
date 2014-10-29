@@ -7236,11 +7236,11 @@ Suppose that $H$ is a linear time invariant with the propoerty that the response
 \]
 where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
-\calZ(h,z) = \lambda(H,s) = z_{k-m}\frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^k + b_1 z^{k-1} + \dots + b_m}.
+\calZ(h,z) = \lambda(H,s) = z^{k-m}\frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^k + b_1 z^{k-1} + \dots + b_m}.
 \]
 Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  By factorising the polynomials on the numerator and denominator of the equation above we obtain
 \[
-\calZ(h) = C z_{k-m}\frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{m})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{k})}.
+\calZ(h) = C z^{k-m}\frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{m})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{k})}.
 \]
 where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial $a_0z^m + a_1 z^{m-1} + \dots + a_m$, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial $b_0z^k + b_1 z^{k-1} + \dots + b_m$, and $C = \tfrac{a_0}{b_0}$.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:ztransfuncpoleszeros}
@@ -7252,11 +7252,20 @@ where $d$ is the number of shared roots, these shared roots being
 \]
 The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros at located on the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
 
-It is always possible to apply partial fractions to bring~\eqref{eq:ztransfuncpoleszeros} into the form
+By application of partial fractions we   
 \[
-p(z) + \sum_{\ell \in K} \frac{A_\ell z}{(z - \beta_\ell)^{r_\ell}}
+\calZ(h) = z^{k-m} \left( p(s) + \sum_{\ell \in K} \frac{A_\ell}{(z - \beta_\ell)^{r_\ell}} \right).
 \]
-BLERG
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  The Laplace transform pair~\eqref{eeq:onlyztrans} has the term $z$ on the numerator and so, it is convenient to write in the form
+\[
+\calZ(h) = z^{k-m} p(s) + z^{k-m-1} \sum_{\ell \in K} \frac{A_\ell z }{(z - \beta_\ell)^{r_\ell}}  .
+\]
+If 
+% It is always possible to apply partial fractions to bring~\eqref{eq:ztransfuncpoleszeros} into the form
+% \[
+% zp(z) + \sum_{\ell \in K} \frac{A_\ell z}{(z - \beta_\ell)^{r_\ell}}
+% \]
+
 
 Consider the difference equation
 \[
