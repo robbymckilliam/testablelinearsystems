@@ -120,7 +120,7 @@ compat=newest
 
 %turn excersize solutions on/off
 \newif\ifsolutions %default is off
-%\solutionstrue %uncomment to turn solutions on.
+\solutionstrue %uncomment to turn solutions on.
 
 \usepackage{comment}
 \ifsolutions
@@ -3978,7 +3978,7 @@ Factorising the polynomials on the numerator and denominator we obtain
 where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial $a_0 + a_1s + \dots + a_m s^m$, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial $b_0 + b_1s + \dots + b_k s^k$, and $C = \tfrac{a_m}{b_m}$.  That such a factorisation is always possible is called the \term{fundamental theorem of algebra}~\citep{Fine_fundamental_theorem_of_algebra}.  %,Weierstraß_fundamental_theorem_of_algebra}.  
 If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:transfuncpoleszeros}
-\lambda(H) = C\frac{(s-\alpha_d)(s - \alpha_1)\cdots(s - \alpha_{m})}{(s-\beta_d)(s - \beta_1)\cdots(s - \beta_{k})},
+\lambda(H) = C\frac{(s-\alpha_d)(s - \alpha_{d+1})\cdots(s - \alpha_{m})}{(s-\beta_d)(s - \beta_{d+1})\cdots(s - \beta_{k})},
 \end{equation}
 where $d$ is the number of shared roots, these shared roots being 
 \[
@@ -4033,8 +4033,7 @@ It is always possible to apply partial fractions and write~\eqref{eq:transfuncpo
 \[
 \lambda(H) = p(s) + \sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}},
 \]
-where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We now restrict attention to the common case when the coefficients of the numerator polynomial $a_0,\dots,a_m$ and the coefficients of the denominator polynomial $b_0,\dots,b_k$ are real.  In this case, the coefficients of the polynomial $p(s)$ are real, and the constant $A_\ell$ is real whenever the corresponding pole $\beta_\ell$ is real.  If the pole $\beta_\ell$ has nonzero imaginary part there always exists another pole $\beta_i$ such that $\beta_\ell = \beta_i^*$, where $\beta_i^*$ is the \term{complex conjugate} of $\beta_i$.  These poles have the same multiplicity, that is, $r_\ell = r_i$, and also the constants $A_\ell = A_i^*$.  Stated another way: the complex poles occur in \term{conjugate pairs}.
-
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  % We now restrict attention to the common case when the coefficients of the numerator polynomial $a_0,\dots,a_m$ and the coefficients of the denominator polynomial $b_0,\dots,b_k$ are real.  In this case, the coefficients of the polynomial $p(s)$ are real, and the constant $A_\ell$ is real whenever the corresponding pole $\beta_\ell$ is real.  If the pole $\beta_\ell$ has nonzero imaginary part there always exists another pole $\beta_i$ such that $\beta_\ell = \beta_i^*$, where $\beta_i^*$ is the \term{complex conjugate} of $\beta_i$.  These poles have the same multiplicity, that is, $r_\ell = r_i$, and also the constants $A_\ell = A_i^*$.  Stated another way: the complex poles occur in \term{conjugate pairs}.
 We see that the transfer function contains the summation of two parts: the polynomial $p(s)$, and a sum of terms of the form $\frac{A}{(s-\beta)^r}$.  Let $p(s) = \gamma_0 + \gamma_1 s + \dots + \gamma_{m-k}s^{m-k}$.  This polynomial is the transfer function of the nonregular system
 \[
 H_1 = \gamma_0 T_0 + \gamma_1 D + \gamma_2 D^2 + \dots + \gamma_{m-k} D^{m-k}.
@@ -4047,31 +4046,31 @@ and so the terms of the form $\frac{A}{(s-\beta)^r}$ correspond with the transfe
 \[
 h_2(t) = u(t) \sum_{\ell\in K} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t}.
 \]
-Let $K_r = \{\ell \in K \mid \Im\beta_\ell = 0\}$ be the indices from $K$ corresponding with the real poles, and let $K_i=\{\ell \in K \mid \Im\beta_\ell > 0\}$ be the indices corresponding with those poles with positive imaginary part.  Because the imaginary poles occur in conjugate pairs the impulse response $h_2$ can be written as
-\[
-h_2(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{t^{r_\ell-1}}{r_\ell!}  \big( A_\ell e^{\beta_\ell t} + A_\ell^* e^{\beta_\ell^* t} \big).
-\]
-The terms
-\begin{align*}
-A_\ell e^{\beta_\ell t} + A_\ell^* e^{\beta_\ell^* t}  &= \abs{A_\ell} e^{\Re\beta_\ell t} \big( e^{\Im\beta_\ell t + \angle A_\ell} + e^{-\Im\beta_\ell t - \angle A_\ell}\big) \\
-&= 2 \abs{A_\ell} e^{\Re\beta_\ell t} \cos\big(\Im\beta_\ell t + \angle A_\ell\big),
-\end{align*}
-and so, the impulse response is
-\[
-h_2(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{2\abs{A_\ell}}{r_\ell!}  t^{r_\ell-1} e^{\Re\beta_\ell t} \cos\big(\Im\beta_\ell t + \angle A_\ell\big).
-\]
-This expression can be simplified by putting
-\[
-B_\ell = \begin{cases} 
-\tfrac{A_\ell}{r_\ell!} & \Im\beta_\ell = 0 \\
-2\tfrac{A_\ell}{r_\ell!} & \Im\beta_\ell > 0
-\end{cases}
-\]
-so that
-\begin{equation}\label{eq:H2implrespcleanedup}
-h_2(t) = u(t) \sum_{\ell\in K_r \cup K_i} B_\ell t^{r_\ell-1} e^{\Re{\beta_\ell} t} \cos\big( \Im \beta_\ell t + \angle B_\ell \big).
-\end{equation}
-Observe that the impulse response is a real valued signal (as expected).
+% Let $K_r = \{\ell \in K \mid \Im\beta_\ell = 0\}$ be the indices from $K$ corresponding with the real poles, and let $K_i=\{\ell \in K \mid \Im\beta_\ell > 0\}$ be the indices corresponding with those poles with positive imaginary part.  Because the imaginary poles occur in conjugate pairs the impulse response $h_2$ can be written as
+% \[
+% h_2(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{t^{r_\ell-1}}{r_\ell!}  \big( A_\ell e^{\beta_\ell t} + A_\ell^* e^{\beta_\ell^* t} \big).
+% \]
+% The terms
+% \begin{align*}
+% A_\ell e^{\beta_\ell t} + A_\ell^* e^{\beta_\ell^* t}  &= \abs{A_\ell} e^{\Re\beta_\ell t} \big( e^{\Im\beta_\ell t + \angle A_\ell} + e^{-\Im\beta_\ell t - \angle A_\ell}\big) \\
+% &= 2 \abs{A_\ell} e^{\Re\beta_\ell t} \cos\big(\Im\beta_\ell t + \angle A_\ell\big),
+% \end{align*}
+% and so, the impulse response is
+% \[
+% h_2(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{2\abs{A_\ell}}{r_\ell!}  t^{r_\ell-1} e^{\Re\beta_\ell t} \cos\big(\Im\beta_\ell t + \angle A_\ell\big).
+% \]
+% This expression can be simplified by putting
+% \[
+% B_\ell = \begin{cases} 
+% \tfrac{A_\ell}{r_\ell!} & \Im\beta_\ell = 0 \\
+% 2\tfrac{A_\ell}{r_\ell!} & \Im\beta_\ell > 0
+% \end{cases}
+% \]
+% so that
+% \begin{equation}\label{eq:H2implrespcleanedup}
+% h_2(t) = u(t) \sum_{\ell\in K_r \cup K_i} B_\ell t^{r_\ell-1} e^{\Re{\beta_\ell} t} \cos\big( \Im \beta_\ell t + \angle B_\ell \big).
+% \end{equation}
+% Observe that the impulse response is a real valued signal (as expected).
 
 The system $H$ mapping $x$ to $y$ is the sum of the regular system $H_2$ and nonregular system $H_1$, that is,
 \[
@@ -4082,9 +4081,9 @@ Observe that $H$ is regular only if the system $H_1 = 0$, that is, only if $H_1$
 The stability of the system $H$ can be immediately determined from its pole-zero plot.  The system is stable if and only if: 
 \begin{enumerate}
 \item the number of poles is greater than or equal to the number of zeros (there are at least as many crosses on the pole-zero plot as circles), 
-\item all of the poles (crosses) lie strictly in the left half plane.  
+\item No poles (crosses) line on the imaginary axis or in the right half of the complex plane.
 \end{enumerate}
-The pole-zero plots in Figure~\ref{fig:polezeroplot} all represent stable systems with the exception of the plot on the bottom right (a PID controller).  This system has two zeros and only one pole.  The single pole is contained on the imaginary axis.  It is not strictly in the left half plane. 
+The pole-zero plots in Figure~\ref{fig:polezeroplot} all represent stable systems with the exception of the plot on the bottom right (a PID controller).  This system has two zeros and only one pole.  The single pole is contained on the imaginary axis.  %It is not strictly in the left half plane. 
 
 
 \subsection{Two masses, a spring, and a damper}
@@ -6645,7 +6644,7 @@ The sequence is bounded below any number greater than 1 because $\abs{\cos(x)} \
 
 \end{solution}
 
-\item Find the discrete time Fourier transform of the sequence $\alpha^n u_n$ where $\abs{\alpha} < 1$ and $u_n$ is the step sequence.  Plot the sequence and the magnitude of the discrete time Fourier transform when $\alpha = \tfrac{1}{2}, \tfrac{1}{4}, \tfrac{1}{10}$.
+\item Find the discrete time Fourier transform of the sequence $\alpha^n u_n$ where $\abs{\alpha} < 1$ and $u_n$ is the step sequence.  Plot the sequence and the magnitude of the discrete time Fourier transform when $\alpha = \tfrac{4}{5}, \tfrac{1}{2}, \tfrac{1}{10}$.
 \begin{solution}
 The discrete time Fourier transform is
 \begin{align*}
@@ -6655,9 +6654,9 @@ The discrete time Fourier transform is
 \end{align*}
 by the formula for the sum of a geometric progression.  The sum converges because $\abs{\alpha} < 1$.  In the case that $\alpha$ is real the magnitude of the discrete time Fourier transform is
 \[
-\abs{\calD( \alpha^n u_n )} = \sqrt{\frac{1}{1 + 2\alpha\cos(2\pi f) + \alpha^2}}.
+\abs{\calD( \alpha^n u_n )} = \sqrt{\frac{1}{1 - 2\alpha\cos(2\pi f) + \alpha^2}}.
 \]
-Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfrac{1}{2}, \tfrac{1}{4}, \tfrac{1}{10}$ is below.
+Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfrac{4}{5}, \tfrac{1}{2}, \tfrac{1}{10}$ is below.
 
 \begin{center}
 {
@@ -6669,10 +6668,10 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
   \begin{scope}[xscale=\scalex]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
-    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{1}{2})^n u_n$};
+    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{4}{5})^n u_n$};
     %\draw[color=black] plot[id=x] function{1/x^2} 
     %    node[right] {$f(t) = t^{-2}$};
-    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{(0.5**x)*\step(x)};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{((4.0/5)**x)*\step(x)};
     % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
     %    node[right] {$f(t) = \frac{1}{20} e^t$};
   \end{scope}
@@ -6682,10 +6681,10 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
   \begin{scope}[xscale=\scalex]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
-    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{1}{4})^n u_n$};
+    \draw[->] (0,-0.5) -- (0,1.75) node[left] {$(\tfrac{1}{2})^n u_n$};
     %\draw[color=black] plot[id=x] function{1/x^2} 
     %    node[right] {$f(t) = t^{-2}$};
-    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{(0.25**x)*\step(x)};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,scale=0.75},samples=\maxn-\minn+1] plot function{(0.5**x)*\step(x)};
     % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
     %    node[right] {$f(t) = \frac{1}{20} e^t$};
   \end{scope}
@@ -6704,19 +6703,19 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
   \end{scope}
 \end{tikzpicture}
 \;\;
-\newcommand{\dplot}[1]{\draw[thick,samples=200] plot function{1/sqrt(1 + 2*#1*cos(2*pi*x) + #1*#1)}}
+\newcommand{\dplot}[1]{\draw[thick,samples=200] plot function{1/sqrt(1 - 2*#1*cos(2*pi*x) + #1*#1)}}
 \begin{tikzpicture}[domain=-1.5:1.5]
   \begin{scope}[xscale=3]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (-1.75,0) -- (1.75,0) node[above] {$f$};
-    \draw[->] (0,-0.5) -- (0,4.5) node[left] {$\calD\big( \alpha^n u_n \big)$};
+    \draw[->] (0,-0.5) -- (0,5.5) node[left] {$\calD\big( \alpha^n u_n \big)$};
     %\draw[color=black] plot[id=x] function{1/x^2} 
     %    node[right] {$f(t) = t^{-2}$};
-    \dplot{0.5};
-    \dplot{0.25};
-    \dplot{0.1};
+    \dplot{4.0/5};
+    \dplot{1.0/2};
+    \dplot{1.0/10};
+    \node[above] at (0.5,5) {$\tfrac{4}{5}$};
     \node[right] at (0.5,4) {$\tfrac{1}{2}$};
-    \node[above] at (0.5,1.8) {$\tfrac{1}{4}$};
     \node[below] at (0.5,1.2) {$\tfrac{1}{10}$};
     % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
     %    node[right] {$f(t) = \frac{1}{20} e^t$};
@@ -6725,6 +6724,7 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
   \htick{2} node[pos=0.5,right] {$2$};
   \htick{3} node[pos=0.5,right] {$3$};
   \htick{4} node[pos=0.5,right] {$4$};
+  \htick{5} node[pos=0.5,right] {$5$};
 \end{tikzpicture}
 }
 \end{center}
@@ -6873,7 +6873,7 @@ where $h$ is a real or complex valued sequence.  Such systems are called \term{d
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-Let $F$ and $G$ be discrete time systems with equal sampling period $P$ and discrete impulse responses $f$ and $g$.  Let 
+Let $F$ and $G$ be discrete time systems with equal sampleperiod $P$ and discrete impulse responses $f$ and $g$.  Let 
 \[
 H = a F + b G \qquad a,b\in\complex
 \]
@@ -6898,14 +6898,14 @@ H(x) &= F \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
 and by putting $k = m+n$ we have
 \begin{align*}
 H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \\
-&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \qquad \text{(interchange summation~\footnote{Sufficient assumptions about the sequences $f$ and $g$ must be made for this interchange of summation to be valid.  For example, the interchange is valid if both $f$ and $g$ and absolutely summable.})}\\
 &= \sum_{k \in \ints} h_k T_{Pk}(x)
 \end{align*}
 where $h$ is the sequence with elements given by
 \[
-h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_k
+h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n
 \]
-The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system with discrete impulse response given by the discrete convolution of the discrete impulse responses of $F$ and $G$.
+The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.
 
 Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  Discrete convolution is associative, that is, if $f$, $g$, and $h$ are sequences then
 \[
@@ -6917,9 +6917,27 @@ a (f * h) + b (g * h) = (af + bg) * h
 \]
 where $a$ and $b$ are real or complex constants.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
+% Discrete time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
+% \[
+% x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n).
+% \]
+% The response of $H$ to $x$ is
+% \begin{align*}
+% y = H(x) &= \sum_{n \in \ints} h_n T_{Pn}\left(\sum_{m \in \ints} c_m \sinc(Ft - m) \right) \\
+% &=  \sum_{m \in \ints} \sum_{n \in \ints} h_n c_m \sinc(Ft - n - m),
+% \end{align*}
+% the interchange of summation being valid under appropriate assumptions about the sequence s$h$ and $c$.  Putting $k = m+n$ we have
+% \[
+% y = H(x) = \sum_{m \in \ints} \sum_{k \in \ints} h_n c_{k-n} \sinc(Ft - k) =  \sum_{m \in \ints} d_k \sinc(Ft - k)
+% \]
+% where $d = h * c$, that is, $d$ is the sequence with $n$th element
+% \[
+% d_n = (h * c)_n = \sum_{m \in \ints} h_m c_{n-m}.
+% \] 
+% We see that the response $y = H(x)$ is a bandlimited signal with samples $d_n = y(nP)$.
+
 
 \section{The z-transform}
-
 
 \newcommand{\calZ}{{\mathcal Z}}
 
@@ -6948,7 +6966,7 @@ has z-transform
 \[
 \calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
 \]
-This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex number with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
+This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex numbers with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
 
 Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
 \[
@@ -7116,21 +7134,23 @@ where
 \[
 [n]_k = n (n-1) \dots (n-k+1)
 \]
-is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  If $c$ is a sequence with z-transform $\calZ(c)$ and region of convergence $R_c$ then the sequence with $n$th element $\alpha^nc_n$ for $\alpha \in \complex$ has z-transform 
+is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
+
+Let $a \in \complex$.  If $c$ is a sequence with z-transform $\calZ(c)$ and region of convergence $R_c$ then the sequence with $n$th element $a^nc_n$ has z-transform 
 \[
-\calZ(\alpha^n c_n) = \sum_{n \in \ints} \alpha^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/\alpha)^{-n} = \calZ(c, z/\alpha) \qquad \frac{z}{\alpha} \in R_c.
+\calZ(a^n c_n) = \sum_{n \in \ints} a^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/a)^{-n} = \calZ(c, z/a) \qquad \frac{z}{a} \in R_c.
 \]
-Using this property the z-transform of the sequence $\alpha^n [n]_k u_n$ is
+Using this property the z-transform of the sequence $a^n [n]_k u_n$ is
 \begin{equation}\label{eeq:onlyztrans}
-\calZ\big( \alpha^n [n]_k u_n \big) = \frac{k! \alpha^k z }{(z - \alpha)^{k+1}} \qquad \abs{z} > \abs{\alpha}.
+\calZ\big( a^n [n]_k u_n \big) = \frac{k! a^k z }{(z - a)^{k+1}} \qquad \abs{z} > \abs{a}.
 \end{equation}
 This is the only z-transform pair we require here.  We will have particular use of the case when $k$ is $0$ or $1$.  In the case that $k=0$ we obtain the z-transform pair
 \[
-\calZ\big( \alpha^n u_n \big) = \frac{ z }{z - \alpha} \qquad \abs{z} > \abs{\alpha}
+\calZ\big( a^n u_n \big) = \frac{ z }{z - a} \qquad \abs{z} > \abs{a}
 \]
 and in the case that $k=1$ we obtain
 \[
-\calZ\big( \alpha^n n u_n \big) = \frac{ \alpha z }{(z - \alpha)^{2}} \qquad \abs{z} > \abs{\alpha}.
+\calZ\big( a^n n u_n \big) = \frac{ a z }{(z - a)^{2}} \qquad \abs{z} > \abs{a}.
 \]
 
 The z-transform of a sequence is related to the transfer function of a discrete time system.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
@@ -7168,20 +7188,20 @@ Let $g$ be a sequence with region of convergence $R_g$ and let $h$ be the sequen
 &= \sum_{n \in \ints} h_{n+\ell} z^{-(n+\ell)} \nonumber \\
 &= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in R_g. \label{eq:timeshiftpropertyztransform}
 \end{align}
-The region of convergence of $h$ is the same as that of $g$.  This is called the \term{time~shift} property of the z-transform.  The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
-\begin{align*}
-H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
-&= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
-&= \sum_{n \in \ints} g_{n - \ell} T_{Pn}(x) 
-\end{align*}
-and so $h_n = g_{n-\ell}$.  The transfer function of $H$ is
-\[
-\lambda(H) = \lambda(T_{P\ell})\lambda(G) = e^{-sP} \lambda(G) \qquad e^{sP} \in R_g.
-\]
-Puting $z = e^{sP}$ we again obtain the time shift property of the z-transform
-\[
-\calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
-\]
+The region of convergence of $h$ is the same as that of $g$.  This is called the \term{time~shift} property of the z-transform.  % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
+% \begin{align*}
+% H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
+% &= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
+% &= \sum_{n \in \ints} g_{n - \ell} T_{Pn}(x) 
+% \end{align*}
+% and so $h_n = g_{n-\ell}$.  The transfer function of $H$ is
+% \[
+% \lambda(H) = \lambda(T_{P\ell})\lambda(G) = e^{-sP} \lambda(G) \qquad e^{sP} \in R_g.
+% \]
+% Puting $z = e^{sP}$ we again obtain the time shift property of the z-transform
+% \[
+% \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
+% \]
 
 Let $H$ be discrete time system with discrete impulse response $h$ having region of convergence containing the complex unit circle.  The spectrum of $H$ is
 \[
@@ -7204,49 +7224,57 @@ We have previously shown that interesting systems are found by consideration of 
 \end{equation}
 where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex constants.
 
-In order to study this equation it is useful to study the equation\footnote{\citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the \term{continuous variable case} of a linear difference equation with constant coefficients.}
+In order to study this equation it is useful to study the equation
 \begin{equation}\label{eq:differenceequformsystem}
 \sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
 \end{equation}
-that relates two signals $x$ and $y$.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
+that relates two signals $x$ and $y$.  \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the \term{continuous variable case} of a linear difference equation with constant coefficients.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
 
-Let $H$ be a linear time invariant system such that response $y = H(x)$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
+Suppose that $H$ is a linear time invariant with the propoerty that the response $y = H(x)$ to input signal $x$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
 \[
-\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}} = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
 \]
 where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
-\calZ(h,z) = \lambda(H,s) = \frac{a_0 + a_1 z^{-1} + \dots + a_m z^{-m}}{b_0 + b_1 z^{-1} + \dots + b_m z^{-k}}.
+\calZ(h,z) = \lambda(H,s) = z_{k-m}\frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^k + b_1 z^{k-1} + \dots + b_m}.
 \]
-Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse  Laplace transform in Section~\ref{sec:poles-zeros-stab}.  Before we describe this proceedure in full generality we first consider some specific examples.
+Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  By factorising the polynomials on the numerator and denominator of the equation above we obtain
+\[
+\calZ(h) = C z_{k-m}\frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{m})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{k})}.
+\]
+where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial $a_0z^m + a_1 z^{m-1} + \dots + a_m$, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial $b_0z^k + b_1 z^{k-1} + \dots + b_m$, and $C = \tfrac{a_0}{b_0}$.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
+\begin{equation}\label{eq:ztransfuncpoleszeros}
+\lambda(H) = C z^{k-m} \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{m})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{k})},
+\end{equation}
+where $d$ is the number of shared roots, these shared roots being 
+\[
+\alpha_0 = \beta_0, \;\; \alpha_1 = \beta_1, \;\; \dots, \;\;  \alpha_{d-1} = \beta_{d-1}.
+\]
+The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros at located on the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+
+It is always possible to apply partial fractions to bring~\eqref{eq:ztransfuncpoleszeros} into the form
+\[
+p(z) + \sum_{\ell \in K} \frac{A_\ell z}{(z - \beta_\ell)^{r_\ell}}
+\]
+BLERG
 
 Consider the difference equation
 \[
-c_n = d_n - \alpha d_{n-1} \qquad n \in \ints
+c_n = d_n - a d_{n-1} \qquad n \in \ints
 \]
-where $\alpha \in \complex$.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
+where $a \in \complex$.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
 \[
-x = y - \alpha T_{P}(y).
+x = y - a T_{P}(y).
 \]
-The transfer function of this system is
+Such a system is called a \term{first order discrete time systems}.  The transfer function of this system is
 \[
-\lambda(H,s) = \frac{1}{1 - \alpha e^{-sP}} = \frac{1}{1 - \alpha z^{-1}} = \frac{z}{z - \alpha}
+\lambda(H,s) = \frac{1}{1 - a e^{-sP}} = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}
 \]
-where $z = e^{sP}$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-\alpha)$.  The inverse z-transform is given by puting $k=0$ in~\eqref{eeq:onlyztrans}.  The discrete impulse response is found to be the sequence with $n$th element $h_n = \alpha^n u_n$.  The region of convergence is the set of complex numbers with magnitude greater than two.  When $\abs{\alpha} < 1$ the region of convergence contains the unit circle and the system has spectrum
+where $z = e^{sP}$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-a)$.  The inverse z-transform is found by puting $k=0$ in~\eqref{eeq:onlyztrans} resulting in $h_n = a^n u_n$.  The region of convergence is the set of complex numbers with magnitude greater than $\abs{a}$.  The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  When $\abs{a} < 1$ the region of convergence contains the unit circle and the system has spectrum
 \[
-\Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - \alpha}.
+\Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - a}.
 \]
-The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresystem1} in the case that $\alpha = \tfrac{1}{2}, \tfrac{1}{10}$.
-
-When $\alpha = 2$, the sample period $P=1$, and the input signal is $x(t) = 2^{t+1}u(t)$, the response is
-\[
-y = H(x) = \sum_{n \in \ints} h_n T_{n}(x) = \sum_{n = 0}^\infty 2^n 2^{t-n+1}u(t-n) = 2^{t+1} \floor{t}.
-\]
-Put $c_n = x(nP) = 2^{n+1}u_{n}$ and $d_n = y(nP) = 2^{n+1}n$.  By definition of $H$, the sequences $d$ and $c$ satisfy the the difference equation
-\[
-c_n = 2^{n+1} u_{n} = d_n - 2 d_{n-1}
-\]
-and so $d_n = 2 d_{n-1} + 2^{n+1}$ for $n > 0$.  Observing that $d_0 = y(0) = 0$ we see that $d_n = 2^{n+1}n$ is a solution for the recursive equation~\eqref{eq:recursiveeqcomplexityfft} that described the complexity of the Cooley-Tukey fast Fourier transform algorithm in Section~\ref{sec:fast-four-transf}.
+The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresystem1} in the case that $a = \tfrac{1}{2}$ and $\tfrac{1}{10}$.
 
 \begin{figure}[tp]
 \centering
@@ -7294,7 +7322,7 @@ and so $d_n = 2 d_{n-1} + 2^{n+1}$ for $n > 0$.  Observing that $d_0 = y(0) = 0$
     %\vtick{-\F} node[pos=0.5,below] {$-F$};
     \vtick{\F} node[pos=0.5,above right] {$F$};
   \end{tikzpicture}
-\caption{Magnitude and phase spectrum of the discrete time system $H$ with discrete implulse response $h_n = \alpha^nu_n$ for $\alpha=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The principal component of the phase spectrum in the interval $[-\pi,\pi)$ is plotted.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
+\caption{Magnitude and phase spectrum of the discrete time system $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The principal component of the phase spectrum in the interval $[-\pi,\pi)$ is plotted.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
 \end{figure}
 
 \begin{comment}
@@ -7340,17 +7368,17 @@ Solving for $\lambda$ yeilds the transfer function of $H$,
 \]
 \end{solution}
 
-\item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $\alpha^nu_n$ is $z/(z-\alpha)$ with region of convergence $\abs{z} > \abs{\alpha}$.
+\item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $a^nu_n$ is $z/(z-a)$ with region of convergence $\abs{z} > \abs{a}$.
 \begin{solution}
 The z-transform is
 \[
-\calZ(\alpha^nu_n) = \sum_{n \in \ints} \alpha^n u_n z^{-n} = \sum_{n=0}^\infty \left(\frac{z}{\alpha}\right)^{-n}.
+\calZ(a^nu_n) = \sum_{n \in \ints} a^n u_n z^{-n} = \sum_{n=0}^\infty \left(\frac{z}{a}\right)^{-n}.
 \]
 This sum is a geometric progression that converges to 
 \[
-\frac{1}{1- \alpha z^{-1}} = \frac{z}{ z-\alpha}
+\frac{1}{1- a z^{-1}} = \frac{z}{ z-a}
 \]
-when $\abs{z/\alpha} > 1$ and diverges otherwise.  The region of convergence is thus $\abs{z} > \abs{\alpha}$.
+when $\abs{z/a} > 1$ and diverges otherwise.  The region of convergence is thus $\abs{z} > \abs{a}$.
 \end{solution}
 
 \item \label{exer:fallingfacztransform} Show that the z-transform of the sequence $[n]_k u_n$ where $[n]_k = n(n-1)\dots(n-k+1)$ is a falling factorial is
@@ -7400,20 +7428,77 @@ By definition $[n]_0 = 1$ for all $n \in \ints$ and so $\calZ( [n]_0 u_n ) = \ca
 as required.
 \end{solution}
 
-\item \label{exer:fftcomplexity} Let $d_n$ be a sequence satisfying $d_n = 2 d_{n-1} + 2^{n+1}$ and suppose that $d_0 = 0$.  Show that $d_n = 2^{n+1}n$ for $n = 1,2,\dots$.
+\item \label{exer:fftcomplexity} Let $d_n$ be a sequence satisfying $d_n = 2 d_{n-1} + 2^{n+1}$ and suppose that $d_0 = 0$.  Show that $d_n = 2^{n+1}n$ for $n = 1,2,\dots$.  %Find a similar expression for $d_n$ is the case that $d_0 = a \neq 0$.
 \begin{solution}
-This equation is in the form~\eqref{eq:differenceequform} if we put $c_n = 2^{n+1} u_{n-1}$.
-The response of the discrete time system $H$ with discrete impulse response $h_n = 2^n u_n$ and period $P=1$ to the input signal $x(t) = 2^{t+1}u(t-1)$ is
+In Section~\ref{sec:difference-equations} we found the discrete time system $H$ with discrete impulse response $h_n = 2^{n}u_n$ is such that the respone $y = H(x)$ is input signal $x$ satisfied the equation
+\[
+x = y - 2 T_{P}(y).
+\] 
+Suppose that the sample period is $P=1$.  The response of $H$ to input signal is $x(t) = 2^{t+1}u(t)$ is
 \begin{align*}
-y = H(x) = \sum_{n\in\ints} h_n T_{n}(x) = \sum_{n=0}^\infty 2^n 2^{t-n+1}u(t-n-1) = 2^{t+1} (\floor{t-1} + 1).
+y = H(x) &= \sum_{n \in \ints} h_n T_{n}(x) \\
+&= \sum_{n = 0}^\infty 2^n 2^{t-n+1}u(t-n) \\
+&= 2^{t+1} \floor{t}u(t)
 \end{align*}
-Observe that $y(0) = H(x,0) = 0$ and that $x(n) = 2^{n+1} u_{n-1}$and so putting $d_n = y(n) = 2^{n+1} n$ yeilds a solution for the recursive equation.
-%Consider the response of the discrete time system $H$ with discrete impulse response $h_n = 2^n u_n$ to the signal $x(t) = 2^{t+1}u(t-1)$.  The 
+Let $c$ and $d$ be sequences with elements 
+\[
+c_n = x(nP) = 2^{n+1}u_{n-1}, \qquad d_n = y(nP) = 2^{n+1}n u_n
+\]
+and observe that $d_0 = 0$.  By definition of $H$ these sequences satisfy the difference equation
+\[
+c_n = 2^{n+1}u_n = d_n - 2 d_{n-1}
+\]
+as required.
+
+Let us now consider an alternative method of solution that applyies the z-transform directly to the difference equation
+\[
+ d_n - 2 d_{n-1} = 2^{n+1} u_{n-1}.
+\]
+Applying the z-transform to both sides and using the time shift property we have
+\[
+\calZ(d) - 2 z^{-1} \calZ(d) = \calZ(2^{n+1} u_n) = \frac{4}{z-2} \qquad \abs{z} > 2.
+\]
+The z-transform of $d$ is then
+\[
+\calZ(d) = \frac{4z}{(z-2)^2} \qquad \abs{z} > 2.
+\]
+The inverse z-transform is found by putting $k=1$ and $a = 2$ in~\eqref{eeq:onlyztrans}.  We obtain $d_n = 2^{n+1} n u_n$.  Observing that $d_n = 0$ we have a solution.
 \end{solution}
 
 \item \label{exer:fibonacci} The Fibonacci sequence $0,1,1,2,3,5,8,13,\dots$ satisfies the recursive equation $d_0 = 0, d_1 = 1$, and $d_n = d_{n-1} + d_{n-2}$ for $n \geq 2$.  Find a closed form expression for the $n$th Fibonacci number.
+\begin{solution}
+Consider the recursive equation
+\[
+d_n - d_{n-1} - d_{n-2} = \delta_{n}.
+\]
+Applying z-transforms to both sides gives
+\[
+\calZ(d) - z^{-1} \calZ(d) - z^{-2} \calZ(d) = \calZ(\delta) = 1.
+\]
+The region of convergence is the whole complex plane.  We have
+\[
+\calZ(d) = \frac{z^2}{z^2 - z - 1} = z \left( \frac{z}{z^2 - z - 1} \right)
+\]
+Our formula for the inverse z-transformation~\eqref{eeq:onlyztrans} involves $z$ on the numerator and so applying partial fractions to the term within the brackets will be convenient.  The roots of $z^2 - z - 1$ are
+\[
+a = \frac{1-\sqrt{5}}{2}, \qquad b = \frac{1+\sqrt{5}}{2}
+\]
+and by partial fractions (see Exercise~\ref{exer:partialfracsecondorder}) we obtain.
+\[
+\frac{z}{(z-a)(z-b)} = \frac{a}{(a-b) (z-a)}-\frac{b}{(a-b) (z-b)}
+\]
+and so
+\[
+\calZ(d) = \frac{az}{(a-b) (z-a)}-\frac{bz}{(a-b) (z-b)}
+\]
+Both of these terms are in the form of~\eqref{eeq:onlyztrans} when $k=0$ and so
+\[
+d_n = \frac{1}{a-b} a^n u_n + \frac{1}{b-a} b^n u_n = \frac{b^n - a^n}{\sqrt{5}} u_n
+\]
+Observe that $d_0 = 0$ and that $d_1 = 1$ as a result of $b - a = 1$.
+\end{solution}
 
-% \item \label{excer:sumsqreexp} Show that $\sum_{n \in \ints} e^{\alpha n^2} = ?$ if $\alpha < 0$ (Hint: solve Excersize~\ref{excer:sumgeomeabsn} first).
+% \item \label{excer:sumsqreexp} Show that $\sum_{n \in \ints} e^{a n^2} = ?$ if $a < 0$ (Hint: solve Excersize~\ref{excer:sumgeomeabsn} first).
 % \begin{solution}
 % BLERG: 
 % \end{solution}
