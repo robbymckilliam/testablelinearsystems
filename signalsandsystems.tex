@@ -7230,9 +7230,9 @@ In order to study this equation it is useful to study the equation
 \end{equation}
 that relates two signals $x$ and $y$.  \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the \term{continuous variable case} of a linear difference equation with constant coefficients.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
 
-Suppose that $H$ is a linear time invariant with the propoerty that the response $y = H(x)$ to input signal $x$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
+Suppose that $H$ is a linear time invariant system with the propoerty that the response $y = H(x)$ to input signal $x$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
 \[
-\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}} = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
 \]
 where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
@@ -7242,25 +7242,48 @@ Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete ti
 \[
 \calZ(h) = C z^{k-m}\frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{m})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{k})}.
 \]
-where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial $a_0z^m + a_1 z^{m-1} + \dots + a_m$, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial $b_0z^k + b_1 z^{k-1} + \dots + b_m$, and $C = \tfrac{a_0}{b_0}$.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
+where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial, and $C = \tfrac{a_0}{b_0}$.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:ztransfuncpoleszeros}
-\lambda(H) = C z^{k-m} \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{m})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{k})},
+\calZ(h) = C z^{k-m} \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{m})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{k})},
 \end{equation}
 where $d$ is the number of shared roots, these shared roots being 
 \[
 \alpha_0 = \beta_0, \;\; \alpha_1 = \beta_1, \;\; \dots, \;\;  \alpha_{d-1} = \beta_{d-1}.
 \]
-The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros at located on the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros located at the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
 
-By application of partial fractions we   
+In order the find the impulse response it is usually easier to multiply by $z^k(-1)^k\prod_{\ell=d}^k\alpha_\ell^{-1}$ on the numerator and $z^m(-1)^m\prod_{\ell=d}^m\beta_\ell^{-1}$ on the denominator to obtain
 \[
-\calZ(h) = z^{k-m} \left( p(s) + \sum_{\ell \in K} \frac{A_\ell}{(z - \beta_\ell)^{r_\ell}} \right).
+\calZ(h) = B \frac{(z^{-1} - \alpha^{-1}_d)(z^{-1} - \alpha_{d+1}^{-1})\cdots(z^{-1} - \alpha_{m}^{-1})}{(z^{-1}-\beta_d^{-1})(z^{-1} - \beta_{d+1}^{-1})\cdots(z^{-1} - \beta_{k}^{-1})},
 \]
-where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  The Laplace transform pair~\eqref{eeq:onlyztrans} has the term $z$ on the numerator and so, it is convenient to write in the form
+where 
 \[
-\calZ(h) = z^{k-m} p(s) + z^{k-m-1} \sum_{\ell \in K} \frac{A_\ell z }{(z - \beta_\ell)^{r_\ell}}  .
+B = C (-1)^{k-m} \frac{\prod_{\ell=d}^k\alpha_\ell}{\prod_{\ell=d}^m\beta_\ell}.
 \]
-If 
+By application of partial fractions with respect to $z^{-1}$ we obtain
+\[
+\calZ(h) = p(z) + \sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}} 
+\]
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}$.  
+is a polynomial in $z^{-1}$ of order $m-k$.  The constant $B$ is incorporated into the coefficients of the polynomial $p(z)$ and the constants $A_\ell$.   The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We see that the z-transform separates into two parts, one corresponding with the polynomial $p$ and the other corresponding with the term $\sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}}$.  Let $F$ be a discrete time system with impulse response $f$ having z-transform 
+\[
+\calZ(f) = p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}
+\]
+It follows from the time shift property of the z-transform that 
+\[
+f_n = \gamma_0 \delta_n + \gamma_1 \delta_{n-1} + \dots + \gamma_{m-k} \delta_{n-m+k}.
+\]
+The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.
+
+By application of partial fractions we obtain
+\[
+\calZ(h) = z^{k-m} \left( p(z) + \sum_{\ell \in K} \frac{A_\ell}{(z - \beta_\ell)^{r_\ell}} \right)
+\]
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(z) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  The Laplace transform pair~\eqref{eeq:onlyztrans} has the term $z$ on the numerator and so, it is convenient to write in the form
+\[
+\calZ(h) = z^{k-m} p(z) + z^{k-m-1} \sum_{\ell \in K} \frac{A_\ell z }{(z - \beta_\ell)^{r_\ell}}  .
+\]
+
 % It is always possible to apply partial fractions to bring~\eqref{eq:ztransfuncpoleszeros} into the form
 % \[
 % zp(z) + \sum_{\ell \in K} \frac{A_\ell z}{(z - \beta_\ell)^{r_\ell}}
@@ -7275,7 +7298,7 @@ where $a \in \complex$.  Suppose that $H$ is a discrete time system such that th
 \[
 x = y - a T_{P}(y).
 \]
-Such a system is called a \term{first order discrete time systems}.  The transfer function of this system is
+Such a system is called a \term{first order discrete time system}.  The transfer function of this system is
 \[
 \lambda(H,s) = \frac{1}{1 - a e^{-sP}} = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}
 \]
@@ -7331,12 +7354,13 @@ The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresy
     %\vtick{-\F} node[pos=0.5,below] {$-F$};
     \vtick{\F} node[pos=0.5,above right] {$F$};
   \end{tikzpicture}
-\caption{Magnitude and phase spectrum of the discrete time system $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The principal component of the phase spectrum in the interval $[-\pi,\pi)$ is plotted.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
+\caption{Magnitude and phase spectrum of the first order discrete time system $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
 \end{figure}
+
 
 \begin{comment}
 
-\section{Digital filters}
+\section{Digital filters}\label{sec:digital-filters}
 
 
 \end{comment}
