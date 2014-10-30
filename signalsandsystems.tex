@@ -7250,45 +7250,63 @@ where $d$ is the number of shared roots, these shared roots being
 \[
 \alpha_0 = \beta_0, \;\; \alpha_1 = \beta_1, \;\; \dots, \;\;  \alpha_{d-1} = \beta_{d-1}.
 \]
-The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros located at the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros located at the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.  In all cases, there exists an equal number of poles and zeros.
 
-In order the find the impulse response it is usually easier to multiply by $z^k(-1)^k\prod_{\ell=d}^k\alpha_\ell^{-1}$ on the numerator and $z^m(-1)^m\prod_{\ell=d}^m\beta_\ell^{-1}$ on the denominator to obtain
-\[
-\calZ(h) = B \frac{(z^{-1} - \alpha^{-1}_d)(z^{-1} - \alpha_{d+1}^{-1})\cdots(z^{-1} - \alpha_{m}^{-1})}{(z^{-1}-\beta_d^{-1})(z^{-1} - \beta_{d+1}^{-1})\cdots(z^{-1} - \beta_{k}^{-1})},
-\]
-where 
-\[
-B = C (-1)^{k-m} \frac{\prod_{\ell=d}^k\alpha_\ell}{\prod_{\ell=d}^m\beta_\ell}.
-\]
-By application of partial fractions with respect to $z^{-1}$ we obtain
-\[
-\calZ(h) = p(z) + \sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}} 
-\]
-where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}$.  
-is a polynomial in $z^{-1}$ of order $m-k$.  The constant $B$ is incorporated into the coefficients of the polynomial $p(z)$ and the constants $A_\ell$.   The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We see that the z-transform separates into two parts, one corresponding with the polynomial $p$ and the other corresponding with the term $\sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}}$.  
+Observe that the z-transform pair  
 
-Let $F$ be a discrete time system with impulse response $f$ having z-transform 
-\[
-\calZ(f) = p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}
-\]
-It follows from the time shift property of the z-transform that 
-\[
-f_n = \gamma_0 \delta_n + \gamma_1 \delta_{n-1} + \dots + \gamma_{m-k} \delta_{n-m+k}.
-\]
-The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.  Let $G$ be a discrete time system with discrete impulse response $g$ having z-transform
-\[
-\calZ(g) = \sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}} = \sum_{\ell \in K} \frac{A_\ell \beta_\ell (-1)^{r_\ell} z}{(z - \beta_\ell)^{r_\ell}}.
-\]
-The inverse BLERG
+% In order the find the impulse response it is usually easier to multiply by $z^k(-1)^k\prod_{\ell=d}^k\alpha_\ell^{-1}$ on the numerator and $z^m(-1)^m\prod_{\ell=d}^m\beta_\ell^{-1}$ on the denominator to obtain
+% \[
+% \calZ(h) = B \frac{(\alpha^{-1}_d - z^{-1})(\alpha_{d+1}^{-1} - z^{-1})\cdots(\alpha_{m}^{-1}-z^{-1})}{(\beta_d^{-1}-z^{-1})(\beta_{d+1}^{-1}-z^{-1})\cdots(\beta_{k}^{-1}-z^{-1})},
+% \]
+% where 
+% \[
+% B = C \frac{\prod_{\ell=d}^k\alpha_\ell}{\prod_{\ell=d}^m\beta_\ell}.
+% \]
+% By application of partial fractions with respect to $z^{-1}$ we can write the z-transform in the form
+% \[
+% \calZ(h) = p(z) + \sum_{\ell \in K} \frac{A_\ell }{(\beta_\ell^{-1}-z^{-1})^{r_\ell}} 
+% \]
+% where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}$.  
+% is a polynomial in $z^{-1}$ of order $m-k$.  The constant $B$ is incorporated into the coefficients of the polynomial $p(z)$ and the constants $A_\ell$.   The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We see that the z-transform separates into two parts, one corresponding with the polynomial $p$ and the other corresponding with the term $\sum_{\ell \in K} \frac{A_\ell }{(\beta_\ell^{-1}-z^{-1})^{r_\ell}}$.  
+
+% Let $F$ be a discrete time system with impulse response $f$ having z-transform 
+% \[
+% \calZ(f) = p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}
+% \]
+% Becasue the z-transform of the delta sequence is $\calZ(\delta) = 1$ it follows from the time shift property of the z-transform that 
+% \[
+% f_n = \gamma_0 \delta_n + \gamma_1 \delta_{n-1} + \dots + \gamma_{m-k} \delta_{n-m+k}.
+% \]
+% The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.  
+
+% Let $G$ be a discrete time system with discrete impulse response $g$ having z-transform
+% \[
+% \calZ(g) = \sum_{\ell \in K} \frac{A_\ell }{(\beta_\ell^{-1}-z^{-1})^{r_\ell}} = z^{r_\ell-1} \sum_{\ell \in K} \frac{A_\ell \beta_\ell^{r_\ell} z}{(z - \beta_\ell)^{r_\ell}}.
+% \]
+% The inverse 
 
 By application of partial fractions we obtain
 \[
 \calZ(h) = z^{k-m} \left( p(z) + \sum_{\ell \in K} \frac{A_\ell}{(z - \beta_\ell)^{r_\ell}} \right)
 \]
-where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(z) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  The Laplace transform pair~\eqref{eeq:onlyztrans} has the term $z$ on the numerator and so, it is convenient to write in the form
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and
 \[
-\calZ(h) = z^{k-m} p(z) + z^{k-m-1} \sum_{\ell \in K} \frac{A_\ell z }{(z - \beta_\ell)^{r_\ell}}  .
+p(z) = \gamma_0 + \gamma_1 z + \dots + \gamma_{m-k} z^{m-k}
 \]
+is a polynomial of degree $m-k$.  If $k > m$ then $p(z) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  The Laplace transform pair~\eqref{eeq:onlyztrans} has the term $z$ on the numerator and so, it is convenient to write in the form
+\[
+\calZ(h) = z^{k-m} p(z) + z^{k-m-1} \sum_{\ell \in K} \frac{A_\ell z }{(z - \beta_\ell)^{r_\ell}}.
+\]
+Let $F$ be a discrete time system with impulse response $f$ having z-transform 
+\[
+\calZ(f) = z^{k-m} p(z) = \gamma_0 z^{k-m} + \gamma_1 z^{-1} + \dots + \gamma_{m-k}
+\]
+Because the z-transform of the delta sequence is $\calZ(\delta) = 1$ it follows from the time shift property of the z-transform that 
+\[
+f_n = \gamma_{m-k} \delta_{n} + \gamma_1 \delta_{n+} + \dots + \gamma_{m-k} \delta_{n-m+k}.
+\]
+The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.  
+
 
 % It is always possible to apply partial fractions to bring~\eqref{eq:ztransfuncpoleszeros} into the form
 % \[
