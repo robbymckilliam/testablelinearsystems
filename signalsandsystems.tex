@@ -7265,7 +7265,9 @@ By application of partial fractions with respect to $z^{-1}$ we obtain
 \calZ(h) = p(z) + \sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}} 
 \]
 where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}$.  
-is a polynomial in $z^{-1}$ of order $m-k$.  The constant $B$ is incorporated into the coefficients of the polynomial $p(z)$ and the constants $A_\ell$.   The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We see that the z-transform separates into two parts, one corresponding with the polynomial $p$ and the other corresponding with the term $\sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}}$.  Let $F$ be a discrete time system with impulse response $f$ having z-transform 
+is a polynomial in $z^{-1}$ of order $m-k$.  The constant $B$ is incorporated into the coefficients of the polynomial $p(z)$ and the constants $A_\ell$.   The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We see that the z-transform separates into two parts, one corresponding with the polynomial $p$ and the other corresponding with the term $\sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}}$.  
+
+Let $F$ be a discrete time system with impulse response $f$ having z-transform 
 \[
 \calZ(f) = p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}
 \]
@@ -7273,7 +7275,11 @@ It follows from the time shift property of the z-transform that
 \[
 f_n = \gamma_0 \delta_n + \gamma_1 \delta_{n-1} + \dots + \gamma_{m-k} \delta_{n-m+k}.
 \]
-The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.
+The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.  Let $G$ be a discrete time system with discrete impulse response $g$ having z-transform
+\[
+\calZ(g) = \sum_{\ell \in K} \frac{A_\ell }{(z^{-1} - \beta_\ell^{-1})^{r_\ell}} = \sum_{\ell \in K} \frac{A_\ell \beta_\ell (-1)^{r_\ell} z}{(z - \beta_\ell)^{r_\ell}}.
+\]
+The inverse BLERG
 
 By application of partial fractions we obtain
 \[
