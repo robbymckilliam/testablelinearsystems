@@ -1,3 +1,3 @@
 bibtex signalsandsystems
-#pdflatex --shell-escape -interaction=nonstopmode signalsandsystems.tex
-pdflatex --shell-escape signalsandsystems.tex
+#pdflatex --shell-escape -interaction=nonstopmode main.tex
+pdflatex --shell-escape main.tex

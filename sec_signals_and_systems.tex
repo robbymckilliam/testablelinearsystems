@@ -1,0 +1,1105 @@
+%\clearpage
+\chapter{Signals and systems}
+%\section{Signals and systems}
+
+A \term{signal} is a function mapping an input variable to some output variable.  For example
+\[
+\sin( \pi t), \qquad \frac{1}{2} t^3, \qquad e^{-t^2}
+\]
+all represent \term{signals} with real input variable $t \in \reals$ and real output variable. These signals are plotted in Figure~\ref{fig:signalsstart}.  If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
+In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
+
+%A 1-dimensional signal is said to be a \term{continuous-time signal} if the variable $t \in \reals$, wheras it is said to be a discrete-time signal
+% If the domain of a signal is the set of real numbers $\reals$ the signal is said to be \term{continuous-time}.  If the domain is the set of integers $\ints$, the signal is said to be \term{discrete-time}.  We will usually indicate a discrete-time signal by using $n$ instead of $t$ for the independent variable, so $\sin(\pi n)$ will usually be a discrete-time signal with $n \in \ints$, and $\sin(\pi t)$ will usually be a continuous-time signal with $t \in \reals$.  Examples of discrete time signals are
+% \[
+% \sin(\tfrac{\pi}{4} n), \qquad e^{-n^2/4}, \qquad n \in \ints
+% \]
+% and they are plotted using vertical lines and dots as in Figure~\ref{fig:signalsstartdiscrete}.  This course is mostly concerned with continuous-time signals.  After this section, we will not return to discrete-time signals until Section~\ref{sec:sampl-interp}.
+
+\begin{figure}[tp]
+\centering
+\begin{tikzpicture}[domain=-1.4:1.4,samples=200]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\sin( \pi t)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\;\;
+\begin{tikzpicture}[domain=-1.4:1.4]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\frac{1}{2}  t^3$};
+    \draw[smooth,color=black,thick] plot function{x*x*x/2};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\;\;
+\begin{tikzpicture}[domain=-1.4:1.4]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$e^{-t^2}$};
+    \draw[smooth,color=black,thick] plot function{exp(-x*x)};
+\end{tikzpicture}
+\caption{1-dimensional signals} \label{fig:signalsstart}
+\end{figure}
+
+% \begin{figure}[tp]
+% \centering
+% \begin{tikzpicture}[domain=-2:2]
+%     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%     \draw[->] (-2.5,0) -- (2.5,0) node[above] {$n$};
+%     \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\sin\big(\tfrac{\pi}{4} n\big)$};
+%     %\draw[color=black] plot[id=x] function{1/x^2} 
+%     %    node[right] {$f(t) = t^{-2}$};
+%     \draw[color=black,ycomb,mark=*,samples=9] plot function{sin(3.14159265359*x/2)};
+%     % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+%     %    node[right] {$f(t) = \frac{1}{20} e^t$};
+% \end{tikzpicture} \;\;
+% \begin{tikzpicture}[domain=-2:2]
+%     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%     \draw[->] (-2.5,0) -- (2.5,0) node[above] {$n$};
+%     \draw[->] (0,-1.75) -- (0,1.75) node[left] {$e^{-n^2/4}$};
+%     \draw[color=black,ycomb,mark=*,samples=9] plot function{exp(-x*x)};
+% \end{tikzpicture}
+% \caption{1-dimensional discrete-time signals} \label{fig:signalsstartdiscrete}
+% \end{figure}
+
+\section{Properties of signals}\label{sec:properties-signals}
+
+A signal $x$ is \term{bounded} if there exists a real number $M$ such that 
+\[
+\sabs{x(t)} < M \qquad \text{for all $t \in \reals$} 
+\]
+where $\sabs{\cdot}$ denotes the (complex) magnitude.  Both $\sin( \pi t)$ and $e^{-t^2}$ are examples of bounded signals because $\sabs{\sin( \pi t)} \leq 1$ and $\sabs{e^{-t^2}} \leq 1$ for all $t \in \reals$.  However, $\frac{1}{2}t^3$ is not bounded because its magnitude grows indefinitely as $t$ moves away from the origin.  % Similarly a discrete-time signal $x$ is bounded if there exists a real number $M$ such that 
+% \[
+% \sabs{x(n)} \leq M \qquad \text{for all $n \in \ints$}.
+% \]
+% For example, both $\sin(\tfrac{\pi}{4} n)$ and $e^{-n^2/4}$ are bounded, but the signal $x(n) = n$ is not.
+
+A signal $x$ is \term{periodic} if there exists a positive real number $T$ such that
+\[
+x(t) = x(t + kT) \qquad \text{for all $k \in \ints$ and $t \in \reals$.}
+\]
+If there exists a smallest such positive $T$ it is called the \term{fundamental period} or simply the~\term{period}.  For example, the signal $\sin( \pi t)$ is periodic with period $T=2$.  Neither $\frac{1}{2}t^3$ or $e^{-t^2}$ are periodic.  % A discrete-time signal $x(n)$ is periodic if there exists an integer $T$ such that 
+% \[
+% x(n) = x(n + kT) \qquad \text{for all $k \in \ints$ and $n \in \ints$}.
+% \]
+% For example $\sin(\tfrac{\pi}{4} n)$ is periodic but $e^{-n^2/4}$ is not.
+
+\newcommand{\rect}{\Pi}
+
+A signal $x$ is \term{right sided} if there exists a $T \in \reals$ such that $x(t) = 0$ for all $t < T$.  Correspondingly $x$ is \term{left sided} if $x(t) = 0$ for all $T > t$.  For example, the \term{step function} 
+\begin{equation} \label{eq:stepfunction}
+u(t) = \begin{cases}
+1 & t \geq 0 \\
+0 & t < 0
+\end{cases}
+\end{equation}
+is right-sided.  Its reflection in time $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to be \term{finite} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ are not finite, but the \term{rectangular pulse}
+\begin{equation}\label{eq:rectfuncdefn}
+\rect(t) = \begin{cases} 
+1 & \abs{t} < \frac{1}{2}\\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+is finite.  %The definitions left sided, right sided, finite, and unbounded in time apply also to discrete-time signals.
+
+\begin{figure}[tp]
+\centering
+\begin{tikzpicture}[domain=-2:2]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
+    \draw[->] (0,-0.65) -- (0,1.75) node[left] {$u(t)$};
+    \draw[thick] (-2,0) -- (0,0) -- (0,1) -- (2,1);
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}[domain=-2:2]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
+    \draw[->] (0,-0.65) -- (0,1.5) node[left] {$u(-t)$};
+    \draw[thick] (2,0) -- (0,0) -- (0,1) -- (-2,1);
+\end{tikzpicture}
+\begin{tikzpicture}[domain=-2:2]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
+    \draw[->] (0,-0.65) -- (0,1.75) node[left] {$\Pi(t)$};
+    \draw[thick] (-2,0) -- (-0.5,0) -- (-0.5,1) -- (0.5,1) -- (0.5,0) -- (2,0);
+    \vtick{-0.5} node[pos=0.5,below] {$-\tfrac{1}{2}$};
+    \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}[domain=-2:2]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
+    \draw[->] (0,-0.65) -- (0,1.5) node[left] {$\tfrac{1}{2} + \tfrac{1}{2}\cos(\pi t)$};
+    \draw[smooth,color=black,thick] plot function{0.5 + 0.5*cos(3.14159265359*x)};
+        %\vtick{-1} node[pos=0.5,below] {$-1$};
+    %\vtick{1} node[pos=0.5,below] {$1$};
+\end{tikzpicture}
+
+%\\
+% \begin{tikzpicture}
+%     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$n$};
+%     \draw[->] (0,-0.5) -- (0,1.5) node[left] {$u(n)$};
+%      \foreach \n in {-2,-1.5,-1,-0.5,0}{
+%       \draw plot[ycomb,mark=*] (\n,0);
+%     }
+%     \foreach \n in {0.5,1,1.5,2}{
+%       \draw plot[ycomb,mark=*] (\n,1);
+%     }
+% \end{tikzpicture} \;\;
+% \begin{tikzpicture}
+%     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$n$};
+%     \draw[->] (0,-0.5) -- (0,1.5) node[left] {$u(-n)$};
+%     \foreach \n in {-2,-1.5,-1,-0.5}{
+%       \draw plot[ycomb,mark=*] (\n,1);
+%     }
+%     \foreach \n in {0,0.5,1,1.5,2}{
+%       \draw plot[ycomb,mark=*] (\n,0);
+%     }
+% \end{tikzpicture}
+\caption{The right sided step function $u(t)$, its left sided reflection $u(-t)$, the finite rectangular pulse $\Pi(t)$ and the signal $\tfrac{1}{2} + \tfrac{1}{2}\cos(x)$ that is not finite.  %The definition of left and right sided applies to both continuous and discrete-time signals.
+} 
+\label{fig:stepsided}
+\end{figure}
+
+A signal $x$ is \term{even} (or \term{symmetric}) if
+\[
+x(t) = x(-t) \qquad  \text{for all $t \in \reals$}
+\] 
+and \term{odd} (or \term{antisymmetric}) if 
+\[
+x(t) = -x(-t) \qquad \text{for all $t \in \reals$}.
+\] 
+For example, $\sin(\pi t)$ and $\tfrac{1}{2}t^3$ are odd and $e^{-t^2}$ is even.  % Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
+% \[
+% x_e(t) = \tfrac{1}{2}\big( x(t) + x(-t) \big)
+% \]
+% is an even signal called the \term{even part} of $x$ and 
+% \[
+% x_o(t) = \tfrac{1}{2}\big( x(t) - x(-t) \big)
+% \] 
+% is an odd signal called the \term{odd part} of $x$.  For example, put $x(t) = e^{-t^2} + \sin(\pi t)$.  The even part of $x$ is $x_e(t) = e^{-t^2}$ and the odd part is $x_o(t) = \sin(\pi t)$.
+% A complex valued signal is \term{conjugate symmetric} if 
+% \[
+% x(t) = x(-t)^* \qquad \text{for all $t \in \reals$,}
+% \]
+% where $*$ denotes the complex conjugate of a complex number.  Equivalently, $x$ is conjugate symetric if its real part is an even signal and its imaginary part is an odd signal.  Conversely, $x$ is \term{conjugate antisymmetric} if  
+% \[
+% x(t) = -x(-t)^* \qquad \text{for all $t \in \reals$,}
+% \] 
+% that is, if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
+
+A signal $x$ is \term{locally integrable} if
+\[
+\int_{a}^{b} \abs{x(t)} dt < \infty
+\]
+for all finite constants $a$ and $b$, where by $< \infty$ we mean that the integral evaluates to a finite number.  
+%Every bounded signal is locally integrable (Exercise~\ref{exer:boundedfunctionarelocallyintegrable}).  
+An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  %In this course we always assume that signals are locally integrable, that is, signals are locally integrable functions mapping $\reals \to \reals$ or $\reals \to \complex$.  
+% Similarly two discrete time signals $x$ and $y$ are equal if $x(n) = y(n)$ for all $n \in \ints$.
+%BLERG: Potentially equality of signals could be defined using local integrability, i.e. two signals are equal if they are equal everywhere except a set of measure zero.
+%BERLG: Another relevant term is ``locally bounded'', i.e, a function is locally bounded if for each finite $a$ and $b$ there exists an $M$ such that $\abs{f(x) }< M$ for all $.  ACTUALLY THIS WONT BE GOOD, SINCE THEN FOURIER TRANSFORMS WONT BE SIGNALS.  It's still a useful concept potentially.  
+A signal $x$ is \term{absolutely integrable} if
+\begin{equation}\label{eq:l1normdefncontinuous}
+\|x\|_1 = \int_{-\infty}^{\infty} \abs{x(t)} dt < \infty.
+\end{equation}
+Here we introduce the notation $\|x\|_1$ called the \term{$L^1$-norm} of $x$.  For example $\sin( \pi t)$ and $\tfrac{1}{2}t^3$ are not absolutely integrable, but $e^{-t^2}$ is because~\citep{nicholas_1950_erf}
+\begin{equation}\label{eq:expabssum}
+\int_{-\infty}^{\infty} \sabs{e^{-t^2}} dt = \int_{-\infty}^{\infty} e^{-t^2} dt  = \sqrt{\pi}.
+\end{equation}
+% A discrete-time signal $x$ is called \term{absolutely summable} if
+% \begin{equation}\label{eq:l1normdiscrete}
+% \|x\|_1 = \sum_{n\in\ints} \abs{x(n)}
+% \end{equation}
+% exists.  For example $\sin(\tfrac{1}{4}n)$ is not absolutely summable, but $e^{-n^2/4}$ is (Excersize~\ref{excer:disctimeabssummableexpbound}).  We have reused (overloaded) the notation $\|\cdot\|_1$ here so that is applies to both continuous and discrete-time signals.  It is left to the reader to remember that $\|\cdot\|_1$ applied to a continuous-time signal means the integral~\eqref{eq:l1normdefncontinuous}, but when applied to a discrete-time signal means the sum~\eqref{eq:l1normdiscrete}.
+It is common to denote the set of absolutely integrable signals by $L^1$ or $L^1(\reals)$.  So, $e^{-t^2} \in L^1$ and $\tfrac{1}{2}t^3 \notin L^1$.   A signal $x$ is called is \term{square integrable} if
+\[
+\|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt < \infty.
+\]
+The real number $\|x\|_2$ is called the \term{$L^2$-norm} of $x$.  Square integrable signals are also called \term{energy signals}, and the squared $L^2$-norm $\|x\|_2^2$ is called the \term{energy} of $x$. For example $\sin( \pi t)$ and $\tfrac{1}{2}t^3$ are not energy signals, but $e^{-t^2}$ is (Exercise~\ref{excer:energyexpchangevar}).  The set of square integrable signals is often denoted by $L^2$ or $L^2(\reals)$.  %A discrete-time signal $x$ is an \term{energy signal} if it is \term{square summable}, that is, if
+% \[
+% \|x\|_2 = \sum_{n\in\ints} \abs{x(n)}^2
+% \]
+% exists.  In this case, the $\|x\|_2$ the energy of $x$.  For example, $\sin(\tfrac{\pi}{4} n)$ is not an energy signal, but $e^{-n^2/4}$ is (Excersize~\ref{excer:disctimeeneryexpbound}).  We have again overloaded the notation so that $\|\cdot\|_2$ applies to both continuous and discrete-time signals.
+
+We write $x = y$ to indicate that two signals $x$ and $y$ are~\term{equal pointwise}, that is, $x(t) = y(t)$ for all $t \in \reals$.  This definition of equality is often stronger than we desire.  For example, the step function $u$ and the signal
+\[
+z(t) = \begin{cases}
+1 & t > 0 \\
+0 & t \leq 0
+\end{cases}
+\]
+are not equal pointwise because they are not equal at $t=0$, that is, $u(0) = 1$ and $z(0) = 0$. %although $\rect(t)$ does equal $\rect(-t)$ for all other values of $t \in \reals$.  
+It is useful to identify signals that differ only at isolated points and for this we use a weaker definition of equality.  We say that two signals $x$ and $y$ are equal \term{almost everywhere} if
+\[
+\int_{a}^b \abs{ x(t) - y(t) } dt = 0
+\]
+for all finite constants $a$ and $b$.  So, in the previous example, while $u \neq z$ pointwise we do have $u = z$ almost everywhere.  Typically the term almost everywhere is abbreviated to a.e. and one writes 
+\[
+x = y \;\; \text{a.e.} \qquad \text{or} \qquad x(t) = y(t) \;\; \text{a.e.}
+\] 
+to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This convention is not followed in these notes.  Instead equal almost everywhere will be used by default, that is, by $x = y$ we will always mean that $x = y$ almost everywhere.  If it is ever important that two signals are equal pointwise this will be specifically stated.
+
+% A continuous-time signal is called a \term{power signal} if it has finite average energy per unit time.  That is, if
+% \[
+% \lim_{T \rightarrow \infty} \frac{1}{2T} \int_{-T}^{T} \abs{x(t)}^2 dt
+% \]
+% exists.  If the limit above exists its value is called the \term{power} of the signal $x(t)$.  An energy signal is a power signal with power equal to zero.  The signal $\sin( \pi t)$ is a power signal with power
+% \[
+% \lim_{T \rightarrow \infty} \frac{1}{2T} \int_{-T}^{T} \sin^2( \pi t) dt = \tfrac{1}{2}.
+% \] 
+% The signal $e^{-t^2}$ is an energy signal, so it is a power signal with zero power.  The signal $\tfrac{1}{2}t^3$ is not a power signal because
+% \[
+% \lim_{T \rightarrow \infty} \frac{1}{2T} \int_{-T}^{T} \tfrac{1}{4} t^6 dt = \lim_{T \rightarrow \infty} \frac{T^6}{56}
+% \]
+% and this limit does not exists (it diverges).
+
+% A discrete-time signal is a \term{power signal} if its average energy is finite, that is,
+% \[
+% \lim_{T\rightarrow\infty} \frac{1}{2T+1} \sum_{n=-T}^{T} \abs{x(n)}^2
+% \]
+% exists.  If the limit exists its value is called the power of $x(n)$.  For example, $\sin(\tfrac{\pi}{4} n)$ is a power signal with power $\tfrac{1}{2}$, and $e^{-n^2/4}$ is an energy signal, so it is also a power signal with zero power.  However, the discrete-time signal $x(n)=n$ is not a power signal because
+% \[
+% \lim_{T\rightarrow\infty} \frac{1}{2T+1} \sum_{n=-T}^{T} n^2 = \lim_{T\rightarrow\infty} \tfrac{1}{3}T(T+1)
+% \]
+% and this limit diverges.
+
+
+%BLERG: It's potentially a decent idea to make signals have contain there limits from the left, i.e. be continuous from the left.  This works well if you define the differentiator, integrator etc in the right way.  Makes sense of impulse response etc. 
+
+%BLERG %\section{Spaces of signals}
+
+
+\section{Systems (functions of signals)}
+
+A \term{system} is a function that maps a signal to another signal.  For example
+\[
+x(t) + 3 x(t-1), \qquad \int_{0}^{1} x(t - \tau) d\tau, \qquad \frac{1}{x(t)}, \qquad \frac{d}{dt} x(t)
+\]
+represent systems, each mapping the signal $x$ to another signal. Consider the electric circuit in Figure~\ref{circ:voltagedivider} called a \term{voltage divider}.  If the voltage at time $t$ is $x(t)$ then, by Ohm's law, the current at time $t$ satisfies
+\[
+i(t) = \frac{1}{R_1 + R_2} x(t),
+\]
+and the voltage over the resistor $R_2$ is
+\begin{equation}\label{eq:voltagedivider}
+y(t) = R_2 i(t) = \frac{R_2}{R_1 + R_2} x(t).
+\end{equation}
+The circuit can be considered as a system mapping the signal $x$ representing the voltage to the signal $i = \tfrac{1}{R_1+R_2}x$ representing the current, or a system mapping $x$ to the signal $y=\frac{R_2}{R_1 + R_2}x$ representing the voltage over resistor $R_2$.
+
+\begin{figure}[tp]
+\centering
+\begin{circuitikz} \draw
+ %(0,0) node[anchor=east]{B}
+  to[short, i<=$i(t)$, o-] (3,0)
+  to[R,l=$R_2$] (3,3)
+ (3,3) to[R, l=$R_1$, -o] (0,3)
+ to[open, v=$x(t)$] (0,0)
+ (3,0) to[short,-o] (4,0)
+ (3,3) to[short,-o] (4,3)
+ (4,0) to[open, v>=$y(t)$] (4,3)
+;\end{circuitikz}
+\caption{A \term{voltage divider} circuit.} \label{circ:voltagedivider}
+\end{figure}
+
+%%some styles for block diagrams
+\begin{figure}[tp]
+\centering
+\begin{tikzpicture}[node distance=2.5cm,auto]
+    \node [dspsquare] (H) {$H$};
+    \node [dspnodeopen,dsp/label=above] (x) [left of=H,node distance=2cm] {$x$};
+    \node [dspnodeopen,dsp/label=above] (y) [right of=H, node distance=2cm] {$H(x)$};
+    \draw[dspconn] (x) -- (H);
+    \draw[dspflow] (H) -- (y);
+\end{tikzpicture}
+\caption{System block diagram with input signal $x$ and output signal $H(x)$.}\label{fig:blockdiagramH1}
+\end{figure}
+
+
+% \begin{figure}[tp]
+% \centering
+% \begin{circuitikz} \draw
+%  %(0,0) node[anchor=east]{B}
+%   to[R,l=$R_o$, i<=$i(t)$, o-] (3,0)
+%   to[R,l=$R_2$] (3,3)
+%  (3,3) to[R, l=$R_1$, -o] (0,3)
+%  to[open, v=$x(t)$] (0,0)
+%  (3,0) to[short,-o] (5,0)
+%  (3,3) to[short,-o] (5,3)
+%  (4,0) to[R,l_=$R_i$] (4,3)
+%  (5,0) to[open, v>=$y(t)$] (5,3)
+% ;\end{circuitikz}
+% \caption{A \term{voltage divider} circuit including input resistance $R_i$ and output resistance $R_o$.} \label{circ:voltagedividerinpout}
+% \end{figure}
+
+We denote systems with capital letters such as $H$ and $G$.  A system $H$ is a function that maps a signal $x$ to another signal denoted $H(x)$.  We call $x$ the \term{input signal} and $H(x)$ the \term{output signal} or the \term{response} of system $H$ to signal $x$.  The value of the signal $H(x)$ at $t$ is denoted by $H(x,t)$ or $H(x,t)$ and we do not distinguish between these notations.  %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
+It is sometimes useful to depict systems with a block diagram.  Figure~\ref{fig:blockdiagramH1} is a simple block diagram showing the input and output signals of a system $H$.
+
+The electric circuit in Figure~\ref{circ:voltagedivider} corresponds with the system
+\[
+H(x) = \frac{R_2}{R_1 + R_2} x = y.
+\]
+This system multiplies the input signal $x$ by $\frac{R_2}{R_1 + R_2}$.  This brings us to our first practical test.
+
+\newcommand{\sinc}{\operatorname{sinc}}
+\begin{test}\label{test:voltagedividertest1}
+(\textbf{Voltage divider})
+In this test we construct the voltage divider from Figure~\ref{circ:voltagedivider} on a breadboard with resistors $R_1 \approx 100\si{\ohm}$ and $R_2 \approx 470\si{\ohm}$ with values accurate to within 5\%.  Using a computer soundcard (an approximation of) the voltage signal 
+\[
+x(t) = \sin( 2 \pi f_1 t) \qquad  \text{with} \qquad  f_1 = 100
+\] 
+is passed through the circuit.  The approximation is generated by sampling $x(t)$ at rate $F = \frac{1}{P} = 44100\si{\hertz}$ to generate samples 
+\[
+x(n P) \qquad n = 0, \dots, 2 F
+\]
+corresponding to approximately $2$ seconds of signal.  These samples are passed to the soundcard which starts playback.  The voltage over resistor $R_2$ is recorded (also using the soundcard) that returns a list of samples $y_1,\dots,y_L$ taken at rate $F$.  The voltage over $R_2$ can be (approximately) reconstructed from these samples as
+\begin{equation}\label{eq:yreconstruct}
+\tilde{y}(t) = \sum_{\ell=1}^L y_\ell \sinc( F t - \ell )
+\end{equation}
+where
+\begin{equation}\label{eq:sincfunction}
+\sinc(t) = \frac{\sin(\pi t)}{\pi t}
+\end{equation}
+is the called the \term{sinc function} and is plotted in Figure~\ref{fig:sincfunction1}. We will justify this reconstruction in Section~\ref{sec:bandlimited-signals}.  Simultaneously the (stereo) soundcard is used to record the input voltage $x$ producing samples $x_1,\dots,x_L$ taken at rate $F$.  An approximation of the input signal is  
+\begin{equation}\label{eq:xreconstruct}
+\tilde{x}(t) = \sum_{\ell=1}^L x_\ell \sinc( F t - \ell ).
+\end{equation}
+In view of~\eqref{eq:voltagedivider} we would expect the approximate relationship
+\[
+\tilde{y} \approx \frac{R_2}{R_1 + R_2} \tilde{x} = \frac{47}{57}\tilde{x}.
+\]
+A plot of $\tilde{y}$, $\tilde{x}$ and $\tfrac{47}{57}\tilde{x}$ over a $20\si{\milli\second}$ period from $1\si{\second}$ to $1.02\si{\second}$ is given in Figure~\ref{fig:test1voltagedivider}.  The hypothesised output signal $\tfrac{47}{57}\tilde{x}$ does not match the observed output signal $\tilde{y}$.  A primary reason is that the circuitry inside the soundcard itself cannot be ignored.  When deriving the equation for the voltage divider we implicitly assumed that current flows through the output of the soundcard without resistance (a short circuit), and that no current flows through the input device of the soundcard (an open circuit).  These assumptions are not realistic.  Modelling the circuitry in the sound card wont be attempted here.  In Section~\ref{sec:active-circuits} we will construct circuits that contain external sources of power (active circuits).  These are less sensitive to the circuitry inside the soundcard.  
+
+%The reason is that the resistances inside the soundcard itself cannot be ignored.  We can model these resistances using an output resistance $R_o$ for the soundcard output device and an input resistance $R_i$ for the soundcard input device as in Figure~\ref{circ:voltagedividerinpout}.  Appendix~\ref{sec:estim-outp-input} describes a method for estimating $R_o$ and $R_i$.  The hardware used for this test have $R_o \approx 0 \si{\ohm}$ and $R_i \approx 4700\si{\ohm}$.  We now expect the relationship
+% \[
+% \tilde{y} \approx \frac{R_2^\prime}{R_1^\prime + R_2^\prime} \tilde{x} = \frac{3196}{4139}\tilde{x} \approx 0.77\tilde{x}
+% \]
+% where 
+% \[
+% R_1^\prime = R_1 + R_o = 820,\qquad R_2^\prime = \frac{R_2 R_i}{R_2 + R_i} = \frac{63920}{23}. 
+% \]
+% A plot of $\tilde{y}$, $\tilde{x}$ and $\frac{47}{82}\tilde{x}$ is given in Figure~\ref{fig:test1voltagedividerfixed}.  Observe that $\tilde{y}$ is close to $0.77\tilde{x}$.
+
+% %%some styles for block diagrams
+% \begin{figure}[p]
+% \centering
+% \includegraphics{tests/voltagedivider/plot-2.mps}
+% \caption{Plot of reconstructed input signal $\tilde{x}$ (solid line), output signal $\tilde{y}$ (solid line with circle) and hypothesised output signal $0.77\tilde{x}$ (solid line with dot) for the voltage divider circuit including input and output resistances in Figure~\ref{circ:voltagedividerinpout}.} \label{fig:test1voltagedividerfixed}
+% \end{figure}
+
+\end{test}
+
+
+%BLERG Potentially what this next bit is out of place?
+
+Not all signals can be input to all systems.  For example, the system
+\[
+H(x,t) = \frac{1}{x(t)}
+\]
+is not defined at those $t$ where $x(t) = 0$ because we cannot divide by zero.  Another example is the system
+\begin{equation}\label{eq:deifferentiator}
+I_{\infty}(x,t) = \int_{-\infty}^{t} x(\tau) d\tau ,
+\end{equation}
+called an \term{integrator}.  %, that is not defined for those signals where the integral above does not exist. %BLERG: YOU MIGHT WANT TO FORMALLY DEFINE DOES NOT EXIST AS IS NOT LEBESGUE INTEGRABLE!
+The signal $x(t) = 1$ cannot be input to the integrator because the integral $\int_{-\infty}^{t} dt$ is not finite for any $t$.  % Another example is the system
+% \[
+% D(x,t) = \frac{d}{dt} x(t),
+% \]
+% called a \term{differentiator}, that is not defined at those $t$ where $x(t)$ is not differentiable.  For example, a differentiator cannot be applied to the step function $u(t)$ from Excersize~\ref{excer:stepfunction}, since $u(t)$ is not continuous, and therefore not differentiable at $t=0$.
+
+When specifying a system it is necessary to also specify a set of signals that can be input.  This is called a \term{domain} for the system.  We are free to choose the domain at our convenience.  For example, a domain for the system $H(x,t) = \frac{1}{x(t)}$ is a the set of signals $x(t)$ which are not zero for any $t$. An example of a domain for the integrator $I_\infty$ is the set $L^1$ of absolutely integrable signals because, if $x$ is absolutely integrable, then 
+\[
+\abs{I_\infty(x,t)} \leq \abs{\int_{-\infty}^{t} x(\tau) d\tau} \leq \int_{-\infty}^{t} \abs{x(\tau)} d\tau <  \int_{-\infty}^{\infty} \abs{x(\tau)} d\tau = \|x\|_1 < \infty
+\] 
+and so, $I_\infty(x,t)$ is finite for all $t$.  In this text, the domain used for a given system will usually be obvious from the context in which the system is defined.  For this reason we will not usually state the domain explicitly.  We will only do so if there is chance for confusion.  %When describing the properties of a system we will often want to show that it satisfies certain conditions ``for all signals''.  By this phrase we will always implicitly mean ``for all signals to which the system can be applied''.  %We say this once and for all so that the text is not littered with technical requirements regarding the sets of signals for which particular properties will hold for particular systems.
+
+%%some styles for block diagrams
+\begin{figure}[p]
+\begin{shaded}
+\centering
+  \begin{tikzpicture}
+    \selectcolormodel{gray} 
+    \begin{axis}[compat=newest,font=\footnotesize,height=8cm,width=12cm,xlabel={time (s)},ylabel={electrical potential}, legend style={draw=none,fill=none,legend pos=north east,cells={anchor=west},font=\footnotesize},xmin=999,xmax=1021,ytick={0}, yticklabels={0},xtick={1000,1005,1010,1015,1020},xticklabels={1.000,1.005,1.010,1.015,1.020}]
+      \addplot[mark=none] table[x index=0, y index=1] {tests/voltagedivider/voltagedivider.csv};
+      \addplot[mark=o,mark repeat=15,mark options={solid,fill=black,scale=1.1}] table[x index=0, y index=2] {tests/voltagedivider/voltagedivider.csv};
+      \addplot[mark=*,mark repeat=15,mark options={solid,fill=black,scale=0.6}] table[x index=0, y index=3] {tests/voltagedivider/voltagedivider.csv};
+      \legend{$\tilde{x}$, $\tilde{y}$, $\tfrac{42}{57}\tilde{x}$ }
+   \end{axis} 
+  \end{tikzpicture}  
+\captionsetup{type=figure}
+%\includegraphics{tests/voltagedivider/plot-1.mps}
+\captionof{figure}{Plot of reconstructed input signal $\tilde{x}$ (solid line), output signal $\tilde{y}$ (solid line with circle) and hypothesised output signal $\tfrac{47}{57}\tilde{x}$ (solid line with dot) for the voltage divider circuit in Figure~\ref{circ:voltagedivider}. The hypothesised signal does not match $\tilde{y}$.  One reason is that the model does not take account of the circuitry inside the soundcard.} \label{fig:test1voltagedivider}
+%\end{center}
+\end{shaded}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[domain=-5.5:4.5,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-6,0) -- (5,0) node[above] {$t$};
+    \draw[->] (0,-0.3) -- (0,2.5);
+    \draw[smooth,color=black,thick] plot function{2*exp(-x*x)};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(x+3)*(x+3))};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(x-1.5)*(x-1.5))};
+    \node[left,shift={(0.0,2.2)}] {$x$};
+    \node[shift={(1.5,2.2)}] {$T_{1.5}(x)$};
+    \vtick{1.5} node[pos=0.5,below] {$1.5$};
+    \node[shift={(-3,2.2)}] {$T_{-3}(x)$};
+    \vtick{-3} node[pos=0.5,below] {$-3$};
+  \end{tikzpicture}
+  \caption{Time-shifter system $T_{1.5}(x,t) = x(t - 1.5)$ and $T_{-3}(x,t) = x(t + 3)$ acting on the signal $x(t) = e^{-t^2}$.} \label{fig:timeshifter}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[domain=-4:6,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-4.5,0) -- (6.5,0) node[above] {$t$};
+    \draw[->] (0,-0.3) -- (0,2.5);
+    \draw[smooth,color=black,thick] plot function{2*exp(-(x-2)*(x-2))};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(2*x-2)*(2*x-2))};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(0.5*x-2)*(0.5*x-2))};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(-x-2)*(-x-2))};
+    \node[shift={(2,2.2)}] {$\alpha=1$};
+    \vtick{2} node[pos=0.5,below] {$2$};
+    \node[shift={(-2,2.2)}] {$\alpha=-1$};
+    \vtick{-2} node[pos=0.5,below] {$-2$};
+    \node[shift={(1,2.2)}] {$\alpha=2$};
+    \vtick{1} node[pos=0.5,below] {$1$};
+    \node[shift={(4,2.2)}] {$\alpha=1/2$};
+    \vtick{4} node[pos=0.5,below] {$4$};
+  \end{tikzpicture}
+  \caption{Time-scaler system $H(x,t) = x(\alpha t)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.} \label{fig:timescaler}
+\end{figure}
+
+
+
+\section{Some important systems}\label{sec:some-import-syst}
+
+The system
+\[
+T_\tau(x,t) = x(t - \tau)
+\]
+is called a \term{time-shifter}.  This system shifts the input signal along the $t$ axis (`time' axis) by $\tau$.  When $\tau$ is positive $T_{\tau}$ delays the input signal by $\tau$.  The time-shifter will appear so regularly in this course that we use the special notation $T_\tau$ to represent it.  Figure~\ref{fig:timeshifter} depicts the action of time-shifters $T_{1.5}$ and $T_{-3}$ on the signal $x(t) = e^{-t^2}$.  When $\tau=0$ the time-shifter is the \term{identity system}
+\[
+T_0(x) = x
+\]
+that maps the signal $x$ to itself.
+
+Another important system is the \term{time-scaler} that has the form
+\[
+H(x,t) = x(\alpha t), \qquad \alpha \in \reals.
+\]
+Figure~\ref{fig:timescaler} depicts the action of a time-scaler with a number of values for $\alpha$.  When $\alpha=-1$ the time-scaler reflects the input signal in the time axis.  When $\alpha = 1$ the time-scaler is the identity system $T_0$.
+
+% Another important system is the \term{time-scaler} that has the form
+% \[
+% S_\alpha(x,t) = x(t/\alpha)
+% \]
+% where $\alpha$ is a real number not equal to zero.  Figure~\ref{fig:timescaler} depicts the action of a time-scaler with $\alpha=-1,\tfrac{1}{2}, 1$.  When $\alpha=-1$ the time-scaler reflects the input signal in the time axis and in that case we will often denote it by the letter $R$, that is, we put $R = S_{-1}$.  We call $R$ the \term{time reflection system}.  When $\alpha=1$ the system $S_1 = T_0$ is the identity system.  The identity system is also obtained by applying the time reflection system twice, that is, $R(R(x)) = R^2(x) = x$.
+
+% \begin{figure}[tp]
+%   \centering
+%   \begin{tikzpicture}[domain=-4:6,samples=200]
+%     % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%     \draw[->] (-4.5,0) -- (6.5,0) node[above] {$t$};
+%     \draw[->] (0,-0.3) -- (0,2.5);
+%     \draw[smooth,color=black,thick] plot function{2*exp(-(x-2)*(x-2))};
+%     \draw[smooth,color=black,thick] plot function{2*exp(-(2*x-2)*(2*x-2))};
+%     \draw[smooth,color=black,thick] plot function{2*exp(-(0.5*x-2)*(0.5*x-2))};
+%     \draw[smooth,color=black,thick] plot function{2*exp(-(-x-2)*(-x-2))};
+%     \node[shift={(2,2.2)}] {$x$};
+%     \vtick{2} node[pos=0.5,below] {$2$};
+%     \node[shift={(-2,2.2)}] {$R(x)$};
+%     \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \node[shift={(1,2.2)}] {$S_{1/2}(x)$};
+%     \vtick{1} node[pos=0.5,below] {$1$};
+%     \node[shift={(4,2.2)}] {$S_2(x)$};
+%     \vtick{4} node[pos=0.5,below] {$4$};
+%   \end{tikzpicture}
+%   \caption{Time-scaler system $S_\alpha(x,t) = x(t/\alpha)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.  When $\alpha=-1$ we use the notation $R(x) = S_{-1}(x)$.} \label{fig:timescaler}
+% \end{figure}
+
+% A simple by regularly encountered signal is the \term{amplifier}
+% \[
+% H(x,t) = a x(t)
+% \]
+% where $a \in \reals$.  
+Another system we regularly encounter is the \term{differentiator}
+\[
+D(x,t) = \frac{d}{dt} x(t),
+\]
+that returns the derivative of the input signal.  We also define a $k$th differentiator
+\[
+D^k(x,t) = \frac{d^k}{dt^k} x(t)
+\]
+that returns the $k$th derivative of the input signal.  %BLERG: existance, special definition at discontinuities?
+
+A related system is the \term{integrator}
+\[
+I_a(x,t) = \int_{-a}^{t} x(\tau) d\tau.
+\]
+The parameter $a$ describes the lower bound of the integral.  In this course it will often be that $a=\infty$.  For example, the response of the integrator $I_{\infty}$ to the signal $t u(t)$ where $u$ is the step function~\eqref{eq:stepfunction} is
+\[
+\int_{-\infty}^{t} \tau u(\tau) d\tau = \begin{cases}
+\int_{0}^{t} \tau d\tau = \frac{t^2}{2} & t > 0 \\
+0 & t \leq 0.
+\end{cases}
+\]
+Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ would not contain the signal $x(t) = t$. 
+
+\section{Properties of systems}
+
+In this section we define a number of important properties that systems can possess.  In what follows $H$ will be a system and the phrase ``for all signals'' will mean for all signals inside some domain for $H$.  %Let $H$ be a system with domain $V$.
+
+A system $H$ is called \term{memoryless} if the output signal $H(x)$ at time $t$ depends only on the input signal $x$ at time $t$.  For example $\frac{1}{x(t)}$ and the identity system $T_0$ are memoryless, but 
+\[
+x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau
+\] 
+are not.  A time-shifter $T_\tau$ with $\tau \neq 0$ is not memoryless.
+
+A system $H$ is \term{causal} if the output signal $H(x)$ at time $t$ depends on the input signal only at times less than or equal to $t$.  Memoryless systems such as $\frac{1}{x(t)}$ and $T_0$ are also causal.  Time-shifters $T_\tau$ are causal when $\tau \geq 0$, but are not causal when $\tau < 0$.  The systems 
+\[
+x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau
+\] 
+are causal, but the systems 
+\[
+x(t) + 3 x(t+1) \qquad \text{and} \qquad \int_{0}^{1} x(t + \tau) d\tau
+\] 
+are not causal.
+
+A system $H$ is called \term{bounded-input-bounded-output (BIBO) stable} or just \term{stable} if the output signal $H(x)$ is bounded whenever the input signal $x$ is bounded.  That is, $H$ is stable if for every positive real number $M$ there exists a positive real number $K$ such that for all signals $x$ satisfying
+\[
+\abs{x(t)} < M \qquad \text{for all $t\in\reals$},
+\] 
+it also holds that
+\[
+\abs{H(x,t)} < K \qquad \text{for all $t\in\reals$}.
+\]
+For example, the system $x(t) + 3 x(t-1)$ is stable with $K = 4M$ since if $\abs{x(t)} < M$ then 
+\[
+\abs{x(t) + 3 x(t-1)} \leq \abs{x(t)} + 3 \abs{x(t-1)} < 4 M = K.
+\]
+The integrator $I_a$ for any $a \in \reals$ and differentiator $D$ are not stable (Exercises~\ref{excer:integratornotstable}~and~\ref{excer:diffnotstable}).
+
+A system $H$ is \term{linear} if
+\[
+H( ax + by) = a H(x) + b H(y)
+\]
+for all signals $x$ and $y$ and all complex numbers $a$ and $b$.  That is, a linear system has the property: If the input consists of a weighted sum of signals, then the output consists of the same weighted sum of the responses of the system to those signals.  Figure~\ref{blockdiag:linearsystem} indicates the linearity property using a block diagram.  For example, the differentiator is linear because
+\begin{align*}
+D(ax + by,t) &= \frac{d}{dt}\big(ax(t) + by(t)\big) \\
+&= a\frac{d}{dt}x(t) + b\frac{d}{dt}y(t) \\
+&= aD(x,t) + bD(y,t)
+\end{align*}
+whenever both $x$ and $y$ are differentiable.  
+%BLERG, there are significant caveats here, what happens when one of x or y is not differentiable, but the sum is!!!!
+However, the system $H(x,t) = \frac{1}{x(t)}$ is not linear because
+\[
+H(ax + by,t) = \frac{1}{ax(t) + by(t)} \neq \frac{a}{x(t)} + \frac{b}{y(t)} = aH(x,t) + bH(y,t)
+\]
+in general.
+
+The property of linearity trivially generalises to more than two signals.  For example, if $x_1,\dots,x_k$ are signals and $a_1,\dots,a_k$ are complex numbers for some finite $k$, then
+\[
+H( a_1x_1 + \dots + a_k x_k ) = a_1 H(x_1) + \dots + a_k H(x_k).
+\]
+% With a little care, the prpoperty of linearity can be extended to infinite sums, that is
+% \[
+% H\left( \sum_{n=1}^\infty a_n x_n \right) = \sum_{n=1}^\infty H(a_n x_n)
+% \]
+% under certain conditions on the system $H$ and the infinite sequence of signals $\{x_n\}$ and sequence complex numbers $\{a_n\}$.  Precisely formalising the conditions underwhich this property holds is beyond our scope.  The property of linearity even extends to integrals, that is, if $\{y_\kappa, \kappa \in \reals\}$ is a set of signals parameterised by $\kappa$ then
+% \begin{equation}\label{eq:exchangesystemandintegration}
+% H \left( \int_a^b y_\kappa d\kappa \right) = \int_a^b H \left( y_\kappa \right) d\kappa,
+% \end{equation}
+% under certain conditions on $H$ and $\{y_\kappa\}$.  This property can hold even when the bounds of the integral are infinite, i.e, $a=-\infty$ or $b=\infty$.  We will have use of this property in Section~\ref{sec:laplace-transform} when we discuss the Laplace transform.  We will not attempt to formally state the conditions required for~\eqref{eq:exchangesystemandintegration} to hold in this course.
+
+% \[
+% z = \lim_{m\rightarrow\infty} \sum_{k=0}^m a_k x_k = \sum_{k=0}^\infty a_kx_k
+% \] 
+% exists (i.e. the limit exists) and can be applied to $H$.  Then
+% \[
+% H(z) = \lim_{m\rightarrow\infty} \sum_{i=1}^m H( a_i x_i )= \sum_{i=1}^{\infty} H( a_i x_i ).
+% \]
+% if the limit exists.
+% We a little care, the property of linearity can be extended to integrals rather than just sums.  Let $H$ be a linear system, and let $\{ x_\tau, \tau \in \reals \}$ be a set of signals parameterised by $\tau \in \reals$, each $x_{\tau}$ able to be applied to $H$.  For given real number $a,b$ with $a < b$, assume that the signal $z = \int_a^b x_\tau d\tau$ exists (i.e. the integral exists) and that the system $H$ can be applied to $z$.  Then
+% \begin{equation}\label{eq:Hintexchange}
+% \int_{a}^{b} H(x_\tau, t ) d\tau = H( z , t ) = H( \int_a^b x_\tau d\tau  , t ).
+% \end{equation}
+% That is, when the appropriate integral exist, the order of integration and $H$ can be exchanged.  This result can hold even when the bound of the integral are infinite, i.e. $a=-\infty$ and $b = \infty$.  BLERG: Exchange of infinite sums? This is handwavy, but it might need to be!
+
+
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[node distance=1.7cm,auto,>=latex']
+    \node[dspadder] (adder) {};
+    \node[dspsquare] (H) [right of=adder, node distance=1.5cm] {$H$};
+    \node[dspmixer,dsp/label=right] (xmult) [above of=adder, node distance=1cm] {$a$};
+    \node [dspnodeopen,dsp/label=above] (x) [left of=xmult, node distance=1cm] {$x$};
+    \node[dspmixer,dsp/label=right] (ymult) [below of=adder, node distance=1cm] {$b$};
+    \node [dspnodeopen] (y) [left of=ymult, node distance=1cm,label=above:$y$] {};
+    \node [dspnodeopen] (res) [right of=H,label=above:$H(ax + by)$] {};
+    \draw[dspconn] (x) -- (xmult);
+    \draw[dspconn] (y) -- (ymult);
+    \draw[dspconn] (ymult) -- (adder);
+    \draw[dspconn] (xmult) -- (adder);
+    \draw[dspconn] (adder) -- (H);
+    \draw[dspflow] (H) -- (res);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[node distance=1.8cm,auto,>=latex',yshift=-0.5]
+    \node[dspadder] (adder) {};
+    \node[dspmixer,dsp/label=right] (xmult) [above of=adder, node distance=1cm] {$a$};
+    \node[dspsquare] (xH) [left of=xmult, node distance=1cm] {$H$};
+    \node [dspnodeopen,dsp/label=above] (x) [left of=xH, node distance=1cm] {$x$};
+    \node[dspmixer,dsp/label=right] (ymult) [below of=adder, node distance=1cm] {$b$};
+    \node[dspsquare] (yH) [left of=ymult, node distance=1cm] {$H$};
+    \node [dspnodeopen] (y) [left of=yH, node distance=1cm,label=above:$y$] {};
+    \node [dspnodeopen] (res) [right of=adder,label=above:$aH(x)+ bH(y)$] {};
+    \draw[dspconn] (x) -- (xH);
+    \draw[dspconn] (xH) -- (xmult);
+    \draw[dspconn] (xmult) -- (adder);
+    \draw[dspconn] (y) -- (yH);
+    \draw[dspconn] (yH) -- (ymult);
+    \draw[dspconn] (ymult) -- (adder);
+    \draw[dspflow] (adder) -- (res);
+\end{tikzpicture}
+\caption{If $H$ is a linear system the outputs of these two diagrams are the same signal, i.e. $H(ax+by) = aH(x)+bH(y)$.}\label{blockdiag:linearsystem}
+\end{figure}
+
+A system $H$ is \term{time invariant} if
+\[
+H\big(T_\tau(x), t \big) = H(x,t-\tau)
+\]
+for all signals $x$ and all time-shifts $\tau\in\reals$.  That is, a system is time-invariant if time shifting the input signal results in the same time-shift of the output signal.  Equivalently, $H$ is time-invariant if it commutes with the time-shifter $T_\tau$, that is, if
+\[
+H\big(T_\tau(x)\big) = T_\tau\big(H(x)\big)
+\]
+for all $\tau \in \reals$ and all signals $x$.  Figure~\ref{blockdiag:timeinvariance} represents the property of time-invariance with a block diagram.  % A consequence of time-invariance is
+% \begin{equation}\label{eq:timeinvvarchange}
+% H(x, t+\tau) = H\big(T_{-\tau}(x), t\big) = H\big(T_{-t}(x), \tau\big).
+% \end{equation}
+% This property will be useful in later sections. 
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[node distance=1.3cm,auto,>=latex']
+    \node[dspnodeopen,dsp/label=above] (x) {$x$};
+    \node[dspsquare] (H) [right of=x] {$H$};
+    \node[dspsquare] (D) [right of=H] {$T_\tau$};  
+    \node[dspnodeopen,dsp/label=above] (out) [right of=D,node distance=1.7cm,label=above:$T_\tau\big(H(x)\big)$] {};
+    \draw[dspconn] (x) -- (H);
+    \draw[dspconn] (H) -- (D);
+    \draw[dspflow] (D) -- (out);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[node distance=1.3cm,auto,>=latex']
+  \node[dspnodeopen,dsp/label=above] (x) {$x$};
+  \node[dspsquare] (D) [right of=x] {$T_\tau$};  
+  \node[dspsquare] (H) [right of=D] {$H$};
+  \node[dspnodeopen,dsp/label=above] (out) [right of=H,node distance=1.7cm,label=above:$H\big(T_\tau(x)\big)$] {};
+  \draw[dspconn] (x) -- (D);
+  \draw[dspconn] (D) -- (H);
+  \draw[dspflow] (H) -- (out);
+\end{tikzpicture}
+\caption{If $H$ is a time-invariant system the outputs of these two diagrams are the same signal, i.e. $H\big(T_\tau(x)\big) = T_\tau\big(H(x)\big)$.}\label{blockdiag:timeinvariance}
+\end{figure}
+
+% Let $S$ be a set of signals.  A system $H$ is said to be \term{invertible} on $S$ if each signal $x \in S$ is mapped to a unique signal $H(x)$.  That is, for all signals $x,y \in S$ then $H(x) = H(y)$ if and only if $x = y$.  If a system $H$ is invertible on $S$ then there exists an inverse system $H^{-1}$ such that
+% \[
+% x = H^{-1}\big(H(x)\big) \qquad \text{for all $x \in S$}.
+% \]
+% % For example, let $S$ be the set of all continuous-time signals\footnote{In this course the set of all continuous-time signals is the set of all locally integrable functions from $\reals \to \complex$.} and let $H$ be the system
+% % \[
+% % H(x,t) = \int_{-1}^0 x(t) dt - \int_0^1x(t) dt.
+% % \]
+% % Let $x$ be a continuous-time signal and let $y(t) = x(t) + c$ for a constant $c \neq 0$.  Then
+% % \begin{align*}
+% % H(x,t) &= \int_{-1}^0 x(t) dt - \int_0^1x(t) dt \\
+% % &= \int_{-1}^0 x(t) dt - \int_0^1x(t) dt + \int_{-1}^1 (c - c) dt \\
+% % &= \int_{-1}^0(x(t)+c) dt - \int_0^1(x(t)+c) dt \\
+% % &= \int_{-1}^0 y(t) dt - \int_0^1y(t) dt = H(y,t),
+% % \end{align*}
+% For example, let $S$ be a any set of signals.  The time-shifter $T_\tau$ is invertible on $S$.  The inverse system is $T_{-\tau}$ since
+% \[
+% T_{-\tau}\big(T_\tau(x), t\big) = x(t - \tau + \tau) = x(t).
+% \]
+% As another example, let $S$ be the set of differentiable signals.  The differentiator system $D$ is \term{not} invertible on $S$ because if $x \in S$ and if $y(t) = x(t) + c$ for any constant $c$ then $D(y) = D(x)$.  However, if we restrict $S$ to those differentiable signals for which $x(0) = c$ is fixed, then $D$ \emph{is} invertible on $S$.  The inverse system in this case is
+% \[
+% D^{-1}(x,t) = I_0(x,t) + c = \int_0^t x(t) dt + c
+% \]
+% because
+% \[
+% D^{-1}(D(x),t) = \int_0^t D(x,t) dt + c = \int_0^t \frac{d}{dt} x(t) dt + x(0) = x(t)
+% \]
+% by the fundamental theorem of calculus.
+
+
+
+\begin{advanced}
+
+\section{Convergence of signals}
+
+A signal $x$ is said to have a limit $\ell$ at $p$ from below if for any $\epsilon > 0$ there exists a $t_0 <  p$ such that $\abs{x(t) - \ell} < \epsilon$ for all $t$ in the open interval $(t_0, p)$.  Similarly $x$ is said to have a limit $\ell$ from above at $p$ if for any $\epsilon > 0$ there exists a $t_0 > p$ such that $\abs{x(t) - \ell}$ for all $t$ in the open interval $(p, t_0)$.  As is customary, we write
+\[
+\lim_{t \to p^-} x(t) = \ell, \qquad \lim_{t \to p^+} x(t) = \ell
+\]
+to indicate limits from below and above respectively.  In the case where $p = \pm \infty$ the definition of a limit is the same, for example, $\lim_{t \rightarrow \infty} x(t) = \ell$ means that for any $\epsilon > 0$ there is a $t_0$ such that $\abs{x(t) - \ell} < \epsilon$ for all $t > t_0$.
+
+A signal $x$ is \term{continuous} at $p$ if the limits of $x$ as $t \rightarrow p$ from above and below are equal to $x(p)$, i.e.,
+\[
+\lim_{t \to p^-} x(t) = \lim_{t \to p^+} x(t) = x(p).
+\]
+In other words, $x$ is continuous at $p$ if for any $\epsilon > 0$ there exists a $\delta$ such that $\abs{x(t) - \ell} < \epsilon$ whenever $\abs{t - p} < \delta$.  Observe that $\delta$ in the previous definition may depend on $p$.  A signal is said to be uniformly continuous if $\delta$ can be chosen independently of $p$.  That is, a signal $x$ is \term{uniformly continuous} if for any $\epsilon > 0$ there exists a $\delta$ such that $\abs{t - p} < \delta$ implies that $\abs{x(t) - x(p)} < \epsilon$ for all $p \in \reals$.  Written another way, a signal $x$ is uniformly continuous if
+\[
+\abs{t - p} < \delta \Rightarrow \sup_{p \in \reals} \abs{x(t) - x(p)} < \epsilon,
+\]
+where $\sup$ is the supremum.  If $A$ is a set of real numbers then $\sup_{x \in A} x$ is the smallest real number greater than or equal to all of the elements in $A$. 
+
+BLERG: Pointwise/uniform convergence of functions, convergence in norm.
+
+
+\section{Continuity of systems}
+
+BLERG: See Theorem~5.4 of~\cite{Rudin_real_and_complex_analysis}.  For linear systems boundedness (or stability with respect to specific norms) is the some as continuity in those norms.  This will be the key to making sense of the Laplace and Fourier transforms (etc) of output signals.
+
+\end{advanced}
+
+\section{Exercises}
+
+\begin{excersizelist}
+
+\item \label{excer:stepfunction} State whether the step function $u(t)$ is bounded, periodic, %continuous, 
+absolutely integrable, an energy signal.
+\begin{solution}
+The magnitude of $u$ is less than or equal to one, so the signal is bounded.  The signal is not period, since for any hypothesised period $T > 0$ we have $u(T) = 1$ but $u(0) = 0$.  %The signal is not continuous at $t = 0$ since $\lim_{t \to 0^+} u(t) = 0$ and $\lim_{t \to 0^{-}} u(t) = 1$.  
+The signal is not absolutely integrable, nor an energy signal since
+\[
+\|u\|_1 = \|u\|_2 = \int_{-\infty}^\infty \abs{u(t)} dt = \int_{0}^\infty dt
+\]
+is not finite.
+\end{solution}
+
+\item \label{exer:oneontnotlocallyint} Show that the signal $t^2$ is locally integrable, but that the signal $\frac{1}{t^2}$ is not. 
+\begin{solution}
+For any $a$ and $b$
+\[
+\int_a^b t^2 dt = \frac{b^3}{3} - \frac{a^3}{3}
+\]
+is finite and so $t^2$ is locally integrable.  Put $a = 0$ and $b > 0$ and
+\[
+\int_0^b \frac{1}{t^2} dt = -\frac{1}{b} + \lim_{t \to 0}\frac{1}{t}  = \infty.
+\]
+The limit above diverges and so $\frac{1}{t^2}$ is not locally integrable. 
+\end{solution}
+
+% \item \label{exer:boundedfunctionarelocallyintegrable} Show that every bounded function is locally integrable.  
+
+\item \label{exer:functionsquarenotabsint} Plot the signal 
+\[
+x(t) = \begin{cases}
+\tfrac{1}{t+1} & t > 0 \\
+\tfrac{1}{t-1} & t \leq 0.
+\end{cases}
+\]
+State whether it is: bounded, locally integrable, absolutely integrable, square integrable.
+\begin{solution}
+\begin{center}
+  \begin{tikzpicture}[samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-4.5,0) -- (4.5,0) node[above] {$t$};
+    \draw[->] (0,-1.2) -- (0,1.2);
+    \draw[smooth,color=black,thick,domain=0:4] plot function{1/(x+1)};
+    \draw[smooth,color=black,thick,domain=-4:0] plot function{1/(x-1)};
+    \htick{1} node[pos=0.5,above right] {$1$};
+    \vtick{-4} node[pos=0.5,above] {$-4$};
+    \vtick{-2} node[pos=0.5,above] {$-2$};
+    \vtick{2} node[pos=0.5,below] {$2$};
+    \vtick{4} node[pos=0.5,below] {$4$};
+  \end{tikzpicture}
+\end{center}
+The signal is bounded since $\abs{x(t)} < M$ for any $M > 1$.  The signal is locally integrable because it is bounded, i.e., for any finite constants $a$ and $b$
+\[
+\int_{a}^b \abs{x(t)} dt < \int_{a}^b M dt = (b-a)M < \infty.
+\]
+The signal $x$ is not absolutely integrable since
+\begin{align*}
+\|x\|_1 &= \int_{-\infty}^\infty \abs{x(t)} dt \\
+&= 2 \int_{0}^\infty \frac{1}{t+1} dt \\
+&= 2 \int_{1}^\infty \frac{1}{t} dt \\
+&= \log(1) + \lim_{t \to \infty} \log(t)
+\end{align*}
+and the limit diverges.  The signal is square integrable since
+\begin{align*}
+\|x\|_2 &= \int_{-\infty}^\infty \sabs{x(t)}^2 dt \\
+&= 2 \int_{0}^\infty \frac{1}{(t+1)^2} dt \\
+&= 2 \int_{1}^\infty \frac{1}{t^2} dt \\
+&= 1 - \lim_{t \to \infty} \frac{1}{t} = 1.
+\end{align*}
+\end{solution}
+
+\item \label{excer:absintnotsquareint} Plot the signal
+\[
+x(t) = \begin{cases}
+\frac{1}{\sqrt{t}} & 0 < t \leq 1 \\
+0 & \text{otherwise}.
+\end{cases}
+\]
+Show that $x$ is absolutely integrable, but not square integrable.
+\begin{solution}
+\begin{center}
+  \begin{tikzpicture}[samples=50]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-4.5,0) -- (4.5,0) node[above] {$t$};
+    \draw[->] (0,-0.2) -- (0,2.5);
+    \draw[thick] (-4,0)--(0,0);
+    \draw[thick,line cap=round] (1,1)--(1,0)--(4,0);
+    \draw[smooth,color=black,thick,domain=0.2:1] plot function{1.0/sqrt(x)};
+    \htick{1} node[pos=0.5,left] {$1$};
+    \vtick{-3} node[pos=0.5,below] {$-3$};
+    \vtick{-1} node[pos=0.5,below] {$-1$};
+    \vtick{1} node[pos=0.5,below] {$1$};
+    \vtick{3} node[pos=0.5,below] {$3$};
+  \end{tikzpicture}
+\end{center}
+The integral
+\[
+\|x\|_1 = \int_{-\infty}^\infty \abs{x(t)} dt = \int_{0}^1 t^{-1/2} dt = [2\sqrt{t}]_0^1 = 2
+\]
+and so $x$ is absolutely integrable.  The integral
+\[
+\|x\|_2 = \int_{-\infty}^\infty \abs{x(t)} dt = \int_{0}^1 t^{-1} dt = [\log(t)]_0^1 = \log(1) - \lim_{t \to 0}\log(t) = \infty
+\]
+and so $x$ is not square integrable.
+\end{solution}
+
+\item \label{excer:energyexpchangevar} Compute the energy of the signal $e^{-\alpha^2 t^2}$ (Hint: use equation~\eqref{eq:expabssum} on page~\pageref{eq:expabssum} and a change of variables).
+\begin{solution}
+From~\eqref{eq:expabssum} we the energy of $e^{-t^2}$ is $\sqrt{\pi}$.  Now
+\[
+\int_{-\infty}^\infty e^{-\alpha t^2} dt = \frac{1}{\alpha}\int_{-\infty}^\infty e^{-\tau^2} d\tau = \frac{\sqrt{\pi}}{\alpha}
+\]
+by the change of variables $\tau = \alpha t$.
+\end{solution}
+
+\item \label{excer:integratornotstable} Show that the integrator $I_a$ for any $a\in\reals$ is not  stable.
+\begin{solution}
+Put $M > 1$.  The time-shifted step function $u(t + a)$ is bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
+\[
+I_a\big(u(t+a)\big) = \int_{-a}^t u(\tau + a)d\tau = \begin{cases}
+\int_{-a}^t d\tau = t + a & t \geq -a \\
+0 & t < -a 
+\end{cases},
+\]
+and this is not a bounded signal, that is, for every $K$ we have $t + a > K$ whenever $t > K - a$.
+\end{solution}
+
+\item \label{excer:diffnotstable} Show that the differentiator system $D$ is not  stable.
+\begin{solution}
+Put $M > 2$.  Define the signal
+\[
+q_a(t) = \begin{cases}
+0 & 2t < -a \\
+1 + \sin\big(\tfrac{\pi t}{a}\big) & -a < 2t < a \\
+2 & 2t > a,
+\end{cases}
+\]
+and observe that $q_a$ is differentiable and bounded below $M$.  The response of the differentiator $D$ to $q_a$ is
+\[
+D(q_a,t) = \begin{cases}
+0 & 2t < -a \\
+\tfrac{\pi}{a} \cos\big(\tfrac{\pi t}{a}\big) & -a < 2t < a \\
+1 & 2t > a.
+\end{cases}
+\]
+The signal $p_a$ and the response $D(p_a)$ are plotted below for $a = \tfrac{1}{2},1$ and $2$.  The response $D(p_a)$ obtains a maximum amplitude of $\tfrac{\pi}{a}$ at $t=0$.  So $D$ is not stable because for any $K$ we can choose $a < \tfrac{\pi}{K}$ so that $\tfrac{\pi}{a} > K$.
+
+\newcommand{\sinpulse}[1]{
+\draw[color=black,thick] (-1.5,0) -- (-#1/2,0) node {};
+\draw[smooth,color=black,thick,domain=-#1/2.0:#1/2.0] plot function{1 + sin(3.14159265359*x/#1)};
+\draw[color=black,thick] (#1/2,2) -- (1.5,2)  node {};
+}
+\newcommand{\responsesinpulse}[1]{
+\draw[color=black,thick] (-1.5,0) -- (-#1/2,0) node {};
+\draw[smooth,color=black,thick,domain=-#1/2.0:#1/2.0] plot function{3.14159265359/#1*cos(3.14159265359*x/#1)};
+\draw[color=black,thick] (#1/2,0) -- (1.5,0)  node {};
+}
+\newcommand{\sinpulseresponse}[1]{}
+\begin{center}
+  \begin{tikzpicture}
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2,0) -- (2,0) node[above] {$t$};
+    \draw[->] (0,-0.5) -- (0,2.5) node[right] {$q_a(t)$};
+    \sinpulse{1};
+    \sinpulse{0.5};
+    \sinpulse{2};
+  \end{tikzpicture}
+\;\;
+  \begin{tikzpicture}
+    \begin{scope}[yscale=0.5]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2,0) -- (2,0) node[above] {$t$};
+    \draw[->] (0,-1) -- (0,7) node[right] {$q_a(t)$};
+    \responsesinpulse{1};
+    \responsesinpulse{0.5};
+    \responsesinpulse{2};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+\end{solution}
+
+\item Show that the time-shifter is linear and time-invariant and that the time-scaler is linear, but not time invariant
+\begin{solution}
+The time shifter $T_\tau$ is time invariant since
+\[
+T_k\big(T_\tau(x)\big) = T_k\big(x(t - \tau)\big) = x(t - \tau - k) = x(t - k - \tau) = T_\tau\big(x(t - k)\big) = T_\tau\big(T_k(x)\big) 
+\]
+for all signals $x$, that is, time shifters commute with time shifters.  The time shifter is linear because
+\[
+T_\tau(ax + by) = ax(t - \tau) + by(t - \tau) = a T_\tau(x) + b T_\tau(y).
+\]
+The time-scaler $H(x) = x(\alpha t)$ is linear because
+\[
+H(ax + by) = ax(\alpha t) + by(\alpha t) = aH(x) + b H(y).
+\]
+The system is not time invariant because
+\[
+H\big(T_\tau(x)\big) = H\big(x(t-\tau)\big) = x(\alpha t - \tau)
+\]
+but 
+\[
+T_\tau\big(H(x)\big) = T_\tau\big(x(\alpha t) \big) = x(\alpha(t - \tau)) = x( \alpha t - \alpha \tau ),
+\]
+and these signals are not equal in general.  For example consider the rectangular pulse $\Pi$.  With time scaling parameter $\alpha = 2$ and time shift $\tau = 1$,
+\[
+H\big(T_1(\Pi)\big) = \Pi( 2 t - 1 ) \neq \Pi( 2t - 2 ) = T_1\big(H(\Pi)\big).
+\]
+\end{solution}
+
+%\item \label{excer:difflLTI} Show that the $k$th differentiator $D^k(x,t) = \tfrac{d^k}{dt^k} x(t)$ is linear and time-invariant
+
+\item Show that the integrator $I_c$ with $c$ finite is linear, but not time-invariant.
+\begin{solution}
+The system is linear because
+\begin{align*}
+I_c(ax + by) &= \int_{-c}^t ax(\tau) + b y(\tau) d\tau \\
+&= a\int_{-c}^t x(\tau) d\tau + b \int_{-c}^t y(\tau) d\tau \\
+&= a I_c(x)  + b I_c(y).
+\end{align*}
+The system is not time invariant because
+\[
+T_k\big(I_c(x)\big) = I_c(x,t-k) = \int_{-c}^{t-k} x(\tau) d\tau 
+\]
+but
+\[
+I_c\big(T_k(x)\big) = \int_{-c}^{t} x(\tau-k) d\tau.
+\]
+We now need only find some signal $x$ for which the integrals on the right hand side of the above equations are not equal.  Choose the signal $x = 1$, i.e., the signal that is equal to $1$ for all time.  In this case
+\[
+T_k\big(I_c(1)\big) = \int_{-c}^{t-k} d\tau =  t-k+c \neq t + c = \int_{-c-k}^{t-k} d\tau = I_c\big(T_k(1)\big) \qquad \text{when $k \neq 0$.}
+\]
+\end{solution}
+
+\item Show that the integrator $I_\infty$ is linear and time invariant.
+\begin{solution}
+The system is linear because
+\begin{align*}
+I_\infty(ax + by) &= \int_{-\infty}^t ax(\tau) + b y(\tau) d\tau \\
+&= a\int_{-\infty}^t x(\tau) d\tau + b \int_{-\infty}^t y(\tau) d\tau \\
+&= a I_\infty(x)  + b I_\infty(y).
+\end{align*}
+The system is time invariant because
+\[
+T_k\big(I_\infty(x)\big) = I_\infty(x,t-k) = \int_{-\infty}^{t-k} x(\tau) d\tau,
+\]
+and
+\[
+I_\infty\big(T_k(x)\big) = \int_{-\infty}^{t} x(\tau-k) d\tau = \int_{-\infty}^{t-k} x(\tau) d\tau.
+\]
+\end{solution}
+
+\item State whether the system $H(x) = x + 1$ is linear, time-invariant,  stable.
+\begin{solution}
+It is not linear because for any signal $x$ and real number $a \neq 1$,
+\[
+H(ax) = ax + 1 \neq aH(x) = a\big( x + 1\big) = ax + a.
+\]
+It is time-invariant because
+\[
+H\big(T_{\tau}(x)\big) = x(t - \tau) + 1 = T_\tau(x + 1) = T_\tau\big(H(x)\big).
+\]
+It is  stable because for any signal $x$ with $x(t) < M$ for all $t\in\reals$, 
+\[
+H(x,t) = x(t) + 1 < M+1 \qquad \text{for all $t \in \reals$}. 
+\]
+\end{solution}
+
+\item State whether the system $H(x) = 0$ is linear, time-invariant,  stable.
+\begin{solution}
+It is linear because
+\[
+H(ax + by) = 0 = aH(x) + bH(y) = 0.
+\]
+It is time-invariant because
+\[
+H\big(T_{\tau}(x)\big)\big(t\big) = 0 = H(x,t-\tau).
+\]
+It is  stable because for any $M > 0$, 
+\[
+H(x,t) = 0 < M \qquad \text{for all $t \in \reals$ and all signals $x$}. 
+\]
+\end{solution}
+
+\item State whether the system $H(x) = 1$ is linear, time-invariant,  stable.
+\begin{solution}
+It is not linear because for any signal $x$ and real number $a \neq 1$
+\[
+H(ax) = 1 \neq  aH(x) = a.
+\]
+It is time-invariant because
+\[
+H\big(T_{\tau}(x)\big) = 1 = T_\tau(1) = T_\tau\big(H(x)\big).
+\]
+It is  stable because for any $K > 1$, 
+\[
+\abs{H(x)(t)} = 1 < K \qquad \text{for all $t \in \reals$ and all signals $x$}. 
+\]
+\end{solution}
+
+\item Let $x$ be a signal with period $T$ that is not equal to zero almost everywhere.  Show that $x$ is not absolutely integrable.
+\begin{solution}
+This is plain and does not really require further explanation, but I've found some students desire more rigour.  
+
+Since $x$ does not equal to zero almost everywhere there exist some finite real numbers $a$ and $b$  such that $\int_{a}^b \abs{x(t)}dt = C > 0$.  Let $k$ be an integer such $-kT < a$ and $kT > b$ so that the integral over $2k+1$ periods 
+\[
+\int_{-kT}^{kT}\abs{x(t)}dt \geq \int_{a}^b \abs{x(t)}dt = C > 0.
+\] 
+Now, since $x$ has period $T$
+\[
+\int_{-ckT}^{ckT}\abs{x(t)}dt = (2c+1) \int_{-kT}^{kT}\abs{x(t)}dt \geq (2c+1)C > 0
+\] 
+for integers $c$ and since this integral is increasing monotonically with $c$ we have $\int_{-ckT}^{ckT}\abs{x(t)}dt \geq \floor{2c+1}C$ for all $c \in \reals$ where $\floor{2c+1}$ denotes the largest integer less than or equal to $2c+1$.  Now,
+\[
+\|x\|_1 = \int_{-\infty}^{\infty} \abs{x(t)} dt = \lim_{c \to \infty} \int_{-ckT}^{ckT}\abs{x(t)}dt \geq \lim_{c \to \infty} \floor{2c+1}C = \infty,
+\]
+and so, $x$ is not absolutely integrable.
+
+%BLERG.  A similar approach can be used to show that x is not square integrable, but you need to use that the function spaces $L^2(T) \subset L^1(T)$ to get an equivalent constant $C$ from assumptions of $x\neq 0 a.e.$.
+\end{solution}
+
+\end{excersizelist}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main.tex"
+%%% End: 
