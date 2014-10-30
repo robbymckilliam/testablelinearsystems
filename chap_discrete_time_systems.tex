@@ -1,0 +1,1209 @@
+\chapter{Discrete time systems} \label{cha:discr-time-syst}
+
+We have so far studied linear time invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  One particular linear time invariant system has so far been absent. This is the time shifter $T_\tau$ with non zero time shift $\tau \neq 0$.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
+
+We now consider systems constructed from linear combinations of time shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period}.  That is, we consider systems of the form
+\[
+H(x) = \sum_{n \in \ints} h_n T_{ P n}(x)
+\]
+where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse of a regular system.  For this reason $h$  is called the~\term{discrete impulse response} of $H$.
+
+
+\section{The discrete time impulse response} \label{sec:discr-time-impulse}
+
+Let $F$ and $G$ be discrete time systems with equal sampleperiod $P$ and discrete impulse responses $f$ and $g$.  Let 
+\[
+H = a F + b G \qquad a,b\in\complex
+\]
+be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x$ is
+\begin{align*}
+H(x) &= a \sum_{n \in \ints} f_{n} T_{ P n}(x) + b \sum_{n \in \ints} g_{n} T_{ P n}(x) \\
+&=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}(x),
+\end{align*}
+and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.
+
+Now suppose that
+\[
+H(x) = F\big( G(x) \big) 
+\]
+is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
+\begin{align*}
+H(x) &= F \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}(x)  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}(x) 
+\end{align*}
+and by putting $k = m+n$ we have
+\begin{align*}
+H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \qquad \text{(interchange summation~\footnote{Sufficient assumptions about the sequences $f$ and $g$ must be made for this interchange of summation to be valid.  For example, the interchange is valid if both $f$ and $g$ and absolutely summable.})}\\
+&= \sum_{k \in \ints} h_k T_{Pk}(x)
+\end{align*}
+where $h$ is the sequence with elements given by
+\[
+h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n
+\]
+The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.
+
+Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  Discrete convolution is associative, that is, if $f$, $g$, and $h$ are sequences then
+\[
+(f*g)*h = f*(g*h). \qquad \text{(Exercise~\ref{excer:discrconvassociative})}
+\] 
+Discrete convolution distributes with addition and commutes with scalar multiplication, that is,
+\[
+a (f * h) + b (g * h) = (af + bg) * h
+\]
+where $a$ and $b$ are real or complex constants.  
+
+The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_n = 0$ for all $n < 0$, then $H$ is causal because 
+\[
+H(x,t) = \sum_{n \in \ints} h_n T_{ P n}(x,t) = \sum_{n =0}^\infty h_n x(t - Pn)
+\] 
+only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
+
+% Discrete time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
+% \[
+% x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n).
+% \]
+% The response of $H$ to $x$ is
+% \begin{align*}
+% y = H(x) &= \sum_{n \in \ints} h_n T_{Pn}\left(\sum_{m \in \ints} c_m \sinc(Ft - m) \right) \\
+% &=  \sum_{m \in \ints} \sum_{n \in \ints} h_n c_m \sinc(Ft - n - m),
+% \end{align*}
+% the interchange of summation being valid under appropriate assumptions about the sequence s$h$ and $c$.  Putting $k = m+n$ we have
+% \[
+% y = H(x) = \sum_{m \in \ints} \sum_{k \in \ints} h_n c_{k-n} \sinc(Ft - k) =  \sum_{m \in \ints} d_k \sinc(Ft - k)
+% \]
+% where $d = h * c$, that is, $d$ is the sequence with $n$th element
+% \[
+% d_n = (h * c)_n = \sum_{m \in \ints} h_m c_{n-m}.
+% \] 
+% We see that the response $y = H(x)$ is a bandlimited signal with samples $d_n = y(nP)$.
+
+
+\section{The z-transform}
+
+\newcommand{\calZ}{{\mathcal Z}}
+
+Let $c$ be a sequence.  The function
+\[
+\calZ(c) = \sum_{n \in \ints} c_n z^{-n}
+\]
+is called the \term{z-transform} of $c$. The z-transform $\calZ(c)$ is a function of the complex plane. To indicate the value of $\calZ(c)$ at $z \in \complex$ we write either $\calZ(c,z)$ or $\calZ(c)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.  Let $R_c$ be the set of nonnegative real numbers such that the sequence $c_n r^{-n}$ is absolutely summable if and only if $r \in R_c$, that is,
+\[
+\sum_{n \in \ints} \abs{c_n} r^{-n} < \infty \qquad \text{if and only if $r \in R_c$}.
+\]
+In this case, $\calZ(c,z)$ is finite for all $z$ with magnitude satisfying $\abs{z} \in R_c$ because 
+\[
+\sabs{\calZ(c,z)} \leq \sum_{n \in \ints} \abs{c_n z^{-n}} \leq \sum_{n \in \ints} \abs{c_n} r^{-n} < \infty.
+\]
+The subset of the complex plane with magnitude from $R_c$ is called the \term{region of convergence} of the sequence $c$.  The region of convergence of a sequence is analogous to the region of convergence of a signal when considering its Laplace transform.  Recall that the region of convergence of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
+
+The step sequence $u$ with elements
+\[
+u_n = \begin{cases} 
+1 & n \geq 0 \\
+0 & n < 0 
+\end{cases}
+\]
+has z-transform
+\[
+\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
+\]
+This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex numbers with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
+
+Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
+\[
+\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} (\tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad \abs{z} > \tfrac{1}{2} 
+\]
+converges only if $\abs{z} > \tfrac{1}{2}$.  The region of convergence is the complex plane with a disc of radius $\tfrac{1}{2}$ removed.  Now consider the sequence with elements 
+\[
+(\tfrac{3}{2})^{n} u_{-n} =  \begin{cases} 
+(\tfrac{3}{2})^{n} & n \leq 0 \\
+0 & n > 0.
+\end{cases}
+\]
+The z-transform
+\[
+\calZ\big( (\tfrac{3}{2})^n u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{2}{3} z)^{n} = \frac{3}{3 - 2z} \qquad \abs{z} < \tfrac{3}{2}
+\]
+converges only if $\abs{z} < \tfrac{3}{2}$.  The region of convergence is an open disc of radius $\frac{3}{2}$ centered at the origin of the complex plane.  The sequence with $n$th element $(\tfrac{1}{2})^{n} u_n + (\frac{3}{2})^{n} u_{-n}$ has z-transform
+\[
+\calZ\big((\tfrac{1}{2})^{n} u_n + (\tfrac{3}{2})^{n} u_{-n}\big) =  \frac{2z}{2z - 1} + \frac{3}{3 - 2z} \qquad \tfrac{1}{2} < \abs{z} < \tfrac{3}{2}
+\]
+that converges only if $\tfrac{1}{2} < \abs{z} < \tfrac{3}{2}$.  The region of convergence is an annulus in the complex plane with inner radius $\tfrac{1}{2}$ and outer radius $\tfrac{3}{2}$.
+
+The delta sequence $\delta$ with elements
+\[
+\delta_n = \begin{cases}
+1 & n = 0 \\
+0 & \text{otherwise}
+\end{cases}
+\]  
+has z-transform
+\[
+\calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
+\]
+The region of convergence is the entire complex plane.  Finally, consider the sequence that has every element equal to $1$.  In this case $\sum_{n \in \ints} z^{-n}$ does not converge for any $z \in \complex$ and the region of convergence is the empty set.  The sequence of all $1$'s is said not to have a z-transform.
+
+{
+\def\minn{-4}
+\def\maxn{4}
+\def\ymax{4}
+\def\ymin{-0.5}
+\def\scalex{0.6}
+\def\step(#1){(#1>=0)} %step function
+\begin{figure}[tp]
+\centering
+\begin{tikzpicture}
+  \def\scaley{3}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$u_n$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{(x>=0)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+  \htick{1*\scaley} node[pos=0.5,left] {$1$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}
+  \def\scaley{3}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$(\tfrac{1}{2})^n u_n$};
+        \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{\step(x)*(0.5**x)};
+  \end{scope}
+  \htick{1*\scaley} node[pos=0.5,right] {$1$};
+  %\htick{4*\scaley} node[pos=0.5,left] {$4$};
+  %\htick{8*\scaley} node[pos=0.5,left] {$8$};
+  %\htick{16*\scaley} node[pos=0.5,left] {$16$};
+\end{tikzpicture}
+ \\ \vspace{0.5cm}
+\begin{tikzpicture}
+  \def\scaley{3}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$(\tfrac{3}{2})^n u_{-n}$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+        \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{\step(-x)*((3.0/2)**x)};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+  \end{scope}
+  \htick{1*\scaley} node[pos=0.5,right] {$1$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}
+   \def\scaley{1.5}
+  \begin{scope}[xscale=\scalex,yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
+    \draw[->] (0,\ymin/\scaley) -- (0,\ymax/\scaley) node[left] {$(\tfrac{1}{2})^n u_n + (\tfrac{3}{2})^n u_{-n}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=\minn:\maxn,samples=\maxn-\minn+1] plot function{\step(x)*(0.5**x) + \step(-x)*((3.0/2)**x)};
+  \end{scope}
+  \htick{2*\scaley} node[pos=0.5,right] {$2$};
+  \htick{1*\scaley} node[pos=0.5,right] {$1$};
+  %\htick{4*\scaley} node[pos=0.5,left] {$4$};
+  %\htick{8*\scaley} node[pos=0.5,left] {$8$};
+  %\htick{16*\scaley} node[pos=0.5,left] {$16$};
+\end{tikzpicture}
+\caption{Real valued sequences.  The top left plot show the step sequence $u$.} \label{fig:realvaluedsequencestepetc}
+\end{figure}
+}
+
+{
+\def\xmax{1.75}
+\def\ymax{1.75}
+\def\zscale{1.5}
+\newcommand{\graybox}{\draw [draw=none,fill=lightgray] (-\xmax,-\ymax) rectangle (\xmax,\ymax);}
+\newcommand{\drawzplane}{
+  \draw [<->] (-\xmax,0) -- (\xmax,0) node [above left]  {$\Re$};
+  \draw [<->] (0,-\ymax) -- (0,\ymax) node [below right] {$\Im$};
+  \draw [dashed] (0,0) circle (1);
+}
+\begin{figure}[tp]
+  \centering
+  \begin{tikzpicture}[scale=\zscale]
+    \path [draw=none,fill=lightgray] (0,0) circle (1) ;
+    \drawzplane
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    \path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture} 
+  \\ \vspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    \graybox
+    \path [draw=none,fill=white] (0,0) circle (3/2);
+    \drawzplane
+     \begin{scope}[yscale=1/\zscale]
+      \vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \;\;\;
+  \begin{tikzpicture}[scale=\zscale]
+    \graybox
+    \path [draw=none,fill=white] (0,0) circle (3/2);
+    \path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      \vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+      \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Regions of convergence (unshaded) for the step sequence $u$ (top left), the sequence $(\tfrac{1}{2})^{n}u_n$ (top right), the sequence $(\tfrac{3}{2})^{n} u_{-n}$ (bottom left), and the sequence $(\tfrac{1}{2})^{n}u_n + (\tfrac{3}{2})^{n} u_{-n}$ (bottom right).  The unit circle is indicated by the dashed circle.  The region of convergence takes the form of the complex plane with a disc at the origin removed (top), a disc at the origin (bottom left), an annulus (bottom right), the entire complex plane, or the empty set. }\label{fig:rocexampleztrans1}
+\end{figure}
+}
+
+\newcommand{\stirling}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\eulerian}[2]{\genfrac{\langle}{\rangle}{0pt}{}{#1}{#2}}
+
+Given the z-transform $\calZ(c)$ the sequence $c$ can be recovered by the inverse z-transform
+\[
+c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
+\]
+where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair 
+\[
+\calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1 \qquad \text{(Exercise~\ref{exer:fallingfacztransform})}
+\]
+where
+\[
+[n]_k = n (n-1) \dots (n-k+1)
+\]
+is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
+
+Let $a \in \complex$.  If $c$ is a sequence with z-transform $\calZ(c)$ and region of convergence $R_c$ then the sequence with $n$th element $a^nc_n$ has z-transform 
+\[
+\calZ(a^n c_n) = \sum_{n \in \ints} a^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/a)^{-n} = \calZ(c, z/a) \qquad \frac{z}{a} \in R_c.
+\]
+Using this property the z-transform of the sequence $a^n [n]_k u_n$ is
+\begin{equation}\label{eeq:onlyztrans}
+\calZ\big( a^n [n]_k u_n \big) = \frac{k! a^k z }{(z - a)^{k+1}} \qquad \abs{z} > \abs{a}.
+\end{equation}
+This is the only z-transform pair we require here.  We will have particular use of the case when $k$ is $0$ or $1$.  In the case that $k=0$ we obtain the z-transform pair
+\[
+\calZ\big( a^n u_n \big) = \frac{ z }{z - a} \qquad \abs{z} > \abs{a}
+\]
+and in the case that $k=1$ we obtain
+\[
+\calZ\big( a^n n u_n \big) = \frac{ a z }{(z - a)^{2}} \qquad \abs{z} > \abs{a}.
+\]
+
+The z-transform of a sequence is related to the transfer function of a discrete time system.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
+\[
+\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
+\]
+Putting $z = e^{Ps}$ we have
+\[
+\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in R_h
+\]
+where $R_h$ is the region of convergence of $h$.  We see that the transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
+\begin{equation}\label{eq:reltransferfunztrans}
+\lambda(H,s) = \calZ(h,e^{Ps}) \qquad e^{sP} \in R_h.
+\end{equation}
+This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).  The set of complex numbers $s$ such that $e^{sP} \in R_h$ is called the region of convergence of the system $H$.  In this way, both sequences and discrete time systems have a region of convergence. 
+
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$ having regions of convergence $R_f$ and $R_g$.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
+\[
+\lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
+\]
+Because
+\[
+\calZ(f, e^{sP}) = \lambda\big( F ,s \big) , \;\;\; \calZ(g, e^{sP}) = \lambda\big( G ,s \big), \;\;\; \calZ(f * g, e^{sP}) = \lambda( H ,s )
+\]
+when $e^{sP} \in R_f \cap R_g$ we have
+\[
+\calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
+\]
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of the convolution is the intersection of the regions of convergence.  This is called the \term{convolution property} of the z-transform.
+%BLERG needs region of convergence done better.
+
+Let $g$ be a sequence with region of convergence $R_g$ and let $h$ be the sequence with $n$th element $h_n = g_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $h$ is related to that of $g$ by
+\begin{align}
+\calZ(h) &= \sum_{n \in \ints} h_n z^{-n} \nonumber \\
+&= \sum_{n \in \ints} h_{n+\ell} z^{-(n+\ell)} \nonumber \\
+&= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in R_g. \label{eq:timeshiftpropertyztransform}
+\end{align}
+The region of convergence of $h$ is the same as that of $g$.  This is called the \term{time~shift} property of the z-transform.  % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
+% \begin{align*}
+% H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
+% &= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
+% &= \sum_{n \in \ints} g_{n - \ell} T_{Pn}(x) 
+% \end{align*}
+% and so $h_n = g_{n-\ell}$.  The transfer function of $H$ is
+% \[
+% \lambda(H) = \lambda(T_{P\ell})\lambda(G) = e^{-sP} \lambda(G) \qquad e^{sP} \in R_g.
+% \]
+% Puting $z = e^{sP}$ we again obtain the time shift property of the z-transform
+% \[
+% \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
+% \]
+
+Let $H$ be discrete time system with discrete impulse response $h$ having region of convergence containing the complex unit circle.  The spectrum of $H$ is
+\[
+\Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
+\]
+The spectrum is periodic with period equal to the reciprocal of the sampling period $F = \frac{1}{P}$ that is called the \term{sampling rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
+\[
+\calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
+\]
+We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform, of the discrete time system $H$ and its discrete impulse response $h$,
+\[
+\lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{2\pi j P f}).
+\]
+
+\section{Difference equations}\label{sec:difference-equations}
+
+\nocite{SolimanAndSrinath_1990}
+
+We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices.  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
+\begin{equation}\label{eq:differenceequform}
+\sum_{\ell=0}^{m} a_\ell c_{n - \ell} = \sum_{\ell=0}^{k} b_\ell d_{n - \ell} \qquad n \in \ints
+\end{equation}
+where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex constants.
+
+In order to study this equation it is useful to study the equation
+\begin{equation}\label{eq:differenceequformsystem}
+\sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
+\end{equation}
+that relates two signals $x$ and $y$.  \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the \term{continuous variable case} of a linear difference equation with constant coefficients.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
+
+Suppose that $H$ is a linear time invariant system with the property that the response $y = H(x)$ to input signal $x$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
+\[
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
+\]
+where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
+\[
+\calZ(h,z) = \lambda(H,s) = z^{k-m}\frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
+\]
+Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  In the case that $m > k$ the term $z^{k-m}$ can be incorporated into the denominator obtaining
+\[
+\calZ(h) = \frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^m + b_1 z^{k-1} + \dots + b_k z^{m-k}}
+\]
+and in the case that $m < k$ the term $z^{m-k}$ can be incorporated into the numerator obtaining
+\[
+\calZ(h) = \frac{a_0z^k + a_1 z^{k-1} + \dots + a_m z^{k-m}}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
+\] 
+In either case the order of the polynomials on the numerator and denominator are the same, that is, the order is $w = \max(m,k)$.
+
+By factorising the polynomials on the numerator and denominator we obtain
+\[
+\calZ(h) = C \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}.
+\]
+where $\alpha_0, \dots, \alpha_w$ are the roots of the numerator polynomial, and $\beta_0, \dots, \beta_w$ are the roots of the denominator polynomial, and $C = \tfrac{a_0}{b_0}$.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
+\begin{equation}\label{eq:ztransfuncpoleszeros}
+\calZ(h) = C \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})},
+\end{equation}
+where $d$ is the number of shared roots, these shared roots being 
+\[
+\alpha_0 = \beta_0, \;\; \alpha_1 = \beta_1, \;\; \dots, \;\;  \alpha_{d-1} = \beta_{d-1}.
+\]
+The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_w$ are called the \term{poles}.  For a discrete time system, the number of poles and zeros are equal.   A pole-zero plot is constructed by marking the complex plane with a cross at the location of each pole and a circle at the location of each zero (Figure~\ref{fig:polezeroplotdisctime}). %If $k>m$ then there exist $k-m$ zeros located at the origin.  If $k<m$ there exist $m-k$ poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+
+{
+\def\xmax{1.75}
+\def\ymax{1.75}
+\def\zscale{1.5}
+\newcommand{\graybox}{\draw [draw=none,fill=lightgray] (-\xmax,-\ymax) rectangle (\xmax,\ymax);}
+\newcommand{\drawzplane}{
+  \draw [<->] (-\xmax,0) -- (\xmax,0) node [above left]  {$\Re$};
+  \draw [<->] (0,-\ymax) -- (0,\ymax) node [below right] {$\Im$};
+  \draw [dashed] (0,0) circle (1);
+}
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[scale=\zscale]
+    \poletikz{-0.3333}{0} \node[below] at (-2.0/3,0) {$\tfrac{2}{3}$};
+    \zerotikz{0}{0} \node[below] at (0,0) {};
+    %\path [draw=none,fill=lightgray] (0,0) circle (1) ;
+    \drawzplane
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    \poletikz{3.0/2.0}{0} \node[below] at (3.0/2,0) {$\tfrac{3}{2}$};
+    \zerotikz{0}{0} \node[below] at (0,0) {};
+    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture} 
+  \\ \vspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    \drawzplane
+     \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \;\;\;
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \\ \vspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    \drawzplane
+     \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \;\;\;
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Pole zero plots for the discrete time systems ... BLERG}\label{fig:polezeroplotdisctime}
+\end{figure}
+}
+
+The z-transform pair~\eqref{eeq:onlyztrans} has the term $z$ on its numerator and so it is convenient to write
+\[
+\calZ(h) = C z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
+\]
+Applying partial fraction to polynomial quotient above yields
+\[
+\calZ(h) = C z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
+\] 
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, and $K$ is a subset of the indices from $\{d,d+1,\dots,w\}$.  Putting 
+\[
+B_\ell = \frac{C A_\ell}{\beta_\ell^{r_\ell-1} (r_\ell-1)! }
+\]
+we obtain
+\[
+\calZ(h) = \sum_{\ell \in K} B_\ell \frac{  \beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}.
+\]
+We can now invert the z-transform using~\eqref{eeq:onlyztrans}.  Those terms where $\beta_\ell \neq 0$ take the correspond with sequences of the form 
+\[
+B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n
+\] 
+where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Those terms where $\beta_\ell = 0$ correspond with sequences of the form 
+\[
+B_\ell(r_\ell-1)! \delta_{n+r_\ell-1} = C A_\ell \delta_{n+r_\ell-1}
+\]
+where the convention $0^0 = 1$ is used and where $\delta$ is the delta sequence.  Letting $K_1$ be the subset of indices from $K$ such that $\beta_\ell = 0$ and $K_2$ be the subset such that $\beta_\ell \neq 0$ we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
+\[
+h_n = C \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
+\]
+The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
+
+We now consider some specific examples of differences equations and their corresponding discrete time systems.  Consider the difference equation
+\[
+c_n = d_n - a d_{n-1} \qquad n \in \ints
+\]
+where $a \in \complex$.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
+\[
+x = y - a T_{P}(y).
+\]
+Such a system is called a \term{first order discrete time system}.  The transfer function of this system is
+\[
+\lambda(H,s) = \frac{1}{1 - a e^{-sP}} = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}
+\]
+where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single poles at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-a)$.  The inverse z-transform is found by puting $k=0$ in~\eqref{eeq:onlyztrans} resulting in $h_n = a^n u_n$.  Other sequences with this z-transform are discarded becasue they do not correspond with $H$ being causal.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  
+When $\abs{a} < 1$ the region of convergence contains the unit circle and the system has spectrum
+\[
+\Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - a}.
+\]
+The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresystem1} in the case that $a = \tfrac{1}{2}$ and $\tfrac{1}{10}$.
+
+\begin{figure}[tp]
+\centering
+\def\P{0.5}
+\def\F{1/\P}
+  \begin{tikzpicture}[domain=-5:5,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \begin{scope}[yscale=2]
+      \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$}; 
+      \draw[->] (0,-0.3) -- (0,2.5) node[right] {$\abs{\Lambda(H, f)}$};
+      % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityabs2.csv};
+      \node[above] at (-\F,2) {$\tfrac{1}{2}$};
+      %\draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityabs4.csv};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityabs10.csv};
+      \node at (-\F,0.95) {$\tfrac{1}{10}$};
+      % \node at (9.3,-1) {$0$};
+      % \htick{2} node[pos=0.5,left] {$2$};
+      \htick{2} node[pos=0.5,above left] {$2$};
+    \end{scope}
+    \vtick{-\F} node[pos=0.5,below] {$-F$};
+    \vtick{\F} node[pos=0.5,below] {$F$};
+  \end{tikzpicture}
+\medskip
+  \begin{tikzpicture}[domain=-5:5,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \begin{scope}[yscale=3]
+      \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$};
+      \draw[->] (0,-0.75) -- (0,0.75) node[right] {$\angle{\Lambda(H, f)}$};
+      % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityangle2.csv};
+      \node[above] at (-\F-0.333,pi/6) {$\tfrac{1}{2}$};
+      %\draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityangle4.csv};
+      \draw[thick] plot[] file {data/discretetimesystem/datafftcomplexityangle10.csv};
+      \node at (-\F-0.5,0.2) {$\tfrac{1}{10}$};
+      % \node at (9.3,-1) {$0$};
+      % \htick{2} node[pos=0.5,left] {$2$};
+      \htick{pi/6} node[pos=0.5,right] {$\tfrac{\pi}{6}$};
+      \htick{-pi/6} node[pos=0.5,left] {$-\tfrac{\pi}{6}$};
+      %\htick{2*pi} node[pos=0.5,left] {$2\pi$};
+      %\htick{pi/2} node[pos=0.5,left] {$\tfrac{\pi}{2}$};
+      %\htick{3*pi/2} node[pos=0.5,left] {$\tfrac{3\pi}{2}$}; 
+      %\htick{-3.14159265359} node[pos=0.5,left] {$-\pi$};
+    \end{scope}
+    %\vtick{-\F} node[pos=0.5,below] {$-F$};
+    \vtick{\F} node[pos=0.5,above right] {$F$};
+  \end{tikzpicture}
+\caption{Magnitude and phase spectrum of the first order discrete time system $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.} \label{fig:spectrumdiscresystem1}
+\end{figure}
+
+
+\begin{comment}
+
+\section{Digital filters}\label{sec:digital-filters}
+
+
+\end{comment}
+
+
+\section{Exercises}
+
+\begin{excersizelist}
+
+
+\item \label{excer:discrconvassociative} Show that discrete convolution is associative.
+\begin{solution}
+Let $f,g,h$ be sequences.  We have
+\begin{align*}
+(f*g)*h &= \sum_{m \in \ints} h_{m} (f*g)_{n-m} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} g_{k} f_{n-m-k} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} f_{k} g_{n-m-k} \qquad \text{commutivity $f*g=g*f$} \\
+&= \sum_{m \in \ints} \sum_{k \in \ints} f_{k} h_m g_{n-m-k} \\
+&= \sum_{k \in \ints} f_{k} \sum_{m \in \ints}  h_m g_{n-k-m} \\
+&= \sum_{k \in \ints} f_{k} (g*h)_{n-k} \\
+&= f*(g*h).
+\end{align*}
+\end{solution}
+
+\item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
+
+\item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\eqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
+\begin{solution}
+Substitute $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\eqref{eq:differenceequformsystem},
+\begin{align*}
+\sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
+\sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
+\sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
+\end{align*}
+Solving for $\lambda$ yeilds the transfer function of $H$,
+\[
+\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
+\]
+\end{solution}
+
+\item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $a^nu_n$ is $z/(z-a)$ with region of convergence $\abs{z} > \abs{a}$.
+\begin{solution}
+The z-transform is
+\[
+\calZ(a^nu_n) = \sum_{n \in \ints} a^n u_n z^{-n} = \sum_{n=0}^\infty \left(\frac{z}{a}\right)^{-n}.
+\]
+This sum is a geometric progression that converges to 
+\[
+\frac{1}{1- a z^{-1}} = \frac{z}{ z-a}
+\]
+when $\abs{z/a} > 1$ and diverges otherwise.  The region of convergence is thus $\abs{z} > \abs{a}$.
+\end{solution}
+
+\item \label{exer:fallingfacztransform} Show that the z-transform of the sequence $[n]_k u_n$ where $[n]_k = n(n-1)\dots(n-k+1)$ is a falling factorial is
+\[
+\calZ\big( [n]_k u_n  \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1.
+\]
+\begin{solution}
+Observe that
+\begin{align*}
+\calZ\big( [n]_{k} u_n  \big) &= \sum_{n\in\ints} [n]_k u_n z^{-n} \\ 
+&= \sum_{n=0}^\infty [n]_k z^{-n} \\ 
+&= \sum_{n=-1}^\infty [n+1]_k z^{-(n+1)} \\
+&= z^{-1} \sum_{n=-1}^\infty [n+1]_k z^{-n}.
+\end{align*}
+Because $[0]_k = 0 \times -1 \times \dots \times (1-k)= 0$ we have
+\[
+z \calZ\big( [n]_{k} u_n  \big) = \sum_{n=0}^\infty [n+1]_k z^{-n}.
+\]  
+Now
+\begin{align*}
+(z - 1) \calZ\big( [n]_{k} u_n  \big) &= \sum_{n=0}^\infty [n+1]_k z^{-n} - \sum_{n=0}^\infty [n]_k u_n z^{-n} \\
+&= \sum_{n=0}^\infty ([n+1]_k - [n]_k) z^{-n}.
+\end{align*}
+Observe that the falling factorial satisfies
+\begin{align*}
+[n+1]_k - [n]_k &= \big( (n+1)n(n-1)\dots(n-k+2) \big) \;\;  - \;\; \big(n(n-1)\dots(n-k+1)\big) \\
+&= [n]_{k-1}(n+1 - n+k-1) \\
+&= [n]_{k-1} k
+\end{align*}
+and so
+\begin{align*}
+(z - 1) \calZ\big( [n]_{k} u_n  \big) &= k \sum_{n=0}^\infty  [n]_{k-1} z^{-n} \\
+&= k \calZ\big( [n]_{k-1} u_n  \big).
+\end{align*}
+We obtain the following recursive equation for $\calZ\big( [n]_{k} u_n  \big)$,
+\[
+\calZ\big( [n]_{k} u_n  \big) = \frac{k}{z-1} \calZ\big( [n]_{k-1} u_n  \big).
+\]
+Unravelling this recursion we obtain
+\[
+\calZ\big( [n]_{k} u_n  \big) = \frac{k}{z-1} \times \frac{k-1}{z-1} \times \frac{k-2}{z-1} \times \dots \times \calZ( [n]_0 u_n ).
+\]
+By definition $[n]_0 = 1$ for all $n \in \ints$ and so $\calZ( [n]_0 u_n ) = \calZ( u_n ) = z/(z-1)$ with region of convergence $\abs{z} >1$.  Thus,
+\[
+\calZ\big( [n]_{k} u_n  \big) = \frac{k! z}{(z-1)^{k+1}} \qquad \abs{z} > 1
+\]
+as required.
+\end{solution}
+
+\item \label{exer:fftcomplexity} Let $d_n$ be a sequence satisfying $d_n = 2 d_{n-1} + 2^{n+1}$ and suppose that $d_0 = 0$.  Show that $d_n = 2^{n+1}n$ for $n = 1,2,\dots$.  %Find a similar expression for $d_n$ is the case that $d_0 = a \neq 0$.
+\begin{solution}
+In Section~\ref{sec:difference-equations} we found the discrete time system $H$ with discrete impulse response $h_n = 2^{n}u_n$ is such that the respone $y = H(x)$ is input signal $x$ satisfied the equation
+\[
+x = y - 2 T_{P}(y).
+\] 
+Suppose that the sample period is $P=1$.  The response of $H$ to input signal is $x(t) = 2^{t+1}u(t)$ is
+\begin{align*}
+y = H(x) &= \sum_{n \in \ints} h_n T_{n}(x) \\
+&= \sum_{n = 0}^\infty 2^n 2^{t-n+1}u(t-n) \\
+&= 2^{t+1} \floor{t}u(t)
+\end{align*}
+Let $c$ and $d$ be sequences with elements 
+\[
+c_n = x(nP) = 2^{n+1}u_{n-1}, \qquad d_n = y(nP) = 2^{n+1}n u_n
+\]
+and observe that $d_0 = 0$.  By definition of $H$ these sequences satisfy the difference equation
+\[
+c_n = 2^{n+1}u_n = d_n - 2 d_{n-1}
+\]
+as required.
+
+Let us now consider an alternative method of solution that applyies the z-transform directly to the difference equation
+\[
+ d_n - 2 d_{n-1} = 2^{n+1} u_{n-1}.
+\]
+Applying the z-transform to both sides and using the time shift property we have
+\[
+\calZ(d) - 2 z^{-1} \calZ(d) = \calZ(2^{n+1} u_n) = \frac{4}{z-2} \qquad \abs{z} > 2.
+\]
+The z-transform of $d$ is then
+\[
+\calZ(d) = \frac{4z}{(z-2)^2} \qquad \abs{z} > 2.
+\]
+The inverse z-transform is found by putting $k=1$ and $a = 2$ in~\eqref{eeq:onlyztrans}.  We obtain $d_n = 2^{n+1} n u_n$.  Observing that $d_n = 0$ we have a solution.
+\end{solution}
+
+\item \label{exer:fibonacci} The Fibonacci sequence $0,1,1,2,3,5,8,13,\dots$ satisfies the recursive equation $d_0 = 0, d_1 = 1$, and $d_n = d_{n-1} + d_{n-2}$ for $n \geq 2$.  Find a closed form expression for the $n$th Fibonacci number.
+\begin{solution}
+Consider the recursive equation
+\[
+d_n - d_{n-1} - d_{n-2} = \delta_{n}.
+\]
+Applying z-transforms to both sides gives
+\[
+\calZ(d) - z^{-1} \calZ(d) - z^{-2} \calZ(d) = \calZ(\delta) = 1.
+\]
+The region of convergence is the whole complex plane.  We have
+\[
+\calZ(d) = \frac{z^2}{z^2 - z - 1} = z \left( \frac{z}{z^2 - z - 1} \right)
+\]
+Our formula for the inverse z-transformation~\eqref{eeq:onlyztrans} involves $z$ on the numerator and so applying partial fractions to the term within the brackets will be convenient.  The roots of $z^2 - z - 1$ are
+\[
+a = \frac{1-\sqrt{5}}{2}, \qquad b = \frac{1+\sqrt{5}}{2}
+\]
+and by partial fractions (see Exercise~\ref{exer:partialfracsecondorder}) we obtain.
+\[
+\frac{z}{(z-a)(z-b)} = \frac{a}{(a-b) (z-a)}-\frac{b}{(a-b) (z-b)}
+\]
+and so
+\[
+\calZ(d) = \frac{az}{(a-b) (z-a)}-\frac{bz}{(a-b) (z-b)}
+\]
+Both of these terms are in the form of~\eqref{eeq:onlyztrans} when $k=0$ and so
+\[
+d_n = \frac{1}{a-b} a^n u_n + \frac{1}{b-a} b^n u_n = \frac{b^n - a^n}{\sqrt{5}} u_n
+\]
+Observe that $d_0 = 0$ and that $d_1 = 1$ as a result of $b - a = 1$.
+\end{solution}
+
+% \item \label{excer:sumsqreexp} Show that $\sum_{n \in \ints} e^{a n^2} = ?$ if $a < 0$ (Hint: solve Excersize~\ref{excer:sumgeomeabsn} first).
+% \begin{solution}
+% BLERG: 
+% \end{solution}
+
+\end{excersizelist}
+
+
+
+%\end{comment}
+
+
+
+% \chapter{Sampling and interpolation} \label{sec:sampl-interp}
+
+% %In each of the tests conducted we have made use of the computer sound card
+
+% Let $x$ be a signal with Fourier transform $\hat{x} = \calF(x)$ and let
+% \begin{equation}\label{eq:periodizedhatxp}
+% \hat{x}_p(f) = \sum_{m \in \ints} \hat{x}(f - m).
+% \end{equation}
+% The signal $\hat{x}_p$ is periodic with period one since for every integer $k$,
+% \[
+% \hat{x}_p(f - k) = \sum_{m \in \ints} \hat{x}(f - k - m) = \sum_{m \in \ints} \hat{x}(f - m) = \hat{x}_p(f).
+% \]
+% For this reason $\hat{x}_p$ is sometimes called the \term{periodised} or \term{wrapped} version of $\hat{x}$~\citep{Fisher_tsa_cd_1994}.  We plot functions $\hat{x}$ and their periodised versions $\hat{x}_p$ in Figure~\ref{fig:periodisedfunctions}.
+
+% Assume that we can write the periodic signal $\hat{x}_p(f)$ as a series
+% \begin{equation}\label{eq:hatxpdiscreteft}
+% \hat{x}_p(f) = \sum_{n\in\ints} x_n e^{-j2\pi f n}.
+% \end{equation}
+% The coefficients $x_n$ in this series can be recovered by
+% \begin{equation}\label{eq:idfftxnhatxp}
+% x_n = \int_{-1/2}^{1/2} \hat{x}_p(f) e^{2\pi jfn} df.
+% \end{equation}
+% To see this write
+% \begin{align*}
+% \int_{-1/2}^{1/2} \hat{x}_p(f) e^{2\pi jfn} df &= \int_{-1/2}^{1/2} \big( \sum_{m\in\ints} x_m e^{-j2\pi f m} \big) e^{2\pi jfn} df \\
+% &= \sum_{m\in\ints} x_m   \int_{-1/2}^{1/2} e^{-j2\pi fm}e^{j2\pi fn} df \\
+% &= \sum_{m\in\ints} x_m   \int_{-1/2}^{1/2} e^{j2\pi f(n-m)} df \\
+% &= \sum_{m\in\ints} x_m   \sinc(n-m) \\
+% &= x_n
+% \end{align*}
+% because $\sinc(n-m) = 1$ when $n = m$ and zero otherwise.  The periodic function $\hat{x}_p$ is called the \term{discrete Fourier transform} of the sequence $x_n$. 
+
+% % To see that write
+% % \begin{align*}
+% % \hat{x}_p(f) &= \sum_{n\in\ints} \int_{-1/2}^{1/2} \hat{x}_p(\gamma) e^{2\pi j \gamma n} d\gamma e^{-j2\pi f n} \\
+% % = \int_{-1/2}^{1/2} \hat{x}_p(\gamma) \sum_{n\in\ints} e^{2\pi j \gamma n} e^{-j2\pi f n} d\gamma\\
+% % \end{align*}
+% % The periodised signal $\hat{x}_p$ is called the \term{discrete Fourier transform} of the sequence $x_n$.
+
+% Substituting~\eqref{eq:periodizedhatxp} into~\eqref{eq:idfftxnhatxp} we obtain
+% \[
+% x_n = \int_{-1/2}^{1/2} \sum_{m \in \ints} \hat{x}(f - m) e^{2\pi jfn} df = \sum_{m \in \ints} \int_{-1/2}^{1/2}  \hat{x}(f - m) e^{2\pi jfn} df.
+% \]
+% %BLERG: where the exchange of integration and summation can be justified by \term{Lebesgue's dominated convergence theorem}~\cite[page~26]{Rudin_real_and_complex_analysis}.  
+% By the change of variable $\gamma = f - m$ we obtain
+% \begin{align*}
+% x_n &= \sum_{m \in \ints} \int_{- 1/2-m}^{1/2-m}  \hat{x}(\gamma) e^{2\pi j n (\gamma + m)} d\gamma \\
+% &= \sum_{m \in \ints} \int_{- 1/2-m}^{1/2-m}  \hat{x}(\gamma) e^{2\pi j n \gamma} d\gamma & \text{(since $e^{2\pi j m} = 1$)} \\
+% &= \int_{-\infty}^{\infty}  \hat{x}(\gamma) e^{2\pi j n \gamma} d\gamma \\
+% & = \calF^{-1}(\hat{x},n) \\
+% &= x(n).
+% \end{align*}
+% Thus, the sequence $x_n$ corresponds with the signal $x$ sampled at the integers, that is $x_n = x(n)$.
+
+% A signal $x$ is called \term{bandlimited} if there exists a positive real number $b$ such that $\calF(x,f) = 0$ for all $\abs{f} > b$.  For example, the $\sinc$ function is bandlimited with bandwidth $\tfrac{1}{2}$ because its Fourier transform $\calF(\sinc,f) = \rect(f) = 0$ for all $\abs{f} > b$.  The value $b$ is referred to as the \term{bandwidth} of the signal $x$.  If $x$ is bandlimited with bandwidth $b\leq\tfrac{1}{2}$, then $x$ can be recovered from its samples at the integers, that is, $x$ can be recovered from the sequence $x_n$.  To see this, first observe that
+% \[
+% \rect(f) \hat{x}(f - m) = \begin{cases} 
+% \hat{x}(f) & m = 0 \\
+% 0 & \text{otherwise}
+% \end{cases}
+% \] 
+% since $\hat{x}(f) = 0$ whenever $\abs{f}\geq \tfrac{1}{2}$.  Now, multiplying $\hat{x}_p(f)$ by the rectangle function gives
+% \[
+% \rect(f)\hat{x}_p(f) = \sum_{m \in \ints} \rect(f) \hat{x}(f - m) = \hat{x}(f).
+% \]
+% Now consider the signal
+% \[
+% \tilde{x}(t) = \sum_{n\in\ints} x_n \sinc(t - n).
+% \]
+% Taking the Fourier transform on both sides gives
+% \begin{align*}
+% \calF(\tilde{x}) &= \calF\big( \sum_{n\in\ints} x_n \sinc(t - n) \big) \\
+% &= \sum_{n\in\ints} x_n \calF \big( \sinc(t - n) \big) \\
+% &= \sum_{n\in\ints} x_n e^{-j2\pi f n}\rect(f) & \text{(time shift property of $\calF$)} \\
+% &= \rect(f) \hat{x}_p(f) & \text{(from~\eqref{eq:hatxpdiscreteft})} \\
+% &= \hat{x}(f) \\
+% &= \calF(x,f).
+% \end{align*}
+% %BLERG: The interchange of $\calF$ and $\sum_{n\in\ints}$ could be justified if $x_n$ is \term{absolutely summable}, not sure what's required for this to happen.  
+% Thus, $\calF(\tilde{x}) = \calF(x)$ and application of the inverse Fourier transform reveals that $\tilde{x} = x$, that is
+% \[
+% x(t) = \sum_{n\in\ints} x_n \sinc(t - n).
+% \]
+% If instead of sampling at the integers we sample at rate $F_s$ so that $x_n = x(F_s n)$, then, by a similar argument, we find that $x$ can be recovered as
+% \[
+% x(t) = \sum_{n\in\ints} x_n \sinc(F_s t - n)
+% \]
+% provided that $x$ is bandlimited with bandwidth $F_s/2$.  This is called the \term{Nyquist criterion}.
+
+% \begin{figure}[p]
+% \centering
+% {
+%   \def\f(#1){exp(-(#1)*(#1)*4)}
+%   \def\scaley{2}
+%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+%     \draw[->] (0,-0.35) -- (0,1.2) node[above] {$\hat{x}(f) = e^{-4 f^2}$};
+%     \draw[smooth,color=black,thick] plot function{\f(x)};
+%     % \htick{1} node[pos=0.5,above left] {$1$};
+%     \begin{scope}[yscale=1/\scaley]
+%       \vtick{1} node[pos=0.5,below] {$1$};
+%       \vtick{-1} node[pos=0.5,below] {$-1$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \end{scope}
+%   \end{tikzpicture} 
+%   \;\;
+%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+%     \draw[->] (0,-0.35) -- (0,1.2) node[above] {$\hat{x}_p(f)$};
+%     \draw[smooth,color=black,dashed] plot function{\f(x)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+%     \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+%     \begin{scope}[yscale=1/\scaley]
+%       \vtick{1} node[pos=0.5,below] {$1$};
+%       \vtick{-1} node[pos=0.5,below] {$-1$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \end{scope}
+%   \end{tikzpicture} 
+% }
+% \\
+% \vspace{1cm}
+% {
+%   \def\ifthenelset(#1,#2,#3){(#1*#2 + !#1*#3)}
+%   \def\step(#1){\ifthenelset(((#1)>0),1,0)} %step function
+%   \def\rectangle(#1){(\step(#1+1)-\step(#1-1))}
+%   \def\f(#1){\rectangle(#1)*(1+cos(pi*(#1)))}
+%   \def\scaley{1}
+%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+%     \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\hat{x}(f) = \rect(f/2)\big(1 + \cos(\pi f)\big)$};
+%     \draw[smooth,color=black,thick] plot function{\f(x)};
+%     % \htick{1} node[pos=0.5,above left] {$1$};
+%     \begin{scope}[yscale=1/\scaley]
+%       \vtick{1} node[pos=0.5,below] {$1$};
+%       \vtick{-1} node[pos=0.5,below] {$-1$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \end{scope}
+%   \end{tikzpicture} 
+%   \;\;
+%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+%     \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\hat{x}_p(f)$};
+%     \draw[smooth,color=black,dashed] plot function{\f(x)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+%     \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+%     \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+%     \begin{scope}[yscale=1/\scaley]
+%       \vtick{1} node[pos=0.5,below] {$1$};
+%       \vtick{-1} node[pos=0.5,below] {$-1$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \end{scope}
+%   \end{tikzpicture} 
+% } 
+% \\
+% \vspace{1cm}
+% {
+%   \def\ifthenelset(#1,#2,#3){(#1*#2 + !#1*#3)}
+%   \def\step(#1){\ifthenelset(((#1)>0),1,0)} %step function
+%   \def\rectangle(#1){(\step(#1+0.3333)-\step(#1-0.3333))}
+%   \def\f(#1){\rectangle(#1)*(1+cos(3*pi*(#1)))}
+%   \def\scaley{1}
+%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
+%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+%     \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\hat{x}(f) = \rect(3f/2)\big(1 + \cos(3 \pi f)\big)$};
+%     \draw[smooth,color=black,thick] plot function{\f(x)};
+%     % \htick{1} node[pos=0.5,above left] {$1$};
+%     \begin{scope}[yscale=1/\scaley]
+%       \vtick{1} node[pos=0.5,below] {$1$};
+%       \vtick{-1} node[pos=0.5,below] {$-1$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \end{scope}
+%   \end{tikzpicture} 
+%   \;\;
+%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
+%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+%     \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\hat{x}_p(f)$};
+%     \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+%     \begin{scope}[yscale=1/\scaley]
+%       \vtick{1} node[pos=0.5,below] {$1$};
+%       \vtick{-1} node[pos=0.5,below] {$-1$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-2} node[pos=0.5,below] {$-2$};
+%     \end{scope}
+%   \end{tikzpicture} 
+% } 
+% \caption{Signals $\hat{x}$ and their periodised versions $\hat{x}_p$.  Aliasing occurs in the plot on the top and middle.  No aliasing occurs in the plot on the bottom.} \label{fig:periodisedfunctions}
+% \end{figure}
+
+% \begin{excersizelist}
+
+% \item Let $x$ be an absolutely integrable signal and let $x_p(t) = \sum_{m\in\ints} x(t - m)$ be its periodised version.  Show that $x_p$ is a periodic signal satisfying $\int_{-1/2}^{1/2} \abs{ x_p(t) } dt < \infty$.
+% \begin{solution}
+% We have
+% \begin{align*}
+% \int_{-1/2}^{1/2} \abs{ x_p(t) } dt &= \int_{-1/2}^{1/2} \abs{ \sum_{m\in\ints} x(t-m) } dt \\
+% &\leq \int_{-1/2}^{1/2} \sum_{m\in\ints} \abs{  x(t-m) } dt \\
+% &= \sum_{m\in\ints} \int_{-1/2}^{1/2} \abs{  x(t-m) } dt \\
+% &= \sum_{m\in\ints} \int_{-1/2-m}^{1/2-m} \abs{  x(\tau) } d\tau & \text{(change variable $\tau = t - m$)}\\
+% &= \int_{-\infty}^{\infty} \abs{  x(\tau) } d\tau < \infty
+% \end{align*}
+% because $x$ is absolutely integrable.
+% \end{solution}
+
+
+% \item State whether the following signals are bandlimited and, if so, find the bandwidth.
+% \begin{enumerate}
+% \item $\sinc(4t)$,
+% \item $\rect(t/4)$,
+% \item $\cos(2\pi t) \sinc(t)$,
+% \item $e^{-\abs{t}}$.
+% \end{enumerate}
+% \begin{solution}
+% Let $S_\alpha(x,t) = x(\alpha t)$ be the time scaler system.  We have 
+% \begin{align*}
+% \calF\big( S_\alpha(x), f\big) &= \int_{-\infty}^\infty x(\alpha t) e^{-2\pi j t } dt \\
+% &= \frac{1}{\alpha} \int_{-\infty}^\infty x(\gamma) e^{ -2\pi j \gamma / \alpha  } d\gamma & \text{(ch. var. $\gamma = \alpha t$)} \\
+% &= \frac{1}{\alpha} \calF\big( x, f/\alpha \big) \\
+% &= \frac{1}{\alpha} S_{1/\alpha}\big(\calF(x),f\big).
+% \end{align*}
+% The Fourier transform of $S_\alpha(\sinc)(t) = \sinc(4t)$ is
+% \[
+% \calF\big( \sinc(4t) \big) = \tfrac{1}{4} \rect(f/4),
+% \]
+% and the signal is bandlimited with bandwidth $2$ because $\rect(f/4) = 0$ whenever $\abs{f} > 2$.  By duality
+% \[
+% \tfrac{1}{4} \calF(\rect(f/4)) =  \sinc(4t)
+% \]
+% and so $\calF(\rect(f/4)) = 4 \sinc(4t)$.  This signal is not bandlimited because the $\sinc$ function is unbounded in time.  By the modulation property of Fourier transform~\eqref{eq:modulationpropertyft},
+% \[
+% \calF\big( \cos(2\pi t) \sinc(t), f \big) = \calF(\sinc,f-1) + \calF(\sinc,f+1) = \rect(f-1) + \rect(f+1). 
+% \]
+% This is bandlimited with bandwidth $\tfrac{3}{2}$.  In Exercise~\ref{exer:fourtransealphaabs} we showed that
+% \[
+% \calF(e^{-\abs{t}}) =  \frac{2}{4\pi^2 f^2 + 1}.
+% \]
+% This signal is not bandlimited.
+% \end{solution}
+
+% \end{excersizelist}
+
+
+% \subsection{The Fourier series}
+
+% The Laplace transform and the Fourier transform do not exists for periodic signals.  In this case, the \term{Fourier series} can be used.  Let $x$ be a periodic signal with period $T$.  The $k$th \term{Fourier coefficient} of $x$ is
+% \[
+% \calF_s(x,k) = \int_{-T/2}^{T/2} x(t) e^{-j2\pi k t/T} dt.
+% \]
+% Thus, $\calF_s(x)$ is a function mapping each integer to a real or complex number, i.e., $\calF_s(x)$ is a \term{sequence}.  We write either $\calF_s(x,k)$ or $\calF_s(x)(k)$ to denote $\calF_s(x)$ evaluated at $k$.  As it was with the Fourier transform it will be convenient to let $\hat{x} = \calF_s(x)$ denote the sequence of Fourier coefficients of the periodic signal $x$.  The $k$th coefficient will be denoted by either $\hat{x}_k$ or $\hat{x}(k)$.  
+
+% We say that the periodic signal $x$ is \term{absolutely integrable on its period} if
+% \[
+% \int_{-T/2}^{T/2} \abs{x(t)} dt
+% \]
+% is finite.  Similarly we will say that $x$ is \term{square integrable on its period} if 
+% \[
+% \int_{-T/2}^{T/2} \abs{x(t)}^2 dt
+% \]
+% is finite.  A periodic signal that is square integrable on its period must also be absolutely integrable on its period (Excersize~\ref{}).  If $x$ is absolutely integrable on it's period then its Fourier series $\hat{x} = \calF_s(x)$ is finite for all integers $k$ because
+% \[
+% \abs{\hat{x}(k)} = \abs{\int_{-T/2}^{T/2} x(t) e^{-j2\pi k t/T} dt} = 
+% \]
+% and so, 
+
+
+% %\subsection{Solving differential equations with periodic inputs}
+% %BLERG: Can just use the impulse response, but this might be harder that using the Fourier series.
+
+
+
+% Let $x$ be a periodic signal with Fourier coefficients $\hat{x} = \calF_s(x)$.  The Fourier coefficients of $x^*$, the conjugate of $x$, satisfy
+% \[
+% \calF_s(x^*,k) = \int_{-T/2}^{T/2} \big( x(t)^* e^{-j2\pi k t/T} \big) dt.
+% \]
+
+%\section{Solving differential equations with periodic inputs}
+%BLERG: Can just use the impulse response, but this might be harder that using the Fourier series.
+
+
+
+%\chapter{Discrete-time systems}
+
+%\section{Sampling and interpolation} \label{sec:sampl-interp}
+
+
+
+
+% %\clearpage
+% \section{Sampling and interpolation} \label{sec:sampl-interp}
+
+% \section{Finite time signals}
+
+% \section{The Nyquist theorem}
+
+% We follow the argument given by~\cite{Shannon1949_comm_pres_noise}.  Let $x$ be a bandlimited continuous-time signal with Fourier transform $X(f) = \calF(x,f) = 0$ whenever $\abs{f} > B$.  From the inverse Fourier transform formula,
+% \[
+% x(t) = \frac{1}{2\pi}\int_{-\infty}^\infty X(f) e^{j2\pi ft} dt = \frac{1}{2\pi}\int_{-B}^{B} X(f) e^{j2\pi ft} dt.
+% \]
+% Sampling $x(t)$ with period $T_s = \frac{1}{f_s}$ we obtain
+% \[
+% y(n) = x(nT) = \frac{1}{2\pi}\int_{-B}^{B} X(f) e^{j2\pi f n T} df
+% \]
+% and provided that $f_s \geq 2B$
+% \[
+% y(n) = x(nT) = \frac{1}{2\pi}\int_{-f_s/2}^{f_s/2} X(f) e^{-j2\pi f n / f_s} dt
+% \]
+% Let $\tilde{x}(f)$ be the signal with period $f_s$ defined by 
+% \[
+% \tilde{x}(f) = \sum_{n\in\ints} X(f + nf_s)
+% \] 
+% and observe that $X$ can be recovered from $\tilde{x}$ by, for example, multiplying by the rectangle function $\Pi(t f_s)$, that is $X(f) = Pi(f f_s) \tilde{x}(f)$.  In this way $\tilde{x}$ uniquely determines $X$.  Now
+% \[
+% y(n) = x(nT) = \frac{1}{2\pi}\int_{-f_s/2}^{f_s/2} \tilde{x}(-t) e^{-j2\pi t n / f_s} dt
+% \]
+% after a change of variable $t = -f$.  Observe that $y(n)$ is the $n$ Fourier coefficient of the periodic signal $\tilde{x}(-t)$, and so $\tilde{x}$ is uniquely determined by the discrete-time signal $y$.  Since the Fourier transform $X(f)$ is uniquely determined by $\tilde{x}$ and since $X(f)$ uniquely determines the original continuous-time signal $x$, we have that the discrete-time signal $y$ uniquely determines $x$.
+
+
+% \section{Discrete-time signals}
+
+
+% \section{Exercises}
+
+% \begin{excersizelist}
+
+% \item \label{excer:disctimeeneryexpbound} Show that the discrete-time signal $e^{-n^2/4}$ is an energy signal and that its energy is less than $\sqrt{2\pi} + 1$.  (Hint: Exercise~\ref{excer:energyexpchangevar} first) 
+
+% \item \label{excer:disctimeabssummableexpbound} Show that  the discrete-time signal $e^{-n^2/4}$ is absolutely summable. (Hint: do Exercise~\ref{excer:disctimeeneryexpbound} first).
+
+% \end{excersizelist}
+
+
+% \section{The Z-transform}
+
+% \section{Digital filters}
+
+
+% %\clearpage
+
+\backmatter
+
+ %\appendix
+
+% \chapter{Estimating the output and input resistance of your soundcard}\label{sec:estim-outp-input}
+
+% \begin{figure}[tp]
+% \centering
+% \begin{circuitikz} \draw
+%  %(0,0) node[anchor=east]{B}
+%   to[R,l=$R_o$] (3,0)
+%   %to[R,l=$R_\ell$] (3,3)
+%  (3,3) to[R, l=$R_\ell$, -o] (0,3)
+%  to[open, v=$x(t)$] (0,0)
+%  (3,0) to[short,-o] (4,0)
+%  (3,3) to[short,-o] (4,3)
+%  (3,0) to[R,l_=$R_i$] (3,3)
+%  (4,0) to[open, v>=$y(t)$] (4,3)
+% ;\end{circuitikz}
+% \caption{A \term{voltage divider} circuit including input resistance $R_i$ and output resistance $R_o$.} \label{circ:voltagedividerinpouttoestimate}
+% \end{figure}
+
+% Construct the circuit~\ref{circ:voltagedividerinpouttoestimate} by placing a single resistor $R_\ell$ in parallel between the input and output device of the soundcard.  We will use $K$ different values of $R_\ell$. The value of the resistor is free to be choosen.  An approximation of the signal
+% \[
+% x(t) = \sin\big( 2\pi (\alpha t + \beta t^2) \big), \qquad \alpha = 100, \beta = 7450
+% \]
+% is passed through the circuit.  This type of signal is called a \term{quadratic chirp}.  The idea being that (approximately) frequencies from range $\alpha = 100\si{\hertz}$ to $\alpha + t_{\max}\beta = 15\kilo\si{\hertz}$ are represented by the signal, where $t_{max}=2$ is the duration of the signal (two seconds here).  The approximation of $x$ is generated by sampling $x(t)$ at rate $F_s = \frac{1}{T_s} = 44100\si{\hertz}$ to generate samples 
+% \[
+% x_{\ell, n} = x(n T_s) \qquad n = 0, \dots, 2 F_s.
+% \]
+% corresponding to approximately $t_{max} = 2$ seconds of signal.  These samples are passed to the soundcard which starts playback.  The voltage over the resistor $R_{\ell n}$ is recorded (also using the soundcard) that returns a lists of samples $y_{\ell 1},\dots,y_{\ell L}$.  Simultaneously the (stereo) soundcard is used to record the voltage over the output of the soundcard into samples $x_{\ell 1}, \dots, x_{\ell L}$.
+
+% A subset of the recorded samples
+% \[
+% x_{\ell s}, \dots, x_{\ell e}, \qquad y_{\ell s}, \dots, y_{\ell e}
+% \]
+% where $s = \floor{F_s/2}$ and $e = \floor{3F_s/2}$ is taken.  These samples for $\ell = 1, \dots, K$ will be used to estimate the input and output resistors $R_o$ and $R_i$.  The circuit acts as a voltage divider and the relationship between $x$ and $y$ is
+% \[
+% y = \frac{R_i}{R_i + R_o + R_\ell} x = A_\ell x
+% \]
+% We will makes least squares estimates of $A_1$ and $A_2$.  They are the minimisers of
+% \[
+% S_{\ell}(a) = \sum_{n = s}^{e} \big(y_{\ell n} - a x_{\ell n}\big)^2
+% \]
+% Differentiating with respect to $a$, and setting to zero
+% \[
+% 0 = - 2 \sum_{n = s}^{e} x_{\ell n} \big(y_{\ell n} - \hat{a}_\ell x_{\ell n}\big)
+% \]
+% from which we obtain the mnimiser
+% \[
+% \hat{a}_\ell = \frac{\sum_{n = s}^{e} x_{\ell n} y_{\ell n}}{\sum_{n = s}^{e} x_{\ell n} x_{\ell n}}.
+% \]
+% Given these too estimates $\hat{a}_1$ and $\hat{a}_2$ we obtain estimates of $R_o$ and $R_i$ by solving the simultaneous equations
+% \[
+% \hat{a}_1 = \frac{\hat{R}_i}{\hat{R}_0 + R_1 + \hat{R}_i}, \qquad \hat{a}_2 = \frac{\hat{R}_i}{\hat{R}_0 + R_2 + \hat{R}_i}.
+% \]
+% Solving these equations
+% \[
+% \hat{R}_i = \frac{\hat{a}_1\hat{a}_2(R_2 - R_1)}{\hat{a}_1 - \hat{a}_2}, \qquad \hat{R}_0 = \frac{1-\hat{a}_1}{\hat{a}_1}R_i - R1.
+% %\hat{R}_0 = \frac{\hat{a}_1(\hat{a}_2-1)R_1 + \hat{a}_2(1 - \hat{a}_1)R_2}{\hat{a}_1 - \hat{a}_2}
+% \]
+
+% \section{Least squares estimation of time offset and amplitude}\label{app:least-squar-estim}
+
+% During most of the tests in this course we have used a synchronisation circuit to estimate the gain and time delay caused by the computers soundcard.  A signal $x$ is output by the soundcard and sampled to obtain
+% \[
+% s_n =  \alpha_0 x(n T_s - \tau_0) + \epsilon_n, \qquad n = 1, \dots, L
+% \]
+% where $\alpha_0$ and $\tau_0$ where $\tau_0$ represents the unknown time shift and $\alpha_0$ the unknown gain and $\epsilon_1,\dots,\epsilon_L$ represent noise.  We will estimate $\alpha_0$ and $\tau_0$ using a least squares method.  That is, we choose estimates $\hat{\alpha}$ and $\hat{\tau}$ to be the minimisers of the sum of squares function
+% \[
+% S(\alpha, \tau) = \sum_{n=1}^L \big( s_n - \alpha x(n T_s - \tau) \big)^2.
+% \]
+% For fixed $\tau$ the minimiser of $S$ with respect to $\alpha$ is
+% \begin{align*}
+% \alpha(\tau) &= \arg\min_{\alpha \in \reals} S(\alpha,\tau) \\
+% &= \frac{\sum_{n=1}^L s_n x(n T_s - \tau)}{\sum_{n=1}^L \big(x(n T_s - \tau)\big)^2 },
+% \end{align*}
+% which is readily shown by differentiating $S$ with respect to $\alpha$ and setting the result to zero.  Substituting this into $S(\alpha, \tau)$ we obtain $S$ minimised with respect to $\alpha$,
+% \[
+% S(\tau) = \min_{\alpha\in\reals} S(\tau,alpha) = \sum_{n=1}^L \big( s_n - \alpha(\tau) x(n T_s - \tau) \big)^2.
+% \]
+% that is only a function of $\tau$.  We now assume that the true time offset $\tau_0$ in known to lie in some interval $[\tau_{\text{\min}}, \tau_{\text{\max}}]$, so that we want to compute
+% \[
+% S(
+% \]
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main.tex"
+%%% End: 
