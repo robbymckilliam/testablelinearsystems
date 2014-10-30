@@ -120,7 +120,7 @@ compat=newest
 
 %turn excersize solutions on/off
 \newif\ifsolutions %default is off
-\solutionstrue %uncomment to turn solutions on.
+%\solutionstrue %uncomment to turn solutions on.
 
 \usepackage{comment}
 \ifsolutions
@@ -7250,7 +7250,7 @@ Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete ti
 \[
 \calZ(h) = \frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^m + b_1 z^{k-1} + \dots + b_k z^{m-k}}
 \]
-and in the case that $m < k$ the term $z^{m-k}$ can be incorporated into the denominator obtaining
+and in the case that $m < k$ the term $z^{m-k}$ can be incorporated into the numerator obtaining
 \[
 \calZ(h) = \frac{a_0z^k + a_1 z^{k-1} + \dots + a_m z^{k-m}}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
 \] 
@@ -7268,14 +7268,81 @@ where $d$ is the number of shared roots, these shared roots being
 \[
 \alpha_0 = \beta_0, \;\; \alpha_1 = \beta_1, \;\; \dots, \;\;  \alpha_{d-1} = \beta_{d-1}.
 \]
-<<<<<<< HEAD
-The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_w$ are called the \term{poles}.  For a discrete time system, the number of poles and zeros are always equal.   A pole-zero plot is constructed by marking the complex plane with a cross at the location of each pole and a circle at the location of each zero. %If $k>m$ then there exist $k-m$ zeros located at the origin.  If $k<m$ there exist $m-k$ poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_w$ are called the \term{poles}.  For a discrete time system, the number of poles and zeros are equal.   A pole-zero plot is constructed by marking the complex plane with a cross at the location of each pole and a circle at the location of each zero (Figure~\ref{fig:polezeroplotdisctime}). %If $k>m$ then there exist $k-m$ zeros located at the origin.  If $k<m$ there exist $m-k$ poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+
+{
+\def\xmax{1.75}
+\def\ymax{1.75}
+\def\zscale{1.5}
+\newcommand{\graybox}{\draw [draw=none,fill=lightgray] (-\xmax,-\ymax) rectangle (\xmax,\ymax);}
+\newcommand{\drawzplane}{
+  \draw [<->] (-\xmax,0) -- (\xmax,0) node [above left]  {$\Re$};
+  \draw [<->] (0,-\ymax) -- (0,\ymax) node [below right] {$\Im$};
+  \draw [dashed] (0,0) circle (1);
+}
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[scale=\zscale]
+    %\path [draw=none,fill=lightgray] (0,0) circle (1) ;
+    \drawzplane
+  \end{tikzpicture}
+  \hspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture} 
+  \\ \vspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    \drawzplane
+     \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \;\;\;
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \\ \vspace{0.3cm}
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    \drawzplane
+     \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \;\;\;
+  \begin{tikzpicture}[scale=\zscale]
+    %\graybox
+    %\path [draw=none,fill=white] (0,0) circle (3/2);
+    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
+    \drawzplane
+    \begin{scope}[yscale=1/\zscale]
+      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
+      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Pole zero plots for the discrete time systems ... BLERG}\label{fig:polezeroplotdisctime}
+\end{figure}
+}
 
 The z-transform pair~\eqref{eeq:onlyztrans} has the term $z$ on its numerator and so it is convenient to write
 \[
 \calZ(h) = C z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
 \]
-Applying partial fraction to polynomial quotient yields
+Applying partial fraction to polynomial quotient above yields
 \[
 \calZ(h) = C z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
 \] 
@@ -7287,84 +7354,19 @@ we obtain
 \[
 \calZ(h) = \sum_{\ell \in K} B_\ell \frac{  \beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}.
 \]
-We can now invert the z-transform.  Those terms where $\beta_\ell \neq 0$ take the correspond with sequences of the form 
+We can now invert the z-transform using~\eqref{eeq:onlyztrans}.  Those terms where $\beta_\ell \neq 0$ take the correspond with sequences of the form 
 \[
 B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n
 \] 
-according to~\eqref{eeq:onlyztrans}.  Other sequences with the same z-transform are disregarded as they do not right sided, and so, do not correspond with a causal discrete time system.  Those terms where $\beta_\ell = 0$ corresponds with sequences of the form 
+where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Those terms where $\beta_\ell = 0$ correspond with sequences of the form 
 \[
 B_\ell(r_\ell-1)! \delta_{n+r_\ell-1} = C A_\ell \delta_{n+r_\ell-1}
 \]
-where the convention $0^0$ is used.  Letting $K_1$ be the subset of indices from $K$ such that $\beta_\ell = 0$ and $K_2$ be the subset such that $\beta_\ell \neq 0$ we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
+where the convention $0^0 = 1$ is used and where $\delta$ is the delta sequence.  Letting $K_1$ be the subset of indices from $K$ such that $\beta_\ell = 0$ and $K_2$ be the subset such that $\beta_\ell \neq 0$ we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
 \[
 h_n = C \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
 \]
-The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
-=======
-The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_m$ are called the \term{poles}.  If $k>m$ then there also exist $k-m$ extra zeros located at the origin due to the term $z^{k-m}$.  If $k<m$ there exist $m-k$ extra poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.  In all cases, there exists an equal number of poles and zeros.
-
-Observe that the z-transform pair  
-
-% In order the find the impulse response it is usually easier to multiply by $z^k(-1)^k\prod_{\ell=d}^k\alpha_\ell^{-1}$ on the numerator and $z^m(-1)^m\prod_{\ell=d}^m\beta_\ell^{-1}$ on the denominator to obtain
-% \[
-% \calZ(h) = B \frac{(\alpha^{-1}_d - z^{-1})(\alpha_{d+1}^{-1} - z^{-1})\cdots(\alpha_{m}^{-1}-z^{-1})}{(\beta_d^{-1}-z^{-1})(\beta_{d+1}^{-1}-z^{-1})\cdots(\beta_{k}^{-1}-z^{-1})},
-% \]
-% where 
-% \[
-% B = C \frac{\prod_{\ell=d}^k\alpha_\ell}{\prod_{\ell=d}^m\beta_\ell}.
-% \]
-% By application of partial fractions with respect to $z^{-1}$ we can write the z-transform in the form
-% \[
-% \calZ(h) = p(z) + \sum_{\ell \in K} \frac{A_\ell }{(\beta_\ell^{-1}-z^{-1})^{r_\ell}} 
-% \]
-% where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}$.  
-% is a polynomial in $z^{-1}$ of order $m-k$.  The constant $B$ is incorporated into the coefficients of the polynomial $p(z)$ and the constants $A_\ell$.   The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  We see that the z-transform separates into two parts, one corresponding with the polynomial $p$ and the other corresponding with the term $\sum_{\ell \in K} \frac{A_\ell }{(\beta_\ell^{-1}-z^{-1})^{r_\ell}}$.  
-
-% Let $F$ be a discrete time system with impulse response $f$ having z-transform 
-% \[
-% \calZ(f) = p(z) = \gamma_0 + \gamma_1 z^{-1} + \dots + \gamma_{m-k} z^{-m-k}
-% \]
-% Becasue the z-transform of the delta sequence is $\calZ(\delta) = 1$ it follows from the time shift property of the z-transform that 
-% \[
-% f_n = \gamma_0 \delta_n + \gamma_1 \delta_{n-1} + \dots + \gamma_{m-k} \delta_{n-m+k}.
-% \]
-% The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.  
-
-% Let $G$ be a discrete time system with discrete impulse response $g$ having z-transform
-% \[
-% \calZ(g) = \sum_{\ell \in K} \frac{A_\ell }{(\beta_\ell^{-1}-z^{-1})^{r_\ell}} = z^{r_\ell-1} \sum_{\ell \in K} \frac{A_\ell \beta_\ell^{r_\ell} z}{(z - \beta_\ell)^{r_\ell}}.
-% \]
-% The inverse 
-
-By application of partial fractions we obtain
-\[
-\calZ(h) = z^{k-m} \left( p(z) + \sum_{\ell \in K} \frac{A_\ell}{(z - \beta_\ell)^{r_\ell}} \right)
-\]
-where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and
-\[
-p(z) = \gamma_0 + \gamma_1 z + \dots + \gamma_{m-k} z^{m-k}
-\]
-is a polynomial of degree $m-k$.  If $k > m$ then $p(z) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  The Laplace transform pair~\eqref{eeq:onlyztrans} has the term $z$ on the numerator and so, it is convenient to write in the form
-\[
-\calZ(h) = z^{k-m} p(z) + z^{k-m-1} \sum_{\ell \in K} \frac{A_\ell z }{(z - \beta_\ell)^{r_\ell}}.
-\]
-Let $F$ be a discrete time system with impulse response $f$ having z-transform 
-\[
-\calZ(f) = z^{k-m} p(z) = \gamma_0 z^{k-m} + \gamma_1 z^{-1} + \dots + \gamma_{m-k}
-\]
-Because the z-transform of the delta sequence is $\calZ(\delta) = 1$ it follows from the time shift property of the z-transform that 
-\[
-f_n = \gamma_{m-k} \delta_{n} + \gamma_1 \delta_{n+} + \dots + \gamma_{m-k} \delta_{n-m+k}.
-\]
-The discrete time system $F$ with impulse response $f$ in this form is called a \term{finite impulse response filter} and will be studied further in Section~\ref{sec:digital-filters}.  
-
-
-% It is always possible to apply partial fractions to bring~\eqref{eq:ztransfuncpoleszeros} into the form
-% \[
-% zp(z) + \sum_{\ell \in K} \frac{A_\ell z}{(z - \beta_\ell)^{r_\ell}}
-% \]
->>>>>>> d4091e97f56cfbc5d65ddc9b3e19e693156e92c4
-
+The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
 
 Consider the difference equation
 \[
