@@ -6,12 +6,12 @@ We now consider systems constructed from linear combinations of time shifters of
 \[
 H(x) = \sum_{n \in \ints} h_n T_{ P n}(x)
 \]
-where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse of a regular system.  For this reason $h$  is called the~\term{discrete impulse response} of $H$.
+where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-Let $F$ and $G$ be discrete time systems with equal sampleperiod $P$ and discrete impulse responses $f$ and $g$.  Let 
+Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let 
 \[
 H = a F + b G \qquad a,b\in\complex
 \]
@@ -31,19 +31,29 @@ is formed by the composition of discrete time systems $F$ and $G$.  The response
 H(x) &= F \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
 &= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
 &= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}(x) 
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}(x).
 \end{align*}
-and by putting $k = m+n$ we have
-\begin{align*}
-H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \\
-&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \qquad \text{(interchange summation~\footnote{Sufficient assumptions about the sequences $f$ and $g$ must be made for this interchange of summation to be valid.  For example, the interchange is valid if both $f$ and $g$ and absolutely summable.})}\\
-&= \sum_{k \in \ints} h_k T_{Pk}(x)
-\end{align*}
+By putting $k = m+n$ we have
+\begin{align}
+H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \nonumber \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \qquad \text{(interchange summation)} \label{eq:discconvinterchangesummation}\\
+&= \sum_{k \in \ints} h_k T_{Pk}(x) \nonumber
+\end{align}
 where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n
 \]
-The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.
+The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  In what follows we will often use the term \term{convolution} rather than the lengthier term \term{discrete convolution} whenever there is no chance for confusion.
+
+Consider the convolution $u * u$ of the step sequence with itself.  The $n$th element of the the convolution is
+\[
+(u * u)_n = \sum_{m \in \ints} u_m u_{n-m} = \sum_{m = 0}^n 1 = n+1.
+\] 
+Not all sequences can be convolved.  Denote by $\onebf$ the sequence with all elements equal one.  The convolution $u * \onebf$ is not possible because
+\[
+(u * \onebf)_n =  \sum_{m \in \ints} u_m \onebf_{n-m} = \sum_{m = 0}^\infty 1 = \infty
+\]
+is not finite for any $n$.  The convolution $u * \onebf$ is said not to exist.  When considering convolution of sequences it is important to make sufficient assumptions for the convolution to exist.  For example, the the convoltuion $f * g$ always exists if both $f$ and $g$ are absolutely summable sequences (Exercise~\ref{exer:convabssummableisabssummable}).  Similarly, the interchange of summation in~\eqref{eq:discconvinterchangesummation} only holds under appropriate assumptions about the sequences $f$ and $g$.  For example, the interchange is valid when $f$ and $g$ are absolutely summable.
 
 Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  Discrete convolution is associative, that is, if $f$, $g$, and $h$ are sequences then
 \[
@@ -621,6 +631,8 @@ Solving for $\lambda$ yeilds the transfer function of $H$,
 \lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
 \]
 \end{solution}
+
+\item \label{exer:convabssummableisabssummable}  Let $f$ and $g$ be absolutely summable sequences.  Show that the discrete convolution $f * g$ is also absolutely summable.  
 
 \item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $a^nu_n$ is $z/(z-a)$ with region of convergence $\abs{z} > \abs{a}$.
 \begin{solution}
