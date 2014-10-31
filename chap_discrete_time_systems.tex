@@ -536,11 +536,11 @@ Now consider the difference equation
 \[
 c_n = d_n - a d_{n-1} - b d_{n-2} \qquad n \in \ints.
 \]
-where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P)(y) - b T_{P}(y)$.  The spectrum of this system is
+where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P}(y) - b T_{2P}(y)$.  The spectrum of this system is
 \[
 \lambda(H) = \frac{1}{1 - a e^{-sP} - b e^{-2sP}} = \frac{z^2}{z^2 - a z - b} = \calZ(h)
 \]
-where $h$ is the discrete impulse response of $h$.  The system has two zeros at $z = 0$ and two poles given by the roots of the polynomial $z^2 - a z - b$.  The z-transform can be inverted to obtain $h$ (Exercise~\ref{exer:findimpulseresponsesecondorderdiscrete}).  The system $H$ is stable if and only if both poles lie strictly inside the complex unit circle.  In this case $H$ has spectrum
+where $h$ is the discrete impulse response of $H$.  The system has two zeros at $z = 0$ and two poles given by the roots of the polynomial $z^2 - a z - b$.  The z-transform can be inverted to obtain $h$ (Exercise~\ref{exer:findimpulseresponsesecondorderdiscrete}).  The system $H$ is stable if and only if both poles lie strictly inside the complex unit circle.  In this case $H$ has spectrum
 \[
 \Lambda(H,f) = \calZ(h, e^{2\pi j P f}) = \frac{1}{1 - a e^{-2\pi jP} - b e^{-4\pi jP}}.
 \]
