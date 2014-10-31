@@ -2,7 +2,7 @@
 
 We have so far studied linear time invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  One particular linear time invariant system has so far been absent. This is the time shifter $T_\tau$ with non zero time shift $\tau \neq 0$.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
 
-We now consider systems constructed from linear combinations of time shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period}.  That is, we consider systems of the form
+We now consider systems constructed from linear combinations of time shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
 \[
 H(x) = \sum_{n \in \ints} h_n T_{ P n}(x)
 \]
@@ -10,6 +10,12 @@ where $h$ is a real or complex valued sequence.  Such systems are called \term{d
 
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
+
+The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_n = 0$ for all $n < 0$, then $H$ is causal because 
+\[
+H(x,t) = \sum_{n \in \ints} h_n T_{ P n}(x,t) = \sum_{n =0}^\infty h_n x(t - Pn)
+\] 
+only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
 Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let 
 \[
@@ -41,13 +47,16 @@ H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \nonumber \\
 \end{align}
 where $h$ is the sequence with elements given by
 \[
-h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n
+h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-The sum above is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  In what follows we will often use the term \term{convolution} rather than the lengthier term \term{discrete convolution} whenever there is no chance for confusion.
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  In what follows we will often use the term \term{convolution} rather than the lengthier term \term{discrete convolution} whenever there is no chance for confusion.
 
-Consider the convolution $u * u$ of the step sequence with itself.  The $n$th element of the the convolution is
+Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
 \[
-(u * u)_n = \sum_{m \in \ints} u_m u_{n-m} = \sum_{m = 0}^n 1 = n+1.
+(u * u)_n = \sum_{m \in \ints} u_m u_{n-m} = \sum_{m = 0}^n 1 = \begin{cases}
+n+1 & n \geq 0 \\
+0 & n < 0.
+\end{cases}
 \] 
 Not all sequences can be convolved.  Denote by $\onebf$ the sequence with all elements equal one.  The convolution $u * \onebf$ is not possible because
 \[
@@ -65,11 +74,6 @@ a (f * h) + b (g * h) = (af + bg) * h
 \]
 where $a$ and $b$ are real or complex constants.  
 
-The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_n = 0$ for all $n < 0$, then $H$ is causal because 
-\[
-H(x,t) = \sum_{n \in \ints} h_n T_{ P n}(x,t) = \sum_{n =0}^\infty h_n x(t - Pn)
-\] 
-only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if an only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
 % Discrete time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
 % \[
@@ -109,14 +113,7 @@ In this case, $\calZ(c,z)$ is finite for all $z$ with magnitude satisfying $\abs
 \]
 The subset of the complex plane with magnitude from $R_c$ is called the \term{region of convergence} of the sequence $c$.  The region of convergence of a sequence is analogous to the region of convergence of a signal when considering its Laplace transform.  Recall that the region of convergence of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
 
-The step sequence $u$ with elements
-\[
-u_n = \begin{cases} 
-1 & n \geq 0 \\
-0 & n < 0 
-\end{cases}
-\]
-has z-transform
+The step sequence $u$ has z-transform
 \[
 \calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
 \]
@@ -154,7 +151,7 @@ has z-transform
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
-The region of convergence is the entire complex plane.  Finally, consider the sequence that has every element equal to $1$.  In this case $\sum_{n \in \ints} z^{-n}$ does not converge for any $z \in \complex$ and the region of convergence is the empty set.  The sequence of all $1$'s is said not to have a z-transform.
+The region of convergence is the entire complex plane.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  In this case $\calZ(\onebf) = \sum_{n \in \ints} z^{-n}$ does not converge for any $z \in \complex$ and the region of convergence is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
 
 {
 \def\minn{-4}
@@ -294,7 +291,7 @@ Let $a \in \complex$.  If $c$ is a sequence with z-transform $\calZ(c)$ and regi
 \[
 \calZ(a^n c_n) = \sum_{n \in \ints} a^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/a)^{-n} = \calZ(c, z/a) \qquad \frac{z}{a} \in R_c.
 \]
-Using this property the z-transform of the sequence $a^n [n]_k u_n$ is
+This is called the \term{scaling} property of the z-transform.  Using this property the z-transform of the sequence $a^n [n]_k u_n$ is
 \begin{equation}\label{eeq:onlyztrans}
 \calZ\big( a^n [n]_k u_n \big) = \frac{k! a^k z }{(z - a)^{k+1}} \qquad \abs{z} > \abs{a}.
 \end{equation}
@@ -306,36 +303,6 @@ and in the case that $k=1$ we obtain
 \[
 \calZ\big( a^n n u_n \big) = \frac{ a z }{(z - a)^{2}} \qquad \abs{z} > \abs{a}.
 \]
-
-The z-transform of a sequence is related to the transfer function of a discrete time system.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
-\[
-\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
-\]
-Putting $z = e^{Ps}$ we have
-\[
-\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in R_h
-\]
-where $R_h$ is the region of convergence of $h$.  We see that the transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
-\begin{equation}\label{eq:reltransferfunztrans}
-\lambda(H,s) = \calZ(h,e^{Ps}) \qquad e^{sP} \in R_h.
-\end{equation}
-This relationship is analogous to the relationship between the Laplace transform and the impulse response of a regular linear time invariant system (Section~\ref{sec:transf-funct-lapl}).  The set of complex numbers $s$ such that $e^{sP} \in R_h$ is called the region of convergence of the system $H$.  In this way, both sequences and discrete time systems have a region of convergence. 
-
-Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$ having regions of convergence $R_f$ and $R_g$.  Let $H$ be the discrete time system formed by the composition $H(x)=F(G(x))$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
-\[
-\lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
-\]
-Because
-\[
-\calZ(f, e^{sP}) = \lambda\big( F ,s \big) , \;\;\; \calZ(g, e^{sP}) = \lambda\big( G ,s \big), \;\;\; \calZ(f * g, e^{sP}) = \lambda( H ,s )
-\]
-when $e^{sP} \in R_f \cap R_g$ we have
-\[
-\calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
-\]
-That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of the convolution is the intersection of the regions of convergence.  This is called the \term{convolution property} of the z-transform.
-%BLERG needs region of convergence done better.
-
 Let $g$ be a sequence with region of convergence $R_g$ and let $h$ be the sequence with $n$th element $h_n = g_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $h$ is related to that of $g$ by
 \begin{align}
 \calZ(h) &= \sum_{n \in \ints} h_n z^{-n} \nonumber \\
@@ -357,11 +324,41 @@ The region of convergence of $h$ is the same as that of $g$.  This is called the
 % \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
 % \]
 
+
+The z-transform of a sequence is related to the transfer function of a discrete time system.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter $T_{Pn}$ is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
+\[
+\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
+\]
+Putting $z = e^{Ps}$ we have
+\[
+\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in R_h
+\]
+where $R_h$ is the region of convergence of $h$.  We see that the transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
+\begin{equation}\label{eq:reltransferfunztrans}
+\lambda(H,s) = \calZ(h,e^{Ps}) \qquad e^{sP} \in R_h.
+\end{equation}
+This relationship is analogous to the relationship between the transfer function of a regular linear time invariant system and the Laplace transform of its impulse response (Section~\ref{sec:transf-funct-lapl}).  The set of complex numbers $s$ such that $e^{sP} \in R_h$ is called the region of convergence of the discrete time system $H$.  In this way, both sequences and discrete time systems have a region of convergence. 
+
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$ having regions of convergence $R_f$ and $R_g$.  Let $H(x) = F(G(x))$ be the discrete time system formed by the composition $F$ and $G$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
+\[
+\lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
+\]
+Because
+\[
+\calZ(f, e^{sP}) = \lambda\big( F ,s \big) , \;\;\; \calZ(g, e^{sP}) = \lambda\big( G ,s \big), \;\;\; \calZ(f * g, e^{sP}) = \lambda( H ,s )
+\]
+when $e^{sP} \in R_f \cap R_g$ we have
+\[
+\calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
+\]
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of the convolution is the intersection of the regions of convergence.  This is called the \term{convolution property} of the z-transform.
+%BLERG needs region of convergence done better.
+
 Let $H$ be discrete time system with discrete impulse response $h$ having region of convergence containing the complex unit circle.  The spectrum of $H$ is
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-The spectrum is periodic with period equal to the reciprocal of the sampling period $F = \frac{1}{P}$ that is called the \term{sampling rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
+The spectrum is periodic with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ that is called the \term{sample rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
