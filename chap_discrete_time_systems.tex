@@ -371,7 +371,7 @@ We have the following relationships between the transfer function, the spectrum,
 
 \nocite{SolimanAndSrinath_1990}
 
-We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices.  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
+We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices (Chapter~\ref{sec:syst-modell-diff}).  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
 \begin{equation}\label{eq:differenceequform}
 \sum_{\ell=0}^{m} a_\ell c_{n - \ell} = \sum_{\ell=0}^{k} b_\ell d_{n - \ell} \qquad n \in \ints
 \end{equation}
@@ -391,7 +391,7 @@ where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
 \calZ(h,z) = \lambda(H,s) = z^{k-m}\frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
 \]
-Then, from~\eqref{eq:reltransferfunztrans}, it follows that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  In the case that $m > k$ the term $z^{k-m}$ can be incorporated into the denominator obtaining
+It follows from~\eqref{eq:reltransferfunztrans} that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  In the case that $m > k$ the term $z^{k-m}$ can be incorporated into the denominator obtaining
 \[
 \calZ(h) = \frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^m + b_1 z^{k-1} + \dots + b_k z^{m-k}}
 \]
@@ -403,11 +403,11 @@ In either case the order of the polynomials on the numerator and denominator are
 
 By factorising the polynomials on the numerator and denominator we obtain
 \[
-\calZ(h) = C \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}.
+\calZ(h) = \frac{a_0}{b_0} \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}.
 \]
-where $\alpha_0, \dots, \alpha_w$ are the roots of the numerator polynomial, and $\beta_0, \dots, \beta_w$ are the roots of the denominator polynomial, and $C = \tfrac{a_0}{b_0}$.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
+where $\alpha_0, \dots, \alpha_w$ are the roots of the numerator polynomial and $\beta_0, \dots, \beta_w$ are the roots of the denominator polynomial.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:ztransfuncpoleszeros}
-\calZ(h) = C \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})},
+\calZ(h) = \frac{a_0}{b_0} \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})},
 \end{equation}
 where $d$ is the number of shared roots, these shared roots being 
 \[
@@ -483,58 +483,68 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
       %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Pole zero plots for the discrete time systems ... BLERG}\label{fig:polezeroplotdisctime}
+  \caption{Pole zero plots for the discrete time systems corresponding with difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left), $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right), ... }\label{fig:polezeroplotdisctime}
 \end{figure}
 }
 
 The z-transform pair~\eqref{eeq:onlyztrans} has the term $z$ on its numerator and so it is convenient to write
 \[
-\calZ(h) = C z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
+\calZ(h) = \frac{a_0}{b_0} z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
 \]
 Applying partial fraction to polynomial quotient above yields
 \[
-\calZ(h) = C z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
+\calZ(h) = \frac{a_0}{b_0} z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
 \] 
-where $r_\ell$ are positive integers, $A_\ell$ are complex constants, and $K$ is a subset of the indices from $\{d,d+1,\dots,w\}$.  Putting 
+where $r_\ell$ are positive integers, $A_\ell$ are complex constants, and $K$ is a subset of the indices from $\{d,d+1,\dots,w\}$.  We need to consider those terms where $\beta_\ell = 0$ separately.  Let $K_1$ be the subset of indices from $K$ such that $\beta_\ell = 0$ when $\ell \in K_1$ and let $K_2$ be the subset such that $\beta_\ell \neq 0$ when $\ell \in K_2$.  Now 
 \[
-B_\ell = \frac{C A_\ell}{\beta_\ell^{r_\ell-1} (r_\ell-1)! }
-\]
-we obtain
-\[
-\calZ(h) = \sum_{\ell \in K} B_\ell \frac{  \beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}.
-\]
-We can now invert the z-transform using~\eqref{eeq:onlyztrans}.  Those terms where $\beta_\ell \neq 0$ take the correspond with sequences of the form 
-\[
-B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n
+\calZ(h) = \frac{a_0}{b_0} \sum_{\ell \in K_1} \frac{A_\ell }{z^{r_\ell-1}} + \sum_{\ell \in K} B_\ell \frac{  \beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}.
 \] 
-where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Those terms where $\beta_\ell = 0$ correspond with sequences of the form 
+where
 \[
-B_\ell(r_\ell-1)! \delta_{n+r_\ell-1} = C A_\ell \delta_{n+r_\ell-1}
+B_\ell = \frac{a_0 A_\ell}{b_0 \beta_\ell^{r_\ell-1} (r_\ell-1)! }.
+\] 
+Those terms of the form $\frac{A_\ell }{z^{r_\ell-1}}$ corresponds with sequences $A_\ell \delta_{n+r_\ell-1}$ where $\delta$ is the delta sequence.  Using~\eqref{eeq:onlyztrans} with $k = r_\ell - 1$ those terms of the form 
+\[
+\frac{\beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}
 \]
-where the convention $0^0 = 1$ is used and where $\delta$ is the delta sequence.  Letting $K_1$ be the subset of indices from $K$ such that $\beta_\ell = 0$ and $K_2$ be the subset such that $\beta_\ell \neq 0$ we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
+correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
 \[
-h_n = C \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
+h_n = \frac{a_0}{b_0} \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
 \]
 The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
 
 We now consider some specific examples of differences equations and their corresponding discrete time systems.  Consider the difference equation
 \[
-c_n = d_n - a d_{n-1} \qquad n \in \ints
+c_n = d_n + a d_{n-1} \qquad n \in \ints
 \]
-where $a \in \complex$.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
+where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
 \[
 x = y - a T_{P}(y).
 \]
-Such a system is called a \term{first order discrete time system}.  The transfer function of this system is
+The transfer function is
 \[
 \lambda(H,s) = \frac{1}{1 - a e^{-sP}} = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}
 \]
-where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single poles at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  It follows that $H$ is a discrete time system with discrete impulse response $h$ having z-transform $\calZ(h) = z/(z-a)$.  The inverse z-transform is found by puting $k=0$ in~\eqref{eeq:onlyztrans} resulting in $h_n = a^n u_n$.  Other sequences with this z-transform are discarded becasue they do not correspond with $H$ being causal.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  
+where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single pole at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  The discrete impulse response is found to be $h_n = a^n u_n$ by putting $k=0$ in~\eqref{eeq:onlyztrans}.  Other sequences with this z-transform are discarded because they do not corresponds with a causal system.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  
 When $\abs{a} < 1$ the region of convergence contains the unit circle and the system has spectrum
 \[
 \Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - a}.
 \]
 The magnitude and phase spectrum are plotted in Figure~\ref{fig:spectrumdiscresystem1} in the case that $a = \tfrac{1}{2}$ and $\tfrac{1}{10}$.
+
+Now consider the difference equation
+\[
+c_n = d_n - a d_{n-1} - b d_{n-2} \qquad n \in \ints.
+\]
+where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P)(y) - b T_{P}(y)$.  The spectrum of this system is
+\[
+\lambda(H) = \frac{1}{1 - a e^{-sP} - b e^{-2sP}} = \frac{z^2}{z^2 - a z - b} = \calZ(h)
+\]
+where $h$ is the discrete impulse response of $h$.  The system has two zeros at $z = 0$ and two poles given by the roots of the polynomial $z^2 - a z - b$.  The z-transform can be inverted to obtain $h$ (Exercise~\ref{exer:findimpulseresponsesecondorderdiscrete}).  The system $H$ is stable if and only if both poles lie strictly inside the complex unit circle.  In this case $H$ has spectrum
+\[
+\Lambda(H,f) = \calZ(h, e^{2\pi j P f}) = \frac{1}{1 - a e^{-2\pi jP} - b e^{-4\pi jP}}.
+\]
+The spectrum is plotted in ...
 
 \begin{figure}[tp]
 \centering
@@ -690,6 +700,8 @@ By definition $[n]_0 = 1$ for all $n \in \ints$ and so $\calZ( [n]_0 u_n ) = \ca
 \]
 as required.
 \end{solution}
+
+\item \label{exer:findimpulseresponsesecondorderdiscrete} Find the discrete impulse response of the discrete time system corresponding with the second order difference equation $c_n = d_n - a d_{n-1} - b d_{n-2}$. 
 
 \item \label{exer:fftcomplexity} Let $d_n$ be a sequence satisfying $d_n = 2 d_{n-1} + 2^{n+1}$ and suppose that $d_0 = 0$.  Show that $d_n = 2^{n+1}n$ for $n = 1,2,\dots$.  %Find a similar expression for $d_n$ is the case that $d_0 = a \neq 0$.
 \begin{solution}
