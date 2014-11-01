@@ -470,7 +470,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
       %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Pole zero plots for the discrete time systems corresponding with the first order difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left) and $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right) and the second order difference equations $z^2 - \tfrac{4}{3} x - \tfrac{4}{9}$ (bottom right) and $z^2 + \sqrt{2}z + 1$ (bottom right).  The plots of the left correspond with stable systems because all poles are contained inside the complex unit circle (dashed).  Plots on the left correspond with unstable systems because there exists poles on or outside the complex unit circle. }\label{fig:polezeroplotdisctime}
+  \caption{Pole zero plots for discrete time systems corresponding with first order difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left) and $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right) and second order difference equations $z^2 - \tfrac{4}{3} x - \tfrac{4}{9}$ (bottom left) and $z^2 + \sqrt{2}z + 1$ (bottom right).  The plots of the left correspond with stable systems because all poles are contained inside the complex unit circle (dashed).  Plots on the right correspond with unstable systems because there exist poles on or outside the complex unit circle.  The small $2$'s above the zero on the lower plots indicate the existence of two zeros at the origin.}\label{fig:polezeroplotdisctime}
 \end{figure}
 }
 
@@ -494,7 +494,7 @@ Those terms of the form $A_\ell z^{1 - r_\ell}$ correspond with sequences $A_\el
 \[
 \frac{\beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}
 \]
-are found to correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
+are found to correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete time system $H$ takes the form
 \[
 h_n = \frac{a_0}{b_0} \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
 \]
@@ -527,7 +527,7 @@ where $a,b \in \complex$.  This is called a~\term{second order difference equati
 \[
 \lambda(H) = \frac{1}{1 - a e^{-sP} - b e^{-2sP}} = \frac{z^2}{z^2 - a z - b} = \calZ(h)
 \]
-where $h$ is the discrete impulse response of $H$.  The system has two zeros at $z = 0$ and two poles given by the roots of the polynomial $z^2 - a z - b$.  The z-transform can be inverted to obtain $h$ (Exercise~\ref{exer:findimpulseresponsesecondorderdiscrete}).  The system $H$ is stable if and only if both poles lie strictly inside the complex unit circle.  In this case $H$ has spectrum
+where $h$ is the discrete impulse response of $H$.  The system has two zeros at $z = 0$ and two poles given by the roots of the polynomial $z^2 - a z - b$.  The z-transform can be inverted to obtain $h$ (Exercise~\ref{exer:findimpulseresponsesecondorderdiscrete}).  The system $H$ is stable if and only if both poles lie strictly inside the complex unit circle (Figure~\ref{fig:polezeroplotdisctime}).  In this case, $H$ has spectrum
 \[
 \Lambda(H,f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi jP f}}{e^{4\pi jP f} - a e^{2\pi jP f} - b}.
 \]
@@ -630,12 +630,41 @@ where $h$ is the discrete impulse response of $H$.  The system has two zeros at 
 % \end{figure}
 
 
-\begin{comment}
+%\begin{comment}
 
 \section{Digital filters}\label{sec:digital-filters}
 
+\begin{itemize}
 
-\end{comment}
+\item Periodicity of the spectrum makes it not immediately clear how discrete time systems will be useful as filter
+
+\item However, bandlimited signals!
+
+\item Picture of 1st order discrete time system filtering something?
+
+\item Test with 1st order system filtering high frequency noise from lecture recording
+
+\item better filters that 1st order are not too hard to realise
+
+\item One approach involves mapping analogue filters, IIR filter,  Bilinear transform
+
+\item Do butterworth as an example.  Implement high order butterworth like filter this way.
+
+\item Filter lecture video with this IIR filter
+
+\item Another approach has no zeros, attempt to design impulse response directly, FIR filters, windowing.
+
+\item Filter lecture video with FIR filter.
+
+\item IIR usually computational advantageous.  FIR better if linear phase important.
+
+\end{itemize}
+
+
+\section{Multirate filters} \label{sec:multirate-filters}
+
+
+%\end{comment}
 
 
 \section{Exercises}
