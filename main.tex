@@ -105,6 +105,37 @@ compat=newest
 \newcommand{\fracpart}[1]{\left\langle #1 \right\rangle}
 \newcommand{\sfracpart}[1]{\langle #1 \rangle}
 
+%create pgf cross shape
+\makeatletter
+\pgfdeclareshape{cross}{%
+  \inheritsavedanchors[from=circle]
+  \inheritanchor[from=circle]{center}
+  \inheritanchor[from=circle]{north}
+  \inheritanchor[from=circle]{south}
+  \inheritanchor[from=circle]{east}
+  \inheritanchor[from=circle]{west}
+  \backgroundpath{%
+    % Save radius to x
+    \pgf@x=\radius
+    % Radius is also containing the "minimum width" and "minimum height"
+    % This ensures that even with no text the shape will be drawn.
+    % Unless of course that min are set to 0pt
+    % So no need to check for that
+    % Save radius
+    \pgfutil@tempdima=\pgf@x%
+
+    % draw cross
+    \pgfpathmoveto{\pgfpoint{-1\pgf@x}{-1\pgf@x}}%
+    \pgfpathlineto{{1\pgf@x}{1\pgf@x}}%
+    \pgfpathclose
+    \pgfpathmoveto{\pgfpoint{1\pgf@x}{-1\pgf@x}}%
+    \pgfpathlineto{{1\pgf@x}{-1\pgf@x}}%
+    \pgfpathclose
+
+  }
+}
+\makeatother
+
 %tikz macros
 \newcommand{\polezeroaxis}[1]{   
   \draw [<->] (-#1,0) -- (#1,0) node [above left]  {$\Re$};
@@ -112,8 +143,9 @@ compat=newest
  }
 \newcommand{\zerotikz}[2]{ \node[draw,thick,circle,inner sep=1.75pt] at (#1,#2) {}; }
 \newcommand{\poletikz}[2]{
-  \draw[thick] (#1-0.08,#2-0.08) -- (#1+0.08,#2+0.08);
-  \draw[thick] (#1-0.08,#2+0.08) -- (#1+0.08,#2-0.08);
+  \node[shape=cross,draw] at (#1,#2) {};
+  % \draw[thick] (#1-0.08,#2-0.08) -- (#1+0.08,#2+0.08);
+  % \draw[thick] (#1-0.08,#2+0.08) -- (#1+0.08,#2-0.08);
 }
 \newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
 \newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}

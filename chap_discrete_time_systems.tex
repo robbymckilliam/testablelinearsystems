@@ -303,13 +303,13 @@ and in the case that $k=1$ we obtain
 \[
 \calZ\big( a^n n u_n \big) = \frac{ a z }{(z - a)^{2}} \qquad \abs{z} > \abs{a}.
 \]
-Let $g$ be a sequence with region of convergence $R_g$ and let $h$ be the sequence with $n$th element $h_n = g_{n-\ell}$ where $\ell \in \ints$.  The z-transform of $h$ is related to that of $g$ by
+Let $g$ be a sequence with region of convergence $R_g$.  The z-transform of the shifted sequence with $n$th element $g_{n-\ell}$ where $\ell \in \ints$ is related to that of $g$ by
 \begin{align}
-\calZ(h) &= \sum_{n \in \ints} h_n z^{-n} \nonumber \\
-&= \sum_{n \in \ints} h_{n+\ell} z^{-(n+\ell)} \nonumber \\
+\calZ(g_{n-\ell}) &= \sum_{n \in \ints} g_{n-\ell} z^{-n} \nonumber \\
+&= \sum_{n \in \ints} g_{n} z^{-(n+\ell)} \nonumber \\
 &= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in R_g. \label{eq:timeshiftpropertyztransform}
 \end{align}
-The region of convergence of $h$ is the same as that of $g$.  This is called the \term{time~shift} property of the z-transform.  % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
+This is called the \term{time~shift} property of the z-transform.  % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
 % \begin{align*}
 % H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
 % &= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
@@ -358,7 +358,7 @@ Let $H$ be discrete time system with discrete impulse response $h$ having region
 \[
 \Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
 \]
-The spectrum is periodic with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ that is called the \term{sample rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
+The spectrum is periodic with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
 \calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
@@ -403,7 +403,7 @@ In either case the order of the polynomials on the numerator and denominator are
 
 By factorising the polynomials on the numerator and denominator we obtain
 \[
-\calZ(h) = \frac{a_0}{b_0} \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}.
+\calZ(h) = \frac{a_0}{b_0} \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}
 \]
 where $\alpha_0, \dots, \alpha_w$ are the roots of the numerator polynomial and $\beta_0, \dots, \beta_w$ are the roots of the denominator polynomial.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:ztransfuncpoleszeros}
@@ -419,6 +419,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
 \def\xmax{1.75}
 \def\ymax{1.75}
 \def\zscale{1.5}
+\def\sqrttwo{0.707107}
 \newcommand{\graybox}{\draw [draw=none,fill=lightgray] (-\xmax,-\ymax) rectangle (\xmax,\ymax);}
 \newcommand{\drawzplane}{
   \draw [<->] (-\xmax,0) -- (\xmax,0) node [above left]  {$\Re$};
@@ -428,14 +429,14 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
 \begin{figure}[p]
   \centering
   \begin{tikzpicture}[scale=\zscale]
-    \poletikz{2.0/3}{0} \node[below] at (2.0/3,0) {$\tfrac{2}{3}$};
+    \poletikz{2.0/3}{0}; %\node[below] at (2.0/3,0) {$\tfrac{2}{3}$};
     \zerotikz{0}{0} \node[below] at (0,0) {};
     %\path [draw=none,fill=lightgray] (0,0) circle (1) ;
     \drawzplane
   \end{tikzpicture}
   \hspace{0.3cm}
   \begin{tikzpicture}[scale=\zscale]
-    \poletikz{-3.0/2.0}{0} \node[below] at (-3.0/2,0) {$-\tfrac{3}{2}$};
+    \poletikz{-3.0/2.0}{0}; % \node[below] at (-3.0/2,0) {$-\tfrac{3}{2}$};
     \zerotikz{0}{0} \node[below] at (0,0) {};
     %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
     \drawzplane
@@ -445,7 +446,10 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
   \end{tikzpicture} 
   \\ \vspace{0.3cm}
   \begin{tikzpicture}[scale=\zscale]
-    %\graybox
+    \zerotikz{0}{0} \node[below] at (0,0) {};
+    \node[above right,font=\tiny] at (0,0) {$2$};
+    \poletikz{2/3}{1/3};
+    \poletikz{2/3}{-1/3};
     %\path [draw=none,fill=white] (0,0) circle (3/2);
     \drawzplane
      \begin{scope}[yscale=1/\zscale]
@@ -454,7 +458,10 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
   \end{tikzpicture}
   \;\;\;
   \begin{tikzpicture}[scale=\zscale]
-    %\graybox
+    \zerotikz{0}{0} \node[below] at (0,0) {};
+    \node[above right,font=\tiny] at (0,0) {$2$};
+    \poletikz{-\sqrttwo}{\sqrttwo};
+    \poletikz{-\sqrttwo}{-\sqrttwo};
     %\path [draw=none,fill=white] (0,0) circle (3/2);
     %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
     \drawzplane
@@ -463,27 +470,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
       %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
     \end{scope}
   \end{tikzpicture}
-  \\ \vspace{0.3cm}
-  \begin{tikzpicture}[scale=\zscale]
-    %\graybox
-    %\path [draw=none,fill=white] (0,0) circle (3/2);
-    \drawzplane
-     \begin{scope}[yscale=1/\zscale]
-      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
-    \end{scope}
-  \end{tikzpicture}
-  \;\;\;
-  \begin{tikzpicture}[scale=\zscale]
-    %\graybox
-    %\path [draw=none,fill=white] (0,0) circle (3/2);
-    %\path [draw=none,fill=lightgray] (0,0) circle (0.5);
-    \drawzplane
-    \begin{scope}[yscale=1/\zscale]
-      %\vtick{-3/2} node[pos=0.5,below] {$-\tfrac{3}{2}$};
-      %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
-    \end{scope}
-  \end{tikzpicture}
-  \caption{Pole zero plots for the discrete time systems corresponding with difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left), $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right), ... }\label{fig:polezeroplotdisctime}
+  \caption{Pole zero plots for the discrete time systems corresponding with the first order difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left) and $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right) and the second order difference equations $z^2 - \tfrac{4}{3} x - \tfrac{4}{9}$ (bottom right) and $z^2 + \sqrt{2}z + 1$ (bottom right).  The plots of the left correspond with stable systems because all poles are contained inside the complex unit circle (dashed).  Plots on the left correspond with unstable systems because there exists poles on or outside the complex unit circle. }\label{fig:polezeroplotdisctime}
 \end{figure}
 }
 
@@ -491,7 +478,7 @@ The z-transform pair~\eqref{eeq:onlyztrans} has the term $z$ on its numerator an
 \[
 \calZ(h) = \frac{a_0}{b_0} z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
 \]
-Applying partial fraction to polynomial quotient above yields
+Applying partial fraction to polynomial quotient yields
 \[
 \calZ(h) = \frac{a_0}{b_0} z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
 \] 
@@ -503,29 +490,29 @@ where
 \[
 B_\ell = \frac{a_0 A_\ell}{b_0 \beta_\ell^{r_\ell-1} (r_\ell-1)! }.
 \] 
-Those terms of the form $\frac{A_\ell }{z^{r_\ell-1}}$ corresponds with sequences $A_\ell \delta_{n+r_\ell-1}$ where $\delta$ is the delta sequence.  Using~\eqref{eeq:onlyztrans} with $k = r_\ell - 1$ those terms of the form 
+Those terms of the form $A_\ell z^{1 - r_\ell}$ correspond with sequences $A_\ell \delta_{n+r_\ell-1}$ where $\delta$ is the delta sequence.  From~\eqref{eeq:onlyztrans} with $k = r_\ell - 1$ those terms of the form 
 \[
 \frac{\beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}
 \]
-correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
+are found to correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete time system $H$ takes for form
 \[
 h_n = \frac{a_0}{b_0} \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
 \]
 The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
 
-We now consider some specific examples of differences equations and their corresponding discrete time systems.  Consider the difference equation
+We now consider some specific examples of difference equations and their corresponding discrete time systems.  Consider the difference equation
 \[
 c_n = d_n + a d_{n-1} \qquad n \in \ints
 \]
-where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies the equation
+where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies
 \[
 x = y - a T_{P}(y).
 \]
-The transfer function is
+The transfer function of $H$ is
 \[
 \lambda(H,s) = \frac{1}{1 - a e^{-sP}} = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}
 \]
-where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single pole at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  The discrete impulse response is found to be $h_n = a^n u_n$ by putting $k=0$ in~\eqref{eeq:onlyztrans}.  Other sequences with this z-transform are discarded because they do not corresponds with a causal system.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  
+where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single pole at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  The discrete impulse response is found to be $h_n = a^n u_n$ by putting $k=0$ in~\eqref{eeq:onlyztrans}.  Other sequences with this z-transform are discarded because they do not correspond with a causal system.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  
 When $\abs{a} < 1$ the region of convergence contains the unit circle and the system has spectrum
 \[
 \Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - a}.
