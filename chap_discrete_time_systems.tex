@@ -536,15 +536,15 @@ Now consider the difference equation
 \[
 c_n = d_n - a d_{n-1} - b d_{n-2} \qquad n \in \ints.
 \]
-where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P}(y) - b T_{2P}(y)$.  The spectrum of this system is
+where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P}(y) - b T_{2P}(y)$.  The transfer function is
 \[
 \lambda(H) = \frac{1}{1 - a e^{-sP} - b e^{-2sP}} = \frac{z^2}{z^2 - a z - b} = \calZ(h)
 \]
 where $h$ is the discrete impulse response of $H$.  The system has two zeros at $z = 0$ and two poles given by the roots of the polynomial $z^2 - a z - b$.  The z-transform can be inverted to obtain $h$ (Exercise~\ref{exer:findimpulseresponsesecondorderdiscrete}).  The system $H$ is stable if and only if both poles lie strictly inside the complex unit circle.  In this case $H$ has spectrum
 \[
-\Lambda(H,f) = \calZ(h, e^{2\pi j P f}) = \frac{1}{1 - a e^{-2\pi jP} - b e^{-4\pi jP}}.
+\Lambda(H,f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi jP f}}{e^{4\pi jP f} - a e^{2\pi jP f} - b}.
 \]
-The spectrum is plotted in ...
+%The spectrum is plotted in ...
 
 \begin{figure}[tp]
 \centering
@@ -594,6 +594,53 @@ The spectrum is plotted in ...
   \end{tikzpicture}
 \caption{Magnitude and phase spectrum of the discrete time $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.  This system corresponds with the first order difference equation $c_n = d_n - 2 d_{n-1}$.} \label{fig:spectrumdiscresystem1}
 \end{figure}
+
+% \begin{figure}[tp]
+% \centering
+% \def\P{0.5}
+% \def\F{1/\P}
+%   \begin{tikzpicture}[domain=-5:5,samples=200]
+%     % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%     \begin{scope}[yscale=2]
+%       \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$}; 
+%       \draw[->] (0,-0.3) -- (0,2.5) node[right] {$\abs{\Lambda(H, f)}$};
+%       % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
+%       \draw[thick] plot[] file {data/discretetimesystem/secondorderlowpassabs.csv};
+%       \node[above] at (-\F,2) {$\tfrac{1}{2}$};
+%       \draw[thick] plot[] file {data/discretetimesystem/secondorderbandpassabs.csv};
+%       \node at (-\F,0.95) {$\tfrac{1}{10}$};
+%       % \node at (9.3,-1) {$0$};
+%       % \htick{2} node[pos=0.5,left] {$2$};
+%       \htick{2} node[pos=0.5,above left] {$2$};
+%     \end{scope}
+%     \vtick{-\F} node[pos=0.5,below] {$-F$};
+%     \vtick{\F} node[pos=0.5,below] {$F$};
+%   \end{tikzpicture}
+% \medskip
+%   \begin{tikzpicture}[domain=-5:5,samples=200]
+%     % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%     \begin{scope}[yscale=3]
+%       \draw[->] (-5.5,0) -- (5.5,0) node[above] {$f$};
+%       \draw[->] (0,-0.75) -- (0,0.75) node[right] {$\angle{\Lambda(H, f)}$};
+%       % \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)*exp(-x)};
+%       \draw[thick] plot[] file {data/discretetimesystem/secondorderlowpassangle.csv};
+%       \node[above] at (-\F-0.333,pi/6) {$\tfrac{1}{2}$};
+%        \draw[thick] plot[] file {data/discretetimesystem/secondorderbandpassangle.csv};
+%       \node at (-\F-0.5,0.2) {$\tfrac{1}{10}$};
+%       % \node at (9.3,-1) {$0$};
+%       % \htick{2} node[pos=0.5,left] {$2$};
+%       \htick{pi/6} node[pos=0.5,right] {$\tfrac{\pi}{6}$};
+%       \htick{-pi/6} node[pos=0.5,left] {$-\tfrac{\pi}{6}$};
+%       %\htick{2*pi} node[pos=0.5,left] {$2\pi$};
+%       %\htick{pi/2} node[pos=0.5,left] {$\tfrac{\pi}{2}$};
+%       %\htick{3*pi/2} node[pos=0.5,left] {$\tfrac{3\pi}{2}$}; 
+%       %\htick{-3.14159265359} node[pos=0.5,left] {$-\pi$};
+%     \end{scope}
+%     %\vtick{-\F} node[pos=0.5,below] {$-F$};
+%     \vtick{\F} node[pos=0.5,above right] {$F$};
+%   \end{tikzpicture}
+% \caption{Magnitude and phase spectrum of the discrete time $H$ for corresponds with the second order difference equation $c_n = d_n - 2 d_{n-1}$$a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.  This system corresponds with the first order difference equation $c_n = d_n - 2 d_{n-1}$.} \label{fig:spectrumdiscresystem2}
+% \end{figure}
 
 
 \begin{comment}
