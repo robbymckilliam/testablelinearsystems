@@ -12,7 +12,7 @@ import scala.math.Pi
 println("Generating data for discrete time system modeling the complexity of the Cooley Tukey FFT in Chapter 6")
 
 val P = 0.5 //period of the discrete time system
-def lambda(alpha : Complex, f : Double) = {
+def Lambda(alpha : Complex, f : Double) = {
   val e2pif = PolarComplex(1,2*Pi*P*f)
   e2pif / (e2pif  - alpha)
 }
@@ -30,10 +30,10 @@ for( d <- ds ){
   val filetfunabs = new java.io.FileWriter("datafftcomplexityabs" + d + ".csv")
   val filetfunangle = new java.io.FileWriter("datafftcomplexityangle" + d + ".csv")
   (fmin to fmax by 0.01) foreach { f =>
-    filetfunabs.write(fmt(f) + "\t" + "\t" + fmt(lambda(alpha,f).magnitude) + "\n")
-    filetfunangle.write(fmt(f) + "\t" + "\t" + fmt(mod2pi(lambda(alpha,f).angle)) + "\n")
+    filetfunabs.write(fmt(f) + "\t" + fmt(Lambda(alpha,f).magnitude) + "\n")
+    filetfunangle.write(fmt(f) + "\t" + fmt(mod2pi(Lambda(alpha,f).angle)) + "\n")
   }
   filetfunabs.close
   filetfunangle.close
 }
-println("Scala finished")
+//println("Scala finished")
