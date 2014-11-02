@@ -634,6 +634,59 @@ where $h$ is the discrete impulse response of $H$.  The system has two zeros at 
 
 \section{Digital filters}\label{sec:digital-filters}
 
+The spectrum of a stable discrete time system is periodic with period equal to the sample rate $F = \tfrac{1}{P}$.  Because of this periodicity it is not immediately apparent that any useful filters can be constructed from discrete time systems.  For example, periodicity makes it impossible to build a lowpass filter.  However, many signals occuring in practice are bandlimited with some bandwidth $b > 0$ (Section~\ref{sec:bandlimited-signals}).  We will find that it is possible to perform useful filtering operations of bandlimited signals using discrete time systems.  This is most easily achieved when the bandwidth $b < \tfrac{F}{2}$ is less than half the sample rate of the system $F$.
+
+To see how this works, consider the bandlimited signal $x$ with Fourier transform
+\[
+\calF(x) = \rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)
+\]
+
+\begin{figure}[tp]
+  \centering
+  \def\sx{1.4}
+  \def\sy{2}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\a{(2.0/3.0)}
+  \colorlet{lightgray}{black!25}
+  \newcommand{\dplot}[1]{\draw[thick,smooth,samples=200,domain=-4:4] plot function{(1-#1)/sqrt(1 - 2*#1*cos(2*\P*pi*x) + #1*#1)}}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      \fill[fill=lightgray] (-4,0) -- plot[samples=200,domain=-4:4] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) -- (4,0) -- cycle;
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {};  
+      
+      % draw filtered Fourier transform magnitude
+      \draw[thick,dashed] (-4,0) -- (-1.75,0) -- (-1.75,1) -- (-1.25,1) -- (-1.25,0) -- (-0.5,0) 
+      -- plot[smooth,domain=-0.5:0.5,samples=50] (\x,{1 + cos(2*pi*\x r)}) 
+      -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
+      
+      % draw filtered Fourier transform magnitude
+      \draw[thick] (-4,0) -- (-1.75,0) 
+      -- plot[samples=40,domain=-1.75:-1.25] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
+      -- (-1.25,0) -- (-0.5,0)
+      -- plot[samples=50,domain=-0.5:0.5] (\x,{(1 + cos(2*pi*\x r))*(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
+      -- (0.5,0) -- (1.25,0) 
+      -- plot[samples=40,domain=1.25:1.75] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
+      -- (1.75,0) -- (4,0);
+
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{2} node[pos=0.5,above left] {$2$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Fourier transform $\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with the first order difference equation $\tfrac{1}{3}c_n = d_n - \tfrac{2}{3} d_{n-1}$.  Observe that the higher frequency rectangular pulses centered at $f = \pm \tfrac{3}{2}$ are weakened considerably, but the raised cosine pulse at the origin is minimally affected.  The system acts as a low pass filter on this bandlimited signal.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+\end{figure}
+
 \begin{itemize}
 
 \item Periodicity of the spectrum makes it not immediately clear how discrete time systems will be useful as filter

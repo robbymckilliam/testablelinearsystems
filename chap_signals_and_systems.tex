@@ -90,8 +90,6 @@ If there exists a smallest such positive $T$ it is called the \term{fundamental 
 % \]
 % For example $\sin(\tfrac{\pi}{4} n)$ is periodic but $e^{-n^2/4}$ is not.
 
-\newcommand{\rect}{\Pi}
-
 A signal $x$ is \term{right sided} if there exists a $T \in \reals$ such that $x(t) = 0$ for all $t < T$.  Correspondingly $x$ is \term{left sided} if $x(t) = 0$ for all $T > t$.  For example, the \term{step function} 
 \begin{equation} \label{eq:stepfunction}
 u(t) = \begin{cases}
@@ -349,7 +347,6 @@ H(x) = \frac{R_2}{R_1 + R_2} x = y.
 \]
 This system multiplies the input signal $x$ by $\frac{R_2}{R_1 + R_2}$.  This brings us to our first practical test.
 
-\newcommand{\sinc}{\operatorname{sinc}}
 \begin{test}\label{test:voltagedividertest1}
 (\textbf{Voltage divider})
 In this test we construct the voltage divider from Figure~\ref{circ:voltagedivider} on a breadboard with resistors $R_1 \approx 100\si{\ohm}$ and $R_2 \approx 470\si{\ohm}$ with values accurate to within 5\%.  Using a computer soundcard (an approximation of) the voltage signal 
