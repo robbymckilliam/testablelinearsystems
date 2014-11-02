@@ -501,9 +501,9 @@ h_n = \frac{a_0}{b_0} \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\el
 The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
 
 We now consider some specific examples of difference equations and their corresponding discrete time systems.  Consider the difference equation
-\[
+\begin{equation}\label{eq:firstorderdifferenceequation}
 c_n = d_n + a d_{n-1} \qquad n \in \ints
-\]
+\end{equation}
 where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies
 \[
 x = y - a T_{P}(y).
@@ -638,8 +638,23 @@ The spectrum of a stable discrete time system is periodic with period equal to t
 
 To see how this works, consider the bandlimited signal $x$ with Fourier transform
 \[
-\calF(x) = \rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)
+\calF(x) = \rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2).
 \]
+The Fourier transform is plotted is Figure~\ref{fig:bandlimiteddiscretetimefiltering} by a dashed line.  The Fourier transform has a raised cosine pulse centered at the origin and two rectangular pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of the signal of most interest is the raised cosine at the origin and that the two rectangular pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  Because the signal has bandwidth $\tfrac{7}{4}$ the value of the Fourier transform of this filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not of consequence.  For example, a discrete time system with sample rate $F > 2b = \frac{7}{2}$ and so spectrum with period larger than $\tfrac{7}{2}$ could be used.  A discrete time system configured for this purpose is called a low pass~\term{digital filter}.
+
+A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
+\[
+c_n = 3 d_n - 2 d_{n-1}
+\]
+and let $H$ be the corresponding discrete time system with sample rate $F = \tfrac{1}{P} = 4$.  The spectrum of $H$ is
+\[
+\Lambda(H,f) = \frac{e^{\pi f j/2}}{3 e^{\pi f j/2} - 2}.
+\]
+The magnitude spectrum is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (gray).  The magnitude spectrum takes its maximum value $\abs{\Lambda(H,0)} = 1$ at $f$ a multiple of $F = 4$ and minimum value $\abs{\Lambda(H,2)} = \tfrac{1}{5}$ at frequencies $f = (k + \tfrac{1}{2})F$ for $k \in \ints$.  The magnitude spectrum takes the value $\frac{1}{\sqrt{2}}$ at frequences of the form
+\[
+f = 4k + \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 4k + 0.167754.
+\]
+On the interval $[-F/2,F/2]$ this discrete time system acts as a lowpass filter with cuttoff frequency 
 
 \begin{figure}[tp]
   \centering
@@ -684,7 +699,7 @@ To see how this works, consider the bandlimited signal $x$ with Fourier transfor
       \htick{2} node[pos=0.5,above left] {$2$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Fourier transform $\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with the first order difference equation $\tfrac{1}{3}c_n = d_n - \tfrac{2}{3} d_{n-1}$.  Observe that the higher frequency rectangular pulses centered at $f = \pm \tfrac{3}{2}$ are weakened considerably, but the raised cosine pulse at the origin is minimally affected.  The system acts as a low pass filter on this bandlimited signal.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+  \caption{Fourier transform $\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with the first order difference equation $c_n = 3 d_n - 2 d_{n-1}$.  Observe that the higher frequency rectangular pulses centered at $f = \pm \tfrac{3}{2}$ are weakened considerably, but the raised cosine pulse at the origin is minimally affected.  The system acts as a low pass filter on this bandlimited signal.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
 \end{figure}
 
 \begin{itemize}
