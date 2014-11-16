@@ -49,7 +49,6 @@ def jfft(N : Int, c : Int => Complex) : Int => Complex = {
   k => d(mod(k,N))
 }
 
-
 /// Now we setup and run some benchmarks with the algorithms above
 
 println("Benchmarking discrete Fourier transforms")
