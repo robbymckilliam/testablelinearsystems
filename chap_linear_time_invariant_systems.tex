@@ -896,7 +896,7 @@ If $t > 1$ then $u(t + \tau) = 1$ for all $\tau \in [-1,1]$ and so
 \[
 H(u,t) = \int_{-1}^{1} \sin(\pi\tau) d\tau = -\frac{\cos(\pi\tau)}{\pi} \big\vert_{-1}^1 = \frac{-\cos(\pi) + \cos(-\pi)}{\pi} = 0 \qquad t > 1.
 \]
-Finally, if $-1 \leq t \leq 1$ then $u(t + \tau)$ is $1$ for $\tau \in [-t,1]$ and $0$ for $\tau \in [-1,-t)$.  So,
+Finally, if $-1 \leq t \leq 1$ then $u(t + \tau)$ is $1$ for $\tau \in [-t,1]$ and $0$ for $\tau \in [-1,-t)$ and so
 \begin{align*}
 H(u,t) &= \int_{-t}^{1} \sin(\pi\tau) d\tau \\
 &= -\frac{\cos(\pi\tau)}{\pi} \big\vert_{-t}^1 \\
@@ -905,7 +905,7 @@ H(u,t) &= \int_{-t}^{1} \sin(\pi\tau) d\tau \\
 
 An alternative way to find the step response is to apply the integrator system $I_\infty$ to the impulse response $h(t) = -\rect(t/2) \sin(\pi t)$ we derived earlier.  We have
 \[
-H(u) = I_\infty(h) = -\int_{-\infty}^t \rect(tau/2) \sin(\pi \tau) d\tau.
+H(u) = I_\infty(h) = -\int_{-\infty}^t \rect(\tau/2) \sin(\pi \tau) d\tau.
 \]
 Again the integral needs to be split into cases.  When $t < -1$ the $\rect(\tau/2)$ occuring inside the integral is always zero and so $H(u,t) = 0$ for $t < -1$.  When $t > 1$ 
 \[
