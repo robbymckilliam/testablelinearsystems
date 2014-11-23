@@ -834,14 +834,14 @@ The signal $x$ is not absolutely integrable since
 \|x\|_1 &= \int_{-\infty}^\infty \abs{x(t)} dt \\
 &= 2 \int_{0}^\infty \frac{1}{t+1} dt \\
 &= 2 \int_{1}^\infty \frac{1}{t} dt \\
-&= \log(1) + \lim_{t \to \infty} \log(t)
+&= 2\log(1) + \lim_{t \to \infty} 2\log(t)
 \end{align*}
 and the limit diverges.  The signal is square integrable since
 \begin{align*}
 \|x\|_2 &= \int_{-\infty}^\infty \sabs{x(t)}^2 dt \\
 &= 2 \int_{0}^\infty \frac{1}{(t+1)^2} dt \\
 &= 2 \int_{1}^\infty \frac{1}{t^2} dt \\
-&= 1 - \lim_{t \to \infty} \frac{1}{t} = 1.
+&= 2 - \lim_{t \to \infty} \frac{2}{t} = 2.
 \end{align*}
 \end{solution}
 
@@ -1051,9 +1051,9 @@ It is time-invariant because
 \[
 H\big(T_{\tau}(x)\big)\big(t\big) = 0 = H(x,t-\tau).
 \]
-It is  stable because for any $M > 0$, 
+It is stable because for any $K > 0$,
 \[
-H(x,t) = 0 < M \qquad \text{for all $t \in \reals$ and all signals $x$}. 
+H(x,t) = 0 < K \qquad \text{for all $t \in \reals$ and all signals $x$}. 
 \]
 \end{solution}
 
