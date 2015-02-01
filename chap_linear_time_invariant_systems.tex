@@ -259,6 +259,8 @@ provided that all the convolutions involved exist.  More generally, the order in
 
 \section{Linear combining and composition}\label{sec:line-comb-comp}
 
+\todo{This could feasibly be connected back to the abstract concept of a vector space in the new Section~\ref{sec:spaces-signals}}
+
 Let $H_1$ and $H_2$ be linear time invariant systems and let $H$ be the system
 \[
 H(x) = cH_1(x) + dH_2(x), \qquad c,d \in \complex
@@ -501,8 +503,6 @@ Thus, the transfer function satisfies
 H(e^{st}) = \lambda(H,s) e^{s\tau}.
 \end{equation}
 
-%%%BLERG.  I think this needs cleaning up.  It's perhaps trying to introduce stuff too early.  Its not obvious at this stage that the system is linear etc.  It might be better to move quickly to the Laplace transform.
-
 We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  As an example, consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
 \[
 x = - y - R_1 C_2 D(y).
@@ -513,18 +513,15 @@ We called this the \term{active RC} circuit.  To simplify notation put $R = R_1$
 % x = \sum_{\ell=1}^m c_\ell e^{s_\ell t},
 % \end{equation}
 % where $c_1,\dots,c_m \in \complex$.  That is, in the case that $x$ is a linear combination of complex exponential signals.
-Observe what occurs when $y = c e^{st}$ is a complex exponential signal with $c \in \complex$.  We have
+Observe what occurs when $y = \lambda e^{st}$ is a complex exponential signal with $\lambda \in \complex$.  We have
 \[
-x = - c e^{st} - c R C s e^{st} = -(1 + R C s) c e^{st} = -(1 + R C s) y,
+x = - \lambda e^{st} - \lambda R C s e^{st} = -(1 + R C s) \lambda e^{st} = -(1 + R C s) y,
 \]
 and so, $x$ is also a complex exponential signal.  We immediately obtain the relationship
 \[
 y = -\frac{1}{1 + R C s} x,
 \]
-that holds whenever $y$ (or equivalently $x$) is of the form $c e^{st}$ with $c \in \complex$.  Let $H$ be a system that maps the input voltage $x$ to the output voltage $y$, i.e., $H$ is a system that describes the active RC circuit.
-%For now we work under the assumption that $H$ is linear.  That this is indeed the case will become clear later.  
-%We can assert that $H$ is linear (Exercise~\ref{excer:activeRCinverseislinear}).  
-%BLERG: At this stage you only care about H being a linear map from the linear space of complex exponentials to the linear space of complex exponentials.  You can do this pretty easily already, but I doubt it is worth it.
+that holds whenever $y$ (or equivalently $x$) is of the form $\lambda e^{st}$ with $\lambda \in \complex$.  Let $H$ be a system that maps the input voltage $x$ to the output voltage $y$, i.e., $H$ is a system that describes the active RC circuit.
 Putting $x = e^{st}$ in the equation above, we find that 
 \[
 y = H(x) = H(e^{st}) =  -\frac{1}{1 + R C s} e^{st},
@@ -533,6 +530,8 @@ and so, the transfer function of the system $H$ describing the active RC circuit
 \begin{equation}\label{eq:transferRCH}
 \lambda(H,s) = -\frac{1}{1 + R C s}.
 \end{equation}
+
+\todo{This can be cleaned up to solve for $\lambda$ and should become the `default' (and perhaps the only way introduced) for finding the transfer function.}
 
 % Now consider when $x$ is a linear combination of complex exponential signals as in~\eqref{eq:xinputlincombexpsigs}.
 % The output voltage $y$ is 

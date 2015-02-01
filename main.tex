@@ -141,6 +141,7 @@ cross/.default={1pt}
 
 \usepackage{framed,xcolor}
 \definecolor{shadecolor}{gray}{0.92}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
 %\usepackage{shaded}
 
 %enviroment for the practical tests (in a grey box)
@@ -152,8 +153,8 @@ cross/.default={1pt}
 \end{shaded}
 }
 
-\newcommand{\mytitle}{Signals and Systems}
-%\newcommand{\mytitle}{Linear shift invariant systems with tests}
+%\newcommand{\mytitle}{Signals and Systems}
+\newcommand{\mytitle}{Testable linear shift invariant systems}
 \title{\mytitle}
 \author{Robby McKilliam}
 
@@ -201,7 +202,6 @@ cross/.default={1pt}
 \end{figure}
 \addtocounter{figure}{-1}
 }
-
 
 \newenvironment{excersizelist}{%
   \renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
