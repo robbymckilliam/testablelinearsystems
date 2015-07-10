@@ -824,7 +824,7 @@ These signals are depicted in Figure~\ref{fig:dcmotoranim}.  This voltage signal
 
 \begin{excersizelist}
 
-\item \label{exer:multiplieropampwithmodel}  Analyse the inverting amplifier circuit in Figure~\ref{circ:opampinvertingamplifierequivalent} to obtain the relationship between input voltage $x$ and output voltage $y$ given by~\eqref{eq:intertingopampmodel}.  You may wish to use a symbolic programming language (for example Sage, Mathematica, or Maple).
+\item \label{exer:multiplieropampwithmodel}  Analyse the inverting amplifier circuit in Figure~\ref{circ:opampinvertingamplifierequivalent} to obtain the relationship between input voltage $x$ and output voltage $y$ given by~\eqref{eq:intertingopampmodel}.  You may wish to use a symbolic programming language (for example Maxima, Sage, Mathematica, or Maple).
 \begin{solution}
 We provide two solutions.  Let $v_i$, $v_o$, $v_1$ and $v_2$ be the voltages over the input resistor $R_i$, the output resistor $R_o$, and resistors $R_1$ and $R_2$ respectively.  Observe that $v_+ - v_i = v_i$ and so the voltage over the dependent source is $A v_i$.  The voltages satisfy,
 \begin{align*}
@@ -849,6 +849,15 @@ Simplify[Solve[{x == v1 - vi,
    vo/ro == v2/r2,
    r1 > 0, r2 > 0, ro > 0, ri > 0, A > 0},
   {y, vi, vo, v2, v1}, Reals]]
+\end{verbatim}
+or Maxima command
+\begin{verbatim}
+linsolve([x = v1 - vi,
+   y = vo + A*vi,
+   y = -vi - v2,
+   v1/r1 + vi/ri = v2/r2,
+   vo/ro = v2/r2],
+   [y, vi, vo, v2, v1]);
 \end{verbatim}
 readily obtains
 \[
