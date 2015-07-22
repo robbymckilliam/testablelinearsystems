@@ -3,13 +3,42 @@
 %\section{Signals and systems}
 
 
-\todo{Introduce functions abstractly.}
+%\todo{Introduce functions abstractly.}
 
-A \term{signal} is a function mapping an input variable to some output variable.  For example
+It is assumed that the reader is familiar with the concept of a function!  That is, a map from a set $X$ to another set $Y$.  For example, consider sets
+\[
+X = \left\{
+\begin{array}{c}
+\text{Mario} \\
+\text{Link} \\
+\text{Ness} 
+\end{array} 
+\right\}
+ \qquad 
+Y = \left\{
+\begin{array}{c}
+\text{Freeman} \\
+\text{Ryu} \\
+\text{Sephiroth} \\
+\text{Conker} 
+\end{array} 
+\right\}
+\]
+A function specifies a mapping from each element in $X$ to an element in $Y$.  For example
+\[
+f(x) = \begin{cases}
+\text{Conker} & x = \text{Mario} \\
+\text{Sephiroth} & x = \text{Link} \\
+\text{Sephiroth} & x = \text{Ness} \\
+\end{cases}
+\]
+defines a function $f$ that maps Mario to Conker, Link to Sepiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and we write $f \in X \to Y$ to indicate that $f$ is a function that maps each element in $X$ to elements in $Y$.
+
+A \term{signal} is a function mapping the set of real numbers $\reals$ to elements from the set of complex numbers $\complex$, that is, a function from $\reals \to \complex$.  For example
 \[
 \sin( \pi t), \qquad \frac{1}{2} t^3, \qquad e^{-t^2}
-\]
-all represent \term{signals} with real input variable $t \in \reals$ and real output variable. These signals are plotted in Figure~\ref{fig:signalsstart}.  If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
+\]   
+all represent \term{signals} with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
 In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
 
 %A 1-dimensional signal is said to be a \term{continuous-time signal} if the variable $t \in \reals$, wheras it is said to be a discrete-time signal
@@ -783,6 +812,65 @@ BLERG: See Theorem~5.4 of~\cite{Rudin_real_and_complex_analysis}.  For linear sy
 \section{Exercises}
 
 \begin{excersizelist}
+
+\item How many distinct functions from the set $X = \{\text{Mario}, \text{Link})\}$ to the set $Y = \{\text{Freeman}, \text{Ryu}, \text{Sephiroth}\}$?  Write down each function.  
+\begin{solution}
+Each of the two elements in $X$ can be mapped to the three elements of $Y$.  There are thus $3^2 = 9$ distinct functions in $X \to Y$.  They are
+\[
+f_1(x) = \begin{cases}
+\text{Freeman} & \text{Mario} \\
+\text{Freeman} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_2(x) = \begin{cases}
+\text{Freeman} & \text{Mario} \\
+\text{Ryu} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_3(x) = \begin{cases}
+\text{Ryu} & \text{Mario} \\
+\text{Freeman} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_4(x) = \begin{cases}
+\text{Freeman} & \text{Mario} \\
+\text{Sephiroth} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_5(x) = \begin{cases}
+\text{Sephiroth} & \text{Mario} \\
+\text{Freeman} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_6(x) = \begin{cases}
+\text{Ryu} & \text{Mario} \\
+\text{Ryu} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_7(x) = \begin{cases}
+\text{Ryu} & \text{Mario} \\
+\text{Sephiroth} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_8(x) = \begin{cases}
+\text{Sephiroth} & \text{Mario} \\
+\text{Ryu} & \text{Link} \\
+\end{cases}
+\]
+\[
+f_9(x) = \begin{cases}
+\text{Sephiroth} & \text{Mario} \\
+\text{Sephiroth} & \text{Link} \\
+\end{cases}
+\]
+\end{solution}
 
 \item \label{excer:stepfunction} State whether the step function $u(t)$ is bounded, periodic, %continuous, 
 absolutely integrable, an energy signal.
