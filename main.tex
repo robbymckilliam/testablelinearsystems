@@ -130,7 +130,7 @@ cross/.default={1pt}
 
 %turn excersize solutions on/off
 \newif\ifsolutions %default is off
-\solutionstrue %uncomment to turn solutions on.
+%\solutionstrue %uncomment to turn solutions on.
 
 \usepackage{comment}
 \ifsolutions
@@ -154,7 +154,11 @@ cross/.default={1pt}
 }
 
 %\newcommand{\mytitle}{Signals and Systems}
+\ifsolutions
+\newcommand{\mytitle}{Testable linear shift invariant systems (Exercise~Solutions)}
+\else
 \newcommand{\mytitle}{Testable linear shift invariant systems}
+\fi
 \title{\mytitle}
 \author{Robby McKilliam}
 
@@ -224,15 +228,23 @@ cross/.default={1pt}
 \maketitle
 
 \setcounter{tocdepth}{1}
+
+\ifsolutions
+\else
 \tableofcontents
-
+\fi 
 %\listoffigures
-
   
 \mainmatter
 \pagestyle{main}
 
+\chapter{Signals and systems}
+\ifsolutions
+ \input{chap_signals_and_systems_exercises.tex}
+\else
  \input{chap_signals_and_systems.tex}
+ \input{chap_signals_and_systems_exercises.tex}
+\fi
 
 % \input{chap_differential_equations.tex}
 
