@@ -43,7 +43,7 @@ that is finite only when $\Re(\alpha) < \Re(s) < \Re(\beta)$.  The corresponding
 \end{equation}
 In words: the Laplace transform of a linear combination of signals is the same linear combination of the Laplace transforms of those signals.
 
-In the previous example the Laplace transform is guaranteed to be finite for any $s$ if $\Re(\alpha) \geq \Re(\beta)$, and the region of convergence is correspondingly the empty set.  Other signals also have this property.  For example, the signal $x(t) = 1$ because
+In the previous example the Laplace transform is not finite for any $s$ if $\Re(\alpha) \geq \Re(\beta)$.  The region of convergence is the empty set.  Other signals also have this property.  For example, the signal $x(t) = 1$ because
 \[
 \calL(1) = \int_{\infty}^\infty e^{-s t} dt = \lim_{t\to -\infty} \frac{e^{-st}}{s} -  \lim_{t\to \infty} \frac{e^{-st}}{s}
 \] 
@@ -56,11 +56,11 @@ As a final example, consider the rectangular pulse
 0 & \text{otherwise}.
 \end{cases}
 \]
-Its Laplace transform is
+Its Laplace transform
 \begin{equation}\label{eq:rectLaplace}
 \calL(\rect) = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s}
 \end{equation}
-and is finite for all $s \in \complex$.  The region of convergence of the rectangular pulse $\Pi$ is the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
+is finite for all $s \in \complex$.  The region of convergence of the rectangular pulse $\Pi$ is the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
  
 \colorlet{lightgray}{black!25}
 

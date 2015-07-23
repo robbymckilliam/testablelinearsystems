@@ -1,7 +1,7 @@
 
 %\todo{Introduce functions abstractly.}
 
-It is assumed that the reader is familiar with the concept of a function!  That is, a map from a set $X$ to another set $Y$.  For example, consider sets
+It is assumed that the reader is familiar with the concept of a function!  That is, a map from the elements in a set $X$ to the elements in another set $Y$.  Consider sets
 \[
 X = \left\{
 \begin{array}{c}
@@ -20,7 +20,7 @@ Y = \left\{
 \end{array} 
 \right\}
 \]
-A function specifies a mapping from each element in $X$ to an element in $Y$.  For example
+An example of function from $X$ to $Y$ is
 \[
 f(x) = \begin{cases}
 \text{Conker} & x = \text{Mario} \\
@@ -28,14 +28,16 @@ f(x) = \begin{cases}
 \text{Sephiroth} & x = \text{Ness} \\
 \end{cases}
 \]
-defines a function $f$ that maps Mario to Conker, Link to Sepiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and we write $f \in X \to Y$ to indicate that $f$ is a function that maps each element in $X$ to elements in $Y$.
+The function $f$ maps Mario to Conker, Link to Sepiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$.
 
-A \term{signal} is a function mapping the set of real numbers $\reals$ to elements from the set of complex numbers $\complex$, that is, a function from $\reals \to \complex$.  For example
+A \term{signal} is a function that maps each element from the set of real numbers $\reals$ to elements from the set of complex numbers $\complex$, that is, a function from $\reals \to \complex$.  For example
 \[
 \sin( \pi t), \qquad \frac{1}{2} t^3, \qquad e^{-t^2}
 \]   
-all represent \term{signals} with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
-In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
+all represent signals with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in voltage, current, position, and angle over time.  %In these examples, the independent variables $t$ will represent time.  However, there is no fundamental reason for this, and the theory developed in this course can be applied in 
+
+% If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
+% In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
 
 %A 1-dimensional signal is said to be a \term{continuous-time signal} if the variable $t \in \reals$, wheras it is said to be a discrete-time signal
 % If the domain of a signal is the set of real numbers $\reals$ the signal is said to be \term{continuous-time}.  If the domain is the set of integers $\ints$, the signal is said to be \term{discrete-time}.  We will usually indicate a discrete-time signal by using $n$ instead of $t$ for the independent variable, so $\sin(\pi n)$ will usually be a discrete-time signal with $n \in \ints$, and $\sin(\pi t)$ will usually be a continuous-time signal with $t \in \reals$.  Examples of discrete time signals are
@@ -125,14 +127,14 @@ u(t) = \begin{cases}
 0 & t < 0
 \end{cases}
 \end{equation}
-is right-sided.  Its reflection in time $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to be \term{finite} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ are not finite, but the \term{rectangular pulse}
+is right-sided.  Its horizontal reflection $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to have \term{finite support} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ do note have finite support, but the \term{rectangular pulse}
 \begin{equation}\label{eq:rectfuncdefn}
 \rect(t) = \begin{cases} 
 1 & \abs{t} < \frac{1}{2}\\
 0 & \text{otherwise}
 \end{cases}
 \end{equation}
-is finite.  %The definitions left sided, right sided, finite, and unbounded in time apply also to discrete-time signals.
+does.
 
 \begin{figure}[tp]
 \centering
@@ -197,15 +199,7 @@ is finite.  %The definitions left sided, right sided, finite, and unbounded in t
 \label{fig:stepsided}
 \end{figure}
 
-A signal $x$ is \term{even} (or \term{symmetric}) if
-\[
-x(t) = x(-t) \qquad  \text{for all $t \in \reals$}
-\] 
-and \term{odd} (or \term{antisymmetric}) if 
-\[
-x(t) = -x(-t) \qquad \text{for all $t \in \reals$}.
-\] 
-For example, $\sin(\pi t)$ and $\tfrac{1}{2}t^3$ are odd and $e^{-t^2}$ is even.  % Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
+A signal $x$ is \term{even} (or \term{symmetric}) if $x(t) = x(-t)$ for all $t \in \reals$ and \term{odd} (or \term{antisymmetric}) if $x(t) = -x(-t)$ for all $t \in \reals$.  For example, $\sin(\pi t)$ and $\tfrac{1}{2}t^3$ are odd and $e^{-t^2}$ is even.  % Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
 % \[
 % x_e(t) = \tfrac{1}{2}\big( x(t) + x(-t) \big)
 % \]
@@ -228,12 +222,13 @@ A signal $x$ is \term{locally integrable} if
 \[
 \int_{a}^{b} \abs{x(t)} dt < \infty
 \]
-for all finite constants $a$ and $b$, where by $< \infty$ we mean that the integral evaluates to a finite number.  
-%Every bounded signal is locally integrable (Exercise~\ref{exer:boundedfunctionarelocallyintegrable}).  
-An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  %In this course we always assume that signals are locally integrable, that is, signals are locally integrable functions mapping $\reals \to \reals$ or $\reals \to \complex$.  
+for all finite constants $a$ and $b$, where by $< \infty$ we mean that the integral evaluates to a finite number.  The signals $\sin(\pi t)$, $\tfrac{1}{2}t^3$, and $e^{-t^2}$ are all locally integrable.  An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  
+
+%In this course we always assume that signals are locally integrable, that is, signals are locally integrable functions mapping $\reals \to \reals$ or $\reals \to \complex$.  
 % Similarly two discrete time signals $x$ and $y$ are equal if $x(n) = y(n)$ for all $n \in \ints$.
 %BLERG: Potentially equality of signals could be defined using local integrability, i.e. two signals are equal if they are equal everywhere except a set of measure zero.
 %BERLG: Another relevant term is ``locally bounded'', i.e, a function is locally bounded if for each finite $a$ and $b$ there exists an $M$ such that $\abs{f(x) }< M$ for all $.  ACTUALLY THIS WONT BE GOOD, SINCE THEN FOURIER TRANSFORMS WONT BE SIGNALS.  It's still a useful concept potentially.  
+
 A signal $x$ is \term{absolutely integrable} if
 \begin{equation}\label{eq:l1normdefncontinuous}
 \|x\|_1 = \int_{-\infty}^{\infty} \abs{x(t)} dt < \infty.
@@ -247,7 +242,7 @@ Here we introduce the notation $\|x\|_1$ called the \term{$L^1$-norm} of $x$.  F
 % \|x\|_1 = \sum_{n\in\ints} \abs{x(n)}
 % \end{equation}
 % exists.  For example $\sin(\tfrac{1}{4}n)$ is not absolutely summable, but $e^{-n^2/4}$ is (Excersize~\ref{excer:disctimeabssummableexpbound}).  We have reused (overloaded) the notation $\|\cdot\|_1$ here so that is applies to both continuous and discrete-time signals.  It is left to the reader to remember that $\|\cdot\|_1$ applied to a continuous-time signal means the integral~\eqref{eq:l1normdefncontinuous}, but when applied to a discrete-time signal means the sum~\eqref{eq:l1normdiscrete}.
-It is common to denote the set of absolutely integrable signals by $L^1$ or $L^1(\reals)$.  So, $e^{-t^2} \in L^1$ and $\tfrac{1}{2}t^3 \notin L^1$.   A signal $x$ is called is \term{square integrable} if
+It is common to denote the set of absolutely integrable signals by $L^1$ or $L^1(\reals)$.  So, $e^{-t^2} \in L^1$ and $\tfrac{1}{2}t^3 \notin L^1$.   A signal $x$ is \term{square integrable} if
 \[
 \|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt < \infty.
 \]
@@ -312,7 +307,7 @@ to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This con
 
 \section{Systems (functions of signals)}
 
-A \term{system} is a function that maps a signal to another signal.  For example
+A \term{system} is a function that maps a signal to another signal.  For example,
 \[
 x(t) + 3 x(t-1), \qquad \int_{0}^{1} x(t - \tau) d\tau, \qquad \frac{1}{x(t)}, \qquad \frac{d}{dt} x(t)
 \]
@@ -347,7 +342,7 @@ The circuit can be considered as a system mapping the signal $x$ representing th
 \begin{tikzpicture}[node distance=2.5cm,auto]
     \node [dspsquare] (H) {$H$};
     \node [dspnodeopen,dsp/label=above] (x) [left of=H,node distance=2cm] {$x$};
-    \node [dspnodeopen,dsp/label=above] (y) [right of=H, node distance=2cm] {$H(x)$};
+    \node [dspnodeopen,dsp/label=above] (y) [right of=H, node distance=2cm] {$Hx$};
     \draw[dspconn] (x) -- (H);
     \draw[dspflow] (H) -- (y);
 \end{tikzpicture}
@@ -371,12 +366,14 @@ The circuit can be considered as a system mapping the signal $x$ representing th
 % \caption{A \term{voltage divider} circuit including input resistance $R_i$ and output resistance $R_o$.} \label{circ:voltagedividerinpout}
 % \end{figure}
 
-We denote systems with capital letters such as $H$ and $G$.  A system $H$ is a function that maps a signal $x$ to another signal denoted $H(x)$.  We call $x$ the \term{input signal} and $H(x)$ the \term{output signal} or the \term{response} of system $H$ to signal $x$.  The value of the signal $H(x)$ at $t$ is denoted by $H(x,t)$ or $H(x,t)$ and we do not distinguish between these notations.  %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
+We denote systems with capital letters such as $H$ and $G$.  A system $H$ is a function that maps a signal $x$ to another signal denoted $H(x)$.  We call $x$ the \term{input signal} and $H(x)$ the \term{output signal} or the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$
+%\footnote{It is customary to drop the brackets only where $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  We deal primarily with linear systems in this text and so droping the brackets will rarely be a Faux Pas.}.  
+The value of the output signal $Hx$ at $t$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.  %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
 It is sometimes useful to depict systems with a block diagram.  Figure~\ref{fig:blockdiagramH1} is a simple block diagram showing the input and output signals of a system $H$.
 
 The electric circuit in Figure~\ref{circ:voltagedivider} corresponds with the system
 \[
-H(x) = \frac{R_2}{R_1 + R_2} x = y.
+Hx = \frac{R_2}{R_1 + R_2} x = y.
 \]
 This system multiplies the input signal $x$ by $\frac{R_2}{R_1 + R_2}$.  This brings us to our first practical test.
 
@@ -587,7 +584,7 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 \]
 Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ would not contain the signal $x(t) = t$. 
 
-\section{Properties of systems}
+\section{Properties of systems}\label{sec:properties-systems}
 
 In this section we define a number of important properties that systems can possess.  In what follows $H$ will be a system and the phrase ``for all signals'' will mean for all signals inside some domain for $H$.  %Let $H$ be a system with domain $V$.
 
