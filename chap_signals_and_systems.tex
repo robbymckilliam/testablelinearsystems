@@ -1,7 +1,7 @@
 
 %\todo{Introduce functions abstractly.}
 
-It is assumed that the reader is familiar with the concept of a function!  That is, a map from the elements in a set $X$ to the elements in another set $Y$.  Consider sets
+It is assumed the reader is familiar with the concept of a function!  That is, a map from the elements in a set $X$ to the elements in another set $Y$.  Consider sets
 \[
 X = \left\{
 \begin{array}{c}
@@ -34,7 +34,7 @@ A \term{signal} is a function that maps each element from the set of real number
 \[
 \sin( \pi t), \qquad \frac{1}{2} t^3, \qquad e^{-t^2}
 \]   
-all represent signals with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in voltage, current, position, and angle over time.  %In these examples, the independent variables $t$ will represent time.  However, there is no fundamental reason for this, and the theory developed in this course can be applied in 
+all represent signals with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in voltage, current, position, and angle over time.  In these examples, the independent variable $t$ will represent time.  However, there is no fundamental reason for this and the techniques we devolop can be applied equally well when $t$ represents a quantity other than time.  Any example where this occurs is in image processing.
 
 % If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
 % In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
@@ -218,6 +218,16 @@ A signal $x$ is \term{even} (or \term{symmetric}) if $x(t) = x(-t)$ for all $t \
 % \] 
 % that is, if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
 
+A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
+\[
+\lim_{h \to 0} \frac{x(t + h) - x(t)}{h} = \lim_{h \to 0} \frac{x(t) - x(t-h)}{h} \qquad \text{for all $t \in \reals$}.
+\]
+Considered a function of $t$ the value of the limit above is called the derivative of $x$ at $t$ and is denoted by $\frac{d}{dt} x(t)$.  For example, the signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$ and $t^2$ are differentiable with derivatives
+\[
+\pi \cos(\pi t), \qquad \tfrac{3}{2} t^{2}, \qquad -2t e^{-t^2}, \qquad 2t,
+\] 
+but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}). 
+
 A signal $x$ is \term{locally integrable} if
 \[
 \int_{a}^{b} \abs{x(t)} dt < \infty
@@ -303,9 +313,11 @@ to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This con
 
 \todo{Examples: even/odd signals, periodic signals, differentiable signal, shift spaces, absolutely integrable and square integrable signals etc}
 
+The set of all differentiable signals forms a linear space because if $x$ and $y$ are differentiable signals then the linear combination $ax + by$ is differentiable.  The derivative is $a \frac{d}{dt} x + b \frac{d}{dt} y$.
+
 \todo{Normed vector spaces, $L_1$, $L_2$}
 
-\section{Systems (functions of signals)}
+\section{Systems (functions of signals)}\label{sec:syst-funct-sign}
 
 A \term{system} is a function that maps a signal to another signal.  For example,
 \[
@@ -427,26 +439,29 @@ A plot of $\tilde{y}$, $\tilde{x}$ and $\tfrac{47}{57}\tilde{x}$ over a $20\si{\
 
 %BLERG Potentially what this next bit is out of place?
 
-Not all signals can be input to all systems.  For example, the system
+
+Let $X$ and $Y$ be set of signals, that is, $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$.  A system is a function $H \in X \to Y$ that maps each signal from $X$ to a signal from $Y$.  We are free to choose the domain $X$ and range $Y$ at our convenience.  In cases such as the voltage divider above it is feasible to choose the domain $X = \reals \to \complex$, that is, the domain can contain all signals.  However, this is not always convenient or possible.  For example, the system
 \[
-H(x,t) = \frac{1}{x(t)}
+Hx(t) = \frac{1}{x(t)}
 \]
-is not defined at those $t$ where $x(t) = 0$ because we cannot divide by zero.  Another example is the system
+is not defined at those $t$ where $x(t) = 0$ because we cannot divide by zero.  To avoid this we might choose the domain as the set of signals $x(t)$ which are not zero for any $t$.   
+
+Another example is the system
 \begin{equation}\label{eq:deifferentiator}
-I_{\infty}(x,t) = \int_{-\infty}^{t} x(\tau) d\tau ,
+I_{\infty}x(t) = \int_{-\infty}^{t} x(\tau) d\tau ,
 \end{equation}
 called an \term{integrator}.  %, that is not defined for those signals where the integral above does not exist. %BLERG: YOU MIGHT WANT TO FORMALLY DEFINE DOES NOT EXIST AS IS NOT LEBESGUE INTEGRABLE!
-The signal $x(t) = 1$ cannot be input to the integrator because the integral $\int_{-\infty}^{t} dt$ is not finite for any $t$.  % Another example is the system
-% \[
-% D(x,t) = \frac{d}{dt} x(t),
-% \]
-% called a \term{differentiator}, that is not defined at those $t$ where $x(t)$ is not differentiable.  For example, a differentiator cannot be applied to the step function $u(t)$ from Excersize~\ref{excer:stepfunction}, since $u(t)$ is not continuous, and therefore not differentiable at $t=0$.
-
-When specifying a system it is necessary to also specify a set of signals that can be input.  This is called a \term{domain} for the system.  We are free to choose the domain at our convenience.  For example, a domain for the system $H(x,t) = \frac{1}{x(t)}$ is a the set of signals $x(t)$ which are not zero for any $t$. An example of a domain for the integrator $I_\infty$ is the set $L^1$ of absolutely integrable signals because, if $x$ is absolutely integrable, then 
+The signal $x(t) = 1$ cannot be input to the integrator because the integral $\int_{-\infty}^{t} dt$ is not finite for any $t$.  However, the integrator $I_\infty$ can operate on absolutely integrable signals because, if $x$ is absolutely integrable, then 
 \[
-\abs{I_\infty(x,t)} \leq \abs{\int_{-\infty}^{t} x(\tau) d\tau} \leq \int_{-\infty}^{t} \abs{x(\tau)} d\tau <  \int_{-\infty}^{\infty} \abs{x(\tau)} d\tau = \|x\|_1 < \infty
+I_\infty x(t) = \int_{-\infty}^{t} x(\tau) d\tau \leq \int_{-\infty}^{t} \abs{x(\tau)} d\tau <  \int_{-\infty}^{\infty} \abs{x(\tau)} d\tau = \|x\|_1 < \infty
 \] 
-and so, $I_\infty(x,t)$ is finite for all $t$.  In this text, the domain used for a given system will usually be obvious from the context in which the system is defined.  For this reason we will not usually state the domain explicitly.  We will only do so if there is chance for confusion.  %When describing the properties of a system we will often want to show that it satisfies certain conditions ``for all signals''.  By this phrase we will always implicitly mean ``for all signals to which the system can be applied''.  %We say this once and for all so that the text is not littered with technical requirements regarding the sets of signals for which particular properties will hold for particular systems.
+and so, $I_\infty x(t)$ is finite for all $t$.  We might then choose a domain for $I_\infty$ as the set of absolutely integrable signals $L_1$.  The integrator can also be applied to signals that are right sided and locally integrable because, for any right sided signal $x$ there exists $T \in \reals$ such that $x(t) = 0$ for all $t < T$ and so
+\[
+I_\infty x(t) = \int_{-\infty}^{t} x(\tau) d\tau = \int_{T}^{t} x(\tau) d\tau < \infty
+\]
+is finite if $x$ is locally integrable.  So another possible domain for $I_\infty$ is the set of right sided locally integrable signals or even the union of $L_1$ and the set of right sided locally integrable signals.
+
+In this text, the domain used for a given system will usually be obvious from the context in which the system is defined.  For this reason we will not usually state the domain explicitly.  We will only do so if there is chance for confusion.  %When describing the properties of a system we will often want to show that it satisfies certain conditions ``for all signals''.  By this phrase we will always implicitly mean ``for all signals to which the system can be applied''.  %We say this once and for all so that the text is not littered with technical requirements regarding the sets of signals for which particular properties will hold for particular systems.
 
 %%some styles for block diagrams
 \begin{figure}[p]
@@ -483,7 +498,7 @@ and so, $I_\infty(x,t)$ is finite for all $t$.  In this text, the domain used fo
     \node[shift={(-3,2.2)}] {$T_{-3}(x)$};
     \vtick{-3} node[pos=0.5,below] {$-3$};
   \end{tikzpicture}
-  \caption{Time-shifter system $T_{1.5}(x,t) = x(t - 1.5)$ and $T_{-3}(x,t) = x(t + 3)$ acting on the signal $x(t) = e^{-t^2}$.} \label{fig:timeshifter}
+  \caption{Time-shifter system $T_{1.5}x(t) = x(t - 1.5)$ and $T_{-3}x(t) = x(t + 3)$ acting on the signal $x(t) = e^{-t^2}$.} \label{fig:timeshifter}
 \end{figure}
 
 \begin{figure}[p]
@@ -505,7 +520,7 @@ and so, $I_\infty(x,t)$ is finite for all $t$.  In this text, the domain used fo
     \node[shift={(4,2.2)}] {$\alpha=1/2$};
     \vtick{4} node[pos=0.5,below] {$4$};
   \end{tikzpicture}
-  \caption{Time-scaler system $H(x,t) = x(\alpha t)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.} \label{fig:timescaler}
+  \caption{Scaler system $Hx(t) = x(\alpha t)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.} \label{fig:timescaler}
 \end{figure}
 
 
@@ -514,25 +529,25 @@ and so, $I_\infty(x,t)$ is finite for all $t$.  In this text, the domain used fo
 
 The system
 \[
-T_\tau(x,t) = x(t - \tau)
+T_\tau x(t) = x(t - \tau)
 \]
-is called a \term{time-shifter}.  This system shifts the input signal along the $t$ axis (`time' axis) by $\tau$.  When $\tau$ is positive $T_{\tau}$ delays the input signal by $\tau$.  The time-shifter will appear so regularly in this course that we use the special notation $T_\tau$ to represent it.  Figure~\ref{fig:timeshifter} depicts the action of time-shifters $T_{1.5}$ and $T_{-3}$ on the signal $x(t) = e^{-t^2}$.  When $\tau=0$ the time-shifter is the \term{identity system}
+is called a \term{time-shifter} or simply \term{shifter}.  This system shifts the input signal along the $t$ axis (``time'' axis) by $\tau$.  When $\tau$ is positive $T_{\tau}$ delays the input signal by $\tau$.  The shifter will appear so regularly in this course that we use the special notation $T_\tau$ to represent it.  Figure~\ref{fig:timeshifter} depicts the action of shifters $T_{1.5}$ and $T_{-3}$ on the signal $x(t) = e^{-t^2}$.  When $\tau=0$ the shifter is the \term{identity system}
 \[
-T_0(x) = x
+T_0 x = x
 \]
-that maps the signal $x$ to itself.
+that maps the signal $x$ to itself.  
 
 Another important system is the \term{time-scaler} that has the form
 \[
-H(x,t) = x(\alpha t), \qquad \alpha \in \reals.
+H x(t) = x(\alpha t), \qquad \alpha \in \reals.
 \]
-Figure~\ref{fig:timescaler} depicts the action of a time-scaler with a number of values for $\alpha$.  When $\alpha=-1$ the time-scaler reflects the input signal in the time axis.  When $\alpha = 1$ the time-scaler is the identity system $T_0$.
+Figure~\ref{fig:timescaler} depicts the action of a time-scaler with a number of values for $\alpha$.  When $\alpha=-1$ the time-scaler reflects the input signal in the $t$ axis.  When $\alpha = 1$ the time-scaler is the identity system $T_0$.  Both the shifter and time-scaler are well defined for all signal and so it is reasonable to choose their domains as the entire set of signals $\reals \to \complex$.
 
-% Another important system is the \term{time-scaler} that has the form
+% Another important system is the \term{scaler} that has the form
 % \[
 % S_\alpha(x,t) = x(t/\alpha)
 % \]
-% where $\alpha$ is a real number not equal to zero.  Figure~\ref{fig:timescaler} depicts the action of a time-scaler with $\alpha=-1,\tfrac{1}{2}, 1$.  When $\alpha=-1$ the time-scaler reflects the input signal in the time axis and in that case we will often denote it by the letter $R$, that is, we put $R = S_{-1}$.  We call $R$ the \term{time reflection system}.  When $\alpha=1$ the system $S_1 = T_0$ is the identity system.  The identity system is also obtained by applying the time reflection system twice, that is, $R(R(x)) = R^2(x) = x$.
+% where $\alpha$ is a real number not equal to zero.  Figure~\ref{fig:timescaler} depicts the action of a scaler with $\alpha=-1,\tfrac{1}{2}, 1$.  When $\alpha=-1$ the scaler reflects the input signal in the time axis and in that case we will often denote it by the letter $R$, that is, we put $R = S_{-1}$.  We call $R$ the \term{time reflection system}.  When $\alpha=1$ the system $S_1 = T_0$ is the identity system.  The identity system is also obtained by applying the time reflection system twice, that is, $R(R(x)) = R^2(x) = x$.
 
 % \begin{figure}[tp]
 %   \centering
@@ -553,7 +568,7 @@ Figure~\ref{fig:timescaler} depicts the action of a time-scaler with a number of
 %     \node[shift={(4,2.2)}] {$S_2(x)$};
 %     \vtick{4} node[pos=0.5,below] {$4$};
 %   \end{tikzpicture}
-%   \caption{Time-scaler system $S_\alpha(x,t) = x(t/\alpha)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.  When $\alpha=-1$ we use the notation $R(x) = S_{-1}(x)$.} \label{fig:timescaler}
+%   \caption{scaler system $S_\alpha(x,t) = x(t/\alpha)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.  When $\alpha=-1$ we use the notation $R(x) = S_{-1}(x)$.} \label{fig:timescaler}
 % \end{figure}
 
 % A simple by regularly encountered signal is the \term{amplifier}
@@ -563,13 +578,18 @@ Figure~\ref{fig:timescaler} depicts the action of a time-scaler with a number of
 % where $a \in \reals$.  
 Another system we regularly encounter is the \term{differentiator}
 \[
-D(x,t) = \frac{d}{dt} x(t),
+Dx(t) = \frac{d}{dt} x(t)
 \]
 that returns the derivative of the input signal.  We also define a $k$th differentiator
 \[
-D^k(x,t) = \frac{d^k}{dt^k} x(t)
+D^k x(t) = \frac{d^k}{dt^k} x(t)
 \]
 that returns the $k$th derivative of the input signal.  %BLERG: existance, special definition at discontinuities?
+We must be carefull when choosing a domain for the differentiator.  For example, consider the step function $u(t)$ from~\eqref{eq:stepfunction}.  We cannot differentiate $u(t)$ at $t = 0$ because
+\[
+D u(0) = \lim_{h \to 0} \frac{u(0) - u(-h)}{h} = \lim_{h \to 0} \frac{1}{h} 
+\]
+and the limit does not converge.
 
 A related system is the \term{integrator}
 \[
@@ -582,19 +602,19 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 0 & t \leq 0.
 \end{cases}
 \]
-Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ would not contain the signal $x(t) = t$. 
+Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ would not contain the signal $x(t) = t$.  As described in Section~\ref{sec:syst-funct-sign} example of domains for $I_\infty$ are the set of absolutely integrable signals $L_1$ and the set of signals that are both right sided and locally integrable.
 
 \section{Properties of systems}\label{sec:properties-systems}
 
-In this section we define a number of important properties that systems can possess.  In what follows $H$ will be a system and the phrase ``for all signals'' will mean for all signals inside some domain for $H$.  %Let $H$ be a system with domain $V$.
+%In this section we define a number of important properties that systems can possess.  In what follows $H$ will be a system and the phrase ``for all signals'' will mean for all signals inside some domain for $H$.  %Let $H$ be a system with domain $V$.
 
-A system $H$ is called \term{memoryless} if the output signal $H(x)$ at time $t$ depends only on the input signal $x$ at time $t$.  For example $\frac{1}{x(t)}$ and the identity system $T_0$ are memoryless, but 
+A system $H$ is called \term{memoryless} if the output signal $Hx$ at time $t$ depends only on the input signal $x$ at time $t$.  For example $\frac{1}{x(t)}$ and the identity system $T_0$ are memoryless, but 
 \[
 x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau
 \] 
-are not.  A time-shifter $T_\tau$ with $\tau \neq 0$ is not memoryless.
+are not.  A shifter $T_\tau$ with $\tau \neq 0$ is not memoryless.
 
-A system $H$ is \term{causal} if the output signal $H(x)$ at time $t$ depends on the input signal only at times less than or equal to $t$.  Memoryless systems such as $\frac{1}{x(t)}$ and $T_0$ are also causal.  Time-shifters $T_\tau$ are causal when $\tau \geq 0$, but are not causal when $\tau < 0$.  The systems 
+A system $H$ is \term{causal} if the output signal $Hx$ at time $t$ depends on the input signal only at times less than or equal to $t$.  Memoryless systems such as $\frac{1}{x(t)}$ and $T_0$ are also causal.  shifters $T_\tau$ are causal when $\tau \geq 0$, but are not causal when $\tau < 0$.  The systems 
 \[
 x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau
 \] 
@@ -604,13 +624,13 @@ x(t) + 3 x(t+1) \qquad \text{and} \qquad \int_{0}^{1} x(t + \tau) d\tau
 \] 
 are not causal.
 
-A system $H$ is called \term{bounded-input-bounded-output (BIBO) stable} or just \term{stable} if the output signal $H(x)$ is bounded whenever the input signal $x$ is bounded.  That is, $H$ is stable if for every positive real number $M$ there exists a positive real number $K$ such that for all signals $x$ satisfying
+The system $H \in X \to Y$ is called \term{bounded-input-bounded-output (BIBO) stable} or just \term{stable} if the output signal $Hx$ is bounded whenever the input signal $x$ is bounded.  That is, $H$ is stable if for every positive real number $M$ there exists a positive real number $K$ such that for all input signals $x$ from the domain $X$ that are bounded below $M$, that is,
 \[
 \abs{x(t)} < M \qquad \text{for all $t\in\reals$},
 \] 
-it also holds that
+it holds that the output signal $Hx$ is bounded below $K$, that is,
 \[
-\abs{H(x,t)} < K \qquad \text{for all $t\in\reals$}.
+\abs{Hx(t)} < K \qquad \text{for all $t\in\reals$}.
 \]
 For example, the system $x(t) + 3 x(t-1)$ is stable with $K = 4M$ since if $\abs{x(t)} < M$ then 
 \[
@@ -618,28 +638,28 @@ For example, the system $x(t) + 3 x(t-1)$ is stable with $K = 4M$ since if $\abs
 \]
 The integrator $I_a$ for any $a \in \reals$ and differentiator $D$ are not stable (Exercises~\ref{excer:integratornotstable}~and~\ref{excer:diffnotstable}).
 
-A system $H$ is \term{linear} if
+Let $H \in X \to Y$ with domain $X$ and range $Y$ being linear spaces of signals.  The system $H$ is \term{linear} if
 \[
-H( ax + by) = a H(x) + b H(y)
+H( ax + by) = a Hx + b Hy
 \]
 for all signals $x$ and $y$ and all complex numbers $a$ and $b$.  That is, a linear system has the property: If the input consists of a weighted sum of signals, then the output consists of the same weighted sum of the responses of the system to those signals.  Figure~\ref{blockdiag:linearsystem} indicates the linearity property using a block diagram.  For example, the differentiator is linear because
 \begin{align*}
-D(ax + by,t) &= \frac{d}{dt}\big(ax(t) + by(t)\big) \\
+D(ax + by)(t) &= \frac{d}{dt}\big(ax(t) + by(t)\big) \\
 &= a\frac{d}{dt}x(t) + b\frac{d}{dt}y(t) \\
-&= aD(x,t) + bD(y,t)
+&= aDx(t) + bDy(t)
 \end{align*}
 whenever both $x$ and $y$ are differentiable.  
 %BLERG, there are significant caveats here, what happens when one of x or y is not differentiable, but the sum is!!!!
-However, the system $H(x,t) = \frac{1}{x(t)}$ is not linear because
+However, the system $Hx(t) = \frac{1}{x(t)}$ is not linear because
 \[
-H(ax + by,t) = \frac{1}{ax(t) + by(t)} \neq \frac{a}{x(t)} + \frac{b}{y(t)} = aH(x,t) + bH(y,t)
+H(ax + by)(t) = \frac{1}{ax(t) + by(t)} \neq \frac{a}{x(t)} + \frac{b}{y(t)} = aHx(t) + bHy(t)
 \]
 in general.
 
-The property of linearity trivially generalises to more than two signals.  For example, if $x_1,\dots,x_k$ are signals and $a_1,\dots,a_k$ are complex numbers for some finite $k$, then
-\[
-H( a_1x_1 + \dots + a_k x_k ) = a_1 H(x_1) + \dots + a_k H(x_k).
-\]
+% The property of linearity trivially generalises to more than two signals.  For example, if $x_1,\dots,x_k$ are signals and $a_1,\dots,a_k$ are complex numbers for some finite $k$, then
+% \[
+% H( a_1x_1 + \dots + a_k x_k ) = a_1 H x_1 + \dots + a_k H x_k.
+%\]
 % With a little care, the prpoperty of linearity can be extended to infinite sums, that is
 % \[
 % H\left( \sum_{n=1}^\infty a_n x_n \right) = \sum_{n=1}^\infty H(a_n x_n)
@@ -692,7 +712,7 @@ H( a_1x_1 + \dots + a_k x_k ) = a_1 H(x_1) + \dots + a_k H(x_k).
     \node[dspmixer,dsp/label=right] (ymult) [below of=adder, node distance=1cm] {$b$};
     \node[dspsquare] (yH) [left of=ymult, node distance=1cm] {$H$};
     \node [dspnodeopen] (y) [left of=yH, node distance=1cm,label=above:$y$] {};
-    \node [dspnodeopen] (res) [right of=adder,label=above:$aH(x)+ bH(y)$] {};
+    \node [dspnodeopen] (res) [right of=adder,label=above:$aHx+ bHy$] {};
     \draw[dspconn] (x) -- (xH);
     \draw[dspconn] (xH) -- (xmult);
     \draw[dspconn] (xmult) -- (adder);
@@ -701,18 +721,18 @@ H( a_1x_1 + \dots + a_k x_k ) = a_1 H(x_1) + \dots + a_k H(x_k).
     \draw[dspconn] (ymult) -- (adder);
     \draw[dspflow] (adder) -- (res);
 \end{tikzpicture}
-\caption{If $H$ is a linear system the outputs of these two diagrams are the same signal, i.e. $H(ax+by) = aH(x)+bH(y)$.}\label{blockdiag:linearsystem}
+\caption{If $H$ is a linear system the outputs of these two diagrams are the same signal, i.e. $H(ax+by) = aHx+bHy$.}\label{blockdiag:linearsystem}
 \end{figure}
 
-A system $H$ is \term{time invariant} if
+Let $H \in X \to Y$ be a system with domain $X$ and range $Y$ being shift-invariant spaces of signals. A system $H$ is \term{shift-invariant} if
 \[
-H\big(T_\tau(x), t \big) = H(x,t-\tau)
+H T_\tau x(t) = Hx(t-\tau)
 \]
-for all signals $x$ and all time-shifts $\tau\in\reals$.  That is, a system is time-invariant if time shifting the input signal results in the same time-shift of the output signal.  Equivalently, $H$ is time-invariant if it commutes with the time-shifter $T_\tau$, that is, if
+for all signals $x \in X$ and all shifts $\tau\in\reals$.  That is, a system is shift-invariant if shifting the input signal results in the same shift of the output signal.  Equivalently, $H$ is shift-invariant if it commutes with the shifter $T_\tau$, that is, if
 \[
-H\big(T_\tau(x)\big) = T_\tau\big(H(x)\big)
+H T_\tau x = T_\tau H(x)
 \]
-for all $\tau \in \reals$ and all signals $x$.  Figure~\ref{blockdiag:timeinvariance} represents the property of time-invariance with a block diagram.  % A consequence of time-invariance is
+for all $\tau \in \reals$ and all signals $x \in X$.  Figure~\ref{blockdiag:timeinvariance} represents the property of shift-invariance with a block diagram.  % A consequence of time-invariance is
 % \begin{equation}\label{eq:timeinvvarchange}
 % H(x, t+\tau) = H\big(T_{-\tau}(x), t\big) = H\big(T_{-t}(x), \tau\big).
 % \end{equation}
@@ -739,7 +759,7 @@ for all $\tau \in \reals$ and all signals $x$.  Figure~\ref{blockdiag:timeinvari
   \draw[dspconn] (D) -- (H);
   \draw[dspflow] (H) -- (out);
 \end{tikzpicture}
-\caption{If $H$ is a time-invariant system the outputs of these two diagrams are the same signal, i.e. $H\big(T_\tau(x)\big) = T_\tau\big(H(x)\big)$.}\label{blockdiag:timeinvariance}
+\caption{If $H$ is a shift-invariant system the outputs of these two diagrams are the same signal, i.e. $HT_\tau x = T_\tau Hx$.}\label{blockdiag:timeinvariance}
 \end{figure}
 
 % Let $S$ be a set of signals.  A system $H$ is said to be \term{invertible} on $S$ if each signal $x \in S$ is mapped to a unique signal $H(x)$.  That is, for all signals $x,y \in S$ then $H(x) = H(y)$ if and only if $x = y$.  If a system $H$ is invertible on $S$ then there exists an inverse system $H^{-1}$ such that
@@ -757,7 +777,7 @@ for all $\tau \in \reals$ and all signals $x$.  Figure~\ref{blockdiag:timeinvari
 % % &= \int_{-1}^0(x(t)+c) dt - \int_0^1(x(t)+c) dt \\
 % % &= \int_{-1}^0 y(t) dt - \int_0^1y(t) dt = H(y,t),
 % % \end{align*}
-% For example, let $S$ be a any set of signals.  The time-shifter $T_\tau$ is invertible on $S$.  The inverse system is $T_{-\tau}$ since
+% For example, let $S$ be a any set of signals.  The shifter $T_\tau$ is invertible on $S$.  The inverse system is $T_{-\tau}$ since
 % \[
 % T_{-\tau}\big(T_\tau(x), t\big) = x(t - \tau + \tau) = x(t).
 % \]
