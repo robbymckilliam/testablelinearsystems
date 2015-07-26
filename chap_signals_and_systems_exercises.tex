@@ -194,7 +194,7 @@ but
 so the step function $u$ is not differentiable at $t = 0$.  A similar argument at $t=\tfrac{1}{2}$ or $t = -\tfrac{1}{2}$ shows that $\rect$ is not differentiable.
 \end{solution}
 
-\item \label{exer:L1L2linearshiftinvariant} Show that the set of absolutely integrable signals $L_1$ and the set of square integrable signals $L_2$ are linear space and that they are shift-invariant. 
+\item \label{exer:L1L2linearshiftinvariant} Show that the set of absolutely integrable signals $L^1$ and the set of square integrable signals $L^2$ are linear space and that they are shift-invariant. 
 
 \item \label{exer:periodicshiftinvariantnotlinear} Show that the set of periodic signals is shift-invariant, but is not a linear space.
 
@@ -208,7 +208,7 @@ so the step function $u$ is not differentiable at $t = 0$.  A similar argument a
 
 \item \label{excer:integratornotstable} Show that the integrator $I_a$ for any $a\in\reals$ is not  stable.
 \begin{solution}
-Put $M > 1$.  The time-shifted step function $u(t + a)$ is bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
+Put $M > 1$.  The shifted step function $u(t + a)$ is bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
 \[
 I_a\big(u(t+a)\big) = \int_{-a}^t u(\tau + a)d\tau = \begin{cases}
 \int_{-a}^t d\tau = t + a & t \geq -a \\
@@ -272,13 +272,13 @@ The signal $p_a$ and the response $D(p_a)$ are plotted below for $a = \tfrac{1}{
 \end{center}
 \end{solution}
 
-\item Show that the time-shifter is linear and time-invariant and that the time-scaler is linear, but not time invariant
+\item Show that the shifter $T_\tau$ is linear and shift-invariant and that the time-scaler is linear, but not time invariant
 \begin{solution}
-The time shifter $T_\tau$ is time invariant since
+The shifter $T_\tau$ is shift-invariant since
 \[
 T_k\big(T_\tau(x)\big) = T_k\big(x(t - \tau)\big) = x(t - \tau - k) = x(t - k - \tau) = T_\tau\big(x(t - k)\big) = T_\tau\big(T_k(x)\big) 
 \]
-for all signals $x$, that is, time shifters commute with time shifters.  The time shifter is linear because
+for all signals $x$, that is, shifters commute with shifters.  The shifter is linear because
 \[
 T_\tau(ax + by) = ax(t - \tau) + by(t - \tau) = a T_\tau(x) + b T_\tau(y).
 \]
@@ -286,7 +286,7 @@ The time-scaler $H(x) = x(\alpha t)$ is linear because
 \[
 H(ax + by) = ax(\alpha t) + by(\alpha t) = aH(x) + b H(y).
 \]
-The system is not time invariant because
+The system is not shift-invariant because
 \[
 H\big(T_\tau(x)\big) = H\big(x(t-\tau)\big) = x(\alpha t - \tau)
 \]
@@ -294,7 +294,7 @@ but
 \[
 T_\tau\big(H(x)\big) = T_\tau\big(x(\alpha t) \big) = x(\alpha(t - \tau)) = x( \alpha t - \alpha \tau ),
 \]
-and these signals are not equal in general.  For example consider the rectangular pulse $\Pi$.  With time scaling parameter $\alpha = 2$ and time shift $\tau = 1$,
+and these signals are not equal in general.  For example consider the rectangular pulse $\Pi$.  With time-scaling parameter $\alpha = 2$ and shift $\tau = 1$,
 \[
 H\big(T_1(\Pi)\big) = \Pi( 2 t - 1 ) \neq \Pi( 2t - 2 ) = T_1\big(H(\Pi)\big).
 \]
@@ -302,7 +302,7 @@ H\big(T_1(\Pi)\big) = \Pi( 2 t - 1 ) \neq \Pi( 2t - 2 ) = T_1\big(H(\Pi)\big).
 
 %\item \label{excer:difflLTI} Show that the $k$th differentiator $D^k(x,t) = \tfrac{d^k}{dt^k} x(t)$ is linear and time-invariant
 
-\item Show that the integrator $I_c$ with $c$ finite is linear, but not time-invariant.
+\item Show that the integrator $I_c$ with $c$ finite is linear, but not shift-invariant.
 \begin{solution}
 The system is linear because
 \begin{align*}
@@ -310,7 +310,7 @@ I_c(ax + by) &= \int_{-c}^t ax(\tau) + b y(\tau) d\tau \\
 &= a\int_{-c}^t x(\tau) d\tau + b \int_{-c}^t y(\tau) d\tau \\
 &= a I_c(x)  + b I_c(y).
 \end{align*}
-The system is not time invariant because
+The system is not shift-invariant because
 \[
 T_k\big(I_c(x)\big) = I_c(x,t-k) = \int_{-c}^{t-k} x(\tau) d\tau 
 \]
@@ -324,7 +324,7 @@ T_k\big(I_c(1)\big) = \int_{-c}^{t-k} d\tau =  t-k+c \neq t + c = \int_{-c-k}^{t
 \]
 \end{solution}
 
-\item Show that the integrator $I_\infty$ is linear and time invariant.
+\item Show that the integrator $I_\infty$ is linear and shift-invariant.
 \begin{solution}
 The system is linear because
 \begin{align*}
@@ -332,7 +332,7 @@ I_\infty(ax + by) &= \int_{-\infty}^t ax(\tau) + b y(\tau) d\tau \\
 &= a\int_{-\infty}^t x(\tau) d\tau + b \int_{-\infty}^t y(\tau) d\tau \\
 &= a I_\infty(x)  + b I_\infty(y).
 \end{align*}
-The system is time invariant because
+The system is shift-invariant because
 \[
 T_k\big(I_\infty(x)\big) = I_\infty(x,t-k) = \int_{-\infty}^{t-k} x(\tau) d\tau,
 \]
@@ -342,13 +342,13 @@ I_\infty\big(T_k(x)\big) = \int_{-\infty}^{t} x(\tau-k) d\tau = \int_{-\infty}^{
 \]
 \end{solution}
 
-\item State whether the system $H(x) = x + 1$ is linear, time-invariant,  stable.
+\item State whether the system $H(x) = x + 1$ is linear, shift-invariant,  stable.
 \begin{solution}
 It is not linear because for any signal $x$ and real number $a \neq 1$,
 \[
 H(ax) = ax + 1 \neq aH(x) = a\big( x + 1\big) = ax + a.
 \]
-It is time-invariant because
+It is shift-invariant because
 \[
 H\big(T_{\tau}(x)\big) = x(t - \tau) + 1 = T_\tau(x + 1) = T_\tau\big(H(x)\big).
 \]
@@ -358,13 +358,13 @@ H(x,t) = x(t) + 1 < M+1 \qquad \text{for all $t \in \reals$}.
 \]
 \end{solution}
 
-\item State whether the system $H(x) = 0$ is linear, time-invariant,  stable.
+\item State whether the system $H(x) = 0$ is linear, shift-invariant,  stable.
 \begin{solution}
 It is linear because
 \[
 H(ax + by) = 0 = aH(x) + bH(y) = 0.
 \]
-It is time-invariant because
+It is shift-invariant because
 \[
 H\big(T_{\tau}(x)\big)\big(t\big) = 0 = H(x,t-\tau).
 \]
@@ -374,13 +374,13 @@ H(x,t) = 0 < K \qquad \text{for all $t \in \reals$ and all signals $x$}.
 \]
 \end{solution}
 
-\item State whether the system $H(x) = 1$ is linear, time-invariant,  stable.
+\item State whether the system $H(x) = 1$ is linear, shift-invariant,  stable.
 \begin{solution}
 It is not linear because for any signal $x$ and real number $a \neq 1$
 \[
 H(ax) = 1 \neq  aH(x) = a.
 \]
-It is time-invariant because
+It is shift-invariant because
 \[
 H\big(T_{\tau}(x)\big) = 1 = T_\tau(1) = T_\tau\big(H(x)\big).
 \]
@@ -416,7 +416,7 @@ and so, $x$ is not absolutely integrable.
 % Start your notes here.
 %BLERG: TO DO
 % Potentially add to Section 1, definition of limit, continuity, absolute continuity, convergence of signal (pointwise and uniform), and continuity of systems (pointwise, uniform etc).
-% We assume/hypothesise that practical systems (electrical, mechanical etc)  are linear and time invariant.  This does not follow from the differential equations.  It's a hypothesis that should be tested like any other.  It's also likely necessary to assume continuity and single valuedness,   See Zemanian Chapter 10 - Passive Systems.  It might be worth writting something on this.
+% We assume/hypothesise that practical systems (electrical, mechanical etc)  are linear and shift invariant.  This does not follow from the differential equations.  It's a hypothesis that should be tested like any other.  It's also likely necessary to assume continuity and single valuedness,   See Zemanian Chapter 10 - Passive Systems.  It might be worth writting something on this.
 
 
 %%% Local Variables: 
