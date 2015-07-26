@@ -1,4 +1,4 @@
-This folder contains scripts for running the Tests in the signals and systems lecture notes.  The software runs on the java virtual machine and uses the Scala programing language (available at http://www.scala-lang.org/).  You will need a working java virtual machine and Scala 2.10.x installed.  Plotting is done with gnuplot (available at http://www.gnuplot.info/).
+This folder contains scripts for running the Tests in the signals and systems lecture notes.  The software runs on the java virtual machine and uses the Scala programing language (available at http://www.scala-lang.org/).  You will need a working java virtual machine and Scala 2.11.x installed.  Plotting is done with gnuplot (available at http://www.gnuplot.info/).
 
 List of directories:
 

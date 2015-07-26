@@ -16,7 +16,8 @@ Y = \left\{
 \text{Freeman} \\
 \text{Ryu} \\
 \text{Sephiroth} \\
-\text{Conker} 
+\text{Conker} \\
+\text{Ness}
 \end{array} 
 \right\}
 \]
@@ -28,13 +29,13 @@ f(x) = \begin{cases}
 \text{Sephiroth} & x = \text{Ness} \\
 \end{cases}
 \]
-The function $f$ maps Mario to Conker, Link to Sepiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$.
+The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The value of $f$ for input $x$ is denoted by $f(x)$ so, for example, $f(Mario) = Conker$ and $f(Link) = Sephiroth$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
 
-A \term{signal} is a function that maps each element from the set of real numbers $\reals$ to elements from the set of complex numbers $\complex$, that is, a function from $\reals \to \complex$.  For example
+A \term{signal} is a function that maps each element from the set of real numbers $\reals$ to elements from the set of complex numbers $\complex$, that is, a function from the set $\reals \to \complex$.  For example
 \[
 \sin( \pi t), \qquad \frac{1}{2} t^3, \qquad e^{-t^2}
 \]   
-all represent signals with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in voltage, current, position, and angle over time.  In these examples, the independent variable $t$ will represent time.  However, there is no fundamental reason for this and the techniques we devolop can be applied equally well when $t$ represents a quantity other than time.  Any example where this occurs is in image processing.
+all represent signals with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in voltage, current, position, and angle over time.  In these examples, the independent variable $t$ will represent time.  However, there is no fundamental reason for this and the techniques developed here can be applied equally well when $t$ represents a quantity other than time.  An example where this occurs is image processing.
 
 % If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
 % In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
@@ -55,7 +56,9 @@ all represent signals with $t \in \reals$.  These signals are plotted in Figure~
     %\draw[color=black] plot[id=x] function{1/x^2} 
     %    node[right] {$f(t) = t^{-2}$};
     \draw[smooth,color=black,thick] plot function{sin(3.14159265359*x)};
-    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    \htick{1} node[pos=0.5,left] {$1$};
+    \htick{-1} node[pos=0.5,right] {$-1$};
+    % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
     %    node[right] {$f(t) = \frac{1}{20} e^t$};
 \end{tikzpicture} 
 \;\;
@@ -64,6 +67,8 @@ all represent signals with $t \in \reals$.  These signals are plotted in Figure~
     \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
     \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\frac{1}{2}  t^3$};
     \draw[smooth,color=black,thick] plot function{x*x*x/2};
+    \htick{1} node[pos=0.5,right] {$1$};
+    \htick{-1} node[pos=0.5,right] {$-1$};
     %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
     %    node[right] {$f(t) = \frac{1}{20} e^t$};
 \end{tikzpicture} 
@@ -73,8 +78,10 @@ all represent signals with $t \in \reals$.  These signals are plotted in Figure~
     \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
     \draw[->] (0,-1.75) -- (0,1.75) node[left] {$e^{-t^2}$};
     \draw[smooth,color=black,thick] plot function{exp(-x*x)};
+    \htick{1} node[pos=0.5,above right] {$1$};
+    \htick{-1} node[pos=0.5,right] {$-1$};
 \end{tikzpicture}
-\caption{1-dimensional signals} \label{fig:signalsstart}
+\caption{Plots of three signals.} \label{fig:signalsstart}
 \end{figure}
 
 % \begin{figure}[tp]
@@ -208,37 +215,78 @@ A signal $x$ is \term{even} (or \term{symmetric}) if $x(t) = x(-t)$ for all $t \
 % x_o(t) = \tfrac{1}{2}\big( x(t) - x(-t) \big)
 % \] 
 % is an odd signal called the \term{odd part} of $x$.  For example, put $x(t) = e^{-t^2} + \sin(\pi t)$.  The even part of $x$ is $x_e(t) = e^{-t^2}$ and the odd part is $x_o(t) = \sin(\pi t)$.
-% A complex valued signal is \term{conjugate symmetric} if 
-% \[
-% x(t) = x(-t)^* \qquad \text{for all $t \in \reals$,}
-% \]
-% where $*$ denotes the complex conjugate of a complex number.  Equivalently, $x$ is conjugate symetric if its real part is an even signal and its imaginary part is an odd signal.  Conversely, $x$ is \term{conjugate antisymmetric} if  
-% \[
-% x(t) = -x(-t)^* \qquad \text{for all $t \in \reals$,}
-% \] 
-% that is, if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
+A signal $x$ is \term{conjugate symmetric} if $x(t) = x(-t)^*$ for all $t \in \reals$ $x$ and \term{conjugate antisymmetric} if $x(t) = -x(-t)^*$ for all $t \in \reals$, where $*$ denotes the complex conjugate of a complex number.  Equivalently, $x$ is conjugate symmetric if its real part $\Re(x)$ is an even signal and its imaginary part $\Im(x)$ is an odd signal and $x$ if conjugate antisymmetric if real part is odd and imaginary part even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
 
+A signal $x$ is \term{continuous at} $t \in \reals$ if
+\[
+\lim_{h \to 0} x(t + h) = \lim_{h \to 0} x(t-h)
+\]
+and $x$ is said to be \term{continuous} if it is continuous at all real numbers $t$.  The signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$ and $t^2$ are all continuous, but the step function $u$ is not continuous at zero because
+\[
+\lim_{h \to 0} u(t + h) = 1 \neq 0 = \lim_{h \to 0} u(t-h).
+\]
 A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
 \[
 \lim_{h \to 0} \frac{x(t + h) - x(t)}{h} = \lim_{h \to 0} \frac{x(t) - x(t-h)}{h} \qquad \text{for all $t \in \reals$}.
 \]
-Considered a function of $t$ the value of the limit above is called the derivative of $x$ at $t$ and is denoted by $\frac{d}{dt} x(t)$.  For example, the signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$ and $t^2$ are differentiable with derivatives
+Considered as a function of $t$ the limit above is called the derivative of $x$ at $t$ and is typically denoted by $\frac{d}{dt} x(t)$.  For example, the signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$ and $t^2$ are differentiable with derivatives
 \[
 \pi \cos(\pi t), \qquad \tfrac{3}{2} t^{2}, \qquad -2t e^{-t^2}, \qquad 2t,
 \] 
-but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}). 
+but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).
+
+
+\begin{figure}[tp]
+\centering
+\begin{tikzpicture}[domain=-1.4:1.4,samples=200]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\pi\cos( \pi t)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \begin{scope}[yscale=0.45]
+      \draw[smooth,color=black,thick] plot function{pi*cos(pi*x)};
+      \htick{pi} node[pos=0.5,right] {$\pi$};
+      \htick{-pi} node[pos=0.5,right] {$-\pi$};
+    \end{scope}
+      % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\;\;
+\begin{tikzpicture}[domain=-1.4:1.4]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$\frac{3}{2}  t^2$};
+    \begin{scope}[yscale=0.45]
+      \draw[smooth,color=black,thick] plot function{3*x*x/2};
+      \htick{3} node[pos=0.5,right] {$3$};
+      \htick{-3} node[pos=0.5,right] {$-3$};
+    \end{scope}
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\;\;
+\begin{tikzpicture}[domain=-1.4:1.4]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.75) -- (0,1.75) node[left] {$-2 t e^{-t^2}$};
+    \htick{1} node[pos=0.5,right] {$1$};
+    \htick{-1} node[pos=0.5,right] {$-1$};
+    \draw[smooth,color=black,thick] plot function{-2*x*exp(-x*x)};
+\end{tikzpicture}
+\caption{Derivatives of the signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$  from Figure~\ref{fig:signalsstart}.} \label{fig:signalsstart}
+\end{figure}
+
 
 A signal $x$ is \term{locally integrable} if
 \[
 \int_{a}^{b} \abs{x(t)} dt < \infty
 \]
 for all finite constants $a$ and $b$, where by $< \infty$ we mean that the integral evaluates to a finite number.  The signals $\sin(\pi t)$, $\tfrac{1}{2}t^3$, and $e^{-t^2}$ are all locally integrable.  An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  
-
 %In this course we always assume that signals are locally integrable, that is, signals are locally integrable functions mapping $\reals \to \reals$ or $\reals \to \complex$.  
 % Similarly two discrete time signals $x$ and $y$ are equal if $x(n) = y(n)$ for all $n \in \ints$.
 %BLERG: Potentially equality of signals could be defined using local integrability, i.e. two signals are equal if they are equal everywhere except a set of measure zero.
 %BERLG: Another relevant term is ``locally bounded'', i.e, a function is locally bounded if for each finite $a$ and $b$ there exists an $M$ such that $\abs{f(x) }< M$ for all $.  ACTUALLY THIS WONT BE GOOD, SINCE THEN FOURIER TRANSFORMS WONT BE SIGNALS.  It's still a useful concept potentially.  
-
 A signal $x$ is \term{absolutely integrable} if
 \begin{equation}\label{eq:l1normdefncontinuous}
 \|x\|_1 = \int_{-\infty}^{\infty} \abs{x(t)} dt < \infty.
@@ -256,7 +304,7 @@ It is common to denote the set of absolutely integrable signals by $L^1$ or $L^1
 \[
 \|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt < \infty.
 \]
-The real number $\|x\|_2$ is called the \term{$L^2$-norm} of $x$.  Square integrable signals are also called \term{energy signals}, and the squared $L^2$-norm $\|x\|_2^2$ is called the \term{energy} of $x$. For example $\sin( \pi t)$ and $\tfrac{1}{2}t^3$ are not energy signals, but $e^{-t^2}$ is (Exercise~\ref{excer:energyexpchangevar}).  The set of square integrable signals is often denoted by $L^2$ or $L^2(\reals)$.  %A discrete-time signal $x$ is an \term{energy signal} if it is \term{square summable}, that is, if
+The real number $\|x\|_2$ is called the \term{$L^2$-norm} of $x$.  Square integrable signals are also called \term{energy signals}, and the squared $L^2$-norm $\|x\|_2^2$ is also called the \term{energy} of $x$. For example $\sin( \pi t)$ and $\tfrac{1}{2}t^3$ are not energy signals, but $e^{-t^2}$ is.  It has energy $\|e^{-t^2}\|^2 = \sqrt{\pi}$ (Exercise~\ref{excer:energyexpchangevar}). The set of square integrable signals is often denoted by $L^2$ or $L^2(\reals)$.  %A discrete-time signal $x$ is an \term{energy signal} if it is \term{square summable}, that is, if
 % \[
 % \|x\|_2 = \sum_{n\in\ints} \abs{x(n)}^2
 % \]
@@ -269,7 +317,7 @@ z(t) = \begin{cases}
 0 & t \leq 0
 \end{cases}
 \]
-are not equal pointwise because they are not equal at $t=0$, that is, $u(0) = 1$ and $z(0) = 0$. %although $\rect(t)$ does equal $\rect(-t)$ for all other values of $t \in \reals$.  
+are not equal pointwise because they are not equal at $t=0$ since $u(0) = 1$ and $z(0) = 0$. %although $\rect(t)$ does equal $\rect(-t)$ for all other values of $t \in \reals$.  
 It is useful to identify signals that differ only at isolated points and for this we use a weaker definition of equality.  We say that two signals $x$ and $y$ are equal \term{almost everywhere} if
 \[
 \int_{a}^b \abs{ x(t) - y(t) } dt = 0
@@ -307,15 +355,6 @@ to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This con
 
 %BLERG: It's potentially a decent idea to make signals have contain there limits from the left, i.e. be continuous from the left.  This works well if you define the differentiator, integrator etc in the right way.  Makes sense of impulse response etc. 
 
-\section{Spaces of signals}\label{sec:spaces-signals}
-
-\todo{Abstract properties of vector space}
-
-\todo{Examples: even/odd signals, periodic signals, differentiable signal, shift spaces, absolutely integrable and square integrable signals etc}
-
-The set of all differentiable signals forms a linear space because if $x$ and $y$ are differentiable signals then the linear combination $ax + by$ is differentiable.  The derivative is $a \frac{d}{dt} x + b \frac{d}{dt} y$.
-
-\todo{Normed vector spaces, $L_1$, $L_2$}
 
 \section{Systems (functions of signals)}\label{sec:syst-funct-sign}
 
@@ -378,12 +417,10 @@ The circuit can be considered as a system mapping the signal $x$ representing th
 % \caption{A \term{voltage divider} circuit including input resistance $R_i$ and output resistance $R_o$.} \label{circ:voltagedividerinpout}
 % \end{figure}
 
-We denote systems with capital letters such as $H$ and $G$.  A system $H$ is a function that maps a signal $x$ to another signal denoted $H(x)$.  We call $x$ the \term{input signal} and $H(x)$ the \term{output signal} or the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$
-%\footnote{It is customary to drop the brackets only where $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  We deal primarily with linear systems in this text and so droping the brackets will rarely be a Faux Pas.}.  
-The value of the output signal $Hx$ at $t$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.  %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
-It is sometimes useful to depict systems with a block diagram.  Figure~\ref{fig:blockdiagramH1} is a simple block diagram showing the input and output signals of a system $H$.
-
-The electric circuit in Figure~\ref{circ:voltagedivider} corresponds with the system
+We denote systems with capital letters such as $H$ and $G$.  A system $H$ is a function that maps a signal $x$ to another signal denoted $H(x)$.  We call $x$ the \term{input signal} and $H(x)$ the \term{output signal} or the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$.  
+\footnote{It is customary to drop the brackets only where $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  We deal primarily with linear systems in this text and so dropping the brackets will rarely be a Faux Pas.}.  
+The value of the output signal $Hx$ at $t$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.   %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
+It is sometimes useful to depict systems with a block diagram as in Figure~\ref{fig:blockdiagramH1}.  The electric circuit in Figure~\ref{circ:voltagedivider} corresponds with the system
 \[
 Hx = \frac{R_2}{R_1 + R_2} x = y.
 \]
@@ -498,7 +535,7 @@ In this text, the domain used for a given system will usually be obvious from th
     \node[shift={(-3,2.2)}] {$T_{-3}(x)$};
     \vtick{-3} node[pos=0.5,below] {$-3$};
   \end{tikzpicture}
-  \caption{Time-shifter system $T_{1.5}x(t) = x(t - 1.5)$ and $T_{-3}x(t) = x(t + 3)$ acting on the signal $x(t) = e^{-t^2}$.} \label{fig:timeshifter}
+  \caption{Shifter systems $T_{1.5}x(t) = x(t - 1.5)$ and $T_{-3}x(t) = x(t + 3)$ acting on the signal $x(t) = e^{-t^2}$.} \label{fig:timeshifter}
 \end{figure}
 
 \begin{figure}[p]
@@ -520,7 +557,7 @@ In this text, the domain used for a given system will usually be obvious from th
     \node[shift={(4,2.2)}] {$\alpha=1/2$};
     \vtick{4} node[pos=0.5,below] {$4$};
   \end{tikzpicture}
-  \caption{Scaler system $Hx(t) = x(\alpha t)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.} \label{fig:timescaler}
+  \caption{Time-scaler system $Hx(t) = x(\alpha t)$ for $\alpha=-1,\tfrac{1}{2}, 1$ and $2$ acting on the signal $x(t) = e^{-(t-2)^2}$.} \label{fig:timescaler}
 \end{figure}
 
 
@@ -585,7 +622,7 @@ that returns the derivative of the input signal.  We also define a $k$th differe
 D^k x(t) = \frac{d^k}{dt^k} x(t)
 \]
 that returns the $k$th derivative of the input signal.  %BLERG: existance, special definition at discontinuities?
-We must be carefull when choosing a domain for the differentiator.  For example, consider the step function $u(t)$ from~\eqref{eq:stepfunction}.  We cannot differentiate $u(t)$ at $t = 0$ because
+We must be careful when choosing a domain for the differentiator.  For example, consider the step function $u(t)$ from~\eqref{eq:stepfunction}.  We cannot differentiate $u(t)$ at $t = 0$ because
 \[
 D u(0) = \lim_{h \to 0} \frac{u(0) - u(-h)}{h} = \lim_{h \to 0} \frac{1}{h} 
 \]
@@ -603,6 +640,81 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 \end{cases}
 \]
 Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ would not contain the signal $x(t) = t$.  As described in Section~\ref{sec:syst-funct-sign} example of domains for $I_\infty$ are the set of absolutely integrable signals $L_1$ and the set of signals that are both right sided and locally integrable.
+
+
+\section{Subsets of signals}\label{sec:spaces-signals}
+
+The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems we describe two important types of subsets.  These are the \term{linear spaces} and those subsets with the property of \term{shift-invariance}.  
+
+Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a$ a complex number we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$.  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
+\[
+ax + by
+\]
+is called a \term{linear combination} of $x$ and $y$.  %Figure~\ref{fig:multiandaddofsignals} plots examples of 
+
+Let $X$ be a set of signals.  The set $X$ is called a \term{linear space} (or \term{vector space}) if for all signals $x$ and $y$ from $X$ and all complex numbers $a$ and $b$ the signal formed by the linear combination $ax + by$ is also in $X$.  The set of all signals $\reals \to \complex$ is a linear space.  Another example is the set of differentiable signals, because, if $x$ and $y$ are differentiable, then the linear combination $ax + by$ is differentiable.  The derivative is $a \frac{d}{dt} x + b \frac{d}{dt} y$.  The set of even signals is another example of a linear space because if $x$ and $y$ are even then
+\[
+ax(t) + by(t) = a x(-t) + b y(-t)
+\]
+and so the linear combination $ax + by$ is even.  The set of absolutely integrable signals $L_1$ and the set of square integrable signals $L_2$ are examples of linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is an example that is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
+
+A set of signals $X$ is \term{shift-invariant} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $T_\tau x$ is also in $X$.  The set of differentiable signals is shift invariant because, if $x$ is differentiable, then the signal $T_\tau x(t) = x(t-\tau)$ is differentiable.  The set of periodic signals is shift invariant (Exercise~\ref{exer:periodicshiftinvariantnotlinear}) as are $L_1$ and $L_2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift invariant.
+
+
+\begin{figure}[tp]
+\centering
+\def\scalex{1.5}
+\def\scaley{1.5}
+\begin{tikzpicture}[domain=-1.4:1.4,samples=200, yscale=\scaley,xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.25) -- (0,2.3) node[left] {};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+      \draw[smooth,color=black,thick] plot function{exp(-x*x)};
+      \draw[smooth,color=black,thick] plot function{-0.5*exp(-x*x)};
+      \draw[smooth,color=black,thick] plot function{2*exp(-x*x)};
+      \begin{scope}[xscale=1/\scalex]
+%        \htick{1} node[pos=0.5,above right] {$1$};
+        %\htick{-1.25} node[pos=0.5,below right] {$-\tfrac{5}{4}$};
+      \end{scope}
+      \node at (0.5,1.95) {$2x$};
+      \node at (-0.3,1.15) {$x$};
+      \node at (1,-0.5) {$-\tfrac{1}{2}x$};
+      % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\;\;
+\begin{tikzpicture}[domain=-1.4:1.4, xscale=\scalex, yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.25) -- (0,2.3) node[left] {};
+%    \begin{scope}[yscale=0.45]
+      \draw[smooth,color=black,thick] plot function{exp(-x*x)};
+      \draw[smooth,color=black,thick] plot function{sin(pi*x)};
+      \draw[smooth,color=black,thick] plot function{exp(-x*x) + sin(pi*x)};
+      \begin{scope}[xscale=1/\scalex]
+%        \htick{1} node[pos=0.5,right] {$1$};
+%        \htick{-1} node[pos=0.5,right] {$-1$};
+      \end{scope}
+      \node at (-1.0,-0.7) {$y$};
+      \node at (-0.7,0.8) {$x$};
+      \node at (1,1.6) {$x+y$};
+%    \end{scope}
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\caption{The signal $x(t) = e^{-t^2}$ and the signals $2x$ and $-\tfrac{1}{2} x$ (left).  The signals $x(t) = e^{-t^2}$ and $y(t) = \sin(\pi t)$ and the signal $x + y$.} \label{fig:multiandaddofsignals}
+\end{figure}
+
+% \todo{Abstract properties of vector space}
+
+% \todo{Examples: even/odd signals, periodic signals, differentiable signal, shift spaces, absolutely integrable and square integrable signals etc}
+
+% The set of all differentiable signals forms a linear space because if $x$ and $y$ are differentiable signals 
+
+% \todo{Normed vector spaces, $L_1$, $L_2$}
+
 
 \section{Properties of systems}\label{sec:properties-systems}
 
