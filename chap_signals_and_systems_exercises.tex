@@ -221,17 +221,41 @@ Let $x, y \in L^1$ and $a, b \in \complex$.  Now
 &= a \|x\|_1 + b\|y\|_1 < \infty
 \end{align*}
 and so $ax + by \in L_1$ and $L_1$ is a linear space.  Also
-\[
-\|T_\tau x\|_1 = \int_{-\infty}^\infty \abs{ T_\tau x(t) } dt = \int_{-\infty}^\infty x(t - \tau) dt = \int_{-\infty}^\infty x(t) dt = \|x\|_1
-\]
+\begin{align*}
+\|T_\tau x\|_1 &= \int_{-\infty}^\infty \abs{ T_\tau x(t) } dt \\
+&= \int_{-\infty}^\infty \abs{x(t - \tau)} dt \\
+&= \int_{-\infty}^\infty \abs{x(k)} dk \qquad \text{change variable $k = t - \tau$}
+&= \|x\|_1 < \infty
+\end{align*}
 and so $L_1$ is shift-invariant.
+
+Now
+\begin{align*}
+\|a x + b y\|_2^2 &= \int_{-\infty}^\infty \abs{ax(t) + by(t)}^2 dt \\
+& \int_{-\infty}^\infty \abs{a x(t)}^2 + \abs{ b y(t)}}^2 + 2 \Re\big( a^* x(t)^* b y(t) \big) dt
+\end{align*}
+where $*$ denotes the complex cojugate and $\Re$ denotes the real part of a complex number.  Now
+\[
+\Re\big( a^* x(t)^* b y(t) \big) \leq \abs{a x(t)} \abs{b y(t)} \leq \max(\abs{a x(t)}^2, \abs{b y(t)}^2) \leq \abs{a x(t)}^2 + \abs{b y(t)}^2
+\]
+and so
+\begin{align*}
+\|a x + b y\|_2^2 &\leq \int_{-\infty}^\infty 3\abs{a x(t)}^2 + 3\abs{ b y(t)}}^2 dt \\
+&= \int_{-\infty}^\infty 3\abs{a}^2\abs{x(t)}^2 + 3\abs{b}^2\abs{ y(t)}}^2 dt \\
+&= 3 \abs{a}^2 \|x\|_2^2 + 3 \abs{b}^2 \|y\|_2^2 < \infty
+\end{align*}
+and $L_2$ is thus a linear space.  Also
+\[
+\|T_\tau x\|_2^2 = \int_{-\infty}^\infty \abs{ T_\tau x(t) }^2 dt = \int_{-\infty}^\infty \abs{x(t - \tau)}^2 dt = \int_{-\infty}^\infty \abs{x(t)}^2 dt = \|x\|_2^2 < \infty
+\]
+and so $L_2$ is shift-invariant.
 \end{solution}
 
 \item \label{exer:periodicshiftinvariantnotlinear} Show that the set of periodic signals is shift-invariant, but is not a linear space.
 
 \item \label{exer:boundedlinearshiftinvar} Show that the set of bounded signals is shift-invariant and is a linear space.
 
-\item \label{exer:boundconstantnotlinear} Let $M > 0$ be a fixed real number. Show that the set of signals bounded below $M$ is shift invariant, but is not a linear space. 
+\item \label{exer:boundconstantnotlinear} Let $K > 0$ be a fixed real number. Show that the set of signals bounded below $K$ is shift invariant, but is not a linear space. 
 
 \item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant.
 
