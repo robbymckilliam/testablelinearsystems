@@ -64,13 +64,13 @@
 
 
 %Let $H$ be a system and let $y = H(x)$ be the response of the system to input signal $x$.  
-Systems of particular interest in this text are those where the input signal $x$ and output signal $y$ are related by a linear differential equation with constant coefficients, that is, an equation of the form
+Systems of particular interest are those where the input signal $x$ and output signal $y$ are related by a linear differential equation with constant coefficients, that is, an equation of the form
 \[
 \sum_{\ell=0}^{m} a_\ell \frac{d^\ell}{d t^\ell} x(t) = \sum_{\ell=0}^{k} b_\ell \frac{d^\ell}{d t^\ell} y(t),
 \]
 where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex numbers.  In what follows we use the differentiator system $D$ rather than the notation $\frac{d}{d t}$ to represent differentiation.  To represent the $\ell$th derivative we write $D^\ell$ instead of  $\frac{d^\ell}{d t^\ell}$.  Using this notation the differential equation above is
 \begin{equation}\label{eq:diffequform}
-\sum_{\ell=0}^{m} a_\ell D^\ell(x) = \sum_{\ell=0}^{k} b_\ell D^\ell(y). 
+\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y. 
 \end{equation}
 %To keep the notation clean we do not usually write the argument $(t)$ for a signal $x$.
 
@@ -80,25 +80,25 @@ x = y + v_R,
 \]
 and the current satisfies both
 \[
-v_R = R i \qquad \text{and} \qquad i = C D(y).
+v_R = R i \qquad \text{and} \qquad i = C Dy.
 \]
 Combining these equations,
 \begin{equation}\label{eq:RCdiffeq}
-x = y + RC D(y)
+x = y + RC Dy
 \end{equation}
 that is in the form of~\eqref{eq:diffequform}.
 
-As another example, consider the mass-spring-damper in Figure~\ref{mech:massspring1}.  A force represented by the signal $f$ is externally applied to the mass, and the position of the mass is represented by the signal $p$.  The spring exerts force $-K p$ that is proportional to the position of the mass, and the damper exerts force $-B D(p)$ that is proportional to the velocity of the mass.  The cumulative force exerted on the mass is
+As another example, consider the mass-spring-damper in Figure~\ref{mech:massspring1}.  A force represented by the signal $f$ is externally applied to the mass, and the position of the mass is represented by the signal $p$.  The spring exerts force $-K p$ that is proportional to the position of the mass, and the damper exerts force $-B Dp$ that is proportional to the velocity of the mass.  The cumulative force exerted on the mass is
 \[
-f_m = f - K p - B D(p)
+f_m = f - K p - B Dp
 \]
-and by Newton's law the acceleration of the mass $D^2(p)$ satisfies
+and by Newton's law the acceleration of the mass $D^2p$ satisfies
 \[
-M D^2(p) = f_m = f - K p - B D(p).
+M D^2 p = f_m = f - K p - B Dp.
 \]
 We obtain the differential equation
 \begin{equation}\label{eq:diffeqmasspringdamper}
-f = K p + B D(p) + M D^2(p)
+f = K p + B Dp + M D^2p
 \end{equation}
 that is in the form of~\eqref{eq:diffequform} if we put $x = f$ and $y = p$.   Given $p$ we can readily solve for the corresponding force $f$.  As a concrete example, let the spring constant, damping constant and mass be $K=B=M=1$.  If the position satisfies $p(t) = e^{-t^2}$, then the corresponding force satisfies
 \[
