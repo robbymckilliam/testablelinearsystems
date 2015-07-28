@@ -232,7 +232,7 @@ and so $L_1$ is shift-invariant.
 Now
 \begin{align*}
 \|a x + b y\|_2^2 &= \int_{-\infty}^\infty \abs{ax(t) + by(t)}^2 dt \\
-& \int_{-\infty}^\infty \abs{a x(t)}^2 + \abs{ b y(t)}}^2 + 2 \Re\big( a^* x(t)^* b y(t) \big) dt
+& \int_{-\infty}^\infty \abs{a x(t)}^2 + \abs{ b y(t)}^2 + 2 \Re\big( a^* x(t)^* b y(t) \big) dt
 \end{align*}
 where $*$ denotes the complex cojugate and $\Re$ denotes the real part of a complex number.  Now
 \[
@@ -240,8 +240,8 @@ where $*$ denotes the complex cojugate and $\Re$ denotes the real part of a comp
 \]
 and so
 \begin{align*}
-\|a x + b y\|_2^2 &\leq \int_{-\infty}^\infty 3\abs{a x(t)}^2 + 3\abs{ b y(t)}}^2 dt \\
-&= \int_{-\infty}^\infty 3\abs{a}^2\abs{x(t)}^2 + 3\abs{b}^2\abs{ y(t)}}^2 dt \\
+\|a x + b y\|_2^2 &\leq \int_{-\infty}^\infty 3\abs{a x(t)}^2 + 3\abs{ b y(t)}^2 dt \\
+&= \int_{-\infty}^\infty 3\abs{a}^2\abs{x(t)}^2 + 3\abs{b}^2\abs{ y(t)}^2 dt \\
 &= 3 \abs{a}^2 \|x\|_2^2 + 3 \abs{b}^2 \|y\|_2^2 < \infty
 \end{align*}
 and $L_2$ is thus a linear space.  Also
