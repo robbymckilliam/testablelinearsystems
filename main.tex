@@ -24,7 +24,7 @@
 
 %turn animations on/off
 \newif\ifanimations %default is off
-%\animationstrue %uncomment to turn animations on.
+\animationstrue %uncomment to turn animations on.
 \ifanimations
 \newcommand{\defaultframerate}{16}
 \newcommand{\defaultanimation}[1]{\animategraphics[autoplay,loop]{\defaultframerate}{#1}{}{}}
@@ -130,7 +130,7 @@ cross/.default={1pt}
 
 %turn excersize solutions on/off
 \newif\ifsolutions %default is off
-%\solutionstrue %uncomment to turn solutions on.
+\solutionstrue %uncomment to turn solutions on.
 
 \usepackage{comment}
 \ifsolutions
@@ -246,14 +246,13 @@ cross/.default={1pt}
  \input{chap_signals_and_systems_exercises.tex}
 \fi
 
-%\clearpage
-% \chapter{Systems modelled by differential equations}\label{sec:syst-modell-diff}
-% \ifsolutions
-%  \input{chap_differential_equations_exercises.tex}
-% \else
-%  \input{chap_differential_equations.tex}
-%  \input{chap_differential_equations_exercises.tex}
-% \fi
+\chapter{Systems modelled by differential equations}\label{sec:syst-modell-diff}
+\ifsolutions
+ \input{chap_differential_equations_exercises.tex}
+\else
+ \input{chap_differential_equations.tex}
+ \input{chap_differential_equations_exercises.tex}
+\fi
 
 % \chapter{Linear time invariant systems}\label{sec:prop-line-time}
 % \ifsolutions
@@ -263,7 +262,6 @@ cross/.default={1pt}
 %  \input{chap_linear_time_invariant_systems_exercises.tex}
 % \fi
 
-% %\clearpage
 % \chapter{The Laplace transform} \label{sec:laplace-transform}
 % \ifsolutions
 %  \input{chap_laplace_transform_exercises.tex}

@@ -63,14 +63,14 @@
 \end{figure}
 
 
-%Let $H$ be a system and let $y = H(x)$ be the response of the system to input signal $x$.  
-Systems of particular interest in this text are those where the input signal $x$ and output signal $y$ are related by a linear differential equation with constant coefficients, that is, an equation of the form
+%Let $H$ be a system and let $y = Hx$ be the response of the system to input signal $x$.  
+Systems of particular interest are those where the input signal $x$ and output signal $y$ are related by a linear differential equation with constant coefficients, that is, an equation of the form
 \[
 \sum_{\ell=0}^{m} a_\ell \frac{d^\ell}{d t^\ell} x(t) = \sum_{\ell=0}^{k} b_\ell \frac{d^\ell}{d t^\ell} y(t),
 \]
 where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex numbers.  In what follows we use the differentiator system $D$ rather than the notation $\frac{d}{d t}$ to represent differentiation.  To represent the $\ell$th derivative we write $D^\ell$ instead of  $\frac{d^\ell}{d t^\ell}$.  Using this notation the differential equation above is
 \begin{equation}\label{eq:diffequform}
-\sum_{\ell=0}^{m} a_\ell D^\ell(x) = \sum_{\ell=0}^{k} b_\ell D^\ell(y). 
+\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y. 
 \end{equation}
 %To keep the notation clean we do not usually write the argument $(t)$ for a signal $x$.
 
@@ -80,25 +80,25 @@ x = y + v_R,
 \]
 and the current satisfies both
 \[
-v_R = R i \qquad \text{and} \qquad i = C D(y).
+v_R = R i \qquad \text{and} \qquad i = C Dy.
 \]
 Combining these equations,
 \begin{equation}\label{eq:RCdiffeq}
-x = y + RC D(y)
+x = y + RC Dy
 \end{equation}
 that is in the form of~\eqref{eq:diffequform}.
 
-As another example, consider the mass-spring-damper in Figure~\ref{mech:massspring1}.  A force represented by the signal $f$ is externally applied to the mass, and the position of the mass is represented by the signal $p$.  The spring exerts force $-K p$ that is proportional to the position of the mass, and the damper exerts force $-B D(p)$ that is proportional to the velocity of the mass.  The cumulative force exerted on the mass is
+As another example, consider the mass-spring-damper in Figure~\ref{mech:massspring1}.  A force represented by the signal $f$ is externally applied to the mass, and the position of the mass is represented by the signal $p$.  The spring exerts force $-K p$ that is proportional to the position of the mass, and the damper exerts force $-B Dp$ that is proportional to the velocity of the mass.  The cumulative force exerted on the mass is
 \[
-f_m = f - K p - B D(p)
+f_m = f - K p - B Dp
 \]
-and by Newton's law the acceleration of the mass $D^2(p)$ satisfies
+and by Newton's law the acceleration of the mass $D^2p$ satisfies
 \[
-M D^2(p) = f_m = f - K p - B D(p).
+M D^2 p = f_m = f - K p - B Dp.
 \]
 We obtain the differential equation
 \begin{equation}\label{eq:diffeqmasspringdamper}
-f = K p + B D(p) + M D^2(p)
+f = K p + B Dp + M D^2p
 \end{equation}
 that is in the form of~\eqref{eq:diffequform} if we put $x = f$ and $y = p$.   Given $p$ we can readily solve for the corresponding force $f$.  As a concrete example, let the spring constant, damping constant and mass be $K=B=M=1$.  If the position satisfies $p(t) = e^{-t^2}$, then the corresponding force satisfies
 \[
@@ -115,7 +115,7 @@ f(t) = \Pi(t - \tfrac{1}{2}) = \begin{cases}
 \]
 What is the corresponding position signal $p$?  We are not yet ready to answer this question, but will be later (Exercise~\ref{exer:massspringdamperrect}).  % We posed this question and others in Section~\ref{sec:syst-modell-diff}.  Imagine we could find a system $H^{-1}$ that \emph{inverts} $H$.  That is, a system $H^{-1}$ with the property
 % \[
-% x = T_0(x) = H^{-1}\big( H(x) \big).
+% x = T_0x = H^{-1}\big( Hx \big).
 % \]
 % Given $H^{-1}$ we could then find $p$ by applying $H^{-1}$ to $f$ because
 % \[
@@ -130,9 +130,9 @@ What is the corresponding position signal $p$?  We are not yet ready to answer t
 \caption{A solution to the mass-spring-damper system with $K=B=M=1$.  The position is $p(t) = e^{-t^2}$ with corresponding force $f(t) = e^{-t^2} (4 t^2-2 t-1)$.} \label{fig:masspringdampersol1}
 \end{figure}
 
-In both the mechanical mass-spring-damper system in Figure~\ref{mech:massspring1} and the electrical RC circuit in Figure~\ref{circ:seriesRC1} we obtain a differential equation relating the input signal $x$ with the output signal $y$.  The equations do not specify the output signal $y$ explicitly in terms of the input signal $x$, that is, they do not explicitly define a system $H$ such $y = H(x)$.  As they are, the differential equations do not provide as much information about the behaviour of the system as we would like.  For example, is the system stable?
+In both the mechanical mass-spring-damper system in Figure~\ref{mech:massspring1} and the electrical RC circuit in Figure~\ref{circ:seriesRC1} we obtain a differential equation relating the input signal $x$ with the output signal $y$.  The equations do not specify the output signal $y$ explicitly in terms of the input signal $x$, that is, they do not explicitly define a system $H$ such $y = Hx$.  As they are, the differential equations do not provide as much information about the behaviour of the system as we would like.  For example, is the system stable?
 %Is it invertible?  
-We will be able to obtain much more information about these systems when the \term{Laplace transform} is introduced in Chapter~\ref{sec:laplace-transform}.
+Much more information about these systems will be obtained when the \term{Laplace transform} is introduced in Chapter~\ref{sec:laplace-transform}.
 %The , described , is a useful tool for obtaining more information about these systems.  %A key property enabling the Laplace transform is that differential equations of the form~\eqref{eq:diffequform} describe systems that are linear and time-invariant.% (Exercise~\ref{excer:differeqarelti}).  %To see this let $x_1$, $y_1$ and $x_2$,$y_2$ be solutions of an equation in the form~\eqref{eq:diffequform}.  For any real numbers $c$ and $d$,
 % \[
 % c \sum_{\ell=0}^{m} a_\ell D^\ell(x_1) = c \sum_{\ell=0}^{k} b_\ell D^\ell(y_1)
@@ -142,26 +142,26 @@ We will be able to obtain much more information about these systems when the \te
 % c \sum_{\ell=0}^{m} a_\ell D^\ell(x_1) = c \sum_{\ell=0}^{k} b_\ell D^\ell(y_1)
 % \]
 %We further study linear, time-invariant systems in Section~\ref{sec:prop-line-time}.  
-The remainder of this chapter details the construction of differential equations that model various mechanical, electrical, and electro-mechanical systems.  We will use the systems constructed here as examples throughout the course.
+The remainder of this chapter details the construction of differential equations that model various mechanical, electrical, and electro-mechanical systems.  The systems constructed will be used as examples throughout the text.
 
 \section{Passive electrical circuits}
 
 \term{Passive electrical circuits} require no sources of power other than the input signal itself.  For example, the voltage divider in Figure~\ref{circ:voltagedivider} and the RC circuit in Figure~\ref{circ:seriesRC1} are passive circuits.  Another common passive electrical circuit is the resistor, capacitor and inductor (RLC) circuit depicted in Figure~\ref{circ:seriesRLC1}.  In this circuit we let the output signal $y$ be the voltage over the resistor.  Let $v_C$ represent the voltage over the capacitor and $v_L$ the voltage over the inductor and let $i$ be the current.  
 We have
 \[
-y = Ri, \qquad i = C D(v_C), \qquad v_L = L D(i),
+y = Ri, \qquad i = C D v_C, \qquad v_L = L D i,
 \]
 leading to the following relationships between $y$, $v_C$ and $v_L$,
 \[
-y = R C D(v_C), \qquad R v_L = L D(y).
+y = R C D v_C , \qquad R v_L = L Dy.
 \]
 Kirchhoff's voltage law gives $x = y + v_C + v_L$ and by differentiating both sides
 \[
-D(x) = D(y) + D(v_C) + D(v_L).
+Dx = Dy + D v_C  + D v_L.
 \]
 Substituting the equations relating $y$, $v_C$ and $v_L$ leads to
 \begin{equation}\label{eq:RLCdiffeq}
-RC D(x) = y+ RC D(y) + LC D^2(y).
+RC Dx = y+ RC Dy + LC D^2y.
 \end{equation}
 We can similarly find equations relating the input voltage with $v_C$ and $v_L$.
 
@@ -409,19 +409,19 @@ Each of $\tilde{y}$, $\tilde{x}$ and $-\tfrac{11}{6}\tilde{x}$ are plotted in Fi
 
 We now consider another circuit consisting of an operational amplifier, two resistors and two capacitors depicted in Figure~\ref{elec:activeRC}.  Assuming an ideal operational amplifier, the voltage at the inverting terminal is zero because the non-inverting terminal is connected to ground.  Thus, the voltage over capacitor $C_2$ and resistor $R_2$ is equal to $y$ and, by Kirchoff's current law,
 \[
-i = \frac{y}{R_2} + C_2 D(y).
+i = \frac{y}{R_2} + C_2 Dy.
 \]
 Similarly, since no current flows through the inverting terminal,
 \[
-i = -\frac{x}{R_1} - C_1 D(x).
+i = -\frac{x}{R_1} - C_1 Dx.
 \]
 Combining these equations yields
 \begin{equation}\label{eq:twoaparrarrelRCactive}
--\frac{x}{R_1} - C_1 D(x) = \frac{y}{R_2} + C_2 D(y).
+-\frac{x}{R_1} - C_1 Dx = \frac{y}{R_2} + C_2 Dy.
 \end{equation}
 Observe the similarity between this equation and that for the passive RC circuit~\eqref{eq:RCdiffeq} when $R_1 = R_2$ and $C_1 = 0$ (an open circuit).  In this case
 \begin{equation}\label{eq:activeRC}
-x = - y - R_1 C_2 D(y).
+x = - y - R_1 C_2 Dy.
 \end{equation}
 We call this the \term{active RC circuit}.  This circuit is tested in Test~\ref{test:activeRCtest}.
 
@@ -440,13 +440,13 @@ with $f_1 = 500$ and $f_2 = 1333$ is passed through the circuit.  As in previous
 \]
 The derivative of the sinc function is
 \begin{equation}\label{eq:sincderivative}
-D(\sinc,t) = \frac{1}{\pi t^2} \big( \pi t \cos(\pi t) - \sin(\pi t) \big),
+D\sinc(t) = \frac{d}{dt} \sinc(t) = \frac{1}{\pi t^2} \big( \pi t \cos(\pi t) - \sin(\pi t) \big),
 \end{equation}
 and so,
 \begin{equation}\label{eq:Dtildey}
-D(\tilde{y},t) = \frac{d}{dt}\left(\sum_{\ell=1}^L y_\ell \sinc(F t - \ell) \right) = F \sum_{\ell=1}^L y_\ell D(\sinc,F t -\ell).
+D \tilde{y}(t) = \frac{d}{dt} \left(\sum_{\ell=1}^L y_\ell \sinc(F t - \ell) \right) = F \sum_{\ell=1}^L y_\ell D \sinc(F t -\ell).
 \end{equation}
-Each of $\tilde{y}$, $\tilde{x}$ and $-\tilde{y} - \tfrac{27}{10^5} D(\tilde{y})$ are plotted in Figure~\ref{fig:test:activeRC}. 
+Each of $\tilde{y}$, $\tilde{x}$ and $-\tilde{y} - \tfrac{27}{10^5} D\tilde{y}$ are plotted in Figure~\ref{fig:test:activeRC}. 
 
 \begin{center}
   \begin{tikzpicture}
@@ -455,19 +455,19 @@ Each of $\tilde{y}$, $\tilde{x}$ and $-\tilde{y} - \tfrac{27}{10^5} D(\tilde{y})
       \addplot[mark=none] table[x index=0, y index=1] {tests/activeRC/data.csv};
       \addplot[mark=o,mark repeat=15,mark options={solid,fill=black,scale=1.1}] table[x index=0, y index=2] {tests/activeRC/data.csv};
       \addplot[mark=*,mark repeat=15,mark options={solid,fill=black,scale=0.6}] table[x index=0, y index=3] {tests/activeRC/data.csv};
-      \legend{$\tilde{x}$, $\tilde{y}$, $-\tilde{y}-\tfrac{27}{10^5}D(\tilde{y})$ }
+      \legend{$\tilde{x}$, $\tilde{y}$, $-\tilde{y}-\tfrac{27}{10^5}D \tilde{y}$ }
    \end{axis} 
   \end{tikzpicture}
 \captionsetup{type=figure}
 %\includegraphics{tests/activeRC/plot-1.mps}
-\captionof{figure}{Plot of reconstructed input signal $\tilde{x}$ (solid line with circle), output signal $\tilde{y}$ (solid line), and hypothesised input signal $-\tilde{y} - \tfrac{27}{10^5} D(\tilde{y})$ (solid line with dot).}\label{fig:test:activeRC}
+\captionof{figure}{Plot of reconstructed input signal $\tilde{x}$ (solid line with circle), output signal $\tilde{y}$ (solid line), and hypothesised input signal $-\tilde{y} - \tfrac{27}{10^5} D\tilde{y}$ (solid line with dot).}\label{fig:test:activeRC}
 \end{center}
 \end{test}
 \end{randomfloat}
 
 Consider the circuit in Figure~\ref{elec:activePID}.  Assuming an ideal operational amplifier, the input voltage $x$ satisfies
 \[
--i = \frac{x}{R_1} + C_1 D(x).
+-i = \frac{x}{R_1} + C_1 Dx.
 \]
 The voltage over the capacitor $C_2$ is $y - R_2i$ and so the current satisfies
 \[
@@ -475,11 +475,11 @@ i = C_2 D( y - R_2i ).
 \]
 Combining these equations gives
 \[
-- \frac{x}{R_1} - C_1 D(x) = C_2 D(y) + \frac{R_2 C_2}{R_1} D(x) + R_2 C_2 C_1 D^2(x),
+- \frac{x}{R_1} - C_1 Dx = C_2 Dy + \frac{R_2 C_2}{R_1} Dx + R_2 C_2 C_1 D^2x,
 \]
 and after rearranging, 
 \[
-D(y) = -\frac{1}{R_1 C_2}x - \left( \frac{R_2}{R_1} + \frac{C_1}{C_2} \right) D(x) - R_2 C_1 D^2(x).
+Dy = -\frac{1}{R_1 C_2}x - \left( \frac{R_2}{R_1} + \frac{C_1}{C_2} \right) Dx - R_2 C_1 D^2x.
 \]
 Put
  \[
@@ -487,7 +487,7 @@ Put
  \]
  and now
  \begin{equation}\label{eq:PIDdiffeq}
- D(y) = - K_i x - K_p D(x) - K_d D^2(x).
+ Dy = - K_i x - K_p Dx - K_d D^2x.
  \end{equation}
 This equation models what is called a \term{proportional-integral-derivative controller} or \term{PID controller}.  %As we will see in Section~\ref{sec:control} circuits of this type are useful for controlling mechanical, electo-mechanical, and many other types of devices.  
 The coefficients $K_i, K_p$ and $K_d$ are called the \term{integral gain}, \term{proportional gain}, and \term{derivative gain}.
@@ -521,7 +521,7 @@ The coefficients $K_i, K_p$ and $K_d$ are called the \term{integral gain}, \term
 \caption{Operational amplifier implementing a \term{proportional-integral-derivative controller}.} \label{elec:activePID}
 \end{figure}
 
-The final active circuit we consider is called a \term{Sallen-Key}~\citep{SallenKey1955} and is depicted in Figure~\ref{elec:sallenkey}.  Observe that the output of the amplifier is connected directly to the inverting input and is also connected to the noninverting input by a capacitor and resistor.  This circuit has both negative \emph{and} positive feedback.  It is not immediately apparent that we can use the simplifying assumptions for an ideal operational amplifier with negative feedback.  However, we will do so, and will find that it works in this case.
+The final active circuit we consider is called a \term{Sallen-Key}~\citep{SallenKey1955} and is depicted in Figure~\ref{elec:sallenkey}.  Observe that the output of the amplifier is connected directly to the inverting input and is also connected to the noninverting input by a capacitor and resistor.  This circuit has both negative \emph{and} positive feedback.  It is not immediately apparent that we can use the simplifying assumptions for an ideal operational amplifier with negative feedback.  However, we will do so and will find that it works in this case.
 
 Let $v_{R1}, v_{R2}, v_{C1}$, and $v_{C2}$ be the voltages over the components $R_1$, $R_2$, $C_1$, and $C_2$.  Kirchoff's voltage law leads to the equations
 \[
@@ -531,17 +531,17 @@ The voltage at the inverting and noninverting terminals is $y$ and so the voltag
 \[
 x = v_{R1} + v_{R2} + y, \qquad v_{C1} = -v_{R2}.
 \]
-The current $i_2$ through capacitor $C_2$ satisfies $i_2 = C_2D(v_{C2}) = C_2 D(y)$.  Because no current flows into the inverting terminal of the amplifier the current through $R_2$ is also $i_2$ and so $v_{R2} = R_2i_2 = R_2 C_2 D(y)$.  Substituting this into the equations above gives
+The current $i_2$ through capacitor $C_2$ satisfies $i_2 = C_2D v_{C2} = C_2 Dy$.  Because no current flows into the inverting terminal of the amplifier the current through $R_2$ is also $i_2$ and so $v_{R2} = R_2i_2 = R_2 C_2 Dy$.  Substituting this into the equations above gives
 \begin{equation}\label{eq:sallenkeyworkingdouble}
-x = v_{R1} + R_2 C_2 D(y) + y, \qquad v_{C1} = -R_2 C_2 D(y).
+x = v_{R1} + R_2 C_2 Dy + y, \qquad v_{C1} = -R_2 C_2 Dy.
 \end{equation}
-Kirchoff's current law asserts that $i + i_1 = i_2$.  The current $i$ through capacitor $C_1$ satisfies $i = C_1D(v_{C1}) = -R_2 C_1 C_2 D^2(y)$ and the current through resistor $R_1$ satisfies 
+Kirchoff's current law asserts that $i + i_1 = i_2$.  The current $i$ through capacitor $C_1$ satisfies $i = C_1D v_{C1} = -R_2 C_1 C_2 D^2y$ and the current through resistor $R_1$ satisfies 
 \[
-v_{R1} = R_1 i_1 = R_1(i_2 - i) = R_1C_2D(y) + R_1 R_2 C_1 C_2 D^2(y).
+v_{R1} = R_1 i_1 = R_1(i_2 - i) = R_1C_2Dy + R_1 R_2 C_1 C_2 D^2y.
 \]
 Substituting this into the equation on the left of~\eqref{eq:sallenkeyworkingdouble} gives
 \begin{equation}\label{eq:sallenkeydiffeq}
-x = y + C_2(R_1 + R_2) D(y) + R_1 R_2 C_1 C_2 D^2(y).
+x = y + C_2(R_1 + R_2) Dy + R_1 R_2 C_1 C_2 D^2y.
 \end{equation}
 The Sallen-Key will be useful when we consider the design of analogue electrical filters in Section~\ref{sec:analogue-filters}.
 
@@ -634,38 +634,33 @@ to [C, l_=$C_{2}$,i=$i_2(t)$] (gnd) node [ground] {}
 \caption{Two masses, a spring and a damper} \label{mech:twomassspring}
 \end{figure}
 
-A mechanical mass-spring-damper system was described in Section~\ref{sec:syst-modell-diff} and Figure~\ref{mech:massspring1}.  We now consider another mechanical system involving a different configuration of masses, a spring and a damper depicted in Figure~\ref{mech:twomassspring}.  A mass $M_1$ is connected to a wall by a damper with constant $B$, and to another mass $M_2$ by a spring with constant $K$.  A force represented by the signal $f$ is applied to the first mass.  We will derive a differential equation relating $f$ with the position $p$ of the second mass.  Assume that the spring applies no force (is in equilibrium) when the masses are distance $d$ apart.  The forces due to the spring satisfy
+A mechanical mass-spring-damper system was described in Section~\ref{sec:syst-modell-diff} and Figure~\ref{mech:massspring1}.  We now consider another mechanical system depicted in Figure~\ref{mech:twomassspring} involving two masses, a spring and a damper.  A mass $M_1$ is connected to a wall by a damper with constant $B$, and to another mass $M_2$ by a spring with constant $K$.  A force represented by the signal $f$ is applied to the first mass.  We will derive a differential equation relating $f$ with the position $p$ of the second mass.  Assume that the spring applies no force (is in equilibrium) when the masses are distance $d$ apart.  The forces due to the spring satisfy
 \[
 f_{s1} = -f_{s2} = K( p - p_1 - d)
 \] 
-where $f_{s1}$ and $f_{s2}$ are signals representing the force due to the spring on mass $M_1$ and $M_2$ respectively.  It is convenient to define the signal $g(t) = p_1(t) + d$ so that forces due to spring satisfy the simpler equation 
+where $f_{s1}$ and $f_{s2}$ are signals representing the force due to the spring on mass $M_1$ and $M_2$ respectively.  It is convenient to define the signal $g = p_1 + d$ so that forces due to spring satisfy the simpler equation 
 \[
 f_{s1} = -f_{s2} = K( p - g ).
 \]
 The only force applied to $M_2$ is by the spring and so, by Newton's law, the acceleration of $M_2$ satisfies
-\[
-M_2 D^2(p) = f_{s2}.
-\]
-Substituting this into the previous equation gives a differential equation relating $g$ and $p$,
 \begin{equation}\label{eq:msdgp}
-K g = K p + M_2 D^2(p).
+M_2 D^2p = f_{s2} = Kg - Kp.
 \end{equation}
 The force applied by the damper on mass $M_1$ is given by the signal
 \[
-f_d = -B D(p_1) = -B D(g)
+f_d = -B D p_1 = -B D g
 \] 
 where the replacement of $p_1$ by $g$ is justified because differentiation will remove the constant $d$.  The cumulative force on $M_1$ is given by the signal
-\begin{align}
-f_1 &= f + f_d + f_{s1} \nonumber \\
-&= f - Kg  + Kp - B D(g), \label{eq:msdtwofg}
-\end{align}
+\[
+f_1 = f + f_d + f_{s1} = f + f_d - f_{s2} =  f - M_2 D^2p - B Dg
+\]
 and by Newton's law the acceleration of $M_1$ satisfies
 \[
-M_1 D^2(p_1) = M_1 D^2(g) = f_1.
+M_1 D^2 p_1 = M_1 D^2 g = f_1 = f - M_2 D^2p - B Dg.
 \]
-Substituting this into~\eqref{eq:msdtwofg} and using~\eqref{eq:msdgp} we obtain a fourth order differential equation relating $p$ and $f$,
+Combining this equation with~\eqref{eq:msdgp} we obtain a fourth order differential equation relating the position $p$ and force $f$,
 \begin{equation}\label{eq:msddiffeqfp}
-f = B D(p) + (M_1+M_2) D^2(p) + \frac{B M_2}{K} D^3(p) + \frac{M_1 M_2}{K} D^4(p).
+f = B Dp + (M_1+M_2) D^2p + \frac{B M_2}{K} D^3p + \frac{M_1 M_2}{K} D^4p.
 \end{equation}
 
 Given the position of the second mass $p$ we can readily solve for the corresponding force $f$ and position of the first mass $p$.  For example, if the constants $B=K=1$ and $M_1=M_2=\tfrac{1}{2}$ and $d = \tfrac{5}{2}$, and if the position of the second mass satisfies
@@ -694,40 +689,40 @@ Direct current (DC) motors convert electrical energy, in the form of a voltage, 
 
 The voltages over the resistor and inductor satisfy
 \[
-v_R = R i, \qquad v_L = L D(i),
+v_R = R i, \qquad v_L = L D i,
 \]
 and the motion of the motor induces a voltage called the \term{back electromotive force} (EMF),
 \[
-v_b = K_b D(\theta) 
+v_b = K_b D \theta
 \]
 that we model as being proportional to the angular velocity of the motor.  The input voltage now satisfies
 \[
-v = v_R + v_L + v_b = R i + L D(i) + K_bD(\theta).
+v = v_R + v_L + v_b = R i + L Di + K_bD\theta.
 \]
 The torque $\tau$ applied by the motor is modelled as being proportional to the current $i$,
 \[
 \tau = K_\tau i.
 \]
-A load with inertia $J$ is attached to the motor.  Two forces are assumed to act on the load, the torque $\tau$ applied by the current, and a torque $\tau_d = -B D(\theta)$ modelling a damper that acts proportionally against the angular velocity of the motor.  By Newton's law, the angular acceleration of the load satisfies
+A load with inertia $J$ is attached to the motor.  Two forces are assumed to act on the load, the torque $\tau$ applied by the current, and a torque $\tau_d = -B D\theta$ modelling a damper that acts proportionally against the angular velocity of the motor.  By Newton's law, the angular acceleration of the load satisfies
 \[
-J D^2(\theta) = \tau + \tau_d = K_\tau i - B D(\theta).
+J D^2\theta = \tau + \tau_d = K_\tau i - B D\theta.
 \]
 Combining these equations we obtain the $3$rd order differential equation
 \[
-v =  \left(\frac{RB}{K_\tau} + K_b\right) D(\theta) + \frac{RJ + LB}{K_\tau} D^2(\theta) + \frac{LJ}{K_\tau} D^3(\theta)
+v =  \left(\frac{RB}{K_\tau} + K_b\right) D\theta + \frac{RJ + LB}{K_\tau} D^2\theta + \frac{LJ}{K_\tau} D^3\theta
 \]
 relating voltage and motor position.  In many DC motors the inductance $L$ is small and can be ignored, leaving the simpler second order equation
 \begin{equation}\label{eq:dcmotordiffequation}
-v = \left(\frac{RB}{K_\tau} + K_b\right) D(\theta) + \frac{RJ}{K_\tau} D^2(\theta).
+v = \left(\frac{RB}{K_\tau} + K_b\right) D\theta + \frac{RJ}{K_\tau} D^2\theta.
 \end{equation}
 
 Given the position signal $\theta$ we can find the corresponding voltage signal $v$.  For example, put the constants $K_b=K_\tau=B=R=J=1$ and assume that 
 \[
 \theta(t) = 2\pi (1 + \operatorname{erf}(t) )
 \]
-where $\operatorname{erf}(t) = \frac{2}{\pi} \int_{-\infty}^{t} e^{-\tau^2} d\tau$ is the \term{error function}.  The corresponding angular velocity $D(\theta)$ and voltage $v$ satisfy
+where $\operatorname{erf}(t) = \frac{2}{\pi} \int_{-\infty}^{t} e^{-\tau^2} d\tau$ is the \term{error function}.  The corresponding angular velocity $D\theta$ and voltage $v$ satisfy
 \[
-D(\theta,t) = 4\sqrt{\pi} e^{-t^2}, \qquad v(t) = 8 \sqrt{\pi} e^{-t^2} (1-t).
+D\theta(t) = 4\sqrt{\pi} e^{-t^2}, \qquad v(t) = 8 \sqrt{\pi} e^{-t^2} (1-t).
 \]
 These signals are depicted in Figure~\ref{fig:dcmotoranim}.  This voltage signal is sufficient to make the motor perform two revolutions and then come to rest.
 

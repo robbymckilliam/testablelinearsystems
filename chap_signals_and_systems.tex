@@ -29,7 +29,7 @@ f(x) = \begin{cases}
 \text{Sephiroth} & x = \text{Ness}.
 \end{cases}
 \]
-The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ the \term{range}.  The value of $f$ for input $x$ is denoted by $f(x)$ so, for example, $f(\text{Mario}) = \text{Conker}$ and $f(\text{Link}) = \text{Sephiroth}$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
+The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The value of $f$ for input $x$ is denoted by $f(x)$ so, for example, $f(\text{Mario}) = \text{Conker}$ and $f(\text{Link}) = \text{Sephiroth}$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
 
 A \term{signal} is a function with domain the set of real numbers $\reals$ and range the set of complex numbers $\complex$, that is, a signal is a function from the set $\reals \to \complex$.  For example
 \[
@@ -225,7 +225,7 @@ and $x$ is said to be \term{continuous} if it is continuous at all $t \in \reals
 \[
 \lim_{h \to 0} u(h) = 1 \neq 0 = \lim_{h \to 0} u(-h).
 \]
-A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
+The set of continuous signals is denoted by $C^0(\reals)$ or just $C^0$.  A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
 \[
 \lim_{h \to 0} \frac{x(t + h) - x(t)}{h} = \lim_{h \to 0} \frac{x(t) - x(t-h)}{h} \qquad \text{for all $t \in \reals$}.
 \]
@@ -233,7 +233,7 @@ Considered as a function of $t$ this limit is called the \term{derivative} of $x
 \[
 \pi \cos(\pi t), \qquad \tfrac{3}{2} t^{2}, \qquad -2t e^{-t^2}, \qquad 2t,
 \] 
-but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).
+but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).  The set of differentiable signals is denoted by $C^1$ or $C^1(\reals)$.  A signal is \term{$k$-times differentiable} if its $k-1$th derivative is differentiable.  The set of $k$-times differentiable signals is denoted by $C^k$ or $C^k(\reals)$.
 
 
 \begin{figure}[tp]
@@ -494,7 +494,7 @@ for all $t \in \reals$.  We might then choose a domain for $I_\infty$ as the set
 \[
 I_\infty x(t) = \int_{-\infty}^{t} x(\tau) d\tau = \int_{T}^{t} x(\tau) d\tau < \infty
 \]
-for all $t \in \reals$ if $x$ is locally integrable.  So another possible domain for $I_\infty$ is the set of right sided locally integrable signals.  The the union of $L^1$ and the set of right sided locally integrable signals is another possible domain.
+for all $t \in \reals$ if $x$ is locally integrable.  So another possible domain for $I_\infty$ is the set of right sided locally integrable signals.  The union of $L^1$ and the set of right sided locally integrable signals is another possible domain.
 
 The domain used for a given system will usually be obvious from the context in which the system is defined.  For this reason we will not usually state the domain explicitly.  We will only do so if there is chance for confusion.  %When describing the properties of a system we will often want to show that it satisfies certain conditions ``for all signals''.  By this phrase we will always implicitly mean ``for all signals to which the system can be applied''.  %We say this once and for all so that the text is not littered with technical requirements regarding the sets of signals for which particular properties will hold for particular systems.
 
@@ -614,7 +614,7 @@ that returns the derivative of the input signal.  We also define a $k$th differe
 D^k x(t) = \frac{d^k}{dt^k} x(t)
 \]
 that returns the $k$th derivative of the input signal.  %BLERG: existance, special definition at discontinuities?
-The differentiator is only defined for differentiable signals.  The largest possible domain for $D$ is the set of differentiable signals.
+The differentiator is only defined for differentiable signals.  The largest possible domain for $D$ is the set of differentiable signals $C^1$ and the largest possible domain for $D^k$ is the set of $k$-times differentiable signals $C^k$.
 
 % We must be careful when choosing a domain for the differentiator.  For example, consider the step function $u(t)$ from~\eqref{eq:stepfunction}.  We cannot differentiate $u(t)$ at $t = 0$ because
 % \[
