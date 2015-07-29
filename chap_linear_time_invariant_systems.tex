@@ -1,9 +1,9 @@
 
-In the previous section we derived differential equations that model mechanical, electrical, and electro-mechanical systems.  The equations themselves often do not provide sufficient information about these system.  For example, we were able to find a signal $p$ representing the position of the mass-spring-damper in Figure~\ref{mech:massspring1} given a particular force signal $f$ is applied to the mass.  However, it is not immediately obvious how to find the force signal $f$ given a particular position signal $p$.  We will be able to solve this problem and, more generally, to describe properties of systems modelled by linear differential equations with constant coefficient, if we make the added assumptions that the systems are \term{linear} and \term{time-invariant}.  We study linear time-invariant systems in this chapter.  Throughout this chapter $H$ will denote a linear time-invariant system.
+In the previous section we derived differential equations that model mechanical, electrical, and electro-mechanical systems.  The equations themselves often do not provide sufficient information about these system.  For example, we were able to find a signal $p$ representing the position of the mass-spring-damper in Figure~\ref{mech:massspring1} given a particular force signal $f$ is applied to the mass.  However, it is not immediately obvious how to find the force signal $f$ given a particular position signal $p$.  We will be able to solve this problem and, more generally, to describe properties of systems modelled by linear differential equations with constant coefficient, if we make the added assumptions that the systems are \term{linear} and \term{shift-invariant}.  We study linear shift-invariant systems in this chapter.  Throughout this chapter $H$ will denote a linear shift-invariant system.
 
 \section{Convolution, regular systems and the delta ``function''} \label{sec:conv-regul-syst}
 
-A large number of linear time-invariant systems can be represented by a signal called the \term{impulse response}.  The impulse response of a system $H$ is a signal $h$ such that
+A large number of linear shift-invariant systems can be represented by a signal called the \term{impulse response}.  The impulse response of a system $H$ is a signal $h$ such that
 \[
 Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau,
 \]
@@ -24,7 +24,7 @@ The above equations show that convolution commutes with scalar multiplication an
 \[
 h * (ax + by) =  a (h * x) + b(h*y).
 \]
-Regular systems are also time-invariant because
+Regular systems are also shift-invariant because
 \begin{align*}
 T_\kappa H x &= T_\kappa(h * x ) \\
 &= \int_{-\infty}^{\infty} h(\tau) x(t- \kappa - \tau) d\tau \\
@@ -123,7 +123,7 @@ so that convolution of $x$ and $\delta$ satisfies
 \[
 \delta * x = \int_{-\infty}^{\infty} \delta(\tau) x(t - \tau) d\tau = x(t) = T_0 x .
 \]
-We now treat $\delta$ as if it were a signal.  So $\delta(t - \tau)$ will represent the impulse response of the time shifter $T_\tau$ because
+We now treat $\delta$ as if it were a signal.  So $\delta(t - \tau)$ will represent the impulse response of the shifter $T_\tau$ because
 \begin{align*}
 T_\tau x &= \delta(t - \tau) * x \\
 &= \int_{-\infty}^{\infty} \delta(\kappa -\tau) x(t - \kappa) d\kappa \\
@@ -194,9 +194,9 @@ The impulse response $h$ immediately yields some properties of the corresponding
 \[
 H x(t)  =  \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau = \int_{0}^{\infty} h(\tau) x(t - \tau) d\tau
 \] 
-only depends on values of the input signal $x$ at times less than or equal to $t$, i.e., only times $t - \tau$ with $\tau > 0$.  The system $H$ is stable if and only if $h$ is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
+only depends on values of the input signal $x$ at $t - \tau$ with $\tau > 0$.  The system $H$ is stable if and only if $h$ is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
-Another related important signal is the \term{step response} defined as the response of the system to the step function $u$.  For example, the step response of the shifter $T_\tau$ is the time shifted step function $T_\tau u(t) = u(t - \tau)$.  The step response of the integrator $I_\infty$ is
+Another related important signal is the \term{step response} defined as the response of the system to the step function $u$.  For example, the step response of the shifter $T_\tau$ is the shifted step function $T_\tau u(t) = u(t - \tau)$.  The step response of the integrator $I_\infty$ is
 \[
 I_\infty u(t) = \int_{-\infty}^t u(\tau) d\tau = \begin{cases}
 \int_{0}^t d\tau  = t & t > 0 \\
@@ -215,7 +215,7 @@ The convolution $x * y$ of two signals $x$ and $y$ does not always exist.  For e
 \[
 x * y = \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau = \int_{-\infty}^\infty u(\tau) d\tau = \int_{0}^\infty d\tau
 \]
-is not finite for any $t$.  We cannot convolve the step function $u$ and the signal that is equal to $1$ for all time.  On the other hand, if $x(t) = y(t) = u(t)$, then
+is not finite for any $t$.  We cannot convolve the step function $u$ and the signal that takes the constant value $1$.  On the other hand, if $x(t) = y(t) = u(t)$, then
 \[
 x * y = \int_{-\infty}^\infty u(\tau) u(t - \tau) d\tau =  \begin{cases}
 \int_{0}^t d\tau  = \tau & t > 0 \\
@@ -241,7 +241,7 @@ x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 \end{align*}
 Convolution is also associative, that is, for signals $x,y,z$, 
 \[
-(x*y)*z = x*(y*z). \qquad \text{(see Exercise~\ref{excer:convassociative})}
+(x*y)*z = x*(y*z). \qquad \text{(Exercise~\ref{excer:convassociative})}
 \]
 By combining the associative and commutative properties we find that the order in which the convolutions in $x * y * z$ are performed does not mater, that is
 \[
@@ -253,25 +253,25 @@ provided that all the convolutions involved exist.  More generally, the order in
 
 %\todo{This could feasibly be connected back to the abstract concept of a vector space in the new Section~\ref{sec:spaces-signals}}
 
-Let $X$ and $Y$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear time-invariant systems with domain $X$ and range $Y$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
+Let $X$ and $Y$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X$ and range $Y$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
 \[
-Hx = cH_1x + dH_2x
+Hx = cH_1x + dH_2x.
 \]
-The system $H$ is said to be a \term{linear combination} of $H_1$ and $H_2$.  The system $H$ is linear because for all signals $x,y \in X$ and complex numbers $a,b$,
+The system $H$ is said to be a \term{linear combination} of $H_1$ and $H_2$.  The system $H$ is linear because for all signals $x,y \in X$ and $a,b \in \complex$,
 \begin{align*}
 H(ax + by) &= cH_1(ax+by) + dH_2(ax+by) \\
 &= acH_1 x +bcH_1y + adH_2x+ bdH_2y & \text{(linearity $H_1, H_2$)} \\
 &= a ( cH_1x  + dH_2x ) + b ( cH_1y + dH_2y ) \\
 &= aHx + bHy.
 \end{align*}
-The system $H$ is also time-invariant because
+The system $H$ is also shift-invariant because
 \begin{align*}
 HT_\tau x &= cH_1T_\tau x + dH_2T_\tau x  \\
-&= c T_\tau H_1 x + dT_\tau H_2 x & \text{(time-invariance $H_1,H_2$)} \\
+&= c T_\tau H_1 x + dT_\tau H_2 x & \text{(shift-invariance $H_1,H_2$)} \\
 &= T_\tau( cH_1 x + dH_2 x ) & \text{(linearity $T_\tau$)} \\
 &= T_\tau H x.
 \end{align*}
-So, linear time-invariant systems can be constructed as \term{linear combinations} of other linear time-invariant systems.  If $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$ then
+So, linear shift-invariant systems can be constructed as linear combination of other linear shift-invariant systems.  If $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$ then
 \begin{align*}
 Hx &= a H_1 x + b H_2 x \\
 &= a h_1 * x + b h_2 * x \\
@@ -303,25 +303,25 @@ and so, $H$ is a regular system with impulse response $h = ah_1 + bh_2$.  %Thus,
     \node (H) at (-0.7,0) [draw,thick,dashed,minimum width=3.5cm,minimum height=3cm,label=above:$H$] {};
     
 \end{tikzpicture}
-\caption{Block diagram depicting the linear combination of linear time-invariant systems. The system $cH_1x+dH_2x$ can be expressed as a single linear time-invariant system $Hx$.}\label{blockdiag:lineartisystem}
+\caption{Block diagram depicting the linear combination of linear shift-invariant systems. The system $cH_1x+dH_2x$ can be expressed as a single linear shift-invariant system $Hx$.}\label{blockdiag:lineartisystem}
 \end{figure}
 
-Another way to construct linear time-invariant systems is by \term{composition}.  Let $X, Y, Z$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in Y \to Z$ be linear time-invariant systems and let $H \in X \to Z$ be the system satisfying
+Another way to construct linear shift-invariant systems is by \term{composition}.  Let $X, Y, Z$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in Y \to Z$ be linear shift-invariant systems and let $H \in X \to Z$ be the system satisfying
 \[
 H x = H_2 H_1 x,
 \]
-that is, $H$ first applies the system $H_1$ and then applies the system $H_2$.  The system $H$ is said to be the \term{composition} of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
+that is, $H$ first applies the system $H_1$ and then applies the system $H_2$.  The system $H$ is said to be the composition of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
 \begin{align*}
 H(ax + by) &= H_2 H_1(ax + by) \\
 &= H_2(aH_1 x + bH_1 y )  &\text{(linearity $H_1$)}\\
 &= aH_2 H_1 x + bH_2 H_1 y  &\text{(linearity $H_2$)} \\
 &= aHx + bHy.
 \end{align*}
-The system is also time-invariant because
+The system is also shift-invariant because
 \begin{align*}
 H T_\tau x &= H_2H_1 T_\tau x \\
-&= H_2 T_\tau H_1 x  &\text{(time-invariance $H_1$)}\\
-&= T_\tau H_2 H_1 x  &\text{(time-invariance $H_2$)} \\
+&= H_2 T_\tau H_1 x  &\text{(shift-invariance $H_1$)}\\
+&= T_\tau H_2 H_1 x  &\text{(shift-invariance $H_2$)} \\
 &= T_\tau H x .
 \end{align*}
 If $H_1$ and $H_2$ are regular systems the composition property can be expressed using their impulse responses $h_1$ and $h_2$.  It follows that
@@ -343,14 +343,12 @@ and so, $H$ is a regular system with impulse response $h = h_2 * h_1$.  %Thus, i
     \draw[dspconn] (x) -- (H1);
     \draw[dspconn] (H1) -- (H2);
     \draw[dspflow] (H2) -- (res);
-    
     \node (H) at ($ (x) !.5! (res) $) [draw,thick,dashed,minimum width=3cm,minimum height=1.5cm,label=above:$H$] {};
-    
 \end{tikzpicture}
-\caption{Block diagram depicting the composition property of linear time-invariant systems. The system $H_2H_1x$ can be expressed as a single linear time-invariant system $Hx$.}\label{blockdiag:compositionlti}
+\caption{Block diagram depicting composition of linear shift-invariant systems. The system $H_2H_1$ can be expressed as a single linear shift-invariant system $H$.}\label{blockdiag:compositionlti}
 \end{figure}
 
-A wide variety of linear time-invariant systems can be constructed by linear combinination and composition of simpler systems.  
+A wide variety of linear shift-invariant systems can be constructed by linear combinination and composition of simpler systems.  
 
 % \section{Commutative (sometimes)}
 % %\section{Commutative and invertible (sometimes)}
@@ -361,7 +359,7 @@ A wide variety of linear time-invariant systems can be constructed by linear com
 % \]
 % whenever the convolutions involved exist.  This commutative property is depicted by the block diagram in Figure~\ref{blockdiag:commutativesystems}.
 
-% The commutative property is very useful when it holds.  It allows us to construct large systems by composing smaller systems without concern for the order in which systems are composed.  However, linear time-invariant systems do not always commute, and so, some care must be taken.  For example, applying a differentiator $D$ followed by the integrator $I_\infty$ to the signal $x(t) = 1$ gives
+% The commutative property is very useful when it holds.  It allows us to construct large systems by composing smaller systems without concern for the order in which systems are composed.  However, linear shift-invariant systems do not always commute, and so, some care must be taken.  For example, applying a differentiator $D$ followed by the integrator $I_\infty$ to the signal $x(t) = 1$ gives
 % \[
 % I_\infty\big( D(x), t) = I_0\big( 0 , t) = 0 \qquad \text{for all $t$}
 % \] 
@@ -371,9 +369,9 @@ A wide variety of linear time-invariant systems can be constructed by linear com
 % \]
 % which does not exists, and so $D(I_0(x),t)$ does not exist.  In the previous example problems arise because the signal $x(t) = 1$ is in the domain 
 % %(more specifically the \term{null space}) 
-% of the differentiator $D$, but it is not in the domain of the integrator $I_\infty$.  We will be able to more precisely specify conditions under which linear time-invariant systems commute when we introduce the Laplace transform in Section~\ref{sec:laplace-transform}.
+% of the differentiator $D$, but it is not in the domain of the integrator $I_\infty$.  We will be able to more precisely specify conditions under which linear shift-invariant systems commute when we introduce the Laplace transform in Section~\ref{sec:laplace-transform}.
 
-% Many linear time-invariant systems are invertible, for example, the inverse of the time shifter $T_\tau$ is $T_{-\tau}$  and, by the fundamental theorem of calculus, the inverse of the integrator $I_\infty$ is the differentiator.  Consider the system
+% Many linear shift-invariant systems are invertible, for example, the inverse of the time shifter $T_\tau$ is $T_{-\tau}$  and, by the fundamental theorem of calculus, the inverse of the integrator $I_\infty$ is the differentiator.  Consider the system
 % \[
 % H(x,t) = x(t) + x(t - 1).
 % \]
@@ -381,7 +379,7 @@ A wide variety of linear time-invariant systems can be constructed by linear com
 % \[
 % H^{-1}(x,t) = 
 % \]
-% In Section~\ref{sec:laplace-transform} we will use the Laplace transform to construct the inverse of some regular systems.  Not all linear time-invariant systems are invertible.  For example, 
+% In Section~\ref{sec:laplace-transform} we will use the Laplace transform to construct the inverse of some regular systems.  Not all linear shift-invariant systems are invertible.  For example, 
 
 %BLERG: YOU CAN SPECIFY WHEN THEY ARE INVERTIBLE ONCE YOU HAVE THE FOURIER TRANSFORM
 
@@ -473,32 +471,32 @@ Let $s = \sigma + j \omega \in \complex$ where $j = \sqrt{-1}$.  A signal of the
 \[
 e^{st} = e^{\sigma t}e^{j \omega t} = e^{\sigma t} \big( \cos(\omega t) + j \sin(\omega t) \big)
 \]
-is called a \term{complex exponential signal}.  Complex exponential signals play an important role in the study of linear time-invariant systems.  The real and imaginary parts of $e^{(\sigma + j\pi)t}$ are plotted in Figure~\ref{fig:sinabsdecay} for $\sigma = -\tfrac{1}{10},0,\tfrac{1}{10}$.  The signal is oscillatory when $\omega \neq 0$.  The signal converges to zero as $t\to\infty$ when $\sigma<0$ and diverges as $t\to\infty$ when $\sigma > 0$.  
+is called a \term{complex exponential signal}.  Complex exponential signals play an important role in the study of linear shift-invariant systems.  The real and imaginary parts of $e^{(\sigma + j\pi)t}$ are plotted in Figure~\ref{fig:sinabsdecay} for $\sigma = -\tfrac{1}{10},0,\tfrac{1}{10}$.  The signal is oscillatory when $\omega \neq 0$.  The signal converges to zero as $t\to\infty$ when $\sigma<0$ and diverges as $t\to\infty$ when $\sigma > 0$.  
 
-Let $H \in X \to Y$ be a linear time-invariant system with domain $X$ and range $Y$ begin linear shift-invariant spaces.  Let $y = H e^{st}$ be the response of $H$ to the complex exponential signal $e^{st} \in X$.  Consider the response of $H$ to the time-shifted signal $T_\tau e^{st} = e^{s(t-\tau)}$ for $\tau \in \reals$.  By time-invariance
+Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ and range $Y$ begin linear shift-invariant spaces.  Let $y = H e^{st}$ be the response of $H$ to the complex exponential signal $e^{st} \in X$.  Consider the response of $H$ to the shifted signal $T_\tau e^{st} = e^{s(t-\tau)}$ for $\tau \in \reals$.  By shift-invariance
 \[
-H T_{\tau} e^{st} = T_{\tau} H  e^{st} = y(t - \tau) \qquad \text{for all $t, \tau \in \reals$},
+H T_{\tau} e^{st} = T_{\tau} H  e^{st} = y(t - \tau) %\qquad \text{for all $t, \tau \in \reals$},
 \]
 and by linearity
 \[
-H e^{s(t-\tau)} = e^{-s\tau} H e^{st}  = e^{-s\tau} y(t) \qquad \text{for all $t, \tau \in \reals$}.
+H e^{s(t-\tau)} = e^{-s\tau} H e^{st}  = e^{-s\tau} y(t). %\qquad \text{for all $t, \tau \in \reals$}.
 \]
 Combining these equations we obtain
 \[
 y(t - \tau) = e^{-s\tau} y(t) \qquad \text{for all $t,\tau \in \reals$}.
 \]
-This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear time-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear time-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number, that is, $\lambda H \in \complex \to \complex$.  The transfer function satisfies
+This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear shift-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear shift-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number, that is, $\lambda H \in \complex \to \complex$.  The transfer function satisfies
 \begin{equation}\label{eq:transfuneigenproperty}
 H e^{st} = \lambda H(s) e^{st}.
 \end{equation}
-This is an important equation.  Stated in words: the response of a linear time-invariant system $H \in X \to Y$ to a complex exponential signals $e^{st} \in X$ is given by the transfer function $\lambda H$ evaluated at $s$ multiplied by the same complex exponential signal $e^{st}$.
+This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
 
 We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  As an example, consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
 \[
 x = - y - R_1 C_2 Dy.
 \]
 We called this the \term{active RC} circuit.  To simplify notation put $R = R_1$ and $C = C_2$ so that $x = -y - RCD(y)$.   
-Suppose that $H$ is a linear time-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  Since $H$ is linear time-invariant, if the input voltage is a complex exponential signal $x = e^{st}$, then the ouput voltage is the same complex exponential signal mulitpled by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$.  Substituting this into the differential equation for the active RC circuit we obtain
+Suppose that $H$ is a linear shift-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  Since $H$ is linear shift-invariant, if the input voltage is a complex exponential signal $x = e^{st}$, then the ouput voltage is the same complex exponential signal mulitpled by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$ .  Substituting this into the differential equation for the active RC circuit we obtain
 \[
 e^{st} = - \lambda e^{st}- R C D (\lambda e^{st}) = -\lambda e^{st} (1  - R C s)
 \]
@@ -575,11 +573,11 @@ It is often of interest to focus on the transfer function when $s$ is purely ima
 \[
 e^{j\omega t} = e^{j 2\pi f} = \cos( 2\pi f t) + j \sin( 2\pi f t).
 \] 
-where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear time-invariant system with domain $X$ containing $e^{j 2\pi f t}$.  The function
+where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ containing the signal $e^{j 2\pi f t}$.  The function
 \[
 \Lambda H(f) = \lambda H( j 2\pi f )
 \]
-is called the \term{spectrum} of $H$.  It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
+is called the \term{spectrum} of $H$.  The spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
 \[
 H e^{j 2\pi f t}  = \lambda H (j 2\pi f) e^{j 2\pi f t} = \Lambda H(f) e^{j 2\pi f t}. 
 \]
@@ -610,7 +608,7 @@ The magnitude and phase spectrum is
 \[
 \abs{\Lambda H(f)} = \big(1 + 4\pi^2 R^2 C^2 f^2\big)^{-\tfrac{1}{2}}, \qquad \angle \Lambda H(f) = \pi - \atan\big( 2\pi R C f \big).
 \]
-The magnitude and phase spectrum are plotted in Figure~\ref{fig:activeRCspectrum} when $R=27 \times 10^3$ and $C= 10 \times 10^{-9}$.  Observe from the plot of the magnitude spectrum that a low frequency sinusoidal signal, say $100\si{\hertz}$ or less, input to the active RC circuit results in a sinusoidal output signal with the same frequency and approximately the same amplitude.  However, a high frequency sinusoidal signal, say greater than $1000\si{\hertz}$, input to the circuit results in a sinusoidal output signal with the same frequency, but smaller amplitude.  For this reason RC circuits are called \term{low pass filters}.
+These plotted in Figure~\ref{fig:activeRCspectrum} when $R=27 \times 10^3$ and $C= 10 \times 10^{-9}$.  Observe from the plot of the magnitude spectrum that a low frequency sinusoidal signal, say $100\si{\hertz}$ or less, input to the active RC circuit results in a sinusoidal output signal with the same frequency and approximately the same amplitude.  However, a high frequency sinusoidal signal, say greater than $1000\si{\hertz}$, input to the circuit results in a sinusoidal output signal with the same frequency, but smaller amplitude.  For this reason RC circuits are called \term{low pass filters}.
 
 \begin{figure}[tp]
   \centering
@@ -693,9 +691,9 @@ where $P = \frac{1}{F}$  is the sample period, the positive real number $\rho$ c
 
 We will not measure the gain $\rho$ nor the delay $\theta$, but will be able to test the properties of the circuit without knowledge of these.  To simplify notation put $\gamma = 2\pi f_k P$.  From the samples of the input signal $x_{k,1},\dots,x_{k,L}$ compute the complex number
 \begin{align*}
-A &= \frac{2j}{L}\sum_{\ell=1}^{L} x_{k,\ell} e^{-j \gamma \ell} \\
-&\approx \frac{2j}{L}\sum_{\ell=1}^{L} \rho \sin( \gamma \ell - \theta)  e^{-j \gamma \ell} \\
-&= \alpha + \alpha^* C
+A = \frac{2j}{L}\sum_{\ell=1}^{L} x_{k,\ell} e^{-j \gamma \ell} 
+\approx \frac{2j}{L}\sum_{\ell=1}^{L} \rho \sin( \gamma \ell - \theta)  e^{-j \gamma \ell} 
+= \alpha + \alpha^* C
 \end{align*}
 where $\alpha = \rho e^{- j \theta}$ and $\alpha^*$ denotes the complex conjugate of $\alpha$ and
 \[
@@ -749,7 +747,7 @@ for each $k = 0,\dots,12$.  Figure~\ref{fig:test:spectrumactiveRC} plots the hyp
 
 %BLERG:  Add a test where you pass through sinusoids and look at the sinusoidal output.  Perhaps even do crude spectral analysis?
 
-%The eigenfunctions are analogous to the \term{eigenvectors} of a matrix in linear algebra.  Just as a transformation of a matrix into it's eigenvectors and corresponding eigenvalues is a useful tool in linear algebra, a decomposition of linear-time-invariant systems into there eigenfunctions, i.e. the Laplace transform, will be useful for the study of linear-time-invariant systems, and for the solution of differential equations.
+%The eigenfunctions are analogous to the \term{eigenvectors} of a matrix in linear algebra.  Just as a transformation of a matrix into it's eigenvectors and corresponding eigenvalues is a useful tool in linear algebra, a decomposition of linear-shift-invariant systems into there eigenfunctions, i.e. the Laplace transform, will be useful for the study of linear-shift-invariant systems, and for the solution of differential equations.
 
 
 %%% Local Variables: 
