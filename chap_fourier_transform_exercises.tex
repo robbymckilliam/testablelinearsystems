@@ -58,7 +58,7 @@ and when $t in [0,1)$
 \[
 (\rect * \rect)(t) = \int_{-1/2+t}^{1/2} d\tau = 1 - t
 \]
-as required.  Now, by the convolution theorem~\eqref{eq:convthmfouriertransform}
+as required.  Now, by the convolution theorem~\zeqref{eq:convthmfouriertransform}
 \[
 \calF(\rect * \rect) = \calF(\bigtriangleup) = \calF(\rect) \calF(\rect) = \sinc^2(t).
 \]
@@ -232,7 +232,7 @@ and so, by duality,
 \[
 \calF( j 2\pi t \rect(t), f ) = \calF(\calF(D(\sinc)),f) = D(\sinc,-f)
 \]
-The derivative of the $\sinc$ function is given in~\eqref{eq:sincderivative}
+The derivative of the $\sinc$ function is given in~\zeqref{eq:sincderivative}
 \[
 D(\sinc,-f) = \frac{1}{\pi f^2} \big( \sin(\pi f) - \pi f \cos(\pi f) \big) = \frac{1}{f} \big( \sinc(f) - \cos(\pi f) \big).
 \]
@@ -306,7 +306,7 @@ by working similarly to the previous equation.  Putting these together we obtain
 x(t) = \sinc(t) + \tfrac{1}{2}\sinc(t + 1) + \tfrac{1}{2}\sinc(t-1).
 \] 
 
-We now derive the same result using duality~\eqref{eq:dualityft} and the modulation~\eqref{eq:modulationpropertyft} properties.  By duality
+We now derive the same result using duality~\zeqref{eq:dualityft} and the modulation~\zeqref{eq:modulationpropertyft} properties.  By duality
 \[
 x(-f) = \calF\big(\rect(f)\big) + \calF\big(\rect(f)\cos(2\pi f)\big)
 \]
@@ -382,7 +382,7 @@ and the signal is bandlimited with bandwidth $2$ because $\rect(f/4) = 0$ whenev
 \[
 \tfrac{1}{4} \calF(\rect(f/4)) =  \sinc(4t)
 \]
-and so $\calF(\rect(f/4)) = 4 \sinc(4t)$.  This signal is not bandlimited because the $\sinc$ function is unbounded in time.  By the modulation property of Fourier transform~\eqref{eq:modulationpropertyft},
+and so $\calF(\rect(f/4)) = 4 \sinc(4t)$.  This signal is not bandlimited because the $\sinc$ function is unbounded in time.  By the modulation property of Fourier transform~\zeqref{eq:modulationpropertyft},
 \[
 \calF\big( \cos(2\pi t) \sinc(t), f \big) = \calF(\sinc,f-1) + \calF(\sinc,f+1) = \rect(f-1) + \rect(f+1). 
 \]

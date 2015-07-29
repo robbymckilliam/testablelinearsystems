@@ -137,7 +137,7 @@ cross/.default={1pt}
 \excludecomment{solution}
 
 \usepackage{framed,xcolor}
-\definecolor{shadecolor}{gray}{0.92}
+\definecolor{shadecolor}{gray}{0.85}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
 %\usepackage{shaded}
 
@@ -211,6 +211,12 @@ cross/.default={1pt}
   \end{enumerate}
 }
 
+%this is a bit nasty, but rewire zref to usual references for main document.  Exercises will use the zref package
+%when building solutions.
+\newcommand{\zref}[1]{\ref{#1}}
+\newcommand{\zeqref}[1]{\eqref{#1}}
+\newcommand{\zpageref}[1]{\pageref{#1}}
+
 \begin{document}
 
 \frontmatter
@@ -233,21 +239,21 @@ cross/.default={1pt}
  \input{chap_differential_equations.tex}
  \input{chap_differential_equations_exercises.tex}
 
-\chapter{Linear time invariant systems}\label{sec:prop-line-time}
+\chapter{Linear time-invariant systems}\label{sec:prop-line-time}
  \input{chap_linear_time_invariant_systems.tex}
  \input{chap_linear_time_invariant_systems_exercises.tex}
 
-\chapter{The Laplace transform} \label{sec:laplace-transform}
- \input{chap_laplace_transform.tex}
- \input{chap_laplace_transform_exercises.tex}
+% \chapter{The Laplace transform} \label{sec:laplace-transform}
+%  \input{chap_laplace_transform.tex}
+%  \input{chap_laplace_transform_exercises.tex}
 
-\chapter{The Fourier transform}\label{sec:fourier-transform}
- \input{chap_fourier_transform.tex}
- \input{chap_fourier_transform_exercises.tex}
+% \chapter{The Fourier transform}\label{sec:fourier-transform}
+%  \input{chap_fourier_transform.tex}
+%  \input{chap_fourier_transform_exercises.tex}
 
-\chapter{Discrete time systems} \label{cha:discr-time-syst}
- \input{chap_discrete_time_systems.tex}
- \input{chap_discrete_time_systems_exercises.tex}
+% \chapter{Discrete time systems} \label{cha:discr-time-syst}
+%  \input{chap_discrete_time_systems.tex}
+%  \input{chap_discrete_time_systems_exercises.tex}
 
 %\clearpage
 

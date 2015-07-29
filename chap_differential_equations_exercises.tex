@@ -3,7 +3,7 @@
 
 \begin{excersizelist}
 
-\item \label{exer:multiplieropampwithmodel}  Analyse the inverting amplifier circuit in Figure~\ref{circ:opampinvertingamplifierequivalent} to obtain the relationship between input voltage $x$ and output voltage $y$ given by~\eqref{eq:intertingopampmodel}.  You may wish to use a symbolic programming language (for example Maxima, Sage, Mathematica, or Maple).
+\item \label{exer:multiplieropampwithmodel}  Analyse the inverting amplifier circuit in Figure~\zref{circ:opampinvertingamplifierequivalent} to obtain the relationship between input voltage $x$ and output voltage $y$ given by~\zeqref{eq:intertingopampmodel}.  You may wish to use a symbolic programming language (for example Maxima, Sage, Mathematica, or Maple).
 \begin{solution}
 We provide two solutions.  Let $v_i$, $v_o$, $v_1$ and $v_2$ be the voltages over the input resistor $R_i$, the output resistor $R_o$, and resistors $R_1$ and $R_2$ respectively.  Observe that $v_+ - v_i = v_i$ and so the voltage over the dependent source is $A v_i$.  The voltages satisfy,
 \begin{align*}
@@ -112,7 +112,7 @@ y(t)= \left( \frac{R_iR_0 - R_2R_iA}{(1+A) R_iR_1+R_0R_1+R_2R_1+R_0R_i+R_2R_i} \
 \end{solution}
 
 
-\item \label{exer:dcmotorpotfeedback} Consider the electromechanical system in Figure~\ref{fig:dcmotor}.  A direct current motor is connected to a potentiometer in such a way that the voltage at the output of the potentiometer is equal to the angle of the motor $\theta$.  This voltage is fed back to the input terminal of the motor.  An input voltage $v$ is applied to the other terminal on the motor.  Find the differential equation relating $v$ and $\theta$.  What is the input voltage $v$ if the motor angle satisfies $\theta(t) = \frac{\pi}{2} (1 + \operatorname{erf}(t) )$.  Plot $\theta$ and $v$ in this case when the motor coefficients satisfy $L=0$, $R = \tfrac{3}{4}$, and $K_b=K_\tau=B=J=1$.
+\item \label{exer:dcmotorpotfeedback} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback}.  A direct current motor is connected to a potentiometer in such a way that the voltage at the output of the potentiometer is equal to the angle of the motor $\theta$.  This voltage is fed back to the input terminal of the motor.  An input voltage $v$ is applied to the other terminal on the motor.  Find the differential equation relating $v$ and $\theta$.  What is the input voltage $v$ if the motor angle satisfies $\theta(t) = \frac{\pi}{2} (1 + \operatorname{erf}(t) )$?  Plot $\theta$ and $v$ in this case when the motor coefficients satisfy $L=0$, $R = \tfrac{3}{4}$, and $K_b=K_\tau=B=J=1$.
 %Find the transfer function of the system that maps the input voltage $v$ to the motor angle $\theta$.  %Under the assumption that the motor coefficients satisfy $L=0$ and $K_b=K_\tau=B=R=J=1$ draw a pole zero plot and determine whether this system is stable and/or regular.  Find and plot the impulse response and step response if they exist.
 
 {
@@ -143,12 +143,12 @@ y(t)= \left( \frac{R_iR_0 - R_2R_iA}{(1+A) R_iR_1+R_0R_1+R_2R_1+R_0R_i+R_2R_i} \
       \end{scope}
     \end{scope}
   \end{circuitikz}
-  \caption{Diagram for a rotary direct current (DC) with potentiometer feedback from Exercise~\ref{exer:dcmotorpotfeedback}.} \label{fig:dcmotor}
+  \caption{Diagram for a rotary direct current (DC) with potentiometer feedback from Exercise~\ref{exer:dcmotorpotfeedback}.} \label{fig:dcmotorpotfeedback}
 \end{figure}
 }
 
 \begin{solution}
-The input voltage to the DC motor is $v - \theta$.  From~(\ref{eq:dcmotordiffequation}) of the lecture notes the relationship between the input voltage and motor angle is
+The input voltage to the DC motor is $v - \theta$.  From~(\zref{eq:dcmotordiffequation}) of the lecture notes the relationship between the input voltage and motor angle is
 \[
 v - \theta = \left(\frac{RB}{K_\tau} + K_b\right) D(\theta) + \frac{RJ}{K_\tau} D^2(\theta)
 \] 
@@ -171,7 +171,7 @@ The signals $v$ and $\theta$ are plotted in the figure below.  Observe that as $
   \centering
   \defaultanimation{tikzfigs/dcmotorstabilised}
 %\animategraphics[autoplay,loop,every=\every]{\defaultframerate}{}{}{}
-  \caption{Voltage and corresponding angle for a electromechanical system in Figure~\ref{} with constants $L =0$, $R = \tfrac{3}{4}$, and$K_b=K_\tau=B=J=1$.} \label{fig:dcmotoranim}
+  \caption{Voltage and corresponding angle for the dc motor with potentiometer in Figure~\ref{fig:dcmotorpotfeedback} with constants $L =0$, $R = \tfrac{3}{4}$, and$K_b=K_\tau=B=J=1$.} \label{fig:dcmotorpotfeedbackdcmotoranim}
 \end{figure}
 
 

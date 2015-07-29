@@ -165,9 +165,9 @@ and so $x$ is absolutely integrable.  The integral
 and so $x$ is not square integrable.
 \end{solution}
 
-\item \label{excer:energyexpchangevar} Compute the energy of the signal $e^{-\alpha^2 t^2}$ (Hint: use equation~\eqref{eq:expabssum} on page~\pageref{eq:expabssum} and a change of variables).
+\item \label{excer:energyexpchangevar} Compute the energy of the signal $e^{-\alpha^2 t^2}$ (Hint: use equation~\zeqref{eq:expabssum} on page~\zpageref{eq:expabssum} and a change of variables).
 \begin{solution}
-From~\eqref{eq:expabssum} we the energy of $e^{-t^2}$ is $\sqrt{\pi}$.  Now
+From~\zeqref{eq:expabssum} we the energy of $e^{-t^2}$ is $\sqrt{\pi}$.  Now
 \[
 \int_{-\infty}^\infty e^{-\alpha t^2} dt = \frac{1}{\alpha}\int_{-\infty}^\infty e^{-\tau^2} d\tau = \frac{\sqrt{\pi}}{\alpha}
 \]
@@ -212,7 +212,7 @@ so the step function $u$ is not differentiable at $t = 0$.  A similar argument a
 %\]
 %\end{solution}
 
-\item \label{exer:L1L2linearshiftinvariant} Show that the set of absolutely integrable signals $L^1$ and the set of square integrable signals $L^2$ are linear spaces and that they are shift-invariant. 
+\item \label{exer:L1L2linearshiftinvariant} Show that the set of locally integrable signals $L_{\text{loc}}$, the absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear shift-invariant spaces. 
 \begin{solution}
 Let $x, y \in L^1$ and $a, b \in \complex$.  Now
 \begin{align*}
@@ -227,7 +227,7 @@ and so $ax + by \in L_1$ and $L_1$ is a linear space.  Also
 &= \int_{-\infty}^\infty \abs{x(k)} dk \qquad \text{change variable $k = t - \tau$}
 &= \|x\|_1 < \infty
 \end{align*}
-and so $L_1$ is shift-invariant.
+and so $L_1$ is a shift-invariant space.
 
 Now
 \begin{align*}
@@ -248,20 +248,20 @@ and $L_2$ is thus a linear space.  Also
 \[
 \|T_\tau x\|_2^2 = \int_{-\infty}^\infty \abs{ T_\tau x(t) }^2 dt = \int_{-\infty}^\infty \abs{x(t - \tau)}^2 dt = \int_{-\infty}^\infty \abs{x(t)}^2 dt = \|x\|_2^2 < \infty
 \]
-and so $L_2$ is shift-invariant.
+and so $L_2$ is a shift-invariant space.
 \end{solution}
 
-\item \label{exer:periodicshiftinvariantnotlinear} Show that the set of periodic signals is shift-invariant, but is not a linear space.
+\item \label{exer:periodicshiftinvariantnotlinear} Show that the set of periodic signals is a shift-invariant space, but not a linear space.
 
-\item \label{exer:boundedlinearshiftinvar} Show that the set of bounded signals is shift-invariant and is a linear space.
+\item \label{exer:boundedlinearshiftinvar} Show that the set of bounded signals is a linear shift-invariant space.
 
-\item \label{exer:boundconstantnotlinear} Let $K > 0$ be a fixed real number. Show that the set of signals bounded below $K$ is shift invariant, but is not a linear space. 
+\item \label{exer:boundconstantnotlinear} Let $K > 0$ be a fixed real number. Show that the set of signals bounded below $K$ is a shift invariant space, but not a linear space. 
 
-\item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant.
+\item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant spaces.
 
-\item \label{excer:integratornotstable} Show that the integrator $I_a$ for any $a\in\reals$ is not  stable.
+\item \label{excer:integratornotstable} Show that the integrator $I_a : L_{\text{loc}} \to \reals \to \complex$ for any $a\in\reals$ is not stable.
 \begin{solution}
-Put $M > 1$.  The shifted step function $u(t + a)$ is bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
+Put $M > 1$.  The shifted step function $u(t + a)$ is locally integrable and bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
 \[
 I_au(t+a) = \int_{-a}^t u(\tau + a)d\tau = \begin{cases}
 \int_{-a}^t d\tau = t + a & t \geq -a \\
@@ -323,7 +323,34 @@ The signal $p_a$ and the response $Dp_a$ are plotted below for $a = \tfrac{1}{2}
     \end{scope}
   \end{tikzpicture}
 \end{center}
+
+
+Another solution was suggested by Badri Vellambi.  Consider the signal $x(t) = \sin( t^2)$ plotted in the figure below.  This signal is bounded below any $M > 1$.  The response of the differentiator is $Dx(t) = 2t \cos(t^2)$ and this is not bounded.
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=2,xscale=0.4]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-6,0) -- (6,0) node[above] {$t$};
+    \draw[->] (0,-1.5) -- (0,1.5) node[right] {$\sin(t^2)$};
+    \draw[smooth,color=black,thick,domain=-5.5:5.5,samples=200] plot function{sin(x*x)};
+    \end{scope}
+  \end{tikzpicture}
+\;\;
+  \begin{tikzpicture}
+    \begin{scope}[xscale=0.4]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-6,0) -- (6,0) node[above] {$t$};
+    \draw[->] (0,-3) -- (0,3) node[right] {$2t \cos(t^2)$};
+    \begin{scope}[yscale=0.25] 
+      \draw[smooth,color=black,thick,domain=-5.5:5.5,samples=200] plot function{2*x*cos(x*x)};
+    \end{scope}
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
 \end{solution}
+
 
 \item Show that the shifter $T_\tau$ is linear and shift-invariant and that the time-scaler is linear, but not time invariant.
 \begin{solution}
@@ -355,9 +382,9 @@ H T_1 \Pi = \Pi( 2 t - 1 ) \neq \Pi( 2t - 2 ) = T_1 H \Pi .
 
 %\item \label{excer:difflLTI} Show that the $k$th differentiator $D^k(x,t) = \tfrac{d^k}{dt^k} x(t)$ is linear and time-invariant
 
-\item Show that the integrator $I_c$ with $c$ finite is linear, but not shift-invariant.
+\item Show that the integrator $I_c \in L_{\text{loc}} \to \reals \to \complex$ with $c$ finite is linear, but not shift-invariant.
 \begin{solution}
-The system is linear because
+The system is linear because, if $x, y \in L_{\text{loc}}$, then
 \begin{align*}
 I_c(ax + by) &= \int_{-c}^t ax(\tau) + b y(\tau) d\tau \\
 &= a\int_{-c}^t x(\tau) d\tau + b \int_{-c}^t y(\tau) d\tau \\
@@ -365,19 +392,19 @@ I_c(ax + by) &= \int_{-c}^t ax(\tau) + b y(\tau) d\tau \\
 \end{align*}
 The system is not shift-invariant because
 \[
-T_k\big(I_c(x)\big) = I_c(x,t-k) = \int_{-c}^{t-k} x(\tau) d\tau 
+T_k I_c x = I_c(x,t-k) = \int_{-c}^{t-k} x(\tau) d\tau 
 \]
 but
 \[
 I_c T_k x = \int_{-c}^{t} x(\tau-k) d\tau.
 \]
-We now need only find some signal $x$ for which the integrals on the right hand side of the above equations are not equal.  Choose the signal $x = 1$, i.e., the signal that is equal to $1$ for all time.  In this case
+We now need only find some signal $x \in L_{\text{loc}}$ for which the integrals on the right hand side of the above equations are not equal.  Choose the signal $x = 1$, i.e., the signal that is equal to $1$ for all time.  In this case
 \[
 T_k I_c 1 = \int_{-c}^{t-k} d\tau =  t-k+c \neq t + c = \int_{-c-k}^{t-k} d\tau = I_c T_k 1 \qquad \text{when $k \neq 0$.}
 \]
 \end{solution}
 
-\item Show that the integrator $I_\infty$ is linear and shift-invariant.
+\item Show that the integrator $I_\infty : L^1 \to \reals \to \complex$ is linear and shift-invariant.
 \begin{solution}
 The system is linear because
 \begin{align*}

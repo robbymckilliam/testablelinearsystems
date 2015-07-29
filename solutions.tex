@@ -21,10 +21,11 @@
 
 \usepackage{mdframed}
 \usepackage{animate}
+\usepackage{comment}
 
 %turn animations on/off
 \newif\ifanimations %default is off
-\animationstrue %uncomment to turn animations on.
+%\animationstrue %uncomment to turn animations on.
 \ifanimations
 \newcommand{\defaultframerate}{16}
 \newcommand{\defaultanimation}[1]{\animategraphics[autoplay,loop]{\defaultframerate}{#1}{}{}}
@@ -133,16 +134,7 @@ cross/.default={1pt}
 
 \newcommand{\onebf}{\mathbf{1}}
 
-%turn excersize solutions on/off
-\newif\ifsolutions %default is off
-%\solutionstrue %uncomment to turn solutions on.
-
-\usepackage{comment}
-\ifsolutions
-  \newenvironment{solution}{\begin{footnotesize}\textbf{Solution:}}{\end{footnotesize}}
-\else
-  \excludecomment{solution}
-\fi
+\newenvironment{solution}{\begin{footnotesize}\textbf{Solution:}}{\end{footnotesize}}
 
 \usepackage{framed,xcolor}
 \definecolor{shadecolor}{gray}{0.92}
@@ -158,12 +150,7 @@ cross/.default={1pt}
 \end{shaded}
 }
 
-%\newcommand{\mytitle}{Signals and Systems}
-\ifsolutions
 \newcommand{\mytitle}{Testable linear shift invariant systems (Exercise~Solutions)}
-\else
-\newcommand{\mytitle}{Testable linear shift invariant systems}
-\fi
 \title{\mytitle}
 \author{Robby McKilliam}
 
@@ -223,6 +210,9 @@ cross/.default={1pt}
 }
 
 
+\usepackage{zref-xr,zref-user}
+\zexternaldocument*{main}
+\newcommand{\zeqref}[1]{(\zref{#1})}
 
 \begin{document}
 
@@ -230,25 +220,30 @@ cross/.default={1pt}
 \pagestyle{front}
 \maketitle
 
+\setcounter{tocdepth}{1}
+
+\tableofcontents
+%\listoffigures
+  
 \mainmatter
 \pagestyle{main}
 
 \chapter{Signals and systems}
  \input{chap_signals_and_systems_exercises.tex}
 
-\chapter{Systems modelled by differential equations}\label{sec:syst-modell-diff}
+\chapter{Systems modelled by differential equations}
  \input{chap_differential_equations_exercises.tex}
 
-\chapter{Linear time invariant systems}\label{sec:prop-line-time}
+\chapter{Linear time-invariant systems}
  \input{chap_linear_time_invariant_systems_exercises.tex}
 
-\chapter{The Laplace transform} \label{sec:laplace-transform}
+\chapter{The Laplace transform} 
  \input{chap_laplace_transform_exercises.tex}
 
-\chapter{The Fourier transform}\label{sec:fourier-transform}
+\chapter{The Fourier transform}
  \input{chap_fourier_transform_exercises.tex}
 
-\chapter{Discrete time systems} \label{cha:discr-time-syst}
+\chapter{Discrete time systems}
  \input{chap_discrete_time_systems_exercises.tex}
 
 %\clearpage
@@ -257,44 +252,10 @@ cross/.default={1pt}
 %\nocite{Rudin_real_and_complex_analysis}
 %\nocite{Papoulis_signal_analysis_1977}
 
-%\pagestyle{back}
+\pagestyle{back}
 
 %\clearpage
-%\bibliography{bib}
-
+\input{main.bbl}
 
 
 \end{document}
-
-
-% \documentclass{book}
-             
-% \usepackage{mathbf-abbrevs} 
-
-% \include{defs}
-% %\setcounter{tocdepth}{1}
-              
-% %\makenomenclature
-                 
-% \begin{document}
-
-
-% \title{Signal and Systems}
-% \author{Robby G. McKilliam}
-
-% \maketitle
-
-
-
-%NOTES for Jorge:
-% - Students didn't know what a p-series was, in particular they didn't know that the harmonic series diverges.  This was needed for showing some signals (for example sinc) are not absolutely integrable.
-% - Having seen epsilon-delta defn of a limit would be useful (though not completely required)
-% - Some students struggle to plot simple functions!
-% - Absolutely integrable and square integrable and examples of these (Lp spaces)
-
-%%% Local Variables:
-%%% TeX-source-correlate-mode: t
-%%% TeX-synctex-tex-flags: "-synctex=1 -shell-escape"
-%%% mode: latex
-%%% TeX-master: t
-%%% End: 

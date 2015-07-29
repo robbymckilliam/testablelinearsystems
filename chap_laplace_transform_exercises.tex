@@ -89,7 +89,7 @@ We have
 \end{solution}
 
 
-\item \label{exer:laplacetransdiffandtimeshift} Show that equation~\eqref{eq:transferLaplcetheorem} on page~\pageref{eq:transferLaplcetheorem} holds when the system $H$ is the differentiator $D^k$ or the time shifter $T_\tau$. 
+\item \label{exer:laplacetransdiffandtimeshift} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ is the differentiator $D^k$ or the time shifter $T_\tau$. 
 \begin{solution}
 Put $y = T_\tau(x) = x(t- \tau)$.  Taking Laplace transforms
 \begin{align*}
@@ -272,9 +272,9 @@ y(t) = - e^{-2t} u(-t) - e^{t} u(-t) \qquad \Re(s) < -2.
 \]
 \end{solution}
 
-\item \label{excer:timescalelaplace} Let $x$ be a signal with region of convergence $R$.  Show that the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ satisfies equation~\eqref{eq:timescalingpropertrylaplacetrans} on page~\pageref{eq:timescalingpropertrylaplacetrans}.
+\item \label{excer:timescalelaplace} Let $x$ be a signal with region of convergence $R$.  Show that the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ satisfies equation~\zeqref{eq:timescalingpropertrylaplacetrans} on page~\zpageref{eq:timescalingpropertrylaplacetrans}.
 \begin{solution}
-First consider when $\alpha = -1$ so that $x(-t)$ is the reflection of the signal $x$ in time (see Section~\ref{sec:some-import-syst}).  We have 
+First consider when $\alpha = -1$ so that $x(-t)$ is the reflection of the signal $x$ in time (see Section~\zref{sec:some-import-syst}).  We have 
 \begin{align*}
  \calL\big( x(-t), s \big) &=  \int_{-\infty}^{\infty} x(-t)  e^{-s t} dt \\
  &=  -\int_{\infty}^{-\infty} x(\tau)  e^{s\tau} d\tau & \text{(change variable $\tau = -t$)}\\
@@ -312,7 +312,7 @@ as required.
 % \end{verbatim}
 % \end{solution}
 
-\item Consider the active electrical circuit from Figure~\ref{elec:activeRC} described by the differential equation from~\eqref{eq:twoaparrarrelRCactive}.  Derive the transfer function of this system.  Find an explicit system $H$ that maps the input voltage $x$ to the output voltage $y$.  State whether this system is stable and/or regular.
+\item Consider the active electrical circuit from Figure~\zref{elec:activeRC} described by the differential equation from~\zeqref{eq:twoaparrarrelRCactive}.  Derive the transfer function of this system.  Find an explicit system $H$ that maps the input voltage $x$ to the output voltage $y$.  State whether this system is stable and/or regular.
 \begin{solution}
 The differential equation modelling the circuit is
 \[
@@ -334,14 +334,14 @@ The first term $-\frac{\alpha + \gamma\beta}{\beta + s}$ corresponds with a regu
 \[
 h_2 = -(\alpha + \gamma\beta) u(t) e^{-\beta t}
 \]
-by using the Laplace transform pair from~\eqref{eq:laplacetneucommon} with the integer $n=0$.  The term $-\gamma$ correspond with the system $H_1 = \gamma T_0$, i.e, the identity system multiplied by $-\gamma$.  The system $H$ that describes the mapping between input voltage $x$ and output voltage $y$ is thus
+by using the Laplace transform pair from~\zeqref{eq:laplacetneucommon} with the integer $n=0$.  The term $-\gamma$ correspond with the system $H_1 = \gamma T_0$, i.e, the identity system multiplied by $-\gamma$.  The system $H$ that describes the mapping between input voltage $x$ and output voltage $y$ is thus
 \[
 H(x) = H_1(x) + H_2(x) = -\gamma x + h_2 * x.
 \]
 The system is not regular because the $H_1$ is not regular.  The system is stable because $H_1$ is stable and $H_2$ is stable because the impulse response $h_2$ is absolutely integrable since $\beta = \tfrac{1}{R_2C_2} > 0$.  Equivalently the system is not regular because the transfer function does not have more poles than zero, and the system is stable because the transfer function has at least as many poles as zeros (equal in this case), and because all the poles lie strictly in the left half plane. 
 \end{solution}
 
-\item \label{exer:massspringdamperrect} Given the mass spring damper system described by~\eqref{eq:masspringeqseclapltrans}, find the position signal $p$ given that the force signal 
+\item \label{exer:massspringdamperrect} Given the mass spring damper system described by~\zeqref{eq:masspringeqseclapltrans}, find the position signal $p$ given that the force signal 
 \[
 f(t) = \rect\big(t-\tfrac{1}{2}\big) = \begin{cases}
 1 & 0 < t \leq 1 \\
@@ -364,7 +364,7 @@ and so, the response of the linear, time invariant system $H$ modelling the mass
 \[
 H(f) = H\big(u - T_{1}(u)\big) = H(u) - T_{1}\big(H(u)\big),
 \]
-and so, $H(f,t) = H(u,t) - H(u,t-1)$, where $H(u)$ is the step response of the system.  The step responses are described in Section~\ref{sec:second-order-systems}.  As described in Section~\ref{sec:second-order-systems}, the system is underdamped when $B = \tfrac{\pi}{3}$, critically damped when $B = \pi$ and overdamped when $B = 2\pi$.
+and so, $H(f,t) = H(u,t) - H(u,t-1)$, where $H(u)$ is the step response of the system.  The step responses are described in Section~\zref{sec:second-order-systems}.  As described in Section~\zref{sec:second-order-systems}, the system is underdamped when $B = \tfrac{\pi}{3}$, critically damped when $B = \pi$ and overdamped when $B = 2\pi$.
 \end{solution}
 
 \item Plot the signal $x(t) = \sin(t e^t) u(t)$ and find and plot its derivative $D(x)$.  Show that the region of convergence of $x$ contains those complex numbers $s$ with $\Re(s) > 0$ and that the region of convergence of $D(x)$ contains those with $\Re(s) > 1$.
