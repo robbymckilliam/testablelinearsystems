@@ -1,238 +1,208 @@
-% \newcommand {\tit}[1] {\textit{#1}}
-% \newcommand {\tmd}[1] {\textmd{#1}}
-% \newcommand {\trm}[1] {\textrm{#1}}
-% \newcommand {\tsc}[1] {\textsc{#1}}
-% \newcommand {\tsf}[1] {\textsf{#1}}
-% \newcommand {\tsl}[1] {\textsl{#1}}
-% \newcommand {\ttt}[1] {\texttt{#1}}
-% \newcommand {\tup}[1] {\textup{#1}}
+%\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[11pt,a4paper]{book}
+%\documentclass[11pt,a4paper]{memoir}
+%\documentclass{amsbook}
+%\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
 
-% \newcommand {\mmd}[1] {\mathmd{#1}}
-% \newcommand {\mrm}[1] {\mathrm{#1}}
-% \newcommand {\msc}[1] {\mathsc{#1}}
-% \newcommand {\msf}[1] {\mathsf{#1}}
-% \newcommand {\msl}[1] {\mathsl{#1}}
-% \newcommand {\mtt}[1] {\mathtt{#1}}
-% \newcommand {\mup}[1] {\mathup{#1}}
+%\usepackage{fullpage}
+%\usepackage{times}
+%\usepackage[squaren]{SIunits}
+\usepackage[binary-units=true]{siunitx}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings,dsp,chains}
+%\usetikzlibrary{external}
+%\tikzexternalize % activate!
+%\tikzexternalize[prefix=tikzexternal/]
+%\tikzset{external/mode=list and make}
+%\tikzset{external/check=diff}
+%\tikzset{external/force remake}
+
+\usepackage{mdframed}
+\usepackage{animate}
+
+%turn animations on/off
+\newif\ifanimations %default is off
+\animationstrue %uncomment to turn animations on.
+\ifanimations
+\newcommand{\defaultframerate}{16}
+\newcommand{\defaultanimation}[1]{\animategraphics[autoplay,loop]{\defaultframerate}{#1}{}{}}
+\else
+\newcommand{\defaultanimation}[1]{\includegraphics[page=1]{#1}}
+\fi
+
+% Define a the counter cnt. Used to identify files generated for use
+% with Gnuplot.
+\newcounter{cnt}
+\setcounter{cnt}{0}
+\makeatletter
+\newcommand{\gettikzxy}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@x}%
+  \edef#3{\the\pgf@y}%
+}
+\usepackage{pgfplots}
+\pgfplotsset{
+compat=newest
+%every axis/.append style={y tick label style={set thousands separator={}}}
+}
+%\usepgflibrary{fpu}
+\makeatother
+
+\usepackage[small]{caption}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{placeins}
+
+\bibliographystyle{robbythesis}
+\usepackage[square]{natbib}
+
+\usepackage[hidelinks]{hyperref}
+
+% You can add more of these if it is helpful.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{result}{Result}
+%\newmdtheoremenv[skipabove=\baselineskip, skipbelow=\baselineskip]{test}{Test}
+\numberwithin{equation}{section}
 
 %some math functions and symbols
-\newcommand{\round}[1]{\left\lceil #1 \right\rfloor}
-\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
-\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
 \newcommand{\reals}{{\mathbb R}}
 \newcommand{\ints}{{\mathbb Z}}
+\newcommand{\naturals}{{\mathbb N}}
 \newcommand{\complex}{{\mathbb C}}
 \newcommand{\integers}{{\mathbb Z}}
-\newcommand{\sign}{\mathtt{sign}}
-\newcommand{\NP}{\operatorname{NearestPt}}
-\newcommand{\NS}{\operatorname{NearestSet}}
-\newcommand{\bres}{\operatorname{Bres}}
-\newcommand{\vol}{\operatorname{vol}}
-\newcommand{\vor}{\operatorname{Vor}}
-\newcommand{\coef}{\operatorname{coef}}
-\newcommand{\eval}{\operatorname{eval}}
-\newcommand{\Int}{\operatorname{Int}}
-\newcommand{\pvec}{\operatorname{vec}}
-\newcommand{\rem}{\operatorname{rem}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\atan}[1]{\operatorname{atan}}
+\newcommand{\rect}{\Pi}
+\newcommand{\sinc}{\operatorname{sinc}}
+
+\newcommand{\term}{\textbf}
 \newcommand{\var}{\operatorname{var}}
 \newcommand{\covar}{\operatorname{covar}}
-\newcommand{\erf}{\operatorname{erf}}
-\newcommand{\adj}{\operatorname{adj}}
-\newcommand{\pad}{\operatorname{pad}}
-\newcommand{\dealias}{\operatorname{dealias}}
+%\newcommand{\prob}{{\mathbb P}}
 \newcommand{\prob}{\operatorname{Pr}}
+\newcommand{\expect}{{\mathbb E}}
+\newcommand{\dealias}{\operatorname{dealias}}
+\renewcommand{\mid}{\; ; \;}
 
-%distribution fucntions
-\newcommand{\projnorm}{\operatorname{ProjectedNormal}}
-\newcommand{\vonmises}{\operatorname{VonMises}}
-\newcommand{\wrapnorm}{\operatorname{WrappedNormal}}
-\newcommand{\wrapunif}{\operatorname{WrappedUniform}}
-
-%sorting and selecting
-\newcommand{\selectindicies}{\operatorname{selectindices}}
-\newcommand{\sortindicies}{\operatorname{sortindices}}
-\newcommand{\largest}{\operatorname{largest}}
-\newcommand{\quickpartition}{\operatorname{quickpartition}}
-\newcommand{\quickpartitiontwo}{\operatorname{quickpartition2}}
-
-%caligraphic letters, b means bold.
-\newcommand{\bcalL}{\bm{\mathcal{L}}}
-\newcommand{\bcalX}{\bm{\mathcal{X}}}
-\newcommand{\bcalP}{\bm{\mathcal{P}}}
-\newcommand{\calP}{\mathcal{P}}
-\newcommand{\calR}{\mathcal{R}}
-\newcommand{\calV}{\mathcal{V}}
-
-
-%Brackets
+% Brackets
 \newcommand{\br}[1]{{\left( #1 \right)}}
 \newcommand{\sqbr}[1]{{\left[ #1 \right]}}
 \newcommand{\cubr}[1]{{\left\{ #1 \right\}}}
+\newcommand{\scubr}[1]{{\{ #1 \}}}
 \newcommand{\abr}[1]{\left< #1 \right>}
-\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\sabs}[1]{\vert #1 \vert}
+ \newcommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
 \newcommand{\ceiling}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\round}[1]{{\left\lceil #1 \right\rfloor}}
 \newcommand{\magn}[1]{\left\| #1 \right\|}
-\newcommand{\fracpart}[1]{\left< #1 \right>}
-\newcommand{\dotprod}[2]{ #1 \cdot #2}
+\newcommand{\fracpart}[1]{\left\langle #1 \right\rangle}
+\newcommand{\sfracpart}[1]{\langle #1 \rangle}
 
-%some commonly used underlined and
-%hated symbols
-\newcommand{\uY}{\ushort{\mbf{Y}}}
-\newcommand{\ueY}{\ushort{Y}}
-\newcommand{\uy}{\ushort{\mbf{y}}}
-\newcommand{\uey}{\ushort{y}}
-\newcommand{\ux}{\ushort{\mbf{x}}}
-\newcommand{\uex}{\ushort{x}}
-\newcommand{\uhx}{\ushort{\mbf{\hat{x}}}}
-\newcommand{\uehx}{\ushort{\hat{x}}}
+\newcommand*{\calL}{\mathcal L}
+\newcommand{\calD}{{\mathcal D}}
+\newcommand{\calF}{{\mathcal F}}
+\newcommand{\calZ}{{\mathcal Z}}
 
-\newcommand {\figwidth} {100mm}
-\newcommand {\Ref}[1] {Reference~\cite{#1}}
-\newcommand {\Sec}[1] {Section~\ref{#1}}
-\newcommand {\App}[1] {Appendix~\ref{#1}}
-\newcommand {\Chap}[1] {Chapter~\ref{#1}}
-\newcommand {\etal} {\emph{~et~al.}}
-\newcommand {\bul} {$\bullet$ }   % bullet
-\newcommand {\fig}[1] {Figure~\ref{#1}}   % references Figure x
-\newcommand {\imp} {$\Rightarrow$}   % implication symbol (default)
-\newcommand {\impt} {$\Rightarrow$}   % implication symbol (text mode)
-\newcommand {\impm} {\Rightarrow}   % implication symbol (math mode)
-\newcommand {\vect}[1] {\mathbf{#1}} 
-\newcommand {\hvect}[1] {\hat{\mathbf{#1}}}
-\newcommand {\del} {\partial}
-\newcommand {\eqn}[1] {Equation~(\ref{#1})} 
-\newcommand {\tab}[1] {Table~\ref{#1}} % references Table x
-\newcommand {\half} {\frac{1}{2}} 
-\newcommand {\ten}[1] {\times10^{#1}}
-\newcommand {\bra}[2] {\mbox{}_{#2}\langle #1 |}
-\newcommand {\ket}[2] {| #1 \rangle_{#2}}
-\newcommand {\Bra}[2] {\mbox{}_{#2}\left.\left\langle #1 \right.\right|}
-\newcommand {\Ket}[2] {\left.\left| #1 \right.\right\rangle_{#2}}
-\newcommand {\im} {\mathrm{Im}}
-\newcommand {\re} {\mathrm{Re}}
-\newcommand {\braket}[4] {\mbox{}_{#3}\langle #1 | #2 \rangle_{#4}} 
-%\newcommand {\dotprod}[4] {\mbox{}_{#3}\langle #1 | #2 \rangle_{#4}} 
-\newcommand {\trace}[1] {\text{tr}\left(#1\right)}
+%create pgf cross shape
+\usetikzlibrary{shapes.misc}
 
-% spell things correctly
-\newenvironment{centre}{\begin{center}}{\end{center}}
-\newenvironment{itemise}{\begin{itemize}}{\end{itemize}}
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={1pt}
+}
 
-%algorithm writing package
-\usepackage[vlined, linesnumbered, algochapter]{algorithm2e}
-%\usepackage[vlined, linesnumbered, algochapter, oldcommands]{algorithm2e}
-\SetAlCapFnt{\small}
-\SetAlTitleFnt{textsc}
+%tikz macros
+\newcommand{\polezeroaxis}[1]{   
+  \draw [<->] (-#1,0) -- (#1,0) node [above left]  {$\Re$};
+  \draw [<->] (0,-#1) -- (0,#1) node [below right] {$\Im$};
+ }
+\newcommand{\zerotikz}[2]{ \node[draw,thick,circle,inner sep=1.75pt] at (#1,#2) {}; }
+\newcommand{\poletikz}[2]{ \node[draw,thick,cross=0.1cm] at (#1,#2) {}; }
 
-%\usepackage{play}
-%\usepackage[grey,times]{quotchap}
-\usepackage[times]{quotchap}
-%\usepackage{makeidx}
+\newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
+\newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}
 
-%%%%% set up the bibliography style
-\bibliographystyle{plainnat}
-%\bibliographystyle{robbythesis}
-%\bibliographystyle{anuthesis}
-%\bibliographystyle{uqthesis}  % uqthesis bibliography style file, made
-			      % with makebst
+\newcommand{\onebf}{\mathbf{1}}
 
-%%%%% optional packages
-\usepackage[square]{natbib}
-		% this is the natural sciences bibliography citation
-		% style package.  The options here give citations in
-		% the text as numbers in square brackets, separated by
-		% commas, citations sorted and consecutive citations
-		% compressed 
-		% output example: [1,4,12-15]
-		
-%\usepackage{multibib}
-%\newcites{anstar}{ANstat}
-%\newcites{sec}{List of Publications}
-%\usepackage[subsectionbib]{bibunits}
-	%multiple bibliographies, ie a list of publications
-	
-\usepackage{units}
-	%nice looking units
-		
-\usepackage{booktabs}
-		%creates nice looking tables
+\newenvironment{solution}{\begin{footnotesize}\textbf{Solution:}}{\end{footnotesize}}
 
-%glossay package		
-%\usepackage{glossary}
-%\newcommand{\glosterm}[1]{\textbf{#1}}
-%\newcommand{\defglosterm}[2]{\glosterm{#1}\glossary{name={#1}, description={#2}}}
-%\makeglossary
+\usepackage{framed,xcolor}
+\definecolor{shadecolor}{gray}{0.92}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+%\usepackage{shaded}
 
-\usepackage{makeidx}
-\newcommand{\keywordfront}[1]{\textbf{#1}}
-%notation use when defining terms.
-\newcommand{\term}[1]{\keywordfront{#1}}
-\makeindex
-		
-  \usepackage[pdftex]{graphicx}
-%  \usepackage{thumbpdf}
-  %\usepackage[naturalnames]{hyperref}
-%  \usepackage{hyperref}
- % \DeclareGraphicsRule{*}{mps}{*}{}
+%enviroment for the practical tests (in a grey box)
+\newcounter{test}
+\newenvironment{test}{
+\begin{shaded}\refstepcounter{test}\par\noindent%
+\textbf{Test \thetest}
+}{
+\end{shaded}
+}
 
-\usepackage{amsmath,amsfonts,amssymb, amsthm} % this is handy for mathematicians and physicists
-			      % see http://www.ams.org/tex/amslatex.html
+\title{Testable linear shift invariant systems (Exercise~Solutions)}
+\author{Robby McKilliam}
 
-%\usepackage[intoc]{nomencl}
-%\usepackage{showkeys} % this shows what labels you are using for cross
-		      % references
-		      
-	
-\usepackage{mathrsfs}
-%fancy math script
+% setup *'d (advanced) sections
+% turn advanced section on/off
+\newif\ifadvanced %default is off
+%\advancedtrue %uncomment to turn advanced sections on.
+\usepackage[pagestyles,raggedright]{titlesec}
+\usepackage{titletoc}
+%\usepackage{titleps}
+\newcommand{\secmark}{}
+\newcommand{\marktotoc}[1]{\renewcommand{\secmark}{#1}}
+\ifadvanced
+\newenvironment{advanced}{
+  \renewcommand{\secmark}{*}%
+  \addtocontents{toc}{\protect\marktotoc{*}}
+}
+{\addtocontents{toc}{\protect\marktotoc{}}}
+\else
+\excludecomment{advanced}
+\fi
+\titleformat{\section}{\normalfont\Large}{\makebox[1.5em][l]{\llap{\secmark}\thesection}}{0.4em}{}
+\titlecontents{section}[3.7em]{}{\contentslabel[\llap{\secmark}\thecontentslabel]{2.3em}}{\hspace*{-2.3em}}{\titlerule*{}\bfseries\contentspage}
+\newpagestyle{front}{%
+  %\headrule
+  \sethead[\thepage][][\subsectiontitle]{\sectiontitle}{}{\thepage}
+  \setfoot[][][]{}{}{}
+}
 
-\usepackage{ushort}
-%enable good underlining in math mode
+\newpagestyle{main}{%
+  %\headrule
+  \sethead[\thepage][][\mytitle]{\llap{\secmark}\thesection\quad\sectiontitle}{}{\thepage}
+  \setfoot[][][]{}{}{}
+}
+\newpagestyle{back}{%
+  %\headrule
+  \sethead[\thepage][][\mytitle]{\sectiontitle}{}{\thepage}
+  \setfoot[][][]{}{}{}
+}
 
-%subfigures
-\usepackage{subfigure}
+%for randomly floating stuff, e.g. the tests 
+\newenvironment{randomfloat}{
+\begin{figure}
+}{
+\end{figure}
+\addtocounter{figure}{-1}
+}
 
-\usepackage[nottoc]{tocbibind}  
-				% allows the table of contents, bibliography
-				% and index to be added to the table of
-				% contents if desired, the option used
-				% here specifies that the table of
-				% contents is not to be added.
-				% tocbibind needs to be after natbib
-				% otherwise bits of it get trampled.
-				
-		 
-	
-%------------------------------------------------------------
-% Theorem like environments
-%
-\newtheorem{theorem}{Theorem}[chapter]
-\theoremstyle{plain}
-\newtheorem{acknowledgement}{Acknowledgement}[chapter]
-%\newtheorem{algorithm}{Algorithm}
-\newtheorem{axiom}{Axiom}[chapter]
-\newtheorem{case}{Case}[chapter]
-\newtheorem{claim}{Claim}[chapter]
-\newtheorem{conclusion}{Conclusion}[chapter]
-\newtheorem{condition}{Condition}[chapter]
-\newtheorem{conjecture}{Conjecture}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{criterion}{Criterion}[chapter]
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{example}{Example}[chapter]
-\newtheorem{exercise}{Exercise}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{notation}{Notation}[chapter]
-\newtheorem{problem}{Problem}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\newtheorem{remark}{Remark}[chapter]
-\newtheorem{solution}{Solution}[chapter]
-\newtheorem{summary}{Summary}[chapter]
-\newtheorem{result}{Result}[chapter]
-\numberwithin{equation}{section}
-%--------------------------------------------------------
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: "writen_component"
-%%% End: 
+\newenvironment{excersizelist}{%
+  \renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
+  \newcommand\itemadvanced{\stepcounter{enumi}\item[$\ast$\, \theenumi.]}
+  %\renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
+  %\renewcommand*{\labelenumi}{(\arabic{enumi})}%
+  \begin{enumerate}
+}{%
+  \end{enumerate}
+}
