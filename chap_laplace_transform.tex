@@ -1,17 +1,18 @@
-Let $x \colon \reals \to \complex$ be a complex valued function of the real line (a signal).  The function
+Let $x$ be a signal.  We denote by $\calL x$ the complex valued function satisfying
 \begin{equation}\label{eq:laplace_defn}
-\calL(x) = \int_{-\infty}^{\infty} x(t) e^{-st} dt
+\calL x(s) = \int_{-\infty}^{\infty} x(t) e^{-st} dt
 \end{equation}
-is called the \term{Laplace transform} of $x$.  The Laplace transform is a function of the complex parameter $s$ and if we need to indicate this we write $\calL(x)(s)$ or $\calL(x,s)$.  The Laplace transform $\calL(x)$ is not necessarily defined for all values of $s \in \complex$.  
-Let $R$ be the set of real numbers such that $x(t) e^{-\sigma t}$ is absolutely integrable if and only if $\sigma \in R$, that is
+called the \term{Laplace transform} of $x$.  The Laplace transform $\calL x(s)$ is not necessarily defined for all complex numbers $s \in \complex$.  
+Let $R_x$ be the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable, that is,
 \[
-\int_{-\infty}^{\infty} \abs{x(t)} e^{-\sigma t} dt < \infty  \qquad \text{if and only if $\sigma \in R$}.
+\int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty  \qquad \text{if and only if $s \in R_x$}.
 \]
-In this case, $\calL(x,s)$ is finite for all $s$ with real part satisfying $\Re(s) \in R$ because 
+The set $R_x \subseteq \complex$ is called the \term{region of convergence} of the signal $x$.  The Laplace transform $\calL x(s)$ is finite for all $s \in R_x$ because 
 \[
-\sabs{\calL(x,s)} = \abs{\int_{-\infty}^{\infty} x(t) e^{-st} dt} \leq \int_{-\infty}^{\infty} \abs{x(t)} e^{-\Re(s) t} dt < \infty.
+\sabs{\calL x(s)} = \abs{\int_{-\infty}^{\infty} x(t) e^{-st} dt} \leq \int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty
 \]
-The subset of the complex plane with real part from $R$ is called the \term{region of convergence} (ROC) of the signal $x$.  %Observe that $x$ is absolutely integrable if and only if its region of convergence contains the imaginary axis.
+for all $s \in R_x$.  We take $R_x$ as the domain of $\calL x$ and so $\calL x \in R_x \to \complex$.  That is, the Laplace transform of a signal is a complex valued function of the region of convergence of that signal.
+
 
 For example, the Laplace transform of the right sided signal $e^{ \alpha t}u(t)$ is
 \begin{align*}
