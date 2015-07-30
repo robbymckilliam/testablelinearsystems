@@ -3,52 +3,59 @@ Let $x$ be a signal.  We denote by $\calL x$ the complex valued function satisfy
 \calL x(s) = \int_{-\infty}^{\infty} x(t) e^{-st} dt
 \end{equation}
 called the \term{Laplace transform} of $x$.  The Laplace transform $\calL x(s)$ is not necessarily defined for all complex numbers $s \in \complex$.  
-Let $R_x$ be the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable, that is,
+Let $\roc(x)$ be the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable, that is,
 \[
-\int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty  \qquad \text{if and only if $s \in R_x$}.
+\int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty  \qquad \text{if and only if $s \in \roc(x)$}.
 \]
-The set $R_x \subseteq \complex$ is called the \term{region of convergence} of the signal $x$.  The Laplace transform $\calL x(s)$ is finite for all $s \in R_x$ because 
+The set $\roc(x) \subseteq \complex$ is called the \term{region of convergence} of the signal $x$.  The Laplace transform $\calL x(s)$ is finite for all $s \in R(x)$ because 
 \[
 \sabs{\calL x(s)} = \abs{\int_{-\infty}^{\infty} x(t) e^{-st} dt} \leq \int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty
 \]
-for all $s \in R_x$.  We take $R_x$ as the domain of $\calL x$ and so $\calL x \in R_x \to \complex$.  That is, the Laplace transform of a signal is a complex valued function of the region of convergence of that signal.
+for all $s \in \roc(x)$.  We take $\roc(x)$ as the domain of $\calL x$ and so $\calL x \in \roc(x) \to \complex$.  That is, the Laplace transform of a signal is a complex valued function of the region of convergence of that signal.
 
+%\section{The region of convergence}
 
-For example, the Laplace transform of the right sided signal $e^{ \alpha t}u(t)$ is
+Consider the right sided signal $e^{ \alpha t}u(t)$.  This signal has region of convergence given by all those complex number with real part greater than the real part of $\alpha$, that is,
+\[
+\roc(e^{ \alpha t}u(t)) = \{ s \in \complex \mid \Re(s) > \Re(\alpha) \}.
+\]
+Figure~\ref{fig:rocexample1} shows the region of convergence when $\Re(\alpha) = -2$.  The Laplace transform of $e^{ \alpha t}u(t)$ is
 \begin{align*}
-\calL(e^{ \alpha t}u(t)) &= \int_{-\infty}^{\infty} e^{ \alpha t} e^{-st} u(t) dt \\
-&= \int_{0}^{\infty} e^{(\alpha - s)t} dt \\
-&= \lim_{t\rightarrow\infty}\frac{e^{(\alpha-s)t}}{\alpha - s} - \frac{1}{\alpha-s}.
+\calL(e^{ \alpha t}u(t)) = \int_{-\infty}^{\infty} e^{ \alpha t} e^{-st} u(t) dt = \int_{0}^{\infty} e^{(\alpha - s)t} dt = \lim_{t\rightarrow\infty}\frac{e^{(\alpha-s)t}}{\alpha - s} - \frac{1}{\alpha-s}.
 \end{align*}
-The limit converges for all $s$ with $\Re(\alpha - s) <0$.  Thus, the Laplace transform of $e^{\alpha t}u(t)$ is
+The limit converges to zero when $\Re(\alpha - s) < 0$, that is, when $s \in \roc(e^{ \alpha t}u(t))$.  Thus, the Laplace transform is
 \[
-\calL(e^{ \alpha t}u(t)) = \frac{1}{s-\alpha} \qquad \Re(s) > \Re(\alpha)
+\calL(e^{ \alpha t}u(t)) = \frac{1}{s-\alpha} \qquad \Re(s) > \Re(\alpha).
 \]
-The region of convergence of $e^{\alpha t}u(t)$ is the subset of the complex plane with real part greater than $\Re(\alpha)$.  Figure~\ref{fig:rocexample1} shows the region of convergence when $\Re(\alpha) = -2$.  Now consider the left sided signal $e^{\beta t}u(-t)$ with Laplace transform
+Now consider the left sided signal $e^{\beta t}u(-t)$.  The region of convergence is 
 \[
-\calL(e^{\beta t}u(-t)) = \lim_{t\rightarrow -\infty}\frac{e^{(\beta-s)t}}{\beta - s} + \frac{1}{\beta-s}.
+\roc(e^{ \beta t}u(-t)) = \{ s \in \complex \mid  \Re(s) < \Re(\beta) \}
 \]
-The limit converges when $\Re(\beta - s) > 0$, and so,
+and the Laplace transform is
 \[
-\calL(e^{\beta t}u(-t)) = \frac{1}{\beta-s} \qquad \Re(s) < \Re(\beta).
+\calL(e^{\beta t}u(-t)) = \lim_{t\rightarrow -\infty}\frac{e^{(\beta-s)t}}{\beta - s} + \frac{1}{\beta-s} = \frac{1}{\beta-s} \qquad \Re(s) < \Re(\beta).
 \]
-The region of convergence of $e^{\beta t}u(-t)$ is those $s \in \complex$ such that $\Re(s) < \Re(\beta)$.  The signal $a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)$ has Laplace transform
+The signal $a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)$ has Laplace transform
 \begin{align*}
 \calL\big( a e^{ \alpha t}u(t) + b e^{\beta t}u(-t) \big) &= \int_{-\infty}^{\infty} \big( a e^{ \alpha t}u(t) + b e^{\beta t}u(-t) \big) e^{-st} dt \\
 &= a \int_{-\infty}^{\infty} e^{ \alpha t}u(t) e^{-st} dt + b\int_{-\infty}^{\infty} e^{\beta t}u(-t)  e^{-st} dt \\
 &= a \calL(e^{ \alpha t}u(t)) + b\calL(e^{\beta t}u(-t))
 \end{align*}
-that is finite only when $\Re(\alpha) < \Re(s) < \Re(\beta)$.  The corresponding ROC is shown in Figure~\ref{fig:rocexample1} when $\Re(\alpha) = -2$ and $\Re(\beta)=3$.   In the previous equation we have discovered that the Laplace transform is \term{linear}, that is, for signals $x$ and $y$ and constants $a$ and $b$,
-\begin{equation}\label{eq:laplacetransislinear}
-\calL(ax + by) = a\calL(x) + b\calL(y).
-\end{equation}
-In words: the Laplace transform of a linear combination of signals is the same linear combination of the Laplace transforms of those signals.
-
-In the previous example the Laplace transform is not finite for any $s$ if $\Re(\alpha) \geq \Re(\beta)$.  The region of convergence is the empty set.  Other signals also have this property.  For example, the signal $x(t) = 1$ because
+with domain given by the region of convergence
 \[
-\calL(1) = \int_{\infty}^\infty e^{-s t} dt = \lim_{t\to -\infty} \frac{e^{-st}}{s} -  \lim_{t\to \infty} \frac{e^{-st}}{s}
+\roc(a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)) = \{ s \in \complex \mid  \Re(\alpha) < \Re(s) < \Re(\beta) \}.
 \] 
-and the limit as $t\to-\infty$ converges only when $\Re(s) < 0$ while the limit as $t \to \infty$ converges only when $\Re(s) > 0$.  %We can similarly show that any periodic signal does not have a Laplace transform (Exercise~\ref{excer:periodicnolaplace}).
+This region is shown in Figure~\ref{fig:rocexample1} when $\Re(\alpha) = -2$ and $\Re(\beta)=3$.   In the previous equation we have discovered that the Laplace transform is \term{linear}, that is, for signals $x$ and $y$ and non zero complex numbers $a$ and $b$, the Laplace transform of the linear combination $ax + by$ is
+\begin{equation}\label{eq:laplacetransislinear}
+\calL(ax + by) = a\calL x + b\calL y \qquad s \in R(ax + by) = R(x) \cap R(y).
+\end{equation}
+The region of converge of $ax + by$ is the intersection of the regions of convergence of $x$ and $y$.
+
+In the previous example the region of convergence is the empty set if $\Re(\alpha) \geq \Re(\beta)$.  The Laplace transform is said not to exist in this case.  Other signals have this property.  For example, the signal $x(t) = 1$ has an empty region of convergence because
+\[
+\int_{\infty}^\infty \abs{e^{-s t}} dt = \lim_{t\to -\infty} \frac{e^{-\Re(s)t}}{s} -  \lim_{t\to \infty} \frac{e^{-\Re(s)t}}{s}
+\] 
+and the limit as $t\to-\infty$ converges only when $\Re(s) < 0$ while the limit as $t \to \infty$ converges only when $\Re(s) > 0$.  %Infact, the region of convergence of every periodic signal is the empty set (Exercise~\ref{excer:periodicnolaplace}).
 
 As a final example, consider the rectangular pulse
 \[
@@ -57,11 +64,15 @@ As a final example, consider the rectangular pulse
 0 & \text{otherwise}.
 \end{cases}
 \]
-Its Laplace transform
+The region of convergence is the entire complex plane because
+\[
+\int_{-\infty}^{\infty} \abs{\rect(t) e^{-st}} dt = \int_{-1/2}^{1/2} e^{-\Re(s)t} dt = \frac{ e^{\Re(s)/2} - e^{-\Re(s)/2}}{s} < \infty
+\]
+for all $s \in \complex$.  The Laplace transform of $\rect$ is
 \begin{equation}\label{eq:rectLaplace}
-\calL(\rect) = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s}
+\calL(\rect) = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s} \qquad s \in \complex
 \end{equation}
-is finite for all $s \in \complex$.  The region of convergence of the rectangular pulse $\Pi$ is the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
+has domain given by the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
  
 \colorlet{lightgray}{black!25}
 
@@ -99,7 +110,7 @@ is finite for all $s \in \complex$.  The region of convergence of the rectangula
 \caption{Regions of convergence (unshaded) for the signal $e^{-2t} u(t)$ (top left), the signal $e^{-2t}u(t) + e^{3t}u(-t)$ (top right), the rectangular pulse $\Pi$ (bottom left), and the constant signal $x(t) = 1$ (bottom right). }\label{fig:rocexample1}
 \end{figure}
 
-Given the Laplace transform $\calL(x)$ the signal $x$ can be recovered by the \term{inverse Laplace transform}
+Given the Laplace transform $\calL x $ the signal $x$ can be recovered by the \term{inverse Laplace transform}
 \[
 x(t) = \frac{1}{2\pi j} \lim_{\omega \rightarrow\infty} \int_{\sigma - j\omega}^{\sigma - j\omega} \calL(x,s) e^{st} ds,
 \]

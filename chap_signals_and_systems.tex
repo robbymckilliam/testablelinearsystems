@@ -795,7 +795,7 @@ in general.
 
 \begin{figure}[tbp]
 \centering
-\begin{tikzpicture}[node distance=1.7cm,auto,>=latex']
+\begin{tikzpicture}[node distance=1.8cm,auto,>=latex']
     \node[dspadder] (adder) {};
     \node[dspsquare] (H) [right of=adder, node distance=1.5cm] {$H$};
     \node[dspmixer,dsp/label=right] (xmult) [above of=adder, node distance=1cm] {$a$};
@@ -809,24 +809,24 @@ in general.
     \draw[dspconn] (xmult) -- (adder);
     \draw[dspconn] (adder) -- (H);
     \draw[dspflow] (H) -- (res);
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}[node distance=1.8cm,auto,>=latex',yshift=-0.5]
-    \node[dspadder] (adder) {};
-    \node[dspmixer,dsp/label=right] (xmult) [above of=adder, node distance=1cm] {$a$};
-    \node[dspsquare] (xH) [left of=xmult, node distance=1cm] {$H$};
-    \node [dspnodeopen,dsp/label=above] (x) [left of=xH, node distance=1cm] {$x$};
-    \node[dspmixer,dsp/label=right] (ymult) [below of=adder, node distance=1cm] {$b$};
-    \node[dspsquare] (yH) [left of=ymult, node distance=1cm] {$H$};
-    \node [dspnodeopen] (y) [left of=yH, node distance=1cm,label=above:$y$] {};
-    \node [dspnodeopen] (res) [right of=adder,label=above:$aHx+ bHy$] {};
-    \draw[dspconn] (x) -- (xH);
-    \draw[dspconn] (xH) -- (xmult);
-    \draw[dspconn] (xmult) -- (adder);
-    \draw[dspconn] (y) -- (yH);
-    \draw[dspconn] (yH) -- (ymult);
-    \draw[dspconn] (ymult) -- (adder);
-    \draw[dspflow] (adder) -- (res);
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}[node distance=1.8cm,auto,>=latex']
+    \node[dspadder] (adder1) [right of=adder, node distance=7.25cm] {};
+    \node[dspmixer,dsp/label=right] (xmult1) [above of=adder1, node distance=1cm] {$a$};
+    \node[dspsquare] (xH1) [left of=xmult1, node distance=1cm] {$H$};
+    \node [dspnodeopen,dsp/label=above] (x1) [left of=xH1, node distance=1cm] {$x$};
+    \node[dspmixer,dsp/label=right] (ymult1) [below of=adder1, node distance=1cm] {$b$};
+    \node[dspsquare] (yH1) [left of=ymult1, node distance=1cm] {$H$};
+    \node [dspnodeopen] (y1) [left of=yH1, node distance=1cm,label=above:$y$] {};
+    \node [dspnodeopen] (res1) [right of=adder1,label=above:$aHx+ bHy$] {};
+    \draw[dspconn] (x1) -- (xH1);
+    \draw[dspconn] (xH1) -- (xmult1);
+    \draw[dspconn] (xmult1) -- (adder1);
+    \draw[dspconn] (y1) -- (yH1);
+    \draw[dspconn] (yH1) -- (ymult1);
+    \draw[dspconn] (ymult1) -- (adder1);
+    \draw[dspflow] (adder1) -- (res1);
 \end{tikzpicture}
 \caption{If $H$ is a linear system the outputs of these two diagrams are the same signal, i.e. $H(ax+by) = aHx+bHy$.}\label{blockdiag:linearsystem}
 \end{figure}
