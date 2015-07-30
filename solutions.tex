@@ -21,6 +21,7 @@
 
 \usepackage{mdframed}
 \usepackage{animate}
+\usepackage{comment}
 
 %turn animations on/off
 \newif\ifanimations %default is off
@@ -133,11 +134,10 @@ cross/.default={1pt}
 
 \newcommand{\onebf}{\mathbf{1}}
 
-\usepackage{comment}
-\excludecomment{solution}
+\newenvironment{solution}{\begin{footnotesize}\textbf{Solution:}}{\end{footnotesize}}
 
 \usepackage{framed,xcolor}
-\definecolor{shadecolor}{gray}{0.85}
+\definecolor{shadecolor}{gray}{0.92}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
 %\usepackage{shaded}
 
@@ -150,9 +150,7 @@ cross/.default={1pt}
 \end{shaded}
 }
 
-%\newcommand{\mytitle}{Signals and Systems}
-\newcommand{\mytitle}{Testable linear shift invariant systems}
-
+\newcommand{\mytitle}{Testable linear shift invariant systems (Exercise~Solutions)}
 \title{\mytitle}
 \author{Robby McKilliam}
 
@@ -211,11 +209,10 @@ cross/.default={1pt}
   \end{enumerate}
 }
 
-%this is a bit nasty, but rewire zref to usual references for main document.  Exercises will use the zref package
-%when building solutions.
-\newcommand{\zref}[1]{\ref{#1}}
-\newcommand{\zeqref}[1]{\eqref{#1}}
-\newcommand{\zpageref}[1]{\pageref{#1}}
+
+\usepackage{zref-xr,zref-user}
+\zexternaldocument*{main}
+\newcommand{\zeqref}[1]{(\zref{#1})}
 
 \begin{document}
 
@@ -232,28 +229,22 @@ cross/.default={1pt}
 \pagestyle{main}
 
 \chapter{Signals and systems}
- \input{chap_signals_and_systems.tex}
  \input{chap_signals_and_systems_exercises.tex}
 
-\chapter{Systems modelled by differential equations}\label{sec:syst-modell-diff}
- \input{chap_differential_equations.tex}
+\chapter{Systems modelled by differential equations}
  \input{chap_differential_equations_exercises.tex}
 
-\chapter{Linear time-invariant systems}\label{sec:prop-line-time}
- \input{chap_linear_time_invariant_systems.tex}
+\chapter{Linear time-invariant systems}
  \input{chap_linear_time_invariant_systems_exercises.tex}
 
-% \chapter{The Laplace transform} \label{sec:laplace-transform}
-%  \input{chap_laplace_transform.tex}
-%  \input{chap_laplace_transform_exercises.tex}
+\chapter{The Laplace transform} 
+ \input{chap_laplace_transform_exercises.tex}
 
-% \chapter{The Fourier transform}\label{sec:fourier-transform}
-%  \input{chap_fourier_transform.tex}
-%  \input{chap_fourier_transform_exercises.tex}
+\chapter{The Fourier transform}
+ \input{chap_fourier_transform_exercises.tex}
 
-% \chapter{Discrete time systems} \label{cha:discr-time-syst}
-%  \input{chap_discrete_time_systems.tex}
-%  \input{chap_discrete_time_systems_exercises.tex}
+\chapter{Discrete time systems}
+ \input{chap_discrete_time_systems_exercises.tex}
 
 %\clearpage
 
@@ -264,41 +255,7 @@ cross/.default={1pt}
 \pagestyle{back}
 
 %\clearpage
-\bibliography{bib}
-
+\input{main.bbl}
 
 
 \end{document}
-
-
-% \documentclass{book}
-             
-% \usepackage{mathbf-abbrevs} 
-
-% \include{defs}
-% %\setcounter{tocdepth}{1}
-              
-% %\makenomenclature
-                 
-% \begin{document}
-
-
-% \title{Signal and Systems}
-% \author{Robby G. McKilliam}
-
-% \maketitle
-
-
-
-%NOTES for Jorge:
-% - Students didn't know what a p-series was, in particular they didn't know that the harmonic series diverges.  This was needed for showing some signals (for example sinc) are not absolutely integrable.
-% - Having seen epsilon-delta defn of a limit would be useful (though not completely required)
-% - Some students struggle to plot simple functions!
-% - Absolutely integrable and square integrable and examples of these (Lp spaces)
-
-%%% Local Variables:
-%%% TeX-source-correlate-mode: t
-%%% TeX-synctex-tex-flags: "-synctex=1 -shell-escape"
-%%% mode: latex
-%%% TeX-master: t
-%%% End: 

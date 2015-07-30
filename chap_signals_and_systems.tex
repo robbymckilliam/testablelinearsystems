@@ -29,7 +29,7 @@ f(x) = \begin{cases}
 \text{Sephiroth} & x = \text{Ness}.
 \end{cases}
 \]
-The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ the \term{range}.  The value of $f$ for input $x$ is denoted by $f(x)$ so, for example, $f(\text{Mario}) = \text{Conker}$ and $f(\text{Link}) = \text{Sephiroth}$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
+The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The value of $f$ for input $x$ is denoted by $f(x)$ so, for example, $f(\text{Mario}) = \text{Conker}$ and $f(\text{Link}) = \text{Sephiroth}$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
 
 A \term{signal} is a function with domain the set of real numbers $\reals$ and range the set of complex numbers $\complex$, that is, a signal is a function from the set $\reals \to \complex$.  For example
 \[
@@ -225,7 +225,7 @@ and $x$ is said to be \term{continuous} if it is continuous at all $t \in \reals
 \[
 \lim_{h \to 0} u(h) = 1 \neq 0 = \lim_{h \to 0} u(-h).
 \]
-A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
+The set of continuous signals is denoted by $C^0(\reals)$ or just $C^0$.  A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
 \[
 \lim_{h \to 0} \frac{x(t + h) - x(t)}{h} = \lim_{h \to 0} \frac{x(t) - x(t-h)}{h} \qquad \text{for all $t \in \reals$}.
 \]
@@ -233,7 +233,7 @@ Considered as a function of $t$ this limit is called the \term{derivative} of $x
 \[
 \pi \cos(\pi t), \qquad \tfrac{3}{2} t^{2}, \qquad -2t e^{-t^2}, \qquad 2t,
 \] 
-but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).
+but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).  The set of differentiable signals is denoted by $C^1$ or $C^1(\reals)$.  A signal is \term{$k$-times differentiable} if its $k-1$th derivative is differentiable.  The set of $k$-times differentiable signals is denoted by $C^k$ or $C^k(\reals)$.
 
 
 \begin{figure}[tp]
@@ -274,7 +274,7 @@ but the step function $u$ and the rectangular pulse $\rect$ are not differentiab
     \htick{-1} node[pos=0.5,right] {$-1$};
     \draw[smooth,color=black,thick] plot function{-2*x*exp(-x*x)};
 \end{tikzpicture}
-\caption{Derivatives of the signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$  from Figure~\ref{fig:signalsstart}.} \label{fig:signalsstart}
+\caption{Derivatives of the signals $\sin( \pi t)$, $\frac{1}{2} t^3$, $e^{-t^2}$  from Figure~\ref{fig:signalsstart}.} \label{fig:signalsstartdiff}
 \end{figure}
 
 
@@ -282,7 +282,8 @@ A signal $x$ is \term{locally integrable} if
 \[
 \int_{a}^{b} \abs{x(t)} dt < \infty
 \]
-for all finite constants $a$ and $b$, where $< \infty$ means that the integral evaluates to a finite number.  The signals $\sin(\pi t)$, $\tfrac{1}{2}t^3$, and $e^{-t^2}$ are all locally integrable.  An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  
+for all finite constants $a$ and $b$, where $< \infty$ means that the integral evaluates to a finite number.  The signals $\sin(\pi t)$, $\tfrac{1}{2}t^3$, and $e^{-t^2}$ are all locally integrable.  An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  The set of locally integrable signals is denoted by $L_{\text{loc}}$ or $L_{\text{loc}}(\reals)$.
+
 %In this course we always assume that signals are locally integrable, that is, signals are locally integrable functions mapping $\reals \to \reals$ or $\reals \to \complex$.  
 % Similarly two discrete time signals $x$ and $y$ are equal if $x(n) = y(n)$ for all $n \in \ints$.
 %BLERG: Potentially equality of signals could be defined using local integrability, i.e. two signals are equal if they are equal everywhere except a set of measure zero.
@@ -494,7 +495,7 @@ for all $t \in \reals$.  We might then choose a domain for $I_\infty$ as the set
 \[
 I_\infty x(t) = \int_{-\infty}^{t} x(\tau) d\tau = \int_{T}^{t} x(\tau) d\tau < \infty
 \]
-for all $t \in \reals$ if $x$ is locally integrable.  So another possible domain for $I_\infty$ is the set of right sided locally integrable signals.  The the union of $L^1$ and the set of right sided locally integrable signals is another possible domain.
+for all $t \in \reals$ if $x$ is locally integrable.  So another possible domain for $I_\infty$ is the set of right sided locally integrable signals.  The union of $L^1$ and the set of right sided locally integrable signals is another possible domain.
 
 The domain used for a given system will usually be obvious from the context in which the system is defined.  For this reason we will not usually state the domain explicitly.  We will only do so if there is chance for confusion.  %When describing the properties of a system we will often want to show that it satisfies certain conditions ``for all signals''.  By this phrase we will always implicitly mean ``for all signals to which the system can be applied''.  %We say this once and for all so that the text is not littered with technical requirements regarding the sets of signals for which particular properties will hold for particular systems.
 
@@ -614,7 +615,7 @@ that returns the derivative of the input signal.  We also define a $k$th differe
 D^k x(t) = \frac{d^k}{dt^k} x(t)
 \]
 that returns the $k$th derivative of the input signal.  %BLERG: existance, special definition at discontinuities?
-The differentiator is only defined for differentiable signals.  The largest possible domain for $D$ is the set of differentiable signals.
+The differentiator is only defined for differentiable signals.  The largest possible domain for $D$ is the set of differentiable signals $C^1$ and the largest possible domain for $D^k$ is the set of $k$-times differentiable signals $C^k$.  Unless otherwise stated we will always assume the domain of $D^k$ to be $C^k$.
 
 % We must be careful when choosing a domain for the differentiator.  For example, consider the step function $u(t)$ from~\eqref{eq:stepfunction}.  We cannot differentiate $u(t)$ at $t = 0$ because
 % \[
@@ -624,7 +625,7 @@ The differentiator is only defined for differentiable signals.  The largest poss
 
 Another important system is the \term{integrator}
 \[
-I_a(x,t) = \int_{-a}^{t} x(\tau) d\tau.
+I_a x(t) = \int_{-a}^{t} x(\tau) d\tau.
 \]
 The parameter $a$ describes the lower bound of the integral.  In this course it will often be that $a=\infty$.  For example, the response of the integrator $I_{\infty}$ to the signal $t u(t)$ where $u$ is the step function~\eqref{eq:stepfunction} is
 \[
@@ -633,12 +634,12 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 0 & t \leq 0.
 \end{cases}
 \]
-Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ cannot contain the signal $x(t) = t$.  As described in Section~\ref{sec:syst-funct-sign}, possible domains for $I_\infty$ are the set of absolutely integrable signals $L^1$ and the set of signals that are both right sided and locally integrable.
+Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ cannot contain the signal $x(t) = t$.  Example of domains for $I_\infty$ are the set of absolutely integrable signals $L^1$ and the set of signals that are both right sided and locally integrable.
 
 
-\section{Linear spaces and shift-invariant sets of signals}\label{sec:spaces-signals}
+\section{Spaces of signals}\label{sec:spaces-signals}
 
-The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems we describe two important types of subsets.  These are the \term{linear spaces} and those subsets with the property of \term{shift-invariance}.  
+The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems we describe two important types of subsets.  These are the \term{linear spaces} the \term{shift-invariant spaces}.  
 
 Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a$ a complex number we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$ (Figure~\ref{fig:multiandaddofsignals}).  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
 \[
@@ -650,9 +651,9 @@ Let $X \subseteq \reals \to \complex$ be a set of signals.  The set $X$ is a \te
 \[
 ax(t) + by(t) = a x(-t) + b y(-t)
 \]
-and so the linear combination $ax + by$ is even.  The set of absolutely integrable signals $L^1$ and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
+and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
 
-A set of signals $X$ is \term{shift-invariant} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $T_\tau x$ is also in $X$.  The set of differentiable signals is shift invariant because, if $x$ is differentiable, then $T_\tau x$ is differentiable.  The derivative is $T_\tau D x$.  The set of periodic signals is shift invariant (Exercise~\ref{exer:periodicshiftinvariantnotlinear}) as are $L^1$ and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift invariant.
+A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $T_\tau x$ is also in $X$.  The set of differentiable signals is shift-invariant space because, if $x$ is differentiable, then $T_\tau x$ is differentiable.  The derivative is $D T_\tau x = T_\tau D x$.  The set of periodic signals is a shift-invariant space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}) as are $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
 
 
 \begin{figure}[tp]
@@ -830,7 +831,7 @@ in general.
 \caption{If $H$ is a linear system the outputs of these two diagrams are the same signal, i.e. $H(ax+by) = aHx+bHy$.}\label{blockdiag:linearsystem}
 \end{figure}
 
-Let $H \in X \to Y$ be a system with shift-invariant domain $X$ and shift-invariant range $Y$. The system $H$ is \term{shift-invariant} if
+Let $H \in X \to Y$ be a system with domain $X$ and range $Y$ begin shift-invariant spaces. The system $H$ is \term{shift-invariant} (or \term{time-invariant}) if
 \[
 H T_\tau x(t) = Hx(t-\tau)
 \]

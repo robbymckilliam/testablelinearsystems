@@ -16,7 +16,7 @@ val f1 = 100
 val f2 = 233
 val Fs = 44100
 val xtrue : Double => Double = t => sin(2*Pi*f1*t)/3 + sin(2*Pi*f2*t)/3
-val (left, right) = playRecord(xtrue, 0, 2.0, Fs)
+val (right,left) = playRecord(xtrue, 0, 2.0, Fs)
 //playSamples(left)
 //playSamples(right)
 
@@ -40,7 +40,7 @@ def y(t : Double) : Double = {
 }
 //H(x)
 val R1 = 12e3
-val R2 = 22e3
+val R2 = 56e3
 def Hx(t : Double) : Double = (1 + R2/R1)*x(t)
 
 println("Writing data to file data.csv")

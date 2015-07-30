@@ -1,0 +1,120 @@
+\documentclass[tikz]{standalone}
+%\documentclass[mathserif]{beamer}
+%\setbeamertemplate{navigation symbols}{}%
+%\documentclass{article}
+%\usepackage{pgfplots}
+%\usepackage[tightpage,active]{preview}
+\usepackage{multido}
+\usetikzlibrary{calc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% \usepackage{animate}
+% % Define a the counter cnt. Used to identify files generated for use
+% % with Gnuplot.
+% \newcounter{cnt}
+% \setcounter{cnt}{0}
+% \makeatletter
+% \newcommand{\gettikzxy}[3]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+%   \edef#3{\the\pgf@y}%
+% }
+% %\usepackage{pgfplots}
+% %\usepgflibrary{fpu}
+% \makeatother
+
+% %turn animations on/off
+% \newif\ifanimated %default is on
+% \animatedtrue %uncomment to turn animations on.
+
+\newcommand{\vtick}[1]{\draw (#1,-0.075) -- (#1,0.075) }
+\newcommand{\htick}[1]{\draw (-0.075,#1) -- (0.075,#1)}
+
+{ %scope all the newcommands
+  \newcommand{\plotyscale}{0.6}
+  \newcommand{\arcdegree}{45}
+  \makeatletter
+  \pgfmathdeclarefunction{erf}{1}{ %I have no idea `which' error function this returns!
+    \begingroup
+    \pgfmathparse{#1 > 0 ? 1 : -1}
+    \edef\sign{\pgfmathresult}%
+    \pgfmathparse{abs(#1)}
+    \edef\x{\pgfmathresult}%
+    \pgfmathparse{1/(1+0.3275911*\x)}
+    \edef\t{\pgfmathresult}%
+    \pgfmathparse{%
+      1 - (((((1.061405429*\t -1.453152027)*\t) + 1.421413741)*\t 
+      -0.284496736)*\t + 0.254829592)*\t*exp(-(\x*\x))}
+    \edef\y{\pgfmathresult}%
+    \pgfmathparse{(\sign)*\y}
+    \pgfmath@smuggleone\pgfmathresult
+    \endgroup
+  }
+  \makeatother
+  \def\R{0.75}
+  \def\B{1}
+  \def\Kb{1}
+  \def\Kt{1}
+  \def\J{1}
+  \def\thetafunc(#1){(3.14159/2*(1+erf(#1)))}
+  \def\dthetafunc(#1){(sqrt(pi)*exp(-#1*#1))}
+  \def\ddthetafunc(#1){(-2*#1*\dthetafunc(#1))}
+  \def\vfunc(#1){(\thetafunc(#1) + (\R*\B/\Kt + \Kb)*\dthetafunc(#1) + \R\J/\Kt*\ddthetafunc(#1))}
+  \newcommand{\background}[1]{
+    \begin{scope}[yscale=\plotyscale]
+      \draw[->] (-3.5,0) -- (3.5,0) node[above] {$t$};
+      \draw[->] (0,-1) -- (0,5.8);
+      % \draw[color=black] plot[id=x] function{1/x^2} 
+      % node[right] {$f(t) = t^{-2}$};
+      \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{\thetafunc(x)};
+      % \draw[smooth,color=black,thick] plot function{36*x*x/(1+9*x*x*x*x*x*x)};
+      \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{\vfunc(x)};
+      \htick{3.14159} node[pos=0.5,left] {$\pi$};
+      %\htick{18} node[pos=0.5,right] {$18$};
+      % \htick{2*3.14159} node[pos=0.5,right] {$2\pi$};
+      \node at (-1.2,3.9) {$v(t)$};
+      \node at (1,2) {$\theta(t)$};
+      % \node at (0.6,2) {$D(\theta)$};
+      % draw animated line
+      \begin{scope}
+        \clip (-3.5,-1) rectangle (3.5,1);
+        % \draw[thick] (#1,-0.2)--(#1,0.2);
+        \node[draw,circle,inner sep=2pt,fill] at (#1,0) {};
+      \end{scope}      
+    \end{scope}
+    \vtick{-3} node[pos=0.5,below] {$-3$};
+    \vtick{-2} node[pos=0.5,below] {$-2$};
+    \vtick{-1} node[pos=0.5,below] {$-1$};
+    \vtick{1} node[pos=0.5,below] {$1$};
+    \vtick{2} node[pos=0.5,below] {$2$};
+    \vtick{3} node[pos=0.5,below] {$3$};
+  }
+  \newcommand{\animations}[1]{
+    \pgfmathparse{360/4*(1+erf(#1))}\pgfmathresult \let\motorangle\pgfmathresult
+    % draw animated angular motor
+    \begin{scope}[xshift=5.7cm,yshift=1.5cm]
+      \node (C) [circle,minimum width=2.5cm] {};
+      \draw[thick] (C.east)++(-0.075cm,0cm) -- +(0.15cm,0cm) node[pos=0.5,right] {0};
+      \draw[thick] (C.north)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,above] {$\tfrac{1}{2}\pi$};
+      \draw[thick] (C.west)++(-0.075cm,0) -- +(0.15cm,0) node[pos=0.5,left] {$\pi$};
+      \draw[thick] (C.south)++(0cm,-0.075cm) -- +(0cm,0.15cm) node[pos=0.5,below] {$\tfrac{3}{2}\pi$};
+      \draw [-latex,thick] (0:1.8) arc (0:\arcdegree:1.8);
+      \node at (\arcdegree/2:1.8) [above right] {$\theta(t)$};
+      \begin{scope}[rotate=\motorangle, every node/.style={transform shape}]
+        \node (M) [circle,style={draw,thick}] {motor};
+        \draw[thick] (M.east)++(-0.1cm,0cm) -- +(0.2cm,0cm);
+      \end{scope}
+    \end{scope}
+  }
+
+\begin{document}
+\multido{\rtime=-4+0.0625}{128}
+%\multido{\rtime=-1.5+2}{6}
+{
+\begin{tikzpicture}
+  \background{\rtime}
+  \animations{\rtime}
+\end{tikzpicture}
+}
+
+\end{document}
