@@ -259,9 +259,9 @@ and so $L_2$ is a shift-invariant space.
 
 \item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant spaces.
 
-\item \label{excer:integratornotstable} Show that the integrator $I_a : L_{\text{loc}} \to \reals \to \complex$ for any $a\in\reals$ is not stable.
+\item \label{excer:integratornotstable} Let $R$ be the set of right sided locally integrable signals.  Show that the integrator $I_a : R \to \reals \to \complex$ for any $a\in\reals$ or $a = \infty$ is not stable.
 \begin{solution}
-Put $M > 1$.  The shifted step function $u(t + a)$ is locally integrable and bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
+Put $M > 1$.  The shifted step function $u(t + a)$ is locally integrable, right sided, and bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
 \[
 I_au(t+a) = \int_{-a}^t u(\tau + a)d\tau = \begin{cases}
 \int_{-a}^t d\tau = t + a & t \geq -a \\
