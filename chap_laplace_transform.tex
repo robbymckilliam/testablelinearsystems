@@ -1,21 +1,22 @@
 Let $x$ be a signal.  We denote by $\calL x$ the complex valued function satisfying
 \begin{equation}\label{eq:laplace_defn}
-\calL x(s) = \int_{-\infty}^{\infty} x(t) e^{-st} dt
+\calL x(s) = \int_{-\infty}^{\infty} x(t) e^{-st} dt 
 \end{equation}
-called the \term{Laplace transform} of $x$.  The Laplace transform $\calL x(s)$ is not necessarily defined for all complex numbers $s \in \complex$.  
-Let $\roc(x)$ be the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable, that is,
+called the \term{Laplace transform} of $x$.  
+
+\section{Regions of convergence}
+
+The domain of the Laplace transform $\calL x$ is not always the entire complex plane $\complex$.  Let $\roc(x)$ be the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable, that is,
 \[
 \int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty  \qquad \text{if and only if $s \in \roc(x)$}.
 \]
-The set $\roc(x) \subseteq \complex$ is called the \term{region of convergence} of the signal $x$.  The Laplace transform $\calL x(s)$ is finite for all $s \in R(x)$ because 
+The set $\roc(x) \subseteq \complex$ is called the \term{region of convergence} of $\calL x$.  The integral~\eqref{eq:laplace_defn} is finite for all $s \in \roc(x)$ because 
 \[
 \sabs{\calL x(s)} = \abs{\int_{-\infty}^{\infty} x(t) e^{-st} dt} \leq \int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty
 \]
-for all $s \in \roc(x)$.  We take $\roc(x)$ as the domain of $\calL x$ and so $\calL x \in \roc(x) \to \complex$.  That is, the Laplace transform of a signal is a complex valued function of the region of convergence of that signal.
+for all $s \in \roc(x)$.  We take $\roc(x)$ as the domain of $\calL x$ and so $\calL x \in \roc(x) \to \complex$.  That is, the Laplace transform of a signal is a complex valued function of the region of convergence.
 
-%\section{The region of convergence}
-
-Consider the right sided signal $e^{ \alpha t}u(t)$.  This signal has region of convergence given by all those complex number with real part greater than the real part of $\alpha$, that is,
+For example, the Laplace transform of the right sided signal $e^{ \alpha t}u(t)$ has region of convergence given by all those complex number with real part greater than the real part of $\alpha$, that is,
 \[
 \roc(e^{ \alpha t}u(t)) = \{ s \in \complex \mid \Re(s) > \Re(\alpha) \}.
 \]
@@ -47,11 +48,11 @@ with domain given by the region of convergence
 \] 
 This region is shown in Figure~\ref{fig:rocexample1} when $\Re(\alpha) = -2$ and $\Re(\beta)=3$.   In the previous equation we have discovered that the Laplace transform is \term{linear}, that is, for signals $x$ and $y$ and non zero complex numbers $a$ and $b$, the Laplace transform of the linear combination $ax + by$ is
 \begin{equation}\label{eq:laplacetransislinear}
-\calL(ax + by) = a\calL x + b\calL y \qquad s \in R(ax + by) = R(x) \cap R(y).
+\calL(ax + by) = a\calL x + b\calL y \qquad s \in \roc(ax + by) = \roc(x) \cap \roc(y).
 \end{equation}
-The region of converge of $ax + by$ is the intersection of the regions of convergence of $x$ and $y$.
+The region of convergence is the intersection of the regions of convergence of $\calL x$ and $\calL y$.
 
-In the previous example the region of convergence is the empty set if $\Re(\alpha) \geq \Re(\beta)$.  The Laplace transform is said not to exist in this case.  Other signals have this property.  For example, the signal $x(t) = 1$ has an empty region of convergence because
+In the previous example the region of convergence is the empty set if $\Re(\alpha) \geq \Re(\beta)$.  The Laplace transform is said not to exist in this case.  Other signals have this property.  For example, the signal $x(t) = 1$ has no Laplace transform because
 \[
 \int_{\infty}^\infty \abs{e^{-s t}} dt = \lim_{t\to -\infty} \frac{e^{-\Re(s)t}}{s} -  \lim_{t\to \infty} \frac{e^{-\Re(s)t}}{s}
 \] 
@@ -68,9 +69,9 @@ The region of convergence is the entire complex plane because
 \[
 \int_{-\infty}^{\infty} \abs{\rect(t) e^{-st}} dt = \int_{-1/2}^{1/2} e^{-\Re(s)t} dt = \frac{ e^{\Re(s)/2} - e^{-\Re(s)/2}}{s} < \infty
 \]
-for all $s \in \complex$.  The Laplace transform of $\rect$ is
+for all $s \in \complex$.  The Laplace transform of $\rect$,
 \begin{equation}\label{eq:rectLaplace}
-\calL(\rect) = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s} \qquad s \in \complex
+\calL \rect = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s} \qquad s \in \complex,
 \end{equation}
 has domain given by the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
  
@@ -110,31 +111,33 @@ has domain given by the entire complex plane.  The examples just given exhibit a
 \caption{Regions of convergence (unshaded) for the signal $e^{-2t} u(t)$ (top left), the signal $e^{-2t}u(t) + e^{3t}u(-t)$ (top right), the rectangular pulse $\Pi$ (bottom left), and the constant signal $x(t) = 1$ (bottom right). }\label{fig:rocexample1}
 \end{figure}
 
-Given the Laplace transform $\calL x $ the signal $x$ can be recovered by the \term{inverse Laplace transform}
+%\section{The inverse Laplace transform}
+
+Given the Laplace transform $\calL x \in \roc(x) \to \complex$ the signal $x$ can be recovered by the \term{inverse Laplace transform}
 \[
 x(t) = \frac{1}{2\pi j} \lim_{\omega \rightarrow\infty} \int_{\sigma - j\omega}^{\sigma - j\omega} \calL(x,s) e^{st} ds,
 \]
-where $\sigma$ is a real number that is inside the region of convergence of $x$.  Solving the integral above typically requires a special type of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following Laplace transform pair
+where $\sigma$ is a real number that is inside the region of convergence $\roc(x)$.  Solving the integral above typically requires a special type of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following Laplace transform pair
 \begin{equation}\label{eq:laplacetranscommonsimple}
 \calL\big(t^n u(t)\big) = \frac{n!}{s^{n+1}} \qquad \Re(s) > 0,
 \end{equation}
-where $n \geq 0$ is an integer (Exercise~\ref{excer:laplacetransformcommonpolyut}).  Let $x(t)$ be a signal with region of convergence $R_x$.  The Laplace transforms of the signal $x(t)$ and the signal $e^{\alpha t}x(t)$ are related.  To see this write
+where $n \geq 0$ is an integer (Exercise~\ref{excer:laplacetransformcommonpolyut}).  The Laplace transforms of the signal $x(t)$ and the signal $e^{\alpha t}x(t)$ are related.  First observe that the region of convergence of $e^{\alpha t}x(t)$ is all those complex numbers $s$ such that $s - \alpha \in \roc(x)$.  Now,
 \begin{align}
-\calL\big( e^{\alpha t} x(t), s\big) &= \int_{-\infty}^{\infty} e^{\alpha t} x(t)  e^{-s t} dt \nonumber \\
+\calL\big( e^{\alpha t} x(t)\big)\big(s\big) &= \int_{-\infty}^{\infty} e^{\alpha t} x(t)  e^{-s t} dt \nonumber \\
 &= \int_{-\infty}^{\infty} x(t)  e^{-(s-\alpha) t} dt \nonumber \\
-&=  \calL(x, s-\alpha) \qquad s - \alpha \in R_x. \label{eq:freqshiftrule}
+&=  \calL x(s-\alpha) \qquad s - \alpha \in \roc(x). \label{eq:freqshiftrule}
 \end{align}
-This is called the \term{frequency shift rule}.  Combining the frequency shift rule with~\eqref{eq:laplacetranscommonsimple} we obtain the transform pair
+This is called the \term{frequency-shift rule}.  Combining the frequency-shift rule with~\eqref{eq:laplacetranscommonsimple} we obtain the transform pair
 \begin{equation}\label{eq:laplacetneucommon}
-\calL\big( t^n e^{\alpha t} u(t) \big) = \calL\big(t^n u(t), s - \alpha\big) = \frac{n!}{(s-\alpha)^{n+1}} \qquad \Re(s) > \Re(\alpha),
+\calL\big( t^n e^{\alpha t} u(t) \big) = \frac{n!}{(s-\alpha)^{n+1}} \qquad \Re(s) > \Re(\alpha),
 \end{equation}
 where $n \geq 0$ is an integer.  This is the only Laplace transform pair we require here.  
 
-A useful relationship exists between the Laplace transform of a signal $x$ and its time scaled version $x(\alpha t)$ where $\alpha \neq 0$.  If $x$ is a signal with region of convergence $R$ then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Laplace transform
+A useful relationship exists between the Laplace transform of a signal $x$ and its time-scaled version $x(\alpha t)$ where $\alpha \neq 0$. The region of convergence of the time-scaled signal $x(\alpha t)$ is those complex number $s$ such that $s/\alpha \in \roc(x)$.  The Laplace transform satisfies
 \begin{equation}\label{eq:timescalingpropertrylaplacetrans}
- \calL\big(x(\alpha t),s\big) = \frac{1}{\abs{\alpha}}\calL(x, s/\alpha), \qquad \Re(s/\alpha) \in R.
+ \calL\big(x(\alpha t)\big)\big(s\big) = \frac{1}{\abs{\alpha}}\calL x(s/\alpha), \qquad \Re(s/\alpha) \in \roc(x).
 \end{equation}
-This is called the \term{time scaling property} (Excercise~\ref{excer:timescalelaplace}).
+This is called the \term{time-scaling property} (Excercise~\ref{excer:timescalelaplace}).
 
  
 % Observe that the signal $t^n e^{\alpha t} u(t)$ is right sided.  It is nonzero only when $t > 0$.  The region of convergence is a right half plane $\Re(s) > \alpha$.  The Laplace transform $n!/s^{n+1}$ also corresponds with the left sided signal $(-t)^n e^{-\alpha t} u(-t)$.  That is,
@@ -163,39 +166,41 @@ This is called the \term{time scaling property} (Excercise~\ref{excer:timescalel
 
 \section{The transfer function and the Laplace transform}\label{sec:transf-funct-lapl}
 
-%Our purpose for introducing the Laplace transform is to study the response of a linear time invariant system $H$ to exponential signals of the form $e^{st}$.  
-Recall from Section~\ref{sec:eigenf-line-time} that exponential signals are \term{eigenfunctions} of linear time invariant systems.  That is, if $s \in \complex$ such that the complex exponential signal $e^{st}$ is in the domain of $H$, then response of $H$ to $e^{st}$ is $\lambda e^{st}$ where $\lambda \in \complex$ is a constant that does not depend on $t$, but may depend on $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda(H,s)$ or $\lambda(H)(s)$ and do not distinguish between these notations.  Considered as a function of $s$, $\lambda(H,s)$ is called the \term{transfer function} of the system $H$.  For a given system $H$, we would like to understand how $\lambda(H,s)$ behaves as $s$ changes.  In what follows we regularly drop the argument ``$(s)$'' and simply write $\lambda(H)$ as the transfer function of $H$.  
+%Our purpose for introducing the Laplace transform is to study the response of a linear shift invariant system $H$ to exponential signals of the form $e^{st}$.  
+Recall from Section~\ref{sec:eigenf-line-time} that complex exponential signals are \term{eigenfunctions} of linear shift-invariant systems.  That is, $H \in X \to Y$ is a linear shift-invariant system and if $e^{st} \in X$ then the response of $H$ to the signal $e^{st}$ satisfies $H e^{st} = \lambda H(s) e^{st}$.
 
-Assume that $H$ is a regular system with impulse response $h$.  In this case,
+Suppose that $H \in X \to Y$ is a regular system with impulse response $h$ and that the complex exponential signal $e^{st} \in X$ whenever $s \in R(h)$.  If $s \in \roc(h)$, then
 \begin{align*}
-H(e^{st}) = e^{st} \lambda(H,s) &= h * e^{st} \\
+H e^{st} = e^{st} \lambda H(s) &= h * e^{st} \\
 &= \int_{-\infty}^{\infty} h(\tau) e^{s(t - \tau)} d\tau \\
 &= e^{st} \int_{-\infty}^{\infty} h(\tau) e^{-s \tau} d\tau \\
-&= e^{st} \calL(h,s),
+&= e^{st} \calL h(s)
 \end{align*}
-and so $\lambda(H) = \calL(h)$.  That is, the transfer function of a regular system is precisely the Laplace transform of its impulse response.  The region of convergence of the impulse response describes a set of complex exponential signals $e^{st}$ in the domain of the system and we refer to this as the region of convergence of the \emph{system}.  In this way, both signals and systems have regions of convergence.
+and so $\lambda H  = \calL h $.  That is, the transfer function of a regular system is precisely the Laplace transform of its impulse response.  %The region of convergence of the impulse response describes a set of complex exponential signals $e^{st}$ in the domain of the system and we refer to this as the region of convergence of the \emph{system}.  In this way, both signals and systems have regions of convergence.
 
-The transfer functions of the time-shifter and differentiator can be obtained by inspection.  For the time-shifter
+The transfer functions of the shifter and differentiator can be obtained by inspection.  For the shifter
 \begin{equation}\label{eq:timeshiftertransferfunction}
-T_\tau(e^{st}) = e^{s(t-\tau)} = e^{-s\tau} e^{st} \qquad \text{and so} \qquad \lambda(T_\tau) = e^{-s\tau}.
+T_\tau e^{st} = e^{s(t-\tau)} = e^{-s\tau} e^{st} \qquad \text{and so} \qquad \lambda T_\tau = e^{-s\tau}.
 \end{equation}
-The region of convergence is the whole complex plane $s \in \complex$.  For the special case of the identity system $T_0$ we obtain $\lambda(T_0) = 1$.  For the differentiator
+The region of convergence is the whole complex plane $s \in \complex$.  For the special case of the identity system $T_0$ we obtain $\lambda T_0 = 1$.  For the differentiator
 \[
-D(e^{st}) = \frac{d}{d t} e^{st} = s e^{st} \qquad \text{and so} \qquad \lambda(D) = s.
+D e^{st} = \frac{d}{d t} e^{st} = s e^{st} \qquad \text{and so} \qquad \lambda D = s.
 \]
-The region of convergence is the whole complex plane $s \in \complex$.  More generally, for the $k$th differentiator
+%The region of convergence is the whole complex plane $s \in \complex$.  
+More generally, for the $k$th differentiator
 \begin{equation}\label{eq:lambdadifferentiator}
-D^k(e^{st}) = \frac{d^k}{d t^k} e^{st} = s^k e^{st} \qquad \text{and so} \qquad  \lambda(D^k) = s^k.
+D^k e^{st} = \frac{d^k}{d t^k} e^{st} = s^k e^{st} \qquad \text{and so} \qquad  \lambda D^k = s^k.
 \end{equation}
-The region of convergence is again the whole complex plane.  These results motivate assigning the following Laplace transforms to the delta ``function'' and its derivatives
+%The region of convergence is again the whole complex plane.  
+These results motivate assigning the following Laplace transforms to the delta ``function'' and the $\delta^k$ symbol,
 \[
-\calL(\delta) = 1, \qquad \calL(\delta^k) = s^k.
+\calL \delta = 1, \qquad \calL \delta^k = s^k.
 \]
 These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 %\subsection{The transfer function of a linear combination of systems}
 
-Let $H_1$ and $H_2$ be linear time invariant systems with regions of convergenence $R_1 \subseteq \complex$ and $R_2\subseteq \complex$.  Let $H = a H_1 + bH_2$ be a linear combination of $H_1$ and $H_2$.  The response of $H$ to the complex exponential signal $e^{st}$ is
+Let $H_1$ and $H_2$ be linear shift-invariant systems with regions of convergenence $R_1 \subseteq \complex$ and $R_2\subseteq \complex$.  Let $H = a H_1 + bH_2$ be a linear combination of $H_1$ and $H_2$.  The response of $H$ to the complex exponential signal $e^{st}$ is
 \begin{align*}
 H(e^{st}) &= a H_1(e^{st}) + b H_2(e^{st}) \\
 &= a\lambda(H_1)e^{st} + b\lambda(H_2)e^{st} & s \in R_1 \cap R_2, \\
@@ -222,7 +227,7 @@ and so,
 \begin{equation}\label{eq:composedtransferfunction}
 \lambda(H) = \lambda(H_1)\lambda(H_2) \qquad s \in R_1 \cap R_2.
 \end{equation}
-That is, the transfer function of a composition of linear time invariant systems is the multiplication of the transfer functions of those systems.  The region of convergence of the composition is the intersection of the regions of convergence of the systems being composed.
+That is, the transfer function of a composition of linear shift-invariant systems is the multiplication of the transfer functions of those systems.  The region of convergence of the composition is the intersection of the regions of convergence of the systems being composed.
 
 %\subsection{The convolution theorem}
 
@@ -247,18 +252,18 @@ Let $y = H(x)$ be the response of the system $H$ to input signal $x$.  Suppose t
 \begin{equation}\label{eq:transferLaplcetheorem}
 \calL(y) = \calL(h)\calL(x) = \lambda(H)\calL(x), \qquad s \in R_x \cap R_y
 \end{equation}
-where, in this case, $R_y = R_h \cap R_x$ where $R_h$ is the region of convergence of the impulse response $h$.  Thus, the Laplace transform of the output signal $y = H(x)$ is the transfer function of the system $H$ multiplied by the Laplace transform of the input signal $x$.  This result also holds when $H$ is a time shifter or a differentiator (Exercise~\ref{exer:laplacetransdiffandtimeshift}).
+where, in this case, $R_y = R_h \cap R_x$ where $R_h$ is the region of convergence of the impulse response $h$.  Thus, the Laplace transform of the output signal $y = H(x)$ is the transfer function of the system $H$ multiplied by the Laplace transform of the input signal $x$.  This result also holds when $H$ is a shifter or a differentiator (Exercise~\ref{exer:laplacetransdiffandtimeshift}).
 
 % \subsection{Commutivity (again)}
 
-% We can now state something about the commutivity of two linear time invariant systems $H_1$ and $H_2$.  From~\eqref{eq:composedtransferfunction} the composition $H_1\big(H_2(x)\big)$ and the composition $H_2\big(H_1(x)\big)$ have the same transfer functions and the same regions of convergence $R_1 \cap R_2$.  From~\eqref{eq:transferLaplcetheorem} we have that the Laplace transform of the output signal $y_1 = H_1\big(H_2(x)\big)$ and of the output signal $y_2 =H_2\big(H_1(\cdot)\big) H_1\big(H_2(x)\big)$ satisfy
+% We can now state something about the commutivity of two linear shift-invariant systems $H_1$ and $H_2$.  From~\eqref{eq:composedtransferfunction} the composition $H_1\big(H_2(x)\big)$ and the composition $H_2\big(H_1(x)\big)$ have the same transfer functions and the same regions of convergence $R_1 \cap R_2$.  From~\eqref{eq:transferLaplcetheorem} we have that the Laplace transform of the output signal $y_1 = H_1\big(H_2(x)\big)$ and of the output signal $y_2 =H_2\big(H_1(\cdot)\big) H_1\big(H_2(x)\big)$ satisfy
 % \[
 % \calL(y_1) = \lambda(H_1)\lambda(H_2) = \lambda(H_2)\lambda(H_1) = \calL(y_2), \qquad s \in R_1 \cap R_2 \cap R_x.
 % \]
 % It follows that $y_1 = y_2$ because $\calL(y_1) = \calL(y_2)$ and these signals have the same region of convergence $R_1 \cap R_2 \cap R_x$.  Thus, $H_1$ and $H_2$ commute for all input signal $x$ with region of convergence $R_x$ intersecting $R_1 \cap R_2$, i.e., such that $R_1 \cap R_2 \cap R_x \neq \emptyset$.
 
 % \begin{theorem}\label{thm:laplacetranslti}
-% Let $H$ be a linear time invariant system and let $y$ be the reponse of $H$ to intput signal $x$, that is $y = H(x)$.  The Laplace transforms of $x$ and $y$ are related by
+% Let $H$ be a linear shift-invariant system and let $y$ be the reponse of $H$ to intput signal $x$, that is $y = H(x)$.  The Laplace transforms of $x$ and $y$ are related by
 % \[
 % \calL(y,s) = \lambda(H,s) \calL(x,s),
 % \]
@@ -297,7 +302,7 @@ where, in this case, $R_y = R_h \cap R_x$ where $R_h$ is the region of convergen
 % \calL(y,s) &=  \int_{-\infty}^{\infty} H(x,\kappa+\tau) e^{-s(\kappa+\tau)} d\kappa \\
 % &= e^{-s\tau} \int_{-\infty}^{\infty} H(x,\kappa+\tau) e^{-s\kappa} d\kappa.
 % \end{align*}
-% Because $H$ is time invariant we have, using~\eqref{eq:timeinvvarchange},
+% Because $H$ is shift-invariant we have, using~\eqref{eq:timeinvvarchange},
 % \[
 % H(x,\kappa+\tau) = H(T_{-\kappa}(x),\tau),
 % \]
@@ -371,7 +376,7 @@ Rearranging this equation we obtain
 \calL(y) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k} \calL(x).
 \]
 %Given the input signal $x$ and its Laplace transform $\calL(x)$ we can find the output signal $y$ (provided it exists) by applying the inverse Laplace transform to the right hand side of the equation above.  
-Let $H$ be a linear time invariant system such that $y = H(x)$ whenever $x$ and $y$ satisfy the differential equation~\eqref{eq:diffinlapsection}.   According to~\eqref{eq:transferLaplcetheorem} the transfer function of $H$ is
+Let $H$ be a linear shift-invariant system such that $y = H(x)$ whenever $x$ and $y$ satisfy the differential equation~\eqref{eq:diffinlapsection}.   According to~\eqref{eq:transferLaplcetheorem} the transfer function of $H$ is
 \[
 \lambda(H) = \frac{\calL(y)}{\calL(x)} = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
 \]
@@ -597,7 +602,7 @@ Consider the mass spring damper system from Figure~\ref{mech:massspring1} that i
 \begin{equation}\label{eq:masspringeqseclapltrans}
 f = K p + B D(p) + M D^2(p)
 \end{equation}
-where $f$ is the force applied to the mass $M$ and $p$ is the position of the mass and $K$ and $B$ are the spring and damping coefficients.  The mass spring damper is an example of a \term{second order system}.  Another example of a second order system is the Sallen-Key active electrical circuit depicted in Figure~\ref{elec:sallenkey}.  In Section~\ref{sec:syst-modell-diff} we were able to find the force $f$ corresponding with a given position signal $p$.  Suppose that $H$ is a linear time invariant system mapping $f$ to $p$, that is, such that $p = H(f)$.  We will find the impulse response of $H$.  Taking Laplace transforms on both sides of the differential equation gives
+where $f$ is the force applied to the mass $M$ and $p$ is the position of the mass and $K$ and $B$ are the spring and damping coefficients.  The mass spring damper is an example of a \term{second order system}.  Another example of a second order system is the Sallen-Key active electrical circuit depicted in Figure~\ref{elec:sallenkey}.  In Section~\ref{sec:syst-modell-diff} we were able to find the force $f$ corresponding with a given position signal $p$.  Suppose that $H$ is a linear shift-invariant system mapping $f$ to $p$, that is, such that $p = H(f)$.  We will find the impulse response of $H$.  Taking Laplace transforms on both sides of the differential equation gives
 \[
 \calL(f) = (K + B s + M s^2) \calL(p).
 \]
@@ -990,7 +995,7 @@ The impulse response and step response are plotted in Figure~\ref{fig:dcmotorani
 
 % %The DC motor is not stable.  Let $H$ be the system that maps input voltage $x$ to motor angle $y$.  Assume we are able to measure the angle of the motor $\theta$.  Consider the system that results from applying a system $G$ to $\theta$ and adding this to the input voltage signal $x$ before it is input to the motor.  This is depicted in Figure~\ref{blockdiag:feedback}.  The input voltage and motor angle now satisfy
 
-% Let $H$ be a linear time invariant system.  Assume that the signal $y$ output from $H$ can be measured.  Consider the system that results from applying a system $G$ to $y$ and adding the resopnse to an input signal $x$, that is then input to the system $H$.  This is depicted in Figure~\ref{blockdiag:feedback}. 
+% Let $H$ be a linear shift-invariant system.  Assume that the signal $y$ output from $H$ can be measured.  Consider the system that results from applying a system $G$ to $y$ and adding the resopnse to an input signal $x$, that is then input to the system $H$.  This is depicted in Figure~\ref{blockdiag:feedback}. 
 % \[
 % y = H\big( x + G(y) \big) = H(x) + H\big(G(y)\big).
 % \]

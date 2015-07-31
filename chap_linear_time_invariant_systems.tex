@@ -115,7 +115,7 @@ Some important systems do not have an impulse response and are not regular.  For
 \lim_{\gamma \rightarrow \infty} T_0 p_\gamma = \lim_{\gamma \rightarrow \infty} p_\gamma
 \]
 does not converge.  %BLERG what is this all about actually?  Is is something like.  The convergence is not ``almost everywhere''?
-Similarly, the  shifter $T_\tau$ and differentiators $D^k$ are not regular.  However, it can be notationally useful to pretend that $T_0$ \emph{does} have an impulse response and this is typically denoted by the symbol $\delta$ and called the \term{delta function}.  The idea is to assign $\delta$ the property
+Similarly, the  shifter $T_\tau$ and differentiators $D^k$ are not regular.  However, it is common to pretend that $T_0$ \emph{does} have an impulse response and this is typically denoted by the symbol $\delta$ called the \term{delta function}.  The idea is to assign $\delta$ the property
 \[
 \int_{-\infty}^\infty x(t) \delta(t) dt = x(0) %= \lim_{\gamma \rightarrow \infty}\int_{\infty}^\infty x(t) p_\gamma(t) dt
 \]
@@ -173,15 +173,15 @@ For $a \in \reals$ it is common to plot $a\delta(t - \tau)$ using an arrow of he
 \caption{Plot of the ``signal'' $\delta(t+2) + 2\delta(t) - \delta(t-1)$ (left) and the ``signal'' $2\sin(\pi t) + \delta(t - \tfrac{3}{2})$ (right).} \label{fig:deltafuncplotexample}
 \end{figure}
 
-% The only other non regular systems that we have use of are differentiators $D^k$, and it is convenient to define a similar notation for pretending that these systems have an impulse response.  In this case we use the symbol $\delta^k$ and assign it the property
-% \[
-% \int_{-\infty}^\infty x(t) \delta^k(t) dt = D^k(x,0),
-% \]
-% so that convolution of $x$ and $\delta$ is
-% \[
-% \delta^k * x = \int_{-\infty}^{\infty} \delta^k(\tau) x(t - \tau) d\tau = D^k(x,t).
-% \]
-% As with the delta function the symbol $\delta^k$ must be treated with care.  This notation can be useful, but purely formal manipulations with $\delta^k$ may not lead to sensible results in general.
+The only other non regular systems that we have use of are differentiators $D^k$ and it is common to define a similar notation for pretending that these systems have an impulse response.  In this case the symbol $\delta^k$ is assigned the property
+\[
+\int_{-\infty}^\infty x(t) \delta^k(t) dt = D^k x(0),
+\]
+so that convolution of $x$ and $\delta^k$ is
+\[
+\delta^k * x = \int_{-\infty}^{\infty} \delta^k(\tau) x(t - \tau) d\tau = D^kx(t).
+\]
+As with the delta function the symbol $\delta^k$ must be treated with care.  This notation can be useful, but purely formal manipulations with $\delta^k$ may not always lead to sensible results.
 
 % The pulse $p_\gamma(t)$ is not differentiable at $t = 0$ and $t=\tfrac{1}{\gamma}$.  Fortunately $\{ p_\gamma, \gamma \in \reals\}$ is not the only family that can be used to define the impulse response.  It is instructive, and useful to instead use a family that is \term{infinately differentiable} (can be differentiated as many times as we like).  An example of such a family is
 % \[
