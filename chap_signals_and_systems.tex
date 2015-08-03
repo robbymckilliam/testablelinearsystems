@@ -107,6 +107,8 @@ all represent signals with $t \in \reals$.  These signals are plotted in Figure~
 
 \section{Properties of signals}\label{sec:properties-signals}
 
+%We now list a number of important properties
+
 A signal $x$ is \term{bounded} if there exists a real number $M$ such that 
 \[
 \sabs{x(t)} < M \qquad \text{for all $t \in \reals$} 
@@ -355,6 +357,81 @@ to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This con
 
 
 %BLERG: It's potentially a decent idea to make signals have contain there limits from the left, i.e. be continuous from the left.  This works well if you define the differentiator, integrator etc in the right way.  Makes sense of impulse response etc. 
+
+
+\section{Spaces of signals}\label{sec:spaces-signals}
+
+The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems we describe two important types of subsets.  These are the \term{linear spaces} the \term{shift-invariant spaces}.  
+
+Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a$ a complex number we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$ (Figure~\ref{fig:multiandaddofsignals}).  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
+\[
+ax + by
+\]
+is called a \term{linear combination} of $x$ and $y$.  %Figure~\ref{fig:multiandaddofsignals} plots examples of 
+
+Let $X \subseteq \reals \to \complex$ be a set of signals.  The set $X$ is a \term{linear space} (or \term{vector space}) if for all signals $x$ and $y$ from $X$ and all complex numbers $a$ and $b$ the signal formed by the linear combination $ax + by$ is also in $X$.  The set of all signals $\reals \to \complex$ is a linear space.  Another example is the set of differentiable signals, because, if $x$ and $y$ are differentiable, then the linear combination $ax + by$ is differentiable.  The derivative is $a D x + b D y$.  The set of even signals is another example of a linear space because if $x$ and $y$ are even then
+\[
+ax(t) + by(t) = a x(-t) + b y(-t)
+\]
+and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
+
+A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $T_\tau x$ is also in $X$.  The set of differentiable signals is shift-invariant space because, if $x$ is differentiable, then $T_\tau x$ is differentiable.  The derivative is $D T_\tau x = T_\tau D x$.  The set of periodic signals is a shift-invariant space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}) as are $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
+
+
+\begin{figure}[tp]
+\centering
+\def\scalex{1.5}
+\def\scaley{1.5}
+\begin{tikzpicture}[domain=-1.4:1.4,samples=200, yscale=\scaley,xscale=\scalex]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.25) -- (0,2.3) node[left] {};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+      \draw[smooth,color=black,thick] plot function{exp(-x*x)};
+      \draw[smooth,color=black,thick] plot function{-0.5*exp(-x*x)};
+      \draw[smooth,color=black,thick] plot function{2*exp(-x*x)};
+      \begin{scope}[xscale=1/\scalex]
+%        \htick{1} node[pos=0.5,above right] {$1$};
+        %\htick{-1.25} node[pos=0.5,below right] {$-\tfrac{5}{4}$};
+      \end{scope}
+      \node at (0.5,1.95) {$2x$};
+      \node at (-0.3,1.15) {$x$};
+      \node at (1,-0.5) {$-\tfrac{1}{2}x$};
+      % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\;\;
+\begin{tikzpicture}[domain=-1.4:1.4, xscale=\scalex, yscale=\scaley]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
+    \draw[->] (0,-1.25) -- (0,2.3) node[left] {};
+%    \begin{scope}[yscale=0.45]
+      \draw[smooth,color=black,thick] plot function{exp(-x*x)};
+      \draw[smooth,color=black,thick] plot function{sin(pi*x)};
+      \draw[smooth,color=black,thick] plot function{exp(-x*x) + sin(pi*x)};
+      \begin{scope}[xscale=1/\scalex]
+%        \htick{1} node[pos=0.5,right] {$1$};
+%        \htick{-1} node[pos=0.5,right] {$-1$};
+      \end{scope}
+      \node at (-1.0,-0.7) {$y$};
+      \node at (-0.7,0.8) {$x$};
+      \node at (1,1.6) {$x+y$};
+%    \end{scope}
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\caption{The signal $x(t) = e^{-t^2}$ and the signals $2x$ and $-\tfrac{1}{2} x$ (left).  The signals $x(t) = e^{-t^2}$ and $y(t) = \sin(\pi t)$ and the signal $x + y$.} \label{fig:multiandaddofsignals}
+\end{figure}
+
+% \todo{Abstract properties of vector space}
+
+% \todo{Examples: even/odd signals, periodic signals, differentiable signal, shift spaces, absolutely integrable and square integrable signals etc}
+
+% The set of all differentiable signals forms a linear space because if $x$ and $y$ are differentiable signals 
+
+% \todo{Normed vector spaces, $L^1$, $L^2$}
+
 
 
 \section{Systems (functions of signals)}\label{sec:syst-funct-sign}
@@ -634,81 +711,7 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 0 & t \leq 0.
 \end{cases}
 \]
-Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ cannot contain the signal $x(t) = t$.  Example of domains for $I_\infty$ are the set of absolutely integrable signals $L^1$ and the set of signals that are both right sided and locally integrable.
-
-
-\section{Spaces of signals}\label{sec:spaces-signals}
-
-The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems we describe two important types of subsets.  These are the \term{linear spaces} the \term{shift-invariant spaces}.  
-
-Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a$ a complex number we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$ (Figure~\ref{fig:multiandaddofsignals}).  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
-\[
-ax + by
-\]
-is called a \term{linear combination} of $x$ and $y$.  %Figure~\ref{fig:multiandaddofsignals} plots examples of 
-
-Let $X \subseteq \reals \to \complex$ be a set of signals.  The set $X$ is a \term{linear space} (or \term{vector space}) if for all signals $x$ and $y$ from $X$ and all complex numbers $a$ and $b$ the signal formed by the linear combination $ax + by$ is also in $X$.  The set of all signals $\reals \to \complex$ is a linear space.  Another example is the set of differentiable signals, because, if $x$ and $y$ are differentiable, then the linear combination $ax + by$ is differentiable.  The derivative is $a D x + b D y$.  The set of even signals is another example of a linear space because if $x$ and $y$ are even then
-\[
-ax(t) + by(t) = a x(-t) + b y(-t)
-\]
-and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
-
-A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $T_\tau x$ is also in $X$.  The set of differentiable signals is shift-invariant space because, if $x$ is differentiable, then $T_\tau x$ is differentiable.  The derivative is $D T_\tau x = T_\tau D x$.  The set of periodic signals is a shift-invariant space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}) as are $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
-
-
-\begin{figure}[tp]
-\centering
-\def\scalex{1.5}
-\def\scaley{1.5}
-\begin{tikzpicture}[domain=-1.4:1.4,samples=200, yscale=\scaley,xscale=\scalex]
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
-    \draw[->] (0,-1.25) -- (0,2.3) node[left] {};
-    %\draw[color=black] plot[id=x] function{1/x^2} 
-    %    node[right] {$f(t) = t^{-2}$};
-      \draw[smooth,color=black,thick] plot function{exp(-x*x)};
-      \draw[smooth,color=black,thick] plot function{-0.5*exp(-x*x)};
-      \draw[smooth,color=black,thick] plot function{2*exp(-x*x)};
-      \begin{scope}[xscale=1/\scalex]
-%        \htick{1} node[pos=0.5,above right] {$1$};
-        %\htick{-1.25} node[pos=0.5,below right] {$-\tfrac{5}{4}$};
-      \end{scope}
-      \node at (0.5,1.95) {$2x$};
-      \node at (-0.3,1.15) {$x$};
-      \node at (1,-0.5) {$-\tfrac{1}{2}x$};
-      % \draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-\end{tikzpicture} 
-\;\;
-\begin{tikzpicture}[domain=-1.4:1.4, xscale=\scalex, yscale=\scaley]
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-1.75,0) -- (1.75,0) node[above] {$t$};
-    \draw[->] (0,-1.25) -- (0,2.3) node[left] {};
-%    \begin{scope}[yscale=0.45]
-      \draw[smooth,color=black,thick] plot function{exp(-x*x)};
-      \draw[smooth,color=black,thick] plot function{sin(pi*x)};
-      \draw[smooth,color=black,thick] plot function{exp(-x*x) + sin(pi*x)};
-      \begin{scope}[xscale=1/\scalex]
-%        \htick{1} node[pos=0.5,right] {$1$};
-%        \htick{-1} node[pos=0.5,right] {$-1$};
-      \end{scope}
-      \node at (-1.0,-0.7) {$y$};
-      \node at (-0.7,0.8) {$x$};
-      \node at (1,1.6) {$x+y$};
-%    \end{scope}
-    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-\end{tikzpicture} 
-\caption{The signal $x(t) = e^{-t^2}$ and the signals $2x$ and $-\tfrac{1}{2} x$ (left).  The signals $x(t) = e^{-t^2}$ and $y(t) = \sin(\pi t)$ and the signal $x + y$.} \label{fig:multiandaddofsignals}
-\end{figure}
-
-% \todo{Abstract properties of vector space}
-
-% \todo{Examples: even/odd signals, periodic signals, differentiable signal, shift spaces, absolutely integrable and square integrable signals etc}
-
-% The set of all differentiable signals forms a linear space because if $x$ and $y$ are differentiable signals 
-
-% \todo{Normed vector spaces, $L^1$, $L^2$}
+Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ cannot contain the signal $x(t) = t$.  Example of domains for $I_\infty$ are the set of absolutely integrable signals $L^1$ and the set of signals that are both right sided and locally integrable.  %The set of all linear combinations of signals of $L^1$ and right sided locally integrable signals also forms a domain.
 
 
 \section{Properties of systems}\label{sec:properties-systems}

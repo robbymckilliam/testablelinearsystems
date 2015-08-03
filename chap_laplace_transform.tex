@@ -182,7 +182,8 @@ The transfer functions of the shifter and differentiator can be obtained by insp
 \begin{equation}\label{eq:timeshiftertransferfunction}
 T_\tau e^{st} = e^{s(t-\tau)} = e^{-s\tau} e^{st} \qquad \text{and so} \qquad \lambda T_\tau = e^{-s\tau}.
 \end{equation}
-The region of convergence is the whole complex plane $s \in \complex$.  For the special case of the identity system $T_0$ we obtain $\lambda T_0 = 1$.  For the differentiator
+%The region of convergence is the whole complex plane $s \in \complex$.  
+For the special case of the identity system $T_0$ we obtain $\lambda T_0 = 1$.  For the differentiator
 \[
 D e^{st} = \frac{d}{d t} e^{st} = s e^{st} \qquad \text{and so} \qquad \lambda D = s.
 \]
@@ -200,59 +201,61 @@ These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 %\subsection{The transfer function of a linear combination of systems}
 
-Let $H_1$ and $H_2$ be linear shift-invariant systems with regions of convergenence $R_1 \subseteq \complex$ and $R_2\subseteq \complex$.  Let $H = a H_1 + bH_2$ be a linear combination of $H_1$ and $H_2$.  The response of $H$ to the complex exponential signal $e^{st}$ is
+Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X$ and range $Y$.  Let $H = a H_1 + bH_2$ be the system formed by a  linear combination of $H_1$ and $H_2$.  The response of $H$ to the complex exponential signal $e^{st} \in X$ is
 \begin{align*}
-H(e^{st}) &= a H_1(e^{st}) + b H_2(e^{st}) \\
-&= a\lambda(H_1)e^{st} + b\lambda(H_2)e^{st} & s \in R_1 \cap R_2, \\
-&= \big( a\lambda(H_1) + b\lambda(H_2) \big) e^{st} & s \in R_1 \cap R_2,\\
-&= \lambda(H) e^{st} & s \in R_1 \cap R_2,
+H e^{st} &= a H_1 e^{st} + b H_2 e^{st} \\
+&= a\lambda H_1(s) e^{st} + b\lambda H_2(s) e^{st}  \\
+&= \big( a\lambda H_1(s) + b\lambda H_2(s) \big) e^{st} \\
+&= \lambda H(s)  e^{st} 
 \end{align*}
-and so,
-\[
-\lambda(H) = a\lambda(H_1) + b\lambda(H_2) \qquad s \in R_1 \cap R_2.
-\]
-That is, the transfer function of a linear combination of systems is the same linear combination of the transfer functions.  The region of convergence of the linear combination is the intersection of the regions of convergence of the systems being combined.
+and so $\lambda H = a\lambda H_1 + b\lambda H_2$.  That is, the transfer function of a linear combination of systems is the same linear combination of the transfer functions.  %The region of convergence of the linear combination is the intersection of the regions of convergence of the systems being combined.
 
-%\subsection{The transfer function of a composition of systems}
-
-Now let $H$ be the system given by the composition of $H_1$ and $H_2$, that is, $H(x) = H_1\big(H_2(x)\big)$.  The response of $H$ to the signal $e^{st}$ is
+Now let $H_1 \in X \to Y$ and $H_2 \in Y \to Z$ be linear shift-invariant systems and let $H \in X \to Z$ be the system formed by the composition $H = H_2 H_1$.  The response of $H$ to the signal $e^{st}$ is
 \begin{align*}
-H(e^{st}) &= H_1\big(H_2(e^{st})\big) \\
-&= H_1\big(\lambda(H_2) e^{st} \big) & s \in R_2\\
-&= \lambda(H_2)H_1(e^{st}) & s \in R_2 \\
-&= \lambda(H_2)\lambda(H_1) e^{st} & s \in R_1 \cap R_2 \\
-&= \lambda(H) e^{st} & s \in R_1 \cap R_2,
+H e^{st} &= H_2 H_1 e^{st} \\
+&= H_2 \big(\lambda H_1(s) e^{st} \big) \\
+&= \lambda H_1(s) H_2 e^{st}  \\
+&=  \lambda H_1(s) \lambda H_2(s) e^{st}  \\
+&= \lambda(H) e^{st} 
 \end{align*}
 and so, 
 \begin{equation}\label{eq:composedtransferfunction}
-\lambda(H) = \lambda(H_1)\lambda(H_2) \qquad s \in R_1 \cap R_2.
+\lambda H = \lambda H_1 \lambda H_2 
 \end{equation}
-That is, the transfer function of a composition of linear shift-invariant systems is the multiplication of the transfer functions of those systems.  The region of convergence of the composition is the intersection of the regions of convergence of the systems being composed.
+That is, the transfer function of a composition of linear shift-invariant systems is the multiplication of the transfer functions of those systems.  %The region of convergence of the composition is the intersection of the regions of convergence of the systems being composed.
 
 %\subsection{The convolution theorem}
 
-We showed in Section~\ref{sec:line-comb-comp} that if $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$, then the impulse of the system $H(x) = H_1\big(H_2(x)\big)$ is given by the convolution $h = h_1 * h_2$.  Because,
+We showed in Section~\ref{sec:line-comb-comp} that if $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$, then the impulse of the composition $H = H_2 H_1$ is given by the convolution $h = h_1 * h_2$.  Because,
 \[
-\lambda(H) = \calL(h) \qquad \lambda(H_1) = \calL(h_1) \qquad \lambda(H_2) = \calL(h_2),
+\lambda H = \calL h \qquad \lambda H_1 = \calL h_1 \qquad \lambda H_2 = \calL h_2,
 \] 
 and using~\eqref{eq:composedtransferfunction}, we obtain,
 \[
-\calL(h_1 * h_2) = \calL(h) =  \lambda(H) = \lambda(H_1)\lambda(H_2) = \calL(h_1) \calL(h_2), \qquad s \in R_1 \cap R_2.
+\calL(h_1 * h_2) = \calL h =  \lambda H = \lambda H_1 \lambda H_2 = \calL h_1 \calL h_2
 \]
 Putting $x = h_1$, $y = h_2$, $R_x = R_1$, and $R_y = R_2$ we obtain the \term{convolution theorem},
 \begin{equation}\label{eq:convtheoremlaplace}
-\calL(x*y) = \calL(x) \calL(y), \qquad s \in R_x \cap R_y.
+\calL(x*y) = \calL x \calL y, \qquad s \in R(x) \cap R(y).
 \end{equation}
 In words: the Laplace transform of a convolution of signals is the multiplication of their Laplace transforms.
 %This is called and goes by the phrase: ``Convolution in the time domain is multiplication in the Laplace/Fourier/Frequency domain''.
 
 %\subsection{The Laplace transform of an output signal}
 
-Let $y = H(x)$ be the response of the system $H$ to input signal $x$.  Suppose that $x$ has region of convergence $R_x$ and that $y$ has region of convergence $R_y$.  In the case that $H$ is regular with impulse response $h$ we have $y = h * x$ and the convolution theorem asserts that
+Let $y = H x$ be the response of the system $H$ to input signal $x$.  In the case that $H$ is regular with impulse response $h$ we have $y = h * x$ and the convolution theorem asserts that
 \begin{equation}\label{eq:transferLaplcetheorem}
-\calL(y) = \calL(h)\calL(x) = \lambda(H)\calL(x), \qquad s \in R_x \cap R_y
+\calL y = \calL h \calL x = \lambda H \calL x,
 \end{equation}
-where, in this case, $R_y = R_h \cap R_x$ where $R_h$ is the region of convergence of the impulse response $h$.  Thus, the Laplace transform of the output signal $y = H(x)$ is the transfer function of the system $H$ multiplied by the Laplace transform of the input signal $x$.  This result also holds when $H$ is a shifter or a differentiator (Exercise~\ref{exer:laplacetransdiffandtimeshift}).
+Thus, the Laplace transform of the output signal $y = H x$ is the transfer function of the system $H$ multiplied by the Laplace transform of the input signal $x$.  This result also holds when $H$ is a shifter, that is,
+\[
+\calL T_{\tau} x = \lambda T_\tau \calL x = e^{-s\tau} \calL x.
+\]
+This is called the \term{time-shift property} of the Laplace transform.  The results also holds under certiain conditions when $H$ is a differentiator, that is,
+\[
+\calL D x = \lambda D \calL x = s \calL x.
+\]
+This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffandtimeshift}).
 
 % \subsection{Commutivity (again)}
 
