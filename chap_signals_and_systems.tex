@@ -361,7 +361,8 @@ to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This con
 
 \section{Spaces of signals}\label{sec:spaces-signals}
 
-The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems we describe two important types of subsets.  These are the \term{linear spaces} the \term{shift-invariant spaces}.  
+%The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems 
+We will regularly be interested in substets of the set of all signals $\reals \to \complex$.  Two important families of subsets are the \term{linear spaces} and the \term{shift-invariant spaces}.
 
 Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a$ a complex number we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$ (Figure~\ref{fig:multiandaddofsignals}).  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
 \[
@@ -375,7 +376,7 @@ ax(t) + by(t) = a x(-t) + b y(-t)
 \]
 and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
 
-For a real number $\tau$ the signal $x(t - \tau)$ is called a \emph{time-shift} or simply \emph{shift} of the signal $x(t)$.  Figure~\ref{fig:timeshifter} depicts the shifter for different values of $\tau$.   A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $x(t - \tau)$ is also in $X$.  Examples of shift-invariant spaces are the set of differentiable signals, the set of periodic signals (Exercise~\ref{exer:periodicshiftinvariantnotlinear}), and $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
+For a real number $\tau$ the signal $x(t - \tau)$ is called a \emph{time-shift} or just \emph{shift} of the signal $x(t)$.  Figure~\ref{fig:timeshifter} depicts the shift $x(t - \tau)$ for different values of $\tau$ in the case that $x(t) = e^{-t^2}$.   A set of signals $X \subset \reals \to \complex$ is a \term{shift-invariant space} if for all $x \in X$ and all real numbers $\tau$ the shift $x(t - \tau)$ is also in $X$.  Examples of shift-invariant spaces are the set of differentiable signals, the set of periodic signals (Exercise~\ref{exer:periodicshiftinvariantnotlinear}), and $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
 
 \begin{figure}[tp]
 \centering
@@ -439,7 +440,7 @@ For a real number $\tau$ the signal $x(t - \tau)$ is called a \emph{time-shift} 
     \node[shift={(-3,2.2)}] {$x(t + 3)$};
     \vtick{-3} node[pos=0.5,below] {$-3$};
   \end{tikzpicture}
-  \caption{The signal $x(t) = e^{-t^2}$ and shifts $x(t - \tau) = e^{-(t-\tau)^2}$ for $\tau = 1.5$ and $-3$.} \label{fig:timeshifter}
+  \caption{The signal $x(t) = e^{-t^2}$ and shift $x(t - \tau) = e^{-(t-\tau)^2}$ for $\tau = 1.5$ and $-3$.} \label{fig:timeshifter}
 \end{figure}
 
 % \todo{Abstract properties of vector space}
@@ -571,11 +572,11 @@ A plot of $\tilde{y}$, $\tilde{x}$ and $\tfrac{47}{57}\tilde{x}$ over a $20\si{\
 %BLERG Potentially what this next bit is out of place?
 
 
-Let $X$ and $Y$ be set of signals, that is, $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$.  A system is a function $H \in X \to Y$ that maps each signal from $X$ to a signal from $Y$.  We are free to choose the domain $X$ and range $Y$ at our convenience.  In cases such as the voltage divider above it is feasible to choose the domain $X = \reals \to \complex$, that is, the domain can contain \emph{all} signals.  However, this is not always convenient or possible.  For example, the system
+Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be sets of signals.  A system is a function $H \in X \to Y$ that maps each signal from $X$ to a  signal from $Y$.  We are free to choose the domain $X$ and range $Y$ at our convenience.  In cases such as the voltage divider above it is feasible to choose the domain $X = \reals \to \complex$, that is, the domain can contain \emph{all} signals.  However, this is not always convenient or possible.  For example, the system
 \[
 Hx(t) = \frac{1}{x(t)}
 \]
-is not defined at those $t$ where $x(t) = 0$ because we cannot divide by zero.  To avoid this we might choose the domain as the set of signals $x(t)$ which are not zero for any $t$.   
+is not defined at those $t$ where $x(t) = 0$ because we cannot divide by zero.  To avoid this we might choose the domain as the set of signals $x(t)$ which are not zero for any $t$.
 
 Another example is the system $I_\infty$ defined by
 \begin{equation}\label{eq:deifferentiator}
