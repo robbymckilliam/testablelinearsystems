@@ -375,8 +375,7 @@ ax(t) + by(t) = a x(-t) + b y(-t)
 \]
 and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
 
-A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $T_\tau x$ is also in $X$.  The set of differentiable signals is shift-invariant space because, if $x$ is differentiable, then $T_\tau x$ is differentiable.  The derivative is $D T_\tau x = T_\tau D x$.  The set of periodic signals is a shift-invariant space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}) as are $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
-
+For a real number $\tau$ the signal $x(t - \tau)$ is called a \emph{time-shift} or simply \emph{shift} of the signal $x(t)$.  Figure~\ref{fig:timeshifter} depicts the shifter for different values of $\tau$.   A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in X$ and all real numbers $\tau$ the shifted signal $x(t - \tau)$ is also in $X$.  Examples of shift-invariant spaces are the set of differentiable signals, the set of periodic signals (Exercise~\ref{exer:periodicshiftinvariantnotlinear}), and $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
 
 \begin{figure}[tp]
 \centering
@@ -422,6 +421,25 @@ A set of signals $X$ is a \term{shift-invariant space} if for all signals $x \in
     %    node[right] {$f(t) = \frac{1}{20} e^t$};
 \end{tikzpicture} 
 \caption{The signal $x(t) = e^{-t^2}$ and the signals $2x$ and $-\tfrac{1}{2} x$ (left).  The signals $x(t) = e^{-t^2}$ and $y(t) = \sin(\pi t)$ and the signal $x + y$.} \label{fig:multiandaddofsignals}
+\end{figure}
+
+
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[domain=-5.5:4.5,samples=200]
+    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-6,0) -- (5,0) node[above] {$t$};
+    \draw[->] (0,-0.3) -- (0,2.5);
+    \draw[smooth,color=black,thick] plot function{2*exp(-x*x)};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(x+3)*(x+3))};
+    \draw[smooth,color=black,thick] plot function{2*exp(-(x-1.5)*(x-1.5))};
+    \node[left,shift={(0.0,2.2)}] {$x$};
+    \node[shift={(1.5,2.2)}] {$x(t - 1.5)$};
+    \vtick{1.5} node[pos=0.5,below] {$1.5$};
+    \node[shift={(-3,2.2)}] {$x(t + 3)$};
+    \vtick{-3} node[pos=0.5,below] {$-3$};
+  \end{tikzpicture}
+  \caption{The signal $x(t) = e^{-t^2}$ and shifts $x(t - \tau) = e^{-(t-\tau)^2}$ for $\tau = 1.5$ and $-3$.} \label{fig:timeshifter}
 \end{figure}
 
 % \todo{Abstract properties of vector space}
@@ -596,23 +614,6 @@ The domain used for a given system will usually be obvious from the context in w
 \end{shaded}
 \end{figure}
 
-\begin{figure}[p]
-  \centering
-  \begin{tikzpicture}[domain=-5.5:4.5,samples=200]
-    % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-6,0) -- (5,0) node[above] {$t$};
-    \draw[->] (0,-0.3) -- (0,2.5);
-    \draw[smooth,color=black,thick] plot function{2*exp(-x*x)};
-    \draw[smooth,color=black,thick] plot function{2*exp(-(x+3)*(x+3))};
-    \draw[smooth,color=black,thick] plot function{2*exp(-(x-1.5)*(x-1.5))};
-    \node[left,shift={(0.0,2.2)}] {$x$};
-    \node[shift={(1.5,2.2)}] {$T_{1.5}(x)$};
-    \vtick{1.5} node[pos=0.5,below] {$1.5$};
-    \node[shift={(-3,2.2)}] {$T_{-3}(x)$};
-    \vtick{-3} node[pos=0.5,below] {$-3$};
-  \end{tikzpicture}
-  \caption{Shifter systems $T_{1.5}x(t) = x(t - 1.5)$ and $T_{-3}x(t) = x(t + 3)$ acting on the signal $x(t) = e^{-t^2}$.} \label{fig:timeshifter}
-\end{figure}
 
 \begin{figure}[p]
   \centering
