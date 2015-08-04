@@ -1,9 +1,9 @@
 
-In the previous section we derived differential equations that model mechanical, electrical, and electro-mechanical systems.  The equations themselves often do not provide sufficient information about these system.  For example, we were able to find a signal $p$ representing the position of the mass-spring-damper in Figure~\ref{mech:massspring1} given a particular force signal $f$ is applied to the mass.  However, it is not immediately obvious how to find the force signal $f$ given a particular position signal $p$.  We will be able to solve this problem and, more generally, to describe properties of systems modelled by linear differential equations with constant coefficient, if we make the added assumptions that the systems are \term{linear} and \term{shift-invariant}.  We study linear shift-invariant systems in this chapter.  Throughout this chapter $H$ will denote a linear shift-invariant system.
+In the previous section we derived differential equations that model mechanical, electrical, and electro-mechanical systems.  The equations themselves often do not provide sufficient information.  For example, we were able to find a signal $p$ representing the position of the mass-spring-damper in Figure~\ref{mech:massspring1} given a particular force signal $f$ is applied to the mass.  However, it is not immediately obvious how to find the force signal $f$ given a particular position signal $p$.  We will be able to solve this problem and, more generally, to describe properties of systems modelled by linear differential equations with constant coefficient, if we make the added assumptions that the systems are \term{linear} and \term{shift-invariant}.  We study linear shift-invariant systems in this chapter.  Throughout this chapter $H$ will denote a linear shift-invariant system.
 
 \section{Convolution, regular systems and the delta ``function''} \label{sec:conv-regul-syst}
 
-A large number of linear shift-invariant systems can be represented by a signal called the \term{impulse response}.  The impulse response of a system $H$ is a signal $h$ such that
+A large number of linear shift-invariant systems can be represented by a signal called the \term{impulse response}.  The impulse response of a system $H$ is signal $h$ such that
 \[
 Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau,
 \]
@@ -33,7 +33,7 @@ T_\kappa H x &= T_\kappa(h * x ) \\
 &= H T_\kappa x. 
 \end{align*}
 
-We can define the impulse response of a regular system $H$ in the following way.  First define the signal
+The impulse response of a regular system $H$ can often by found in the following way.  First define the signal
 \[
 p_\gamma(t) = \begin{cases}
 \gamma, & 0 < t \leq \frac{1}{\gamma} \\
@@ -44,15 +44,11 @@ that is, a rectangular shaped pulse of height $\gamma$ and width $\tfrac{1}{\gam
 \begin{align*}
 H p_\gamma = h * p_\gamma = \int_{-\infty}^\infty h(\tau) p_\gamma(t - \tau) d\tau = \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau.
 \end{align*}
-Taking limits as $\gamma\rightarrow\infty$,
+Suppose that $\lim_{\gamma \rightarrow \infty} H p_\gamma(t)$ converges for all $t \in \reals$, then,
 \[
-\lim_{\gamma \rightarrow \infty} H p_\gamma = \lim_{\gamma \rightarrow \infty} \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau = h \;\; \text{a.e.}
+\lim_{\gamma \rightarrow \infty} H p_\gamma = \lim_{\gamma \rightarrow \infty} \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau = h \;\; \text{a.e.},
 \]
-Thus, we define the impulse response of a regular system $H$ as the limit  
-\begin{equation}\label{eq:defnimpulseresponse}
-h = \lim_{\gamma \rightarrow \infty} H p_\gamma.  
-\end{equation}
-The limit converges when $H$ is regular.  If this limit does not converge, the system is not regular and does not have an impulse response.  %The reader unclear on the meaning of the limit above might want to review Section~\ref{sec:convergence-signals}.
+that is, the impulse response satisfies $h = \lim_{\gamma \rightarrow \infty} H p_\gamma$.  %If this limit does not converge for any $t$, then the system is not regular and does not have an impulse response.  %The reader unclear on the meaning of the limit above might want to review Section~\ref{sec:convergence-signals}.
 
 %BLERG Young's inequality gives a neat way of knowing when convolutions exist or don't exists based on what Lp space the signals lie in.  This becomes useful in the Fourier transform section?
 
@@ -110,11 +106,12 @@ u(t) = \lim_{\gamma\rightarrow\infty} H p_\gamma(t) = \begin{cases}
   \caption{The rectangular shaped pulse $p_\gamma$ for $\gamma=0.5,1,2,5$ and the response of the integrator $I_\infty$ to $p_\gamma$ for $\gamma=0.5,1,2,5,\infty$.} \label{fig:rectpulsedelta}
 \end{figure}
 
-Some important systems do not have an impulse response and are not regular.  For example, the identity system $T_0$ is not regular because 
-\[
-\lim_{\gamma \rightarrow \infty} T_0 p_\gamma = \lim_{\gamma \rightarrow \infty} p_\gamma
-\]
-does not converge.  %BLERG what is this all about actually?  Is is something like.  The convergence is not ``almost everywhere''?
+Some important systems do not have an impulse response and are not regular.  For example, the identity system $T_0$ is not regular.  % because 
+% \[
+% \lim_{\gamma \rightarrow \infty} T_0 p_\gamma = \lim_{\gamma \rightarrow \infty} p_\gamma
+% \]
+% does not converge.  
+% BLERG what is this all about actually?  Is is something like.  The convergence is not ``almost everywhere''?
 Similarly, the  shifter $T_\tau$ and differentiators $D^k$ are not regular.  However, it is common to pretend that $T_0$ \emph{does} have an impulse response and this is typically denoted by the symbol $\delta$ called the \term{delta function}.  The idea is to assign $\delta$ the property
 \[
 \int_{-\infty}^\infty x(t) \delta(t) dt = x(0) %= \lim_{\gamma \rightarrow \infty}\int_{\infty}^\infty x(t) p_\gamma(t) dt
@@ -173,7 +170,7 @@ For $a \in \reals$ it is common to plot $a\delta(t - \tau)$ using an arrow of he
 \caption{Plot of the ``signal'' $\delta(t+2) + 2\delta(t) - \delta(t-1)$ (left) and the ``signal'' $2\sin(\pi t) + \delta(t - \tfrac{3}{2})$ (right).} \label{fig:deltafuncplotexample}
 \end{figure}
 
-The only other non regular systems that we have use of are differentiators $D^k$ and it is common to define a similar notation for pretending that these systems have an impulse response.  In this case the symbol $\delta^k$ is assigned the property
+The only other non regular systems that we have use of are differentiators $D^k$ and it is common to define a similar notation for pretending that these systems have an impulse response.  In this case, the symbol $\delta^k$ is assigned the property
 \[
 \int_{-\infty}^\infty x(t) \delta^k(t) dt = D^k x(0),
 \]
@@ -203,7 +200,7 @@ I_\infty u(t) = \int_{-\infty}^t u(\tau) d\tau = \begin{cases}
 0 & t \leq 0.
 \end{cases}
 \]
-This signal is often called the \term{ramp function}.  Not all systems have a step response.  For example, the system with impulse response $u(-t)$ does not because the convolution of the step $u(t)$ and its reflection $u(-t)$ does not exist.  If a system $H$ has both an impulse response $h$ and a step response $H u$, then these two signals are related.  To see this, observe that the step response is
+This signal is often called the \term{ramp function}.  Not all systems have a step response.  For example, the system with impulse response $u(-t)$ does not because convolution of the step $u(t)$ and its reflection $u(-t)$ is not possible.  If a system $H$ has both an impulse response $h$ and a step response $H u$, then these two signals are related.  To see this, observe that the step response is
 \begin{equation}\label{eq:stepresponseintegrateimpulseresponse}
 Hu = h * u = \int_{-\infty}^{\infty}h(\tau)u(t - \tau) d\tau = \int_{-\infty}^{t} h(\tau) d\tau = I_\infty h. 
 \end{equation}
@@ -249,11 +246,11 @@ x*y*z = y*z*x = z*x*y = y*x*z = x*z*y = z*y*x
 \]
 provided that all the convolutions involved exist.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
 
-\section{Linear combinations and composition}\label{sec:line-comb-comp}
+\section{Linear combination and composition}\label{sec:line-comb-comp}
 
 %\todo{This could feasibly be connected back to the abstract concept of a vector space in the new Section~\ref{sec:spaces-signals}}
 
-Let $X$ and $Y$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X$ and range $Y$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
+Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X$ and range $Y$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
 \[
 Hx = cH_1x + dH_2x.
 \]
