@@ -42,7 +42,7 @@ The signal $a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)$ has Laplace transform
 &= a \int_{-\infty}^{\infty} e^{ \alpha t}u(t) e^{-st} dt + b\int_{-\infty}^{\infty} e^{\beta t}u(-t)  e^{-st} dt \\
 &= a \calL(e^{ \alpha t}u(t)) + b\calL(e^{\beta t}u(-t))
 \end{align*}
-with domain given by the region of convergence
+with region of convergence
 \[
 \roc(a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)) = \{ s \in \complex \mid  \Re(\alpha) < \Re(s) < \Re(\beta) \}.
 \] 
@@ -69,11 +69,11 @@ The region of convergence is the entire complex plane because
 \[
 \int_{-\infty}^{\infty} \abs{\rect(t) e^{-st}} dt = \int_{-1/2}^{1/2} e^{-\Re(s)t} dt = \frac{ e^{\Re(s)/2} - e^{-\Re(s)/2}}{s} < \infty
 \]
-for all $s \in \complex$.  The Laplace transform of $\rect$,
+for all $s \in \complex$.  The Laplace transform of $\rect$ is
 \begin{equation}\label{eq:rectLaplace}
-\calL \rect = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s} \qquad s \in \complex,
+\calL \rect = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s} \qquad s \in \complex.
 \end{equation}
-has domain given by the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
+The domain is the entire complex plane.  The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
  
 \colorlet{lightgray}{black!25}
 
@@ -121,7 +121,7 @@ where $\sigma$ is a real number that is inside the region of convergence $\roc(x
 \begin{equation}\label{eq:laplacetranscommonsimple}
 \calL\big(t^n u(t)\big) = \frac{n!}{s^{n+1}} \qquad \Re(s) > 0,
 \end{equation}
-where $n \geq 0$ is an integer (Exercise~\ref{excer:laplacetransformcommonpolyut}).  The Laplace transforms of the signal $x(t)$ and the signal $e^{\alpha t}x(t)$ are related.  First observe that the region of convergence of $e^{\alpha t}x(t)$ is all those complex numbers $s$ such that $s - \alpha \in \roc(x)$.  Now,
+where $n \geq 0$ is an integer (Exercise~\ref{excer:laplacetransformcommonpolyut}).  The Laplace transforms of the signal $x(t)$ and the signal $e^{\alpha t}x(t)$ are related.  The region of convergence of $e^{\alpha t}x(t)$ is all those complex numbers $s$ such that $s - \alpha \in \roc(x)$ and the Laplace transform satisfies
 \begin{align}
 \calL\big( e^{\alpha t} x(t)\big)\big(s\big) &= \int_{-\infty}^{\infty} e^{\alpha t} x(t)  e^{-s t} dt \nonumber \\
 &= \int_{-\infty}^{\infty} x(t)  e^{-(s-\alpha) t} dt \nonumber \\

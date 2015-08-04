@@ -250,7 +250,7 @@ provided that all the convolutions involved exist.  More generally, the order in
 
 %\todo{This could feasibly be connected back to the abstract concept of a vector space in the new Section~\ref{sec:spaces-signals}}
 
-Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X$ and range $Y$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
+Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X \subseteq \reals \to \complex$ and range $Y \subseteq \reals \to \complex$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
 \[
 Hx = cH_1x + dH_2x.
 \]
@@ -268,7 +268,7 @@ HT_\tau x &= cH_1T_\tau x + dH_2T_\tau x  \\
 &= T_\tau( cH_1 x + dH_2 x ) & \text{(linearity $T_\tau$)} \\
 &= T_\tau H x.
 \end{align*}
-So, linear shift-invariant systems can be constructed as linear combination of other linear shift-invariant systems.  If $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$ then
+So, linear shift-invariant systems can be constructed as linear combinations of other linear shift-invariant systems.  If $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$ then
 \begin{align*}
 Hx &= a H_1 x + b H_2 x \\
 &= a h_1 * x + b h_2 * x \\
@@ -307,7 +307,7 @@ Another way to construct linear shift-invariant systems is by \term{composition}
 \[
 H x = H_2 H_1 x,
 \]
-that is, $H$ first applies the system $H_1$ and then applies the system $H_2$.  The system $H$ is said to be the composition of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
+that is, $H$ first applies the system $H_1$ and then applies the system $H_2$.  The system $H$ is said to be the \term{composition} of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
 \begin{align*}
 H(ax + by) &= H_2 H_1(ax + by) \\
 &= H_2(aH_1 x + bH_1 y )  &\text{(linearity $H_1$)}\\
@@ -470,7 +470,7 @@ e^{st} = e^{\sigma t}e^{j \omega t} = e^{\sigma t} \big( \cos(\omega t) + j \sin
 \]
 is called a \term{complex exponential signal}.  Complex exponential signals play an important role in the study of linear shift-invariant systems.  The real and imaginary parts of $e^{(\sigma + j\pi)t}$ are plotted in Figure~\ref{fig:sinabsdecay} for $\sigma = -\tfrac{1}{10},0,\tfrac{1}{10}$.  The signal is oscillatory when $\omega \neq 0$.  The signal converges to zero as $t\to\infty$ when $\sigma<0$ and diverges as $t\to\infty$ when $\sigma > 0$.  
 
-Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ and range $Y$ begin linear shift-invariant spaces.  Let $y = H e^{st}$ be the response of $H$ to the complex exponential signal $e^{st} \in X$.  Consider the response of $H$ to the shifted signal $T_\tau e^{st} = e^{s(t-\tau)}$ for $\tau \in \reals$.  By shift-invariance
+Let $H \in X \to Y$ be a linear shift-invariant system.  Suppose that $y = H e^{st}$ is the response of $H$ to the complex exponential signal $e^{st} \in X$.  Consider the response of $H$ to the shifted signal $T_\tau e^{st} = e^{s(t-\tau)}$ for $\tau \in \reals$.  By shift-invariance
 \[
 H T_{\tau} e^{st} = T_{\tau} H  e^{st} = y(t - \tau) %\qquad \text{for all $t, \tau \in \reals$},
 \]
@@ -482,18 +482,18 @@ Combining these equations we obtain
 \[
 y(t - \tau) = e^{-s\tau} y(t) \qquad \text{for all $t,\tau \in \reals$}.
 \]
-This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear shift-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear shift-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number, that is, $\lambda H \in \complex \to \complex$.  The transfer function satisfies
+This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear shift-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear shift-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number.  Letting $S$ be the set of complex number $s$ such $e^{st} \in X$ we have $\lambda H \in S \to \complex$.  The transfer function satisfies
 \begin{equation}\label{eq:transfuneigenproperty}
-H e^{st} = \lambda H(s) e^{st}.
+H e^{st} = \lambda H(s) e^{st}
 \end{equation}
-This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
+whenever $e^{st} \in X$.  This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
 
 We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  As an example, consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
 \[
 x = - y - R_1 C_2 Dy.
 \]
 We called this the \term{active RC} circuit.  To simplify notation put $R = R_1$ and $C = C_2$ so that $x = -y - RCD(y)$.   
-Suppose that $H$ is a linear shift-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  Since $H$ is linear shift-invariant, if the input voltage is a complex exponential signal $x = e^{st}$, then the ouput voltage is the same complex exponential signal mulitpled by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$ .  Substituting this into the differential equation for the active RC circuit we obtain
+Suppose that $H$ is a linear shift-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  If the input voltage is a complex exponential signal $x = e^{st}$, then the ouput voltage is the same complex exponential signal mulitpled by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$.  Substituting this into the differential equation for the active RC circuit we obtain
 \[
 e^{st} = - \lambda e^{st}- R C D (\lambda e^{st}) = -\lambda e^{st} (1  - R C s)
 \]
@@ -566,19 +566,20 @@ where, to simplify notation, we have written simply $\lambda$ for $\lambda H(s)$
 
 \section{The spectrum}\label{sec:spectrum}
 
-It is often of interest to focus on the transfer function when $s$ is purely imaginary, that is, when $s = j \omega$.  In this case the complex exponential signal takes the form
+It is of interest to focus on the transfer function when $s$ is purely imaginary, that is, when $s = j \omega$.  In this case the complex exponential signal takes the form
 \[
-e^{j\omega t} = e^{j 2\pi f} = \cos( 2\pi f t) + j \sin( 2\pi f t).
+e^{j\omega t} = e^{j 2\pi f} = \cos( 2\pi f t) + j \sin( 2\pi f t)
 \] 
 where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ containing the signal $e^{j 2\pi f t}$.  The function
 \[
 \Lambda H(f) = \lambda H( j 2\pi f )
 \]
-is called the \term{spectrum} of $H$.  The spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
+is called the \term{spectrum} of $H$.  %The spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  
+It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
 \[
-H e^{j 2\pi f t}  = \lambda H (j 2\pi f) e^{j 2\pi f t} = \Lambda H(f) e^{j 2\pi f t}. 
+H e^{j 2\pi f t}  = \lambda H (j 2\pi f) e^{j 2\pi f t} = \Lambda H(f) e^{j 2\pi f t}
 \]
-It is of interest to consider the \term{magnitude spectrum} $\abs{\Lambda H}$ and the \term{phase spectrum} $\angle{\Lambda H}$ separately.  The notation $\angle$ denotes the \term{argument} (or \term{phase}) of a complex number.  We have,
+whenever $e^{j 2\pi f t} \in X$.  It is of interest to consider the \term{magnitude spectrum} $\abs{\Lambda H}$ and the \term{phase spectrum} $\angle{\Lambda H}$ separately.  The notation $\angle$ denotes the \term{argument} (or \term{phase}) of a complex number.  We have,
 \[
 \Lambda H(f) = \abs{\Lambda H(f)} e^{j \angle{\Lambda H(f)}}
 \]  
