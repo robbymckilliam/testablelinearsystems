@@ -3,7 +3,7 @@ In the previous section we derived differential equations that model mechanical,
 
 \section{Convolution, regular systems and the delta ``function''} \label{sec:conv-regul-syst}
 
-A large number of linear shift-invariant systems can be represented by a signal called the \term{impulse response}.  The impulse response of a system $H$ is signal $h$ such that
+A large number of linear shift-invariant systems can be represented by a signal called the \term{impulse response}.  The impulse response of a system $H$ is a locally integrable signal $h$ such that
 \[
 Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau,
 \]
@@ -12,7 +12,17 @@ that is, the response of $H$ to input signal $x$ can be represented as an integr
 h * x = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau.
 \]
 %where $(h*x)(t)$ indicates $h*x$ evaluated at $t$.  
-Those systems that have an impulse response we call \term{regular systems}\footnote{The name \term{regular system} is motivated by the term \term{regular distribution}~\citep{Zemanian_dist_theory_1965}}.  Observe that regular systems are linear because
+Those systems that have an impulse response we call \term{regular systems}\footnote{The name \term{regular system} is motivated by the term \term{regular distribution}~\citep{Zemanian_dist_theory_1965}}.  Unless otherwise stated the domain of the regular system $H$ is assumed to be the set of signals $x$ such that the integral
+\[
+\int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
+\]
+This set of signals is denoted by $\fin(h)$ and so $H \in \fin(h) \to \reals \to \complex$.  Observe that for all $x \in \fin(h)$ the response 
+\[
+Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau \leq \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty 
+\]
+for all $t \in \reals$.  It can be shown that $\fin(h)$ is a linear shift-invariance space (Exercise~\ref{exer:finhlinshiftinv}).
+
+Regular systems are linear because, for all $x, y \in \fin(h)$ and all $a, b \in \complex$,
 \begin{equation}\begin{split}\label{eq:regsystemislinear}
 H(ax + by) &= h * (ax + by) \\
 &= \int_{-\infty}^{\infty} h(\tau) \big(ax(t - \tau) + by(t - \tau)\big) d\tau \\
@@ -20,11 +30,11 @@ H(ax + by) &= h * (ax + by) \\
 &= a (h * x) + b(h*y) \\
 &= a Hx + bHy.
 \end{split}\end{equation}
-The above equations show that convolution commutes with scalar multiplication and distributes with addition, that is,
+The above equation shows that convolution commutes with scalar multiplication and distributes with addition, that is,
 \[
 h * (ax + by) =  a (h * x) + b(h*y).
 \]
-Regular systems are also shift-invariant because
+Regular systems are also shift-invariant because for all $x \in \fin(h)$
 \begin{align*}
 T_\kappa H x &= T_\kappa(h * x ) \\
 &= \int_{-\infty}^{\infty} h(\tau) x(t- \kappa - \tau) d\tau \\
@@ -33,7 +43,7 @@ T_\kappa H x &= T_\kappa(h * x ) \\
 &= H T_\kappa x. 
 \end{align*}
 
-The impulse response of a regular system $H$ can often by found in the following way.  First define the signal
+The impulse response of a regular system $H$ can be found in the following way.  First define the signal
 \[
 p_\gamma(t) = \begin{cases}
 \gamma, & 0 < t \leq \frac{1}{\gamma} \\
@@ -44,11 +54,11 @@ that is, a rectangular shaped pulse of height $\gamma$ and width $\tfrac{1}{\gam
 \begin{align*}
 H p_\gamma = h * p_\gamma = \int_{-\infty}^\infty h(\tau) p_\gamma(t - \tau) d\tau = \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau.
 \end{align*}
-Suppose that $\lim_{\gamma \rightarrow \infty} H p_\gamma(t)$ converges for all $t \in \reals$, then,
+Taking $\gamma \to \infty$ we find that
 \[
-\lim_{\gamma \rightarrow \infty} H p_\gamma = \lim_{\gamma \rightarrow \infty} \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau = h \;\; \text{a.e.},
+\lim_{\gamma \rightarrow \infty} H p_\gamma = \lim_{\gamma \rightarrow \infty} \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau = h \;\; \text{a.e.}.
 \]
-that is, the impulse response satisfies $h = \lim_{\gamma \rightarrow \infty} H p_\gamma$.  %If this limit does not converge for any $t$, then the system is not regular and does not have an impulse response.  %The reader unclear on the meaning of the limit above might want to review Section~\ref{sec:convergence-signals}.
+%that is, the impulse response satisfies $h = \lim_{\gamma \rightarrow \infty} H p_\gamma$ almost everywhere.  %If this limit does not converge for any $t$, then the system is not regular and does not have an impulse response.  %The reader unclear on the meaning of the limit above might want to review Section~\ref{sec:convergence-signals}.
 
 %BLERG Young's inequality gives a neat way of knowing when convolutions exist or don't exists based on what Lp space the signals lie in.  This becomes useful in the Fourier transform section?
 

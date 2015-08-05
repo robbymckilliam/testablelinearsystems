@@ -136,7 +136,7 @@ u(t) = \begin{cases}
 0 & t < 0
 \end{cases}
 \end{equation}
-is right-sided.  Its horizontal reflection $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to have \term{finite support} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ do not have finite support, but the \term{rectangular pulse}
+is right-sided.  Its horizontal reflection $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to be \term{finite} or to have \term{finite support} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ do not have finite support, but the \term{rectangular pulse}
 \begin{equation}\label{eq:rectfuncdefn}
 \rect(t) = \begin{cases} 
 1 & \abs{t} < \frac{1}{2}\\
@@ -712,7 +712,7 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 \end{cases}
 \]
 Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ cannot contain the signal $x(t) = t$.  %Example of domains for $I_\infty$ are the set of absolutely integrable signals $L^1$ and the set of signals that are both right sided and locally integrable.  
-Unless otherwise stated we will assume the domain of $I_\infty$ to be the subset of locally integrable signals for which $\int_{-\infty}^0 \abs{x(t)} dt < \infty$ (Exercise~\ref{excer:domainintegrator}).    %The set of all linear combinations of signals of $L^1$ and right sided locally integrable signals also forms a domain.
+Unless otherwise stated we will assume the domain of $I_\infty$ to be the subset of locally integrable signals $L_{\text{loc}}$ for which $\int_{-\infty}^0 \abs{x(t)} dt < \infty$ (Exercise~\ref{excer:domainintegrator}).  For finite $a$ we will assume, unless otherwise stated, that the domain of $I_a$ is the set of locally integrable signals $L_{\text{loc}}$. %The set of all linear combinations of signals of $L^1$ and right sided locally integrable signals also forms a domain.
 
 
 \section{Properties of systems}\label{sec:properties-systems}
@@ -848,6 +848,8 @@ for all $\tau \in \reals$ and all signals $x \in X$.  Figure~\ref{blockdiag:time
 % H(x, t+\tau) = H\big(T_{-\tau}(x), t\big) = H\big(T_{-t}(x), \tau\big).
 % \end{equation}
 % This property will be useful in later sections. 
+
+%We will primarily be interested in systems that are both linear and shift-invariant said to be \term{linear shift-invariant} or \term{linear time-invariant} systems.  The phrase ``Let $H \in X \to Y$ be a linear shift-invariant system'' will occur regularly in this text and it will imp
 
 \begin{figure}[tbp]
 \centering

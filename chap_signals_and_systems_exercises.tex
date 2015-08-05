@@ -259,7 +259,7 @@ and so $L_2$ is a shift-invariant space.
 
 \item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant spaces.
 
-\item \label{excer:integratornotstable1} Show that the integrator $I_a : L_{\text{loc}} \to \reals \to \complex$ for any finite $a\in\reals$ is not stable.
+\item \label{excer:integratornotstable1} Show that the integrator $I_c$ with finite $c\in\reals$ is not stable.
 \begin{solution}
 Put $M > 1$.  The shifted step function $u(t + a)$ is locally integrable and bounded below $M$, i.e. $\sabs{u(t+a)} \leq 1 < M$ for all $t \in \reals$.  However, the response of the integrator $I_a$ to $u(t+a)$ is
 \[
@@ -271,9 +271,18 @@ I_au(t+a) = \int_{-a}^t u(\tau + a)d\tau = \begin{cases}
 and this is not a bounded signal, that is, for every $K$ we have $t + a > K$ whenever $t > K - a$.
 \end{solution}
 
-\item \label{excer:domainintegrator} Show that if the signal $x$ is locally integrable and $\int_{-\infty}^0\abs{x(t)}dt < \infty$ then $I_\infty x(t) = \int_{-\infty}^t\abs{x(t)}dt < \infty$ for all $t \in \reals$.
+\item \label{excer:domainintegrator} Show that if the signal $x$ is locally integrable and $\int_{-\infty}^0\abs{x(t)}dt < \infty$ then $I_\infty x(t) = \int_{-\infty}^t x(t) dt < \infty$ for all $t \in \reals$.
+\begin{solution}
+We have
+\begin{align*}
+I_\infty x(t) \leq \abs{I_\infty x(t)} &= \abs{\int_{-\infty}^t x(t)dt } \\
+&\leq \int_{-\infty}^t \abs{x(t)}dt \\
+&= \int_{-\infty}^0 \abs{x(t)}dt + \int_{0}^t \abs{x(t)}dt
+\end{align*}
+Now $\int_{-\infty}^0 \abs{x(t)}dt < \infty$ by assumption and $\int_{0}^t \abs{x(t)}dt$ because $x$ is locally integrable.  It follows that 
+\end{solution}
 
-\item \label{excer:integratornotstable} Show that the integrator $I_\infty$ is not stable
+\item \label{excer:integratornotstable} Show that the integrator $I_\infty$ is not stable.
 \begin{solution}
 By default the domain for $I_\infty$ is the subset of locally integrable signals for which $\int_{-\infty}^0\abs{x(t)}dt < \infty$.  The step function $u(t)$ is in this domain.  The argument now follows similiarly to Exercise~\ref{excer:integratornotstable}.
 \end{solution}
@@ -389,7 +398,7 @@ H T_1 \Pi = \Pi( 2 t - 1 ) \neq \Pi( 2t - 2 ) = T_1 H \Pi .
 
 %\item \label{excer:difflLTI} Show that the $k$th differentiator $D^k(x,t) = \tfrac{d^k}{dt^k} x(t)$ is linear and time-invariant
 
-\item Show that the integrator $I_c \in L_{\text{loc}} \to \reals \to \complex$ with $c$ finite is linear, but not shift-invariant.
+\item Show that the integrator $I_c$ with finite $c \in \reals$ is linear, but not shift-invariant.
 \begin{solution}
 The system is linear because, if $x, y \in L_{\text{loc}}$, then
 \begin{align*}
@@ -429,7 +438,7 @@ I_\infty T_k x = \int_{-\infty}^{t} x(\tau-k) d\tau = \int_{-\infty}^{t-k} x(\ta
 \]
 \end{solution}
 
-\item State whether the system $H x = x + 1$ is linear, shift-invariant,  stable.
+\item State whether the system $H x = x + 1$ is linear, shift-invariant, stable.
 \begin{solution}
 It is not linear because for any signal $x$ and real number $a \neq 1$,
 \[

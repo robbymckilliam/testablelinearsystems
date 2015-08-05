@@ -7,6 +7,43 @@
 % The convergence is pointwise.  If $t \leq 0$ then $I_\infty(p_\gamma,t) = 0 = u(t)$ so only remains to consider what happens for $t > 0$.  Fix $t > 0$ and for any $\epsilon > 0$ we can choose $\gamma$ large enough that $I_\infty(p_\gamma,t) = 1$
 % \end{solution}
 
+\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\fin(h)$ defined in Section~\ref{sec:conv-regul-syst} on page~\pageref{sec:conv-regul-syst} is a linear shift-invariant space.
+
+\item Show that $\fin(u)$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
+\begin{solution}
+By definition $\fin(u)$ is the set of signals $x$ such that
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
+\]
+Denote by $B$ the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.  We first show that $\fin(u)$ is a subset of $B$, that is $\fin(u) \subseteq B$.  We do so by contraposition, that is, we show that if $x \notin B$ then $x \notin \fin(u)$.  Suppose that $x$ is not locally integrable, that is, suppose there exists $a, b \in \reals$ such that $\int_{a}^{b} \abs{x(t)} d\tau$ is not finite.  Then $x \notin B$.  Now
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{\infty} \abs{u(t - k) x(k)} dk = \int_{-\infty}^{t} \abs{x(k)} dk
+\]
+the second equation following from the change of variable $k = t - \tau$.  Choosing $k > b$ we have
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau \geq \int_{a}^{b} \abs{x(\tau)} d\tau
+\]
+which, by assumption, is not finite, and so $x \notin \fin(u)$.  
+
+We now show that $B \subseteq \fin(u)$.  Suppose that $x \in \fin(u)$, that is, suppose that
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty
+\]
+for all $t$.  Then
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau = \int_{-\infty}^{a} \abs{x(\tau)} d\tau + \int_{a}^{t} \abs{x(\tau)} d\tau
+\]
+for all $a, t \in \reals$ and so, the two integrals on the right are finite for all $a,t \in \reals$.  In particular
+\[
+\int_{a}^{t} \abs{x(\tau)} d\tau < \infty
+\]
+for all $a, t \in \reals$ and so $x$ is locally integrabls and putting $a = 0$ we have that
+\[
+\int_{-\infty}^{0} \abs{x(\tau)} d\tau < \infty.
+\]
+It follows that $x \in B$.  We have now show that $\fin(u) \subseteq B$ and that $B \subseteq \fin(u)$ and so it must be that $B = \fin(u)$.
+\end{solution} 
+
 \item \label{excer:distributivecommutive} Show that convolution distributes with addition and commutes with scalar multiplication, that is, show that $a(x*w) + b(y*w) = (ax+by)*w$.
 \begin{solution}
 \begin{align*}
@@ -241,7 +278,7 @@ where $C$ is defined in the question statement.  Now
 as required.
 \end{solution}
 
-\item (\textbf{Properties of systems})  State whether each of the following systems are: causal, linear, shift-invariant, or stable.  Plot the impulse and step response of the systems whenever they exist.
+\item State whether each of the following systems are: causal, linear, shift-invariant, or stable.  Plot the impulse and step response of the systems whenever they exist.
 \begin{enumerate}
 \item $Hx(t) = 3x(t - 1) - 2x(t+1)$
 \item $Hx(t) = \sin\big(2\pi x(t)\big)$
