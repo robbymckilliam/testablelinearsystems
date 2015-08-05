@@ -317,7 +317,7 @@ Another way to construct linear shift-invariant systems is by \term{composition}
 \[
 H x = H_2 H_1 x,
 \]
-that is, $H$ first applies the system $H_1$ and then applies the system $H_2$.  The system $H$ is said to be the \term{composition} of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
+that is, $H$ first applies $H_1$ and then applies $H_2$.  The system $H$ is said to be the \term{composition} of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
 \begin{align*}
 H(ax + by) &= H_2 H_1(ax + by) \\
 &= H_2(aH_1 x + bH_1 y )  &\text{(linearity $H_1$)}\\
@@ -498,7 +498,7 @@ H e^{st} = \lambda H(s) e^{st}
 \end{equation}
 whenever $e^{st} \in X$.  This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
 
-We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  As an example, consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
+We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  Consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
 \[
 x = - y - R_1 C_2 Dy.
 \]
@@ -576,20 +576,20 @@ where, to simplify notation, we have written simply $\lambda$ for $\lambda H(s)$
 
 \section{The spectrum}\label{sec:spectrum}
 
-It is of interest to focus on the transfer function when $s$ is purely imaginary, that is, when $s = j \omega$.  In this case the complex exponential signal takes the form
+It is of interest to focus on the transfer function when $s$ is purely imaginary, that is, when $s = j \omega$ with $\omega \in \reals$.  In this case the complex exponential signal takes the form
 \[
 e^{j\omega t} = e^{j 2\pi f} = \cos( 2\pi f t) + j \sin( 2\pi f t)
 \] 
-where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ containing the signal $e^{j 2\pi f t}$.  The function
+where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ containing the signal $e^{j 2\pi f t}$.  We denote by $\Lambda H$ the function satisfying
 \[
 \Lambda H(f) = \lambda H( j 2\pi f )
 \]
-is called the \term{spectrum} of $H$.  %The spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  
+called the \term{spectrum} of $H$.  %The spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  
 It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
 \[
 H e^{j 2\pi f t}  = \lambda H (j 2\pi f) e^{j 2\pi f t} = \Lambda H(f) e^{j 2\pi f t}
 \]
-whenever $e^{j 2\pi f t} \in X$.  It is of interest to consider the \term{magnitude spectrum} $\abs{\Lambda H}$ and the \term{phase spectrum} $\angle{\Lambda H}$ separately.  The notation $\angle$ denotes the \term{argument} (or \term{phase}) of a complex number.  We have,
+whenever $e^{j 2\pi f t} \in X$.  It is of interest to consider the \term{magnitude spectrum} $\abs{\Lambda H(f)}$ and the \term{phase spectrum} $\angle{\Lambda H(f)}$ separately.  The notation $\angle$ denotes the \term{argument} (or \term{phase}) of a complex number.  We have,
 \[
 \Lambda H(f) = \abs{\Lambda H(f)} e^{j \angle{\Lambda H(f)}}
 \]  
