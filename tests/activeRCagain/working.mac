@@ -1,0 +1,9 @@
+kill(all);
+sinc(x) := sin(x)/x;
+g1(t,tau) := exp(-r*tau)*sinc(t - F*tau);
+f(t) := integrate(g1(t,x), x,0,100);
+
+g2(t,f) := exp(-2*pi*%i*f*t)/(2*pi*%i*f*F-r);
+f2(t) := integrate( g2(t,f), f, -1/2, 1/2);
+
+/*plot2d([g1(x), sinc(x)], [x, -2, 6]); */
