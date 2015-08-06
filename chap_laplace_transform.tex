@@ -227,7 +227,7 @@ That is, the transfer function of a composition of linear shift-invariant system
 
 %\subsection{The convolution theorem}
 
-We showed in Section~\ref{sec:line-comb-comp} that if $H_1 \in X \to Y$ and $H_2 \in Y \to Z$ are regular systems with impulse responses $h_1$ and $h_2$, then the impulse response of the composition $H = H_2 H_1$ is given by the convolution $h = h_1 * h_2$.  Because,
+Now suppose that $H_1$ and $H_2$ are also regular systems with impulse responses $h_1$ and $h_2$. We showed in Section~\ref{sec:line-comb-comp} that the composition $H = H_2 H_1$ is a regular system with impulse response given by the convolution $h = h_1 * h_2$.  Because,
 \[
 \lambda H = \calL h \qquad \lambda H_1 = \calL h_1 \qquad \lambda H_2 = \calL h_2,
 \] 
@@ -237,9 +237,9 @@ and using~\eqref{eq:composedtransferfunction}, we obtain,
 \]
 Putting $x = h_1$ and $y = h_2$, we obtain the \term{convolution theorem},
 \begin{equation}\label{eq:convtheoremlaplace}
-\calL(x*y) = \calL x \calL y
+\calL(x*y) = \calL x \calL y.
 \end{equation}
-that holds on the intersection of the regions of convergence of $\calL x$ and $\calL y$, that is, $\roc(x) \cap \roc(y)$.  In words: the Laplace transform of a convolution of signals is the multiplication of their Laplace transforms.
+In words: the Laplace transform of a convolution of signals is the multiplication of their Laplace transforms.  The convolution theorem holds on the intersection of the regions of convergence of $\calL x$ and $\calL y$, that is, for $s \in \roc(x) \cap \roc(y)$.  
 %This is called and goes by the phrase: ``Convolution in the time domain is multiplication in the Laplace/Fourier/Frequency domain''.
 
 %\subsection{The Laplace transform of an output signal}
@@ -248,15 +248,15 @@ Let $H$ be a regular system with impulse response $h$ and let $y = H x$ be the r
 \begin{equation}\label{eq:transferLaplcetheorem}
 \calL y = \calL h \calL x = \lambda H \calL x.
 \end{equation}
-Thus, the Laplace transform of the output signal $y = H x$ is the transfer function of the system $H$ multiplied by the Laplace transform of the input signal $x$.  This result also holds for the shifter, that is,
+Thus, the Laplace transform of the response $y = H x$ is the transfer function of the system $H$ multiplied by the Laplace transform of the input signal $x$.  The region of convergence is $\roc(h) \cap \roc(x)$.  This result also holds for the shifter, that is,
 \[
-\calL T_{\tau} x = \lambda T_\tau \calL x = e^{-s\tau} \calL x \qquad x \in \reals \to \complex.
+\calL T_{\tau} x = \lambda T_\tau \calL x = e^{-s\tau} \calL x \qquad x \in \reals \to \complex,
 \]
-This is called the \term{time-shift property} of the Laplace transform.  The results also holds for the differentiator, that is,
+with region of convergence is $\roc(x)$.  This is called the \term{time-shift property} of the Laplace transform.  The results also holds for the differentiator, that is,
 \[
-\calL D x = \lambda D \calL x = s \calL x.
+\calL D x = \lambda D \calL x = s \calL x
 \]
-under the added assumption that  BLERG.  This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffandtimeshift}).
+with region of convergence is $\roc(x)$ under the added assumptions that $x$ is differentiable, i.e. $x \in C^1$, and that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc(x)$.  This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffandtimeshift}).  Observe that the assumption is true if, for example, $x(t)$ is finite. %A of signal that does not satisfy the differentiation property is $u(t) \sin(e^{t^2})$.
 
 % \subsection{Commutivity (again)}
 
@@ -358,33 +358,37 @@ under the added assumption that  BLERG.  This is called the \term{differentiatio
 % by the fundamental theorem of calculus and~\eqref{eq:laplacelimits}.
 
 
-\section{Solving differential equations}\label{sec:solv-diff-equat}
+%section{Solving differential equations}\label{sec:solv-diff-equat}
 
-Assume we have a system modelled by a differential equation of the form
+In Chapter~\ref{sec:syst-modell-diff} we derived differential equations of the form
 \begin{equation}\label{eq:diffinlapsection}
-\sum_{\ell=0}^{m} a_\ell D^\ell(x) = \sum_{\ell=0}^{k} b_\ell D^\ell(y),
+\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y,
 \end{equation}
-where $x$ and $y$ are signals.  Taking Laplace transforms of both sides of this equation,
-\begin{align*}
-\calL\left( \sum_{\ell=0}^{m} a_\ell D^\ell(x) \right) &= \calL\left( \sum_{\ell=0}^{k} b_\ell D^\ell(y) \right) & \\
-\sum_{\ell=0}^{m} a_\ell \calL\big(D^\ell(x)\big) &= \sum_{\ell=0}^{k} b_\ell \calL\big(D^\ell(y)\big) & \text{(linearity~\eqref{eq:laplacetransislinear})} \\
-\sum_{\ell=0}^{m} a_\ell \lambda(D^\ell) \calL(x) &= \sum_{\ell=0}^{k} b_\ell \lambda(D^\ell) \calL(y) & \text{(using \eqref{eq:transferLaplcetheorem})} \\
-\sum_{\ell=0}^{m} a_\ell s^\ell \calL(x) &= \sum_{\ell=0}^{k} b_\ell s^\ell \calL(y). & \text{(since $\lambda(D^\ell) = s^\ell$ by~\eqref{eq:lambdadifferentiator})}
-\end{align*}
-We have obtained an equation relating the Laplace transforms of $x$ and $y$,
-\[
-\calL(x) (a_0 + a_1s + \dots a_m s^m) =  \calL(y) (b_0 + b_1s + \dots b_k s^k). 
-\]
-Rearranging this equation we obtain 
-\[
-\calL(y) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k} \calL(x).
-\]
+to model electrical, mechanical, and electromechanical devices. %  Taking Laplace transforms of both sides of this equation,
+% \begin{align*}
+% \calL\left( \sum_{\ell=0}^{m} a_\ell D^\ell x \right) &= \calL\left( \sum_{\ell=0}^{k} b_\ell D^\ell(y) \right) & \\
+% \sum_{\ell=0}^{m} a_\ell \calL\big(D^\ell(x)\big) &= \sum_{\ell=0}^{k} b_\ell \calL\big(D^\ell(y)\big) & \text{(linearity~\eqref{eq:laplacetransislinear})} \\
+% \sum_{\ell=0}^{m} a_\ell \lambda(D^\ell) \calL(x) &= \sum_{\ell=0}^{k} b_\ell \lambda(D^\ell) \calL(y) & \text{(using \eqref{eq:transferLaplcetheorem})} \\
+% \sum_{\ell=0}^{m} a_\ell s^\ell \calL(x) &= \sum_{\ell=0}^{k} b_\ell s^\ell \calL(y). & \text{(since $\lambda(D^\ell) = s^\ell$ by~\eqref{eq:lambdadifferentiator})}
+% \end{align*}
+% We have obtained an equation relating the Laplace transforms of $x$ and $y$,
+% \[
+% \calL(x) (a_0 + a_1s + \dots a_m s^m) =  \calL(y) (b_0 + b_1s + \dots b_k s^k). 
+% \]
+% Rearranging this equation we obtain 
+% \[
+% \calL(y) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k} \calL(x).
+% \]
 %Given the input signal $x$ and its Laplace transform $\calL(x)$ we can find the output signal $y$ (provided it exists) by applying the inverse Laplace transform to the right hand side of the equation above.  
-Let $H$ be a linear shift-invariant system such that $y = H(x)$ whenever $x$ and $y$ satisfy the differential equation~\eqref{eq:diffinlapsection}.   According to~\eqref{eq:transferLaplcetheorem} the transfer function of $H$ is
+Suppose that $H \in X \to Y$ is a linear shift-invariant system such that $y = Hx$ if $x$ and $y$ satisfy such a differential equation.  Since $H$ is linear and shift-invariant the response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into the differential equation gives
 \[
-\lambda(H) = \frac{\calL(y)}{\calL(x)} = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
+\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st} = \sum_{\ell=0}^{m} a_\ell s^{\ell} \lambda H(s) e^{st} = \lambda H(s) \sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st}
 \]
-Properties of $H$ can be obtained by inspecting this transfer function.  For example, the impulse response of $H$ (if it exists) can be obtained by applying the inverse Laplace transform.
+and rearrnaging we find that the transfer function $\lambda H$ satisfies
+\begin{equation} \label{eq:findtransferfuncfromdiff}
+\lambda H(s) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
+\end{equation}
+Properties of $H$ can be obtained by inspecting this transfer function.  For example, the impulse response of $H$ (if it exists) can be obtained by applying the inverse Laplace transform.  
 
 We now apply these results to the differential equations that model the RC electrical circuit from Figure~\ref{circ:seriesRC1} and the mass spring damper from Figure~\ref{mech:massspring1}.  The RC circuit is an example of what is called a \term{first order system} and the mass spring damper is an example of what is called a \term{second order system}.
 
@@ -392,24 +396,20 @@ We now apply these results to the differential equations that model the RC elect
 
 Recall the passive electrical RC circuit from Figure~\ref{circ:seriesRC1}.  The differential equation modelling this circuit is~\eqref{eq:diffequform},
 \[
-x = y + RC D(y)
+x = y + RC D y
 \] 
-where $x$ is the input voltage signal, $y$ is the voltage over the capacitor, and $R$ and $C$ are the resistance and capacitance.  The RC circuit is an example of a \term{first order system}.  Let $H$ be a system mapping the input voltage signal $x$ to the output voltage signal $y$.  We will discover the impulse response of $H$.  Taking the Laplace transform on both sides of the differential equation gives
+where $x$ is the input voltage signal, $y$ is the voltage over the capacitor, and $R$ and $C$ are the resistance and capacitance.  The RC circuit is an example of a \term{first order system}, so called, because the highest order derivative that occurs is of order one, that is, $D^k$ with $k = 1$.  Let $H$ be a system mapping the input voltage signal $x$ to the output voltage signal $y$.  From~\eqref{eq:findtransferfuncfromdiff} the transfer function $\lambda H$ is found to satisfy
 \[
-\calL(x) = (1 + RC s ) \calL(y)
-\]
-and it follows that the transfer function of $H$ is
-\[
-\lambda(H) = \frac{\calL(y)}{\calL(x)} = \frac{1}{1 + RC s} = \frac{r}{r + s}
+\lambda H(s) = \frac{1}{1 + RC s} = \frac{r}{r + s}
 \]
 where $r = \tfrac{1}{RC}$.  The value $\tfrac{1}{r} = RC$ is called the \term{time constant}.  The impulse response of $H$ is given by the inverse of this Laplace transform.  There are two signals with Laplace transform $\frac{r}{r + s}$: the right sided signal $r e^{-r t} u(t)$ with region of convergence $\Re(s) > -r$, and the left sided signal $-r e^{-r t} u(-t)$ with region of convergence $\Re(s) < -r$.  The RC circuit (and in fact all physically realisable systems) are expected to be causal.  For this reason, the left sided signal $ -r e^{-r t} u(-t)$ cannot be the impulse response of $H$.  The impulse response is the right sided signal
 \[
 h(t) = r e^{-r t} u(t).
 \]
 %Figure~\ref{fig:firstorderresponsesstableunstable} plots this impulse response for an RC circuit with $r = \frac{1}{RC} = -\tfrac{1}{5}, 1, \tfrac{1}{5}$.  
-Given an input voltage signal $x$ we can now find the corresponding output signal $y = H(x)$ by convolving $x$ with the impulse response $h$.  That is,
+Given an input voltage signal $x$ we can now find the corresponding output signal $y = Hx$ by convolving $x$ with the impulse response $h$.  That is,
 \[
-y = H(x) = h * x = \int_{-\infty}^{\infty} r e^{-r \tau} u(\tau) x(t - \tau) d\tau = r \int_{0}^{\infty} e^{-r \tau} x(t - \tau) d\tau.
+y = Hx = h * x = \int_{-\infty}^{\infty} r e^{-r \tau} u(\tau) x(t - \tau) d\tau = r \int_{0}^{\infty} e^{-r \tau} x(t - \tau) d\tau.
 \] 
 %The output signal $y$ exists whenever this convolution exists.  The domain of $H$ is the set of input signals $x$ such that the convolution $h * x$ does exist. 
 
@@ -421,16 +421,16 @@ If $r \geq 0$ the impulse response is absolutely integrable, that is,
 \end{align*}
 and the system is stable (Exercise~\ref{excer:bibostableimpulseresp}).  However, if $r < 0$ the impulse response is not absolutely integrable and the system is not stable.  Figure~\ref{fig:firstorderresponsesstableunstable} shows the impulse response when $r=-\frac{1}{5}, -\tfrac{1}{3}, -\tfrac{1}{2}, 1, 2$.  In a passive electrical RC circuit the resistance $R$ and capacitance $C$ are always positive and $r=\tfrac{1}{RC}$ is positive. For this reason, passive electrical RC circuits are always stable.
 
-From~\eqref{eq:stepresponseintegrateimpulseresponse}, the step response $H(u)$ is given by applying the integrator $I_\infty$ to the impulse response, that is, 
+From~\eqref{eq:stepresponseintegrateimpulseresponse}, the step response $Hu$ is given by applying the integrator $I_\infty$ to the impulse response, that is, 
 \[
-H(u) = I_\infty(h) = \int_{-\infty}^t r e^{-r \tau} u(\tau) d\tau =  \begin{cases}
+Hu = I_\infty h = \int_{-\infty}^t r e^{-r \tau} u(\tau) d\tau =  \begin{cases}
 r \int_{0}^t e^{-r \tau} d\tau & t > 0 \\
 0 & \text{otherwise} 
 \end{cases}
 \]
 or more simply
 \begin{equation}\label{eq:stepresponsefirstorder}
-H(u) = \big( 1 - e^{-r t}\big) u(t).
+Hu = \big( 1 - e^{-r t}\big) u(t).
 \end{equation}
 This step response in plotted in Figure~\ref{fig:firstorderresponsesstableunstable}.
 
