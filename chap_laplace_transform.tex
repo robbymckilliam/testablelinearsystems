@@ -227,7 +227,7 @@ That is, the transfer function of a composition of linear shift-invariant system
 
 %\subsection{The convolution theorem}
 
-Now suppose that $H_1$ and $H_2$ are also regular systems with impulse responses $h_1$ and $h_2$. We showed in Section~\ref{sec:line-comb-comp} that the composition $H = H_2 H_1$ is a regular system with impulse response given by the convolution $h = h_1 * h_2$.  Because,
+Suppose that $H_1$ and $H_2$ are also regular systems with impulse responses $h_1$ and $h_2$. We showed in Section~\ref{sec:line-comb-comp} that the composition $H = H_2 H_1$ is a regular system with impulse response given by the convolution $h = h_1 * h_2$.  Because,
 \[
 \lambda H = \calL h \qquad \lambda H_1 = \calL h_1 \qquad \lambda H_2 = \calL h_2,
 \] 
@@ -235,6 +235,7 @@ and using~\eqref{eq:composedtransferfunction}, we obtain,
 \[
 \calL(h_1 * h_2) = \calL h =  \lambda H = \lambda H_1 \lambda H_2 = \calL h_1 \calL h_2.
 \]
+%This holds for all $s \in \roc(h_1)$ and $s \in \roc(h_2)$.
 Putting $x = h_1$ and $y = h_2$, we obtain the \term{convolution theorem},
 \begin{equation}\label{eq:convtheoremlaplace}
 \calL(x*y) = \calL x \calL y.
@@ -493,6 +494,10 @@ From~\eqref{eq:xreconstruct},
 where the function
 \[
 g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r \int_{0}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau.
+\]
+It is helpful to transform $g(t)$ into the form more ammenable to numerical integration
+\[
+g(t) = \int_{-\pi}^{\pi} \frac{\cos(\omega t) + \omega t \sin(\omega t)}{1 + \omega^2t^2} \; dt \qquad \text{(Exercise~\ref{?})}
 \]
 An approximation of $g(t)$ is made using the trapezoidal sum
 \[
