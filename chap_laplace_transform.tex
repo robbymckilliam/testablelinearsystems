@@ -500,20 +500,25 @@ g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r \int_{0}^\inf
 % g(t) = -\int_{-\pi}^{\pi} \frac{\cos(\omega t ) + V^2 \omega t \sin(\omega t )}{1 + \omega^2t^2} \; d\omega \qquad \text{(Exercise~\ref{?})}
 % \]
 % where $V = \tfrac{F}{r} = $.  
-We will make a numerical approximation of $g(t)$.  It is helpful to first make the change of variable $k = r \tau$ so that
+% We will make a numerical approximation of $g(t)$.  It is helpful to first make the change of variable $k = r \tau$ so that
+% \[
+% g(t) = \int_{0}^\infty e^{-k} \sinc( t - Vk ) dk
+% \]
+% where $V = \tfrac{F}{r} = \tfrac{11907}{1000}$. First observe that $g(t)$ small values when $\abs{t}$ is large, specifically,
+% \[
+% \abs{g(t)} \leq \int_{0}^\infty e^{-k} \abs{\sinc( t - Vk )} dk \leq  \frac{1}{\abs{t}} \int_{0}^\infty \tfrac{ e^{-k}} = \frac{e}{\abs{t}}
+% \]
+% and so, we will approximate $g(t)$ by zero when $\abs{t} > T = 10^3$.  This approximation is accurate to 3 decimal places. For $\abs{t} < 10^3$ 
+% % We first truncate the upper bound of the integral,
+% % \[
+% % g(t) \approx \int_{0}^{b} 
+% % \] 
+% % We choose $K$ 
+% % \[
+% % \]
+An approximation of $g(t)$ is made by the trapezoidal sum
 \[
-g(t) = \int_{0}^\infty e^{-k} \sinc( t - Vk ) dk
-\]
-where $V = \tfrac{F}{r} = % because $r > 0$.We first truncate the upper bound of the integral,
-\[
-g(t) \approx \int_{0}^{b} 
-\] 
-We choose $K$ 
-\[
-\]
-An approximation of $g(t)$ is made using the trapezoidal sum
-\[
-f(t) \approx \frac{K}{2N} \left( p(0) + p(K) + 2 \sum_{n=1}^{N-1} p( \Delta n ) \right),
+g(t) \approx \frac{K}{2N} \left( p(0) + p(K) + 2 \sum_{n=1}^{N-1} p( \Delta n ) \right),
 \]
 where $p(\tau) = h(\tau) \sinc( t - F\tau )$ and
 \[
