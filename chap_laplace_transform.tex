@@ -495,9 +495,21 @@ where the function
 \[
 g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r \int_{0}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau.
 \]
-It is helpful to transform $g(t)$ into the form more ammenable to numerical integration
+% It is helpful to transform $g(t)$ into the form more ammenable to numerical integration
+% \[
+% g(t) = -\int_{-\pi}^{\pi} \frac{\cos(\omega t ) + V^2 \omega t \sin(\omega t )}{1 + \omega^2t^2} \; d\omega \qquad \text{(Exercise~\ref{?})}
+% \]
+% where $V = \tfrac{F}{r} = $.  
+We will make a numerical approximation of $g(t)$.  It is helpful to first make the change of variable $k = r \tau$ so that
 \[
-g(t) = \int_{-\pi}^{\pi} \frac{\cos(\omega t) + \omega t \sin(\omega t)}{1 + \omega^2t^2} \; dt \qquad \text{(Exercise~\ref{?})}
+g(t) = \int_{0}^\infty e^{-k} \sinc( t - Vk ) dk
+\]
+where $V = \tfrac{F}{r} = % because $r > 0$.We first truncate the upper bound of the integral,
+\[
+g(t) \approx \int_{0}^{b} 
+\] 
+We choose $K$ 
+\[
 \]
 An approximation of $g(t)$ is made using the trapezoidal sum
 \[
@@ -609,15 +621,11 @@ Figure~\ref{fig:test:activeRCagain} plots the input signal $\tilde{x}$, output s
 
 Consider the mass spring damper system from Figure~\ref{mech:massspring1} that is described by the equation
 \begin{equation}\label{eq:masspringeqseclapltrans}
-f = K p + B D(p) + M D^2(p)
+f = K p + B D p + M D^2 p
 \end{equation}
-where $f$ is the force applied to the mass $M$ and $p$ is the position of the mass and $K$ and $B$ are the spring and damping coefficients.  The mass spring damper is an example of a \term{second order system}.  Another example of a second order system is the Sallen-Key active electrical circuit depicted in Figure~\ref{elec:sallenkey}.  In Section~\ref{sec:syst-modell-diff} we were able to find the force $f$ corresponding with a given position signal $p$.  Suppose that $H$ is a linear shift-invariant system mapping $f$ to $p$, that is, such that $p = H(f)$.  We will find the impulse response of $H$.  Taking Laplace transforms on both sides of the differential equation gives
+where $f$ is the force applied to the mass $M$ and $p$ is the position of the mass and $K$ and $B$ are the spring and damping coefficients.  The mass spring damper is an example of a \term{second order system} because it contains differeniators $D^2$ of order at most two.  Another example of a second order system is the Sallen-Key active electrical circuit depicted in Figure~\ref{elec:sallenkey}.  In Section~\ref{sec:syst-modell-diff} we were able to find the force $f$ corresponding with a given position signal $p$.  Suppose that $H$ is a linear shift-invariant system mapping $f$ to $p$, that is, such that $p = Hf$.  We will find the impulse response of $H$.  From~\ref{eq:findtransferfuncfromdiff} the transfer function is found to satisfy
 \[
-\calL(f) = (K + B s + M s^2) \calL(p).
-\]
-Rearranging gives the transfer function of $H$,
-\[
-\lambda(H) = \frac{\calL(p)}{\calL(f)} =  \frac{1}{K + B s + M s^2}.
+\lambda H(s) =  \frac{1}{K + B s + M s^2}.
 \]
 We can invert this Laplace transform to obtain the impulse response.  There are three cases to consider depending on whether the quadratic $K + Bs + Ms^2$ has two distinct real roots, is irreducible (does not have real roots), or has two identical real roots.
 
@@ -632,7 +640,7 @@ where
 \]
 and $B^2 - 4KM > 0$.  By a partial fraction expansion (Exercise~\ref{exer:partialfracsecondorder}),
 \begin{align*}
-\lambda(H) &= \frac{1}{M(s - \beta+\alpha)(s + \beta + \alpha)} \\
+\lambda H(s) &= \frac{1}{M(s - \beta+\alpha)(s + \beta + \alpha)} \\
 &= \frac{1}{2\beta M}\left( \frac{1}{s-\beta+\alpha} - \frac{1}{s+\beta+\alpha} \right).
 \end{align*}
 From~\eqref{eq:laplacetneucommon} we obtain the transform pairs
@@ -658,7 +666,7 @@ h(t) = \frac{1}{ \theta M} u(t) e^{-\alpha t} \sin(\theta t).
 \paragraph{Case 3: (Identical roots)}
 In this case, the two roots are equal to $-\alpha$ and
 \[
-\lambda(H) = \frac{1}{M(s + \alpha)^2}.
+\lambda H(s) = \frac{1}{M(s + \alpha)^2}.
 \]
 From~\eqref{eq:laplacetneucommon} we obtain the transform pair
 \[
@@ -681,18 +689,18 @@ The impulse response of a second order system is absolutely integrable when $\al
 
 From~\eqref{eq:stepresponseintegrateimpulseresponse} the step response $H(u)$ is given by applying the integrator $I_\infty$ to the impulse response.  There are three cases to consider depending on whether the system is overdamped, underdamped, or critically damped.  When the system is overdamped the step response is
 \begin{align*}
-H(u) = I_\infty(h) &= \frac{1}{2 \beta M} \int_{-\infty}^t e^{-\alpha \tau} \big( e^{\beta \tau} - e^{-\beta \tau} \big) u(\tau) d\tau \\
+Hu = I_\infty(h) &= \frac{1}{2 \beta M} \int_{-\infty}^t e^{-\alpha \tau} \big( e^{\beta \tau} - e^{-\beta \tau} \big) u(\tau) d\tau \\
 &= \frac{1}{2 \beta M} \int_{0}^t e^{-\alpha \tau} \big( e^{\beta \tau} - e^{-\beta \tau} \big) d\tau \\
 &= \frac{1}{2 \beta M}u(t)\left( \frac{e^{(\beta-\alpha)t}- 1}{ \beta-\alpha} + \frac{e^{-(\beta+\alpha)t}- 1}{\beta+\alpha}\right).
 \end{align*}
 When the system is underdamped the step response is
 \begin{align*}
-H(u) = I_\infty(h) &= \frac{1}{ \theta M} \int_{0}^t e^{-\alpha \tau} \sin(\theta \tau) dt \\
+Hu = I_\infty(h) &= \frac{1}{ \theta M} \int_{0}^t e^{-\alpha \tau} \sin(\theta \tau) dt \\
 &= u(t) \left(\frac{\theta - e^{-t \alpha } \big(\theta  \cos(t \theta)+\alpha  \sin(t \theta)\big)}{M \theta(\alpha ^2+\theta ^2)} \right).
 \end{align*}
 When the system is critically damped the step response is
 \begin{align*}
-H(u) = I_\infty(h) &= \frac{1}{ \theta M} \int_{0}^t \frac{1}{M} t e^{-\alpha t} dt \\
+Hu = I_\infty(h) &= \frac{1}{ \theta M} \int_{0}^t \frac{1}{M} t e^{-\alpha t} dt \\
 &= \frac{1}{M\alpha^2}u(t)\big(1 - e^{-t\alpha s}(1+t\alpha) \big).
 \end{align*}
 These step responses are plotted in Figure~\ref{fig:masspringdamperoscillatorystepresp}.
@@ -714,13 +722,13 @@ These step responses are plotted in Figure~\ref{fig:masspringdamperoscillatoryst
 
 \section{Poles, zeros, and stability}\label{sec:poles-zeros-stab}
 
-As discussed in Section~\ref{sec:solv-diff-equat} the transfer function of a system described by a linear differential equation with constant coefficients is of the form
+The transfer function of a system described by a linear differential equation with constant coefficients is of the form of~\eqref{eq:findtransferfuncfromdiff}, that is,
 \[
-\lambda(H) = \frac{\calL(y)}{\calL(x)} = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
+\lambda H = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
 \]
 Factorising the polynomials on the numerator and denominator we obtain
 \[
-\lambda(H) = C\frac{(s-\alpha_0)(s - \alpha_1)\cdots(s - \alpha_m)}{(s-\beta_0)(s - \beta_1)\cdots(s - \beta_k)},
+\lambda H = C\frac{(s-\alpha_0)(s - \alpha_1)\cdots(s - \alpha_m)}{(s-\beta_0)(s - \beta_1)\cdots(s - \beta_k)},
 \] 
 where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial $a_0 + a_1s + \dots + a_m s^m$, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial $b_0 + b_1s + \dots + b_k s^k$, and $C = \tfrac{a_m}{b_m}$.  That such a factorisation is always possible is called the \term{fundamental theorem of algebra}~\citep{Fine_fundamental_theorem_of_algebra}.  %,Weierstraß_fundamental_theorem_of_algebra}.  
 If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
@@ -767,7 +775,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{ze
     \vtick{1} node[pos=0.5,below] {$1$};
     \polezeroaxis{2.8}
   \end{tikzpicture}
-  \caption{Top left: pole zero plot for the first order system $x = y + D(y)$.  There is a single pole at $-1$. Top right: pole zero plot for the overdamped second order system $x = 2y + 3D(y) + D^2(y)$ that has two real poles at $-1$ and $-2$. Bottom left: pole zero plot for the underdamped second order system $x = 5y + 2 D(y) + D^2(y)$ that has two imaginary poles at $-1+2j$ and $-1-2j$.  The poles form a conjugate pair.  Bottom right: pole zero plot for the equation $D(y) =  5 x - 2 D(x) + D^2(x)$ that models a PID controller~\eqref{eq:PIDdiffeq}.  The system has a single pole at the origin and two zeros at $1+2j$ and $1-2j$. }\label{fig:polezeroplot}
+  \caption{Top left: pole zero plot for the first order system $x = y + D y$.  There is a single pole at $-1$. Top right: pole zero plot for the overdamped second order system $x = 2y + 3D y + D^2 y$ that has two real poles at $-1$ and $-2$. Bottom left: pole zero plot for the underdamped second order system $x = 5y + 2 D y + D^2y$ that has two imaginary poles at $-1+2j$ and $-1-2j$.  The poles form a conjugate pair.  Bottom right: pole zero plot for the equation $Dy =  5 x - 2 Dx + D^2x$ that models a PID controller~\eqref{eq:PIDdiffeq}.  The system has a single pole at the origin and two zeros at $1+2j$ and $1-2j$. }\label{fig:polezeroplot}
 \end{figure}
 
 % If two poles are equal, i.e, $\beta_i = \beta_k$ for some $i \neq k$, this is said be be a pole of \term{multiplicity} 2.  More generally, if there is a set of indices $K$ such that all of $\beta_i, i \in K$ are equal, this is said to be a pole of multiplicity $\abs{K}$ where $\abs{K}$ is the number of indices in $K$.  Combining the poles and the multiplicty the polynomial on the denomiator can be written in the form
@@ -778,7 +786,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{ze
 
 It is always possible to apply partial fractions and write~\eqref{eq:transfuncpoleszeros} in the form
 \[
-\lambda(H) = p(s) + \sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}},
+\lambda H = p(s) + \sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}},
 \]
 where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  % We now restrict attention to the common case when the coefficients of the numerator polynomial $a_0,\dots,a_m$ and the coefficients of the denominator polynomial $b_0,\dots,b_k$ are real.  In this case, the coefficients of the polynomial $p(s)$ are real, and the constant $A_\ell$ is real whenever the corresponding pole $\beta_\ell$ is real.  If the pole $\beta_\ell$ has nonzero imaginary part there always exists another pole $\beta_i$ such that $\beta_\ell = \beta_i^*$, where $\beta_i^*$ is the \term{complex conjugate} of $\beta_i$.  These poles have the same multiplicity, that is, $r_\ell = r_i$, and also the constants $A_\ell = A_i^*$.  Stated another way: the complex poles occur in \term{conjugate pairs}.
 We see that the transfer function contains the summation of two parts: the polynomial $p(s)$, and a sum of terms of the form $\frac{A}{(s-\beta)^r}$.  Let $p(s) = \gamma_0 + \gamma_1 s + \dots + \gamma_{m-k}s^{m-k}$.  This polynomial is the transfer function of the nonregular system
@@ -821,9 +829,9 @@ h_2(t) = u(t) \sum_{\ell\in K} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell
 
 The system $H$ mapping $x$ to $y$ is the sum of the regular system $H_2$ and nonregular system $H_1$, that is,
 \[
-y = H(x) = H_1(x) + H_2(x).
+y = Hx = H_1x + H_2x.
 \] 
-Observe that $H$ is regular only if the system $H_1 = 0$, that is, only if $H_1$ maps all input signals to the signal $x(t) = 0$ for all $t \in \reals$.  This occurs only when the polynomial $p(s) = 0$, that is, only when the number of poles exceeds the number of zeros.  The system $H$ will be stable if both $H_1$ and $H_2$ are stable.  Because the differentiator $D^\ell$ is not stable (Exercise~\ref{excer:diffnotstable}) the system $H_1$ is stable if only if the order of the polynomial $p(s)$ is zero, that is, if $p(s) = \gamma_0$ is a constant (potentially $\gamma_0 = 0$).  In this case $H_1(x) = \gamma_0 T_0(x)$ is the identity system multiplied by a constant.  The polynomial $p(s)$ is a constant only when the order of the denominator polynomial is greater than or equal to the order of the numerator polynomial, that is, when the number of poles is greater than or equal to the number of zeros.  The regular system $H_2$ is stable if and only if its impulse response $h_2$ is absolutely integrable.  This occurs only when the terms $e^{\beta_\ell t}$ inside the sum~\eqref{eq:H2implrespcleanedup} are decreasing as $t \rightarrow \infty$, that is, only if the real part of the poles $\Re{\beta_\ell}$ are negative.  Thus, the system $H_2$ is stable if and only if the real part of the poles are strictly negative.
+Observe that $H$ is regular only if the system $H_1 = 0$, that is, only if $H_1$ maps all input signals to the signal $x(t) = 0$ for all $t \in \reals$.  This occurs only when the polynomial $p(s) = 0$, that is, only when the number of poles exceeds the number of zeros.  The system $H$ will be stable if both $H_1$ and $H_2$ are stable.  Because the differentiator $D^\ell$ is not stable (Exercise~\ref{excer:diffnotstable}) the system $H_1$ is stable if only if the order of the polynomial $p(s)$ is zero, that is, if $p(s) = \gamma_0$ is a constant (potentially $\gamma_0 = 0$).  In this case $H_1x = \gamma_0 T_0x$ is the identity system multiplied by a constant.  The polynomial $p(s)$ is a constant only when the order of the denominator polynomial is greater than or equal to the order of the numerator polynomial, that is, when the number of poles is greater than or equal to the number of zeros.  The regular system $H_2$ is stable if and only if its impulse response $h_2$ is absolutely integrable.  This occurs only when the terms $e^{\beta_\ell t}$ inside the sum~\eqref{eq:H2implrespcleanedup} are decreasing as $t \rightarrow \infty$, that is, only if the real part of the poles $\Re{\beta_\ell}$ are negative.  Thus, the system $H_2$ is stable if and only if the real part of the poles are strictly negative.
 
 The stability of the system $H$ can be immediately determined from its pole-zero plot.  The system is stable if and only if: 
 \begin{enumerate}
@@ -837,21 +845,17 @@ The pole-zero plots in Figure~\ref{fig:polezeroplot} all represent stable system
 
 Consider the system involving two masses, a spring, and a damper in Figure~\ref{mech:twomassspring}.  From \eqref{eq:msddiffeqfp}, the equation relating the force applied to the first mass $f$ and the position of the second mass $p$ is
 \[
-f = B D(p) + (M_1+M_2) D^2(p) + \frac{B M_2}{K} D^3(p) + \frac{M_1 M_2}{K} D^4(p),
+f = B Dp + (M_1+M_2) D^2p + \frac{B M_2}{K} D^3p + \frac{M_1 M_2}{K} D^4p,
 \]
-where $B$ is the damping coefficient, $K$ is the spring constant, and $M_1$ and $M_2$ are the masses.  Taking Laplace transforms
+where $B$ is the damping coefficient, $K$ is the spring constant, and $M_1$ and $M_2$ are the masses.  The transfer function of a system $H$ that maps $f$ to $p$ is
 \[
-\calL(f) = s \left(B + (M_1+M_2) s + \frac{B M_2}{K} s^2 + \frac{M_1 M_2}{K} s^3 \right) \calL(p),
-\]
-from which, we obtain the transfer function of a system $H$ that maps $f$ to $p$,
-\[
-\lambda(H) = \frac{\calL(p)}{\calL(f)} = \frac{1}{s \left(B + (M_1+M_2) s + \frac{B M_2}{K} s^2 + \frac{M_1 M_2}{K} s^3 \right)}.
+\lambda H(s) = \frac{1}{s \left(B + (M_1+M_2) s + \frac{B M_2}{K} s^2 + \frac{M_1 M_2}{K} s^3 \right)}.
 \]
 The system has no zeros and 4 poles.  One of these poles always exists at the origin.  The system is not stable because this pole is not strictly in the left half of the complex plane.
 
 Consider the specific case when $B=K=M_1=M_2=1$.  Factorising the denominator polynomial gives
 \[
-\lambda(H) = \frac{1}{s(s-\beta_1)(s-\beta_2)(s-\beta_2^*)},
+\lambda H = \frac{1}{s(s-\beta_1)(s-\beta_2)(s-\beta_2^*)},
 \]
 where 
 \[
@@ -889,15 +893,15 @@ This impulse response is plotted in Figure~\ref{fig:masspringdampertwoimpulseres
 
 Recall the direct current (DC) motor from Figure~\ref{circ:dcmotor} described by the differential equation from~\eqref{eq:dcmotordiffequation},
 \[
-v = \left(\frac{RB}{K_\tau} + K_b\right) D(\theta) + \frac{RJ}{K_\tau} D^2(\theta),
+v = \left(\frac{RB}{K_\tau} + K_b\right) D \theta + \frac{RJ}{K_\tau} D^2 \theta,
 \]
 where $v$ is the input voltage signal and $\theta$ is a signal representing the angle of the motor.  The constants $R,B,K_\tau,K_b,$ and $J$ are related to components of the motor as described in Section~\ref{sec:direct-curr-motors}.  To simplify the differential equation put $a = \tfrac{RB}{K_\tau} + K_b$ and $b=\tfrac{RJ}{K_\tau}$ and the equation becomes
 \[
-v = a D(\theta) + b D^2(\theta).
+v = a D \theta + b D^2 \theta.
 \]
-Taking Laplace transforms on both sides of this equation gives the transfer function of a system $H$ that maps input voltage $v$ to motor angle $\theta$,
+The transfer function of a system $H$ that maps input voltage $v$ to motor angle $\theta$ is
 \[
-\lambda(H) = \frac{1}{s(a + bs)}.
+\lambda H(s) = \frac{1}{s(a + bs)}.
 \]
 This system has no zeros and two poles.  One pole is at $-\tfrac{a}{b}$ and the other is at the origin.  The system is not stable because the pole at the origin is not strictly in the left half of the complex plane.
 
@@ -909,9 +913,9 @@ where $\beta = -\tfrac{a}{b}$.  Using~\eqref{eq:laplacetneucommon}, the impulse 
 \begin{equation}\label{eq:impulseresponseDCmotor}
 h(t) = \frac{1}{a}u(t)\big( 1  - e^{\beta t} \big).
 \end{equation}
-Other signals with Laplace transform~\eqref{eq:transferfunctionDCmotorpartialfraced} are discarded because they do not lead to a causal system.  The step response $H(u)$ is obtained by applying the integrator system $I_\infty$ to the impulse response, that is
+Other signals with Laplace transform~\eqref{eq:transferfunctionDCmotorpartialfraced} are discarded because they do not lead to a causal system.  The step response $H u$ is obtained by applying the integrator system $I_\infty$ to the impulse response, that is
 \[
-H(u) = I_\infty(h) = \frac{1}{a\beta}u(t) \big( \beta t + e^{\beta t} - 1 \big).
+H u = I_\infty(h) = \frac{1}{a\beta}u(t) \big( \beta t + e^{\beta t} - 1 \big).
 \]
 The impulse response and step response are plotted in Figure~\ref{fig:dcmotoranimimpulseresponse} when $K_b= \tfrac{1}{8}$, $K_\tau = 8$ and $B=R=1$ and $J=2$ so that $a = \tfrac{1}{4}$, $b=\tfrac{1}{4}$ and $\beta = -1$.
 

@@ -1,9 +1,42 @@
 kill(all);
+F:44100;
+R:27000;
+C:1/10000000;
+r:1/R/C;
+print(r);
 sinc(x) := sin(x)/x;
 g1(t,tau) := exp(-r*tau)*sinc(t - F*tau);
-f(t) := integrate(g1(t,x), x,0,100);
+f1(t) := r*quad_qags(g1(t,x),x,0,1/100,'epsrel=1d-2)[1];
 
-g2(t,f) := exp(-2*pi*%i*f*t)/(2*pi*%i*f*F-r);
-f2(t) := integrate( g2(t,f), f, -1/2, 1/2);
+V:F/r;
+print(V);
+g2(t,k):= exp(-k)*sinc(t - V*k);
+f2(t) := quad_qags(g2(t,x),x,0,10,'epsrel=1d-3)[1];
 
-/*plot2d([g1(x), sinc(x)], [x, -2, 6]); */
+g3(t,w) := (cos(w*t) + V*w*sin(w*t))/(1 + V^2*w^2)/%pi;
+f3(t) := quad_qags(g3(t,x),x,-%pi,%pi,'epsrel=1d-2)[1];
+
+/* Should print small numbers */
+print(f1(0.01)-f2(0.01));
+print(f1(0.02)-f2(0.02));
+print(f1(0.03)-f2(0.03));
+print(f1(1)-f2(1));
+print(f1(2)-f2(2));
+print(f1(3)-f2(3));
+print(f1(10)-f2(10));
+print(f1(20)-f2(20));
+print(f1(30)-f2(30));
+print(f3(0.01)-f2(0.01));
+print(f3(0.02)-f2(0.02));
+print(f3(0.03)-f2(0.03));
+print(f3(1)-f2(1));
+print(f3(2)-f2(2));
+print(f3(3)-f2(3));
+print(f3(10)-f2(10));
+print(f3(20)-f2(20));
+print(f3(30)-f2(30));
+
+plot2d( [ g3(0.1,x), g3(1,x), g3(10,x), g3(100,x) ], [x, -%pi, %pi]);
+
+/* Should plot ontop of one another */
+plot2d([f1, f2, f3], [x, -1,2]);
