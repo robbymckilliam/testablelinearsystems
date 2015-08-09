@@ -14,17 +14,21 @@ The set $\roc(x) \subseteq \complex$ is called the \term{region of convergence} 
 \[
 \sabs{\calL x(s)} = \abs{\int_{-\infty}^{\infty} x(t) e^{-st} dt} \leq \int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty.
 \]
-We take $\roc(x)$ as the domain of $\calL x$ and so $\calL x \in \roc(x) \to \complex$, that is, the Laplace transform is a complex valued function of the region of convergence.
+We take $\roc(x)$ as the domain of $\calL x$ and so $\calL x \in \roc(x) \to \complex$, that is, the Laplace transform is a complex valued function of its region of convergence.
 
-For example, the Laplace transform of the right sided signal $e^{ \alpha t}u(t)$ has region of convergence given by all those complex numbers with real part greater than the real part of $\alpha$, that is,
+For example, consider the right sided signal $e^{ \alpha t}u(t)$.  The integral
+\[
+\int_{-\infty}^{\infty} \abs{e^{\alpha t} u(t) e^{-s t}} dt = \int_{0}^{\infty} e^{\Re(\alpha - s)t} dt = \lim_{t \to \infty} \frac{e^{\Re(\alpha - s)t}}{\Re(\alpha - s)}  - \frac{1}{\Re(\alpha - s)}
+\]
+is finite if and only if $\Re(\alpha - s) < 0$ and so the region of convergence of the Laplace transform of $e^{\alpha t}u(t)$ is
 \[
 \roc(e^{ \alpha t}u(t)) = \{ s \in \complex \mid \Re(s) > \Re(\alpha) \}.
 \]
 Figure~\ref{fig:rocexample1} shows the region of convergence when $\Re(\alpha) = -2$.  Applying~\eqref{eq:laplace_defn} we find that
 \begin{align*}
-\calL(e^{ \alpha t}u(t)) = \int_{-\infty}^{\infty} e^{ \alpha t} e^{-st} u(t) dt = \int_{0}^{\infty} e^{(\alpha - s)t} dt = \lim_{t\rightarrow\infty}\frac{e^{(\alpha-s)t}}{\alpha - s} - \frac{1}{\alpha-s}.
+\calL(e^{ \alpha t}u(t)) = \int_{-\infty}^{\infty} e^{ \alpha t} e^{-st} u(t) dt = \lim_{t\rightarrow\infty}\frac{e^{(\alpha-s)t}}{\alpha - s} - \frac{1}{\alpha-s}.
 \end{align*}
-The limit converges to zero when $\Re(\alpha - s) < 0$, that is, when $s \in \roc(e^{ \alpha t}u(t))$.  Thus, the Laplace transform is
+The limit converges to zero when $\Re(\alpha - s) < 0$, that is, when $s \in \roc(e^{ \alpha t}u(t))$, and so the Laplace transform is
 \[
 \calL(e^{ \alpha t}u(t)) = \frac{1}{s-\alpha} \qquad \Re(s) > \Re(\alpha).
 \]
@@ -253,11 +257,11 @@ Thus, the Laplace transform of the response $y = H x$ is the transfer function o
 \[
 \calL T_{\tau} x = \lambda T_\tau \calL x = e^{-s\tau} \calL x \qquad x \in \reals \to \complex,
 \]
-with region of convergence is $\roc(x)$.  This is called the \term{time-shift property} of the Laplace transform.  The results also holds for the differentiator, that is,
+with region of convergence is $\roc(x)$.  This is called the \term{time-shift property} of the Laplace transform (Exercise~\ref{exer:laplacetranstimeshift}).  The results also holds for the differentiator, that is,
 \[
 \calL D x = \lambda D \calL x = s \calL x
 \]
-with region of convergence is $\roc(x)$ under the added assumptions that $x$ is differentiable, i.e. $x \in C^1$, and that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc(x)$.  This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffandtimeshift}).  Observe that the assumption is true if, for example, $x(t)$ is finite. %A of signal that does not satisfy the differentiation property is $u(t) \sin(e^{t^2})$.
+with region of convergence is $\roc(x)$ under the added assumptions that $x$ is differentiable, i.e. $x \in C^1$, and that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc(x)$.  This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffproperty}).  Observe that the assumption is true if, for example, $x(t)$ is finite. %A of signal that does not satisfy the differentiation property is $u(t) \sin(e^{t^2})$.
 
 % \subsection{Commutivity (again)}
 
@@ -508,14 +512,14 @@ g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r \int_{0}^\inf
 % \[
 % \abs{g(t)} \leq \int_{0}^\infty e^{-k} \abs{\sinc( t - Vk )} dk \leq  \frac{1}{\abs{t}} \int_{0}^\infty \tfrac{ e^{-k}} = \frac{e}{\abs{t}}
 % \]
-% and so, we will approximate $g(t)$ by zero when $\abs{t} > T = 10^3$.  This approximation is accurate to 3 decimal places. For $\abs{t} < 10^3$ 
-% % We first truncate the upper bound of the integral,
-% % \[
-% % g(t) \approx \int_{0}^{b} 
-% % \] 
-% % We choose $K$ 
-% % \[
-% % \]
+% and so, we will approximate $g(t)$ by zero when $\abs{t} > T = 10^3$.  This approximation is accurate to 3 decimal places. For $\abs{t} < 10^3$ we truncate the upper bound of the integral,
+% \[
+% g(t) \approx \int_{0}^{B} e^{-k} \sinc( t - Vk ) dk
+% \] 
+% where $B$ is chosen so that 
+% \[
+% \abs{\int_{0}^{B} e^{-k} \sinc( t - Vk ) dk} \leq \frac{1}{\abs{t}} \int_{0}^{B} e^{-k} dk = 
+% \]
 An approximation of $g(t)$ is made by the trapezoidal sum
 \[
 g(t) \approx \frac{K}{2N} \left( p(0) + p(K) + 2 \sum_{n=1}^{N-1} p( \Delta n ) \right),

@@ -150,11 +150,11 @@ y(t)= \left( \frac{R_iR_0 - R_2R_iA}{(1+A) R_iR_1+R_0R_1+R_2R_1+R_0R_i+R_2R_i} \
 \begin{solution}
 The input voltage to the DC motor is $v - \theta$.  From~(\zref{eq:dcmotordiffequation}) of the lecture notes the relationship between the input voltage and motor angle is
 \[
-v - \theta = \left(\frac{RB}{K_\tau} + K_b\right) D(\theta) + \frac{RJ}{K_\tau} D^2(\theta)
+v - \theta = \left(\frac{RB}{K_\tau} + K_b\right) D\theta + \frac{RJ}{K_\tau} D^2\theta
 \] 
 and so
 \[
-v = \theta + \left(\frac{RB}{K_\tau} + K_b\right) D(\theta) + \frac{RJ}{K_\tau} D^2(\theta).
+v = \theta + \left(\frac{RB}{K_\tau} + K_b\right) D\theta + \frac{RJ}{K_\tau} D^2\theta.
 \]
 If $\theta(t) = \frac{\pi}{2} (1 + \operatorname{erf}(t) )$ then
 \[
