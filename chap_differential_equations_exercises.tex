@@ -112,6 +112,90 @@ y(t)= \left( \frac{R_iR_0 - R_2R_iA}{(1+A) R_iR_1+R_0R_1+R_2R_1+R_0R_i+R_2R_i} \
 \end{solution}
 
 
+\item \label{exer:twomassspringtwowalls} Figure~\ref{mech:twomassspringtwowalls} depicts a mechanical system involving two masses, two springs, and a damper connected between two walls.  Suppose that the spring $K_2$ is at rest when the mass $M_2$ is at position $p(t) = 0$.  A force, represented by the signal $f$, is applied to mass $M_1$.  Derive a differential equation relating the force $f$ and the position $p$ of mass $M_2$.
+
+\begin{solution}
+Let $p_1$ be a signal representing the position of mass $M_1$.  Suppose that the spring $K_1$ connecting masses $M_1$ and $M_2$ is a rest when the masses are distance $d_1$ apart, i.e., $p - p_1 = d_1$.  The force applied by the spring on $M_2$ is by spring $K_1$ is 
+\[
+f_1 = -K_1(p - p_1 - d_1) = -K_1(p - g)
+\] 
+where $g = p_1 + d_1$.  The force applied by spring $K_1$ on mass $M_1$ is then $-f_1$.  The force applied by the damper on $M_1$ is
+\[
+f_d = -BD p_1 = -BD(g - d_1) = - BD g.
+\]
+The total force applied to $M_1$ is $f + f_d - f_1$ and by Newton's law
+\[
+M_1 D^2 p_1 = M_1 D^2g = f + f_d - f_1 = f - BDg + K_1(p - g).
+\]
+The force applied to $M_2$ by the spring $K_2$ is
+\[
+f_2 = -K_2 p 
+\] 
+because the spring is assumed to be at rest when $p = 0$.  The total force applied to $M_2$ is $f_1 + f_2$ and by Newton's law
+\[
+M_2 D^2p = f_1 + f_2 =  -K_1(p - g) - K_2p.
+\]
+Rearranging gives
+\[
+-K_1 g = (K_1+K_2)p + M_2 D^2p
+\]
+and
+\[
+-K_1(p - g) = M_2 D^2p  + K_2p .
+\]
+Now,
+\[
+M_1 D^2g + BDg + M_2 D^2p  + K_2p = f 
+\]
+and so
+\[
+K_1K_2 p + B(K_1+K_2)Dp + (M_1K_1 + M_1K_2 + K_1 M_2) D^2p  + BM_2D^3p + M_1M_2 D^4p = K_1 f .
+\]
+In the case that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$ we have
+\[
+p + 2Dp + 4D^2p + 2D^3p + 2D^4p = f.
+\]
+\end{solution}
+
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}
+\tikzstyle{spring}=[thick,decorate,decoration={coil,pre length=0.3cm,post length=0.3cm,segment length=6,aspect=0.9}]
+\tikzstyle{damper}=[thick,decoration={markings,  
+  mark connection node=dmp,
+  mark=at position 0.5 with 
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+  }
+}, decorate]
+\tikzstyle{ground}=[fill,pattern=north east lines,draw=none,minimum width=0.75cm,minimum height=0.3cm]
+\tikzstyle{wall}=[fill,pattern=north east lines,draw=none,minimum width=0.3cm,minimum height=2cm]
+
+\node (Wleft) [wall] {};
+\draw (Wleft.north east)--(Wleft.south east);
+
+\node (M1) [minimum width=1cm,minimum height=2cm,style={draw,outer sep=0pt,thick},xshift=2.65cm] {$M_1$};
+\draw [damper] (Wleft.east)--(M1.west) node[pos=0.5,above,minimum height=30pt] {$B$};
+%\draw [-latex,thick] (M1.north) ++(-0.5cm,0.3cm) -- +(1cm,0) node[pos=0.5,above] {$f(t)$};
+\draw [-latex,thick] (M1.south) ++(-0.5cm,-0.3cm) -- +(1cm,0) node[pos=0.5,below] {$f(t)$};
+
+\node (M2) [minimum width=1cm,minimum height=2cm,style={draw,outer sep=0pt,thick},xshift=5.15cm] {$M_2$};
+\draw [spring] (M1.east)--(M2.west) node[pos=0.5,above,minimum height=20pt] {$K_1$};
+\draw [-latex,thick] (M2.south) ++(-0.5cm,-0.3cm) -- +(1cm,0) node[pos=0.5,below] {$p(t)$};
+
+\node (Wright) [wall,xshift=7.8cm] {};
+\draw (Wright.north west)--(Wright.south west);
+\draw [spring] (M2.east)--(Wright.west) node[pos=0.5,above,minimum height=20pt] {$K_2$};
+%\draw [thick,<->] (Wleft.north east)++(0,0.25cm) -- ++(7.5cm,0) node[pos=0.5,above] {$d$};
+
+\end{tikzpicture}
+\caption{Two masses, a spring, and a damper connect between two walls for Exercise~\ref{exer:twomassspringtwowalls}.} \label{mech:twomassspringtwowalls}
+\end{figure}
+
+
+
 \item \label{exer:dcmotorpotfeedback} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback}.  A direct current motor is connected to a potentiometer in such a way that the voltage at the output of the potentiometer is equal to the angle of the motor $\theta$.  This voltage is fed back to the input terminal of the motor.  An input voltage $v$ is applied to the other terminal on the motor.  Find the differential equation relating $v$ and $\theta$.  What is the input voltage $v$ if the motor angle satisfies $\theta(t) = \frac{\pi}{2} (1 + \operatorname{erf}(t) )$?  Plot $\theta$ and $v$ in this case when the motor coefficients satisfy $L=0$, $R = \tfrac{3}{4}$, and $K_b=K_\tau=B=J=1$.
 %Find the transfer function of the system that maps the input voltage $v$ to the motor angle $\theta$.  %Under the assumption that the motor coefficients satisfy $L=0$ and $K_b=K_\tau=B=R=J=1$ draw a pole zero plot and determine whether this system is stable and/or regular.  Find and plot the impulse response and step response if they exist.
 
@@ -143,7 +227,7 @@ y(t)= \left( \frac{R_iR_0 - R_2R_iA}{(1+A) R_iR_1+R_0R_1+R_2R_1+R_0R_i+R_2R_i} \
       \end{scope}
     \end{scope}
   \end{circuitikz}
-  \caption{Diagram for a rotary direct current (DC) with potentiometer feedback from Exercise~\ref{exer:dcmotorpotfeedback}.} \label{fig:dcmotorpotfeedback}
+  \caption{Diagram for a rotary direct current (DC) with potentiometer feedback for Exercise~\ref{exer:dcmotorpotfeedback}.} \label{fig:dcmotorpotfeedback}
 \end{figure}
 }
 

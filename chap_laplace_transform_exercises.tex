@@ -467,11 +467,129 @@ which is finite for all $s$ with $\Re(s) > 0$ as required.  For the derivative w
 which is finite for all $s$ with $\Re(s) > 1$ as required.
 \end{solution}
 
-
-\item \label{exer:dcmotorpotfeedbacktranfunc} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback} from Exercise~\ref{exer:dcmotorpotfeedback}.  After solving Exercise~\ref{exer:dcmotorpotfeedback}, find the transfer function of the system that maps the input voltage $v$ to the motor angle $\theta$.  Under the assumption that the motor coefficients satisfy $L=0$ and $K_b=K_\tau=B=R=J=1$ draw a pole zero plot and determine whether this system is stable and/or regular.  Find and plot the impulse response and step response if they exist.
+\item \label{exer:twomassspringtwowallstranfuncpolezeros} Consider the mechanical system in Figure~\ref{mech:twomassspringtwowalls} from Exercise~\ref{exer:twomassspringtwowalls}.  After solving Exercise~\ref{exer:twomassspringtwowalls}, find the transfer function of a linear shift-invariant $H$ system mapping $f$ to $p$.  Now suppose that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$.  Find the poles and zeros of $H$ and draw a pole zero plot.  Determine whether $H$ is stable and/or regular.  Find and plot the impulse response and the step response of $H$ if they exist.
 
 \begin{solution}
-Exercise~\ref{exer:dcmotorpotfeedback} finds the following differential equation relating $v$ and $\theta$,
+Let $H$ be a linear time invariant system mapping $f$ to $p$.  The transfer function of $H$ is
+\[
+\lambda H(s) = \frac{1}{1 + 2s + 4s^2 + 2s^3 + 2s^4}.
+\]
+Factorising the polynomial on the denominator we obtain
+\[
+\lambda H(s) = \frac{1}{(s-\beta_0)(s-\beta_1)(s-\beta_2)(s-\beta_3)}
+\]
+where the roots are
+\[
+\beta_0 = \beta_1^* = -0.193622 + 1.17046j, \;\;\; \beta_2 = \beta_3^* = -0.306378 + 0.511255j
+\]
+The system has no zeros and four poles.  A pole zero plot is shown below.  
+
+\begin{center}
+  \begin{tikzpicture}
+\begin{scope}[yscale=1.5,xscale=10]
+    % \path [draw=none,fill=lightgray] (-2.5,-2.5)--(-1,-2.5)--(-1,2.5)--(-2.5,2.5)--cycle;
+    %\vtick{-1} node[pos=0.5,below] {$-2$};
+    \poletikz{-0.193622}{1.17046} \node[above left] at (-0.193622,1.17046) {$\beta_0$};
+    \poletikz{-0.193622}{-1.17046} \node[above left] at (-0.193622,-1.17046) {$\beta_1$};
+    \poletikz{-0.306378}{0.511255} \node[above left] at (-0.306378,0.511255) {$\beta_2$};
+    \poletikz{-0.306378}{-0.511255} \node[above left] at (-0.306378,-0.511255) {$\beta_3$};
+    %\poletikz{-5/11}{0} \node[above left] at (-5/11,0) {$-\tfrac{5}{11}\times 10^4$};
+    \polezeroaxis{0.5}{2};
+\end{scope}
+\begin{scope}[yscale=1.5]
+\htick{1} node[pos=0.5,right] {$1$};
+\htick{-1} node[pos=0.5,right] {$-1$};
+\end{scope}
+\begin{scope}[xscale=10]
+\vtick{-0.1} node[pos=0.5,below] {$-\tfrac{1}{10}$};
+\vtick{-0.2} node[pos=0.5,below] {$-\tfrac{2}{10}$};
+\vtick{-0.3} node[pos=0.5,below] {$-\tfrac{3}{10}$};
+%\vtick{-0.4} node[pos=0.5,below] {$-\tfrac{4}{10}$};
+\end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Because there are atleast as many poles as zeros and the real part of all the poles is negative the system is stable.  Because there are more poles than zeros the system is regular and has an impulse response.  Applying partial fractions gives
+\[
+\lambda H(s) = \frac{A_0}{s - \beta_0} + \frac{A_1}{s - \beta_1} + \frac{A_2}{s - \beta_2} + \frac{A_3}{s - \beta_3}
+\]
+where
+\[
+A_0 = A_1^* = -0.0887401 + 0.368434 j, \;\;\; A_2 = A_3^* = 0.0887401 + 0.863059j.
+\]
+The impulse response is
+\[
+h(t) = u(t) \left( A_0 e^{\beta_0 t} + A_1 e^{\beta_1 t} + A_2 e^{\beta_2 t} + A_3 e^{\beta_3 t}  \right).
+\]
+The step response is
+\[
+H u = I_\infty(h) = u(t) \left( C_0 e^{ \beta_0 t} + C_1 e^{\beta_1 t} + C_2 e^{\beta_2 t} + C_3 e^{\beta_3 t} - B  \right)
+\]
+where $C_n = A_n/\beta_n$, $n = 0,1,2,3$ and $B=C_0+C_1+C_2+C_3$.  These responses are plotted below.
+
+\begin{center} 
+  {
+    \def\Azeroabs{0.37897}
+    \def\Azeroarg{-1.80715}
+    \def\Atwoabs{0.867609}
+    \def\Atwoarg{-1.46834}
+    \def\betazerore{-0.193622}
+    \def\betazeroim{-1.17046}
+    \def\betatwore{-0.306378}
+    \def\betatwoim{0.511255}
+    \def\Czeroabs{0.319438}
+    \def\Czeroarg{-0.0724163}
+    \def\Ctwoabs{1.45565}
+    \def\Ctwoarg{2.70417}
+    \def\B{-2}
+    \def\step(#1){ifthenelse(#1>0,1,0)}
+    \def\h(#1){2*\step(#1)*(\Azeroabs*exp(\betazerore*#1)*cos(180/3.145*(\betazeroim*#1 + \Azeroarg)) + \Atwoabs*exp(\betatwore*#1)*cos(180/3.145*(\betatwoim*#1 + \Atwoarg)))}
+    \def\Hu(#1){\step(#1)*(2*\Czeroabs*exp(\betazerore*#1)*cos(180/3.145*(\betazeroim*#1 + \Czeroarg)) + 2*\Ctwoabs*exp(\betatwore*#1)*cos(180/3.145*(\betatwoim*#1 + \Ctwoarg)) - \B)}
+
+    \begin{tikzpicture}
+      \begin{scope}[xscale=0.5,yscale=2]
+        \draw[->] (-2,0) -- (17,0) node[above] {$t$};
+        \draw[->] (0,-0.7) -- (0,1.3) node[right] {$h$};
+        \draw[thick] (-1,0) -- (0,0);
+        \draw[color=black,thick] plot[domain=0:15.5,samples=101] (\x,{\h(\x)});
+      \end{scope}
+      \begin{scope}[xscale=0.5]
+        \vtick{5} node[pos=0.5,below] {$5$};
+        \vtick{10} node[pos=0.5,below] {$10$};
+        \vtick{15} node[pos=0.5,below] {$15$};
+      \end{scope}
+      \begin{scope}[yscale=2]
+        \htick{1} node[pos=0.5,left] {$1$};
+      \end{scope}
+    \end{tikzpicture}
+
+    \vspace{0.5cm}
+
+    \begin{tikzpicture}
+      \begin{scope}[xscale=0.5,yscale=1]
+        \draw[->] (-2,0) -- (17,0) node[above] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.1) node[right] {$H(u)$};
+        \draw[thick] (-1,0) -- (0,0);
+        \draw[color=black,thick] plot[domain=0:15.5,samples=101] (\x,{\Hu(\x)});
+      \end{scope}
+      \begin{scope}[xscale=0.5]
+        \vtick{5} node[pos=0.5,below] {$5$};
+        \vtick{10} node[pos=0.5,below] {$10$};
+        \vtick{15} node[pos=0.5,below] {$15$};
+      \end{scope}
+      \htick{1} node[pos=0.5,left] {$1$};
+      \htick{2} node[pos=0.5,left] {$2$};
+    \end{tikzpicture}
+  }
+\end{center}
+
+\end{solution}
+
+
+\item \label{exer:dcmotorpotfeedbacktranfunc} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback} from Exercise~\ref{exer:dcmotorpotfeedback}.  After solving Exercise~\ref{exer:dcmotorpotfeedback}, find the transfer function of a linear shift-invariant system that maps the input voltage $v$ to the motor angle $\theta$.  Under the assumption that the motor coefficients satisfy $L=0$ and $K_b=K_\tau=B=R=J=1$ draw a pole zero plot and determine whether this system is stable and/or regular.  Find and plot the impulse response and step response if they exist.
+
+\begin{solution}
+Exercise~\zref{exer:dcmotorpotfeedback} finds the following differential equation relating $v$ and $\theta$,
 \[
 v = \theta + \left(\frac{RB}{K_\tau} + K_b\right) D \theta + \frac{RJ}{K_\tau} D^2 \theta.
 \]

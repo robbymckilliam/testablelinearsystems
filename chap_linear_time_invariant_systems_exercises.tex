@@ -7,7 +7,7 @@
 % The convergence is pointwise.  If $t \leq 0$ then $I_\infty(p_\gamma,t) = 0 = u(t)$ so only remains to consider what happens for $t > 0$.  Fix $t > 0$ and for any $\epsilon > 0$ we can choose $\gamma$ large enough that $I_\infty(p_\gamma,t) = 1$
 % \end{solution}
 
-\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\fin(h)$ defined in Section~\ref{sec:conv-regul-syst} on page~\pageref{sec:conv-regul-syst} is a linear shift-invariant space.
+\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\fin(h)$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
 
 \item Show that $\fin(u)$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
 \begin{solution}
@@ -102,7 +102,18 @@ H(x)(t) &= \int_{-1}^{1} \sin(\pi\tau) x(t + \tau) d\tau \\
 \end{align*}
 where we put $h(t) = -\rect(t/2) \sin(\pi t)$.  It follows that $h$ is the impulse response of $H$.  Since $h$ has an impulse resposne it is regular, and since it is regular its also linear and time invariant.
 
-The hard way is to first show linear, then show time invariance, and then find this impulse response using~\zeqref{eq:defnimpulseresponse}.  We have
+The hard way is to first show linear, then show time invariance, and then find this impulse response as the limit 
+\[
+h = \lim_{\gamma \rightarrow \infty} H p_\gamma.
+\]
+where the function 
+\[
+p_\gamma(t) = \begin{cases}
+\gamma, & 0 < t \leq \frac{1}{\gamma} \\
+0, & \text{otherwise},
+\end{cases}
+\]
+is introduced in Section~\zref{sec:conv-regul-syst}.  We have
 \begin{align*}
 H(ax+by) &= \int_{-1}^{1} \sin(\pi\tau) \big( ax(t + \tau) + by(t + \tau) \big) d\tau \\
 &= a \int_{-1}^{1} \sin(\pi\tau) x(t + \tau) d\tau + b\int_{-1}^{1} \sin(\pi\tau)  y(t + \tau) \big) d\tau \\
