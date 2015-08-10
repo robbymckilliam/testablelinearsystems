@@ -365,11 +365,11 @@ with region of convergence is $\roc(x)$ under the added assumptions that $x$ is 
 
 %section{Solving differential equations}\label{sec:solv-diff-equat}
 
-In Chapter~\ref{sec:syst-modell-diff} we derived differential equations of the form
+In Chapter~\ref{sec:syst-modell-diff} we modelled electrical, mechanical, and electromechanical devices by differential equations of the form
 \begin{equation}\label{eq:diffinlapsection}
-\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y,
+\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y.
 \end{equation}
-to model electrical, mechanical, and electromechanical devices. %  Taking Laplace transforms of both sides of this equation,
+%  Taking Laplace transforms of both sides of this equation,
 % \begin{align*}
 % \calL\left( \sum_{\ell=0}^{m} a_\ell D^\ell x \right) &= \calL\left( \sum_{\ell=0}^{k} b_\ell D^\ell(y) \right) & \\
 % \sum_{\ell=0}^{m} a_\ell \calL\big(D^\ell(x)\big) &= \sum_{\ell=0}^{k} b_\ell \calL\big(D^\ell(y)\big) & \text{(linearity~\eqref{eq:laplacetransislinear})} \\
@@ -385,9 +385,9 @@ to model electrical, mechanical, and electromechanical devices. %  Taking Laplac
 % \calL(y) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k} \calL(x).
 % \]
 %Given the input signal $x$ and its Laplace transform $\calL(x)$ we can find the output signal $y$ (provided it exists) by applying the inverse Laplace transform to the right hand side of the equation above.  
-Suppose that $H \in X \to Y$ is a linear shift-invariant system such that $y = Hx$ if $x$ and $y$ satisfy such a differential equation.  Since $H$ is linear and shift-invariant the response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into the differential equation gives
+Suppose that $H \in X \to Y$ is a linear shift-invariant system such that $y = Hx$ if $x$ and $y$ satisfy a differential equation of this form.  Since $H$ is linear and shift-invariant the response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into the differential equation gives
 \[
-\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st} = \sum_{\ell=0}^{m} a_\ell s^{\ell} \lambda H(s) e^{st} = \lambda H(s) \sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st}
+\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st} = \sum_{\ell=0}^{k} b_\ell s^{\ell} \lambda H(s) e^{st} = \lambda H(s) \sum_{\ell=0}^{k} b_\ell s^{\ell} e^{st}
 \]
 and rearrnaging we find that the transfer function $\lambda H$ satisfies
 \begin{equation} \label{eq:findtransferfuncfromdiff}
@@ -403,7 +403,7 @@ Recall the passive electrical RC circuit from Figure~\ref{circ:seriesRC1}.  The 
 \[
 x = y + RC D y
 \] 
-where $x$ is the input voltage signal, $y$ is the voltage over the capacitor, and $R$ and $C$ are the resistance and capacitance.  The RC circuit is an example of a \term{first order system}, so called, because the highest order derivative that occurs is of order one, that is, $D^k$ with $k = 1$.  Let $H$ be a system mapping the input voltage signal $x$ to the output voltage signal $y$.  From~\eqref{eq:findtransferfuncfromdiff} the transfer function $\lambda H$ is found to satisfy
+where $x$ is the input voltage signal, $y$ is the voltage over the capacitor, and $R$ and $C$ are the resistance and capacitance.  The RC circuit is an example of a \term{first order system} so called because the highest order derivative that occurs is of order one, that is, $D^k$ with $k = 1$.  Let $H$ be a system mapping the input voltage signal $x$ to the output voltage signal $y$.  From~\eqref{eq:findtransferfuncfromdiff} the transfer function $\lambda H$ is found to satisfy
 \[
 \lambda H(s) = \frac{1}{1 + RC s} = \frac{r}{r + s}
 \]
