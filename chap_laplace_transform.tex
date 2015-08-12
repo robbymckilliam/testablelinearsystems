@@ -698,18 +698,18 @@ The impulse response of a second order system is absolutely integrable when $\al
 
 From~\eqref{eq:stepresponseintegrateimpulseresponse} the step response $H(u)$ is given by applying the integrator $I_\infty$ to the impulse response.  There are three cases to consider depending on whether the system is overdamped, underdamped, or critically damped.  When the system is overdamped the step response is
 \begin{align*}
-Hu = I_\infty(h) &= \frac{1}{2 \beta M} \int_{-\infty}^t e^{-\alpha \tau} \big( e^{\beta \tau} - e^{-\beta \tau} \big) u(\tau) d\tau \\
+Hu = I_\infty h &= \frac{1}{2 \beta M} \int_{-\infty}^t e^{-\alpha \tau} \big( e^{\beta \tau} - e^{-\beta \tau} \big) u(\tau) d\tau \\
 &= \frac{1}{2 \beta M} \int_{0}^t e^{-\alpha \tau} \big( e^{\beta \tau} - e^{-\beta \tau} \big) d\tau \\
 &= \frac{1}{2 \beta M}u(t)\left( \frac{e^{(\beta-\alpha)t}- 1}{ \beta-\alpha} + \frac{e^{-(\beta+\alpha)t}- 1}{\beta+\alpha}\right).
 \end{align*}
 When the system is underdamped the step response is
 \begin{align*}
-Hu = I_\infty(h) &= \frac{1}{ \theta M} \int_{0}^t e^{-\alpha \tau} \sin(\theta \tau) dt \\
+Hu = I_\infty h &= \frac{1}{ \theta M} \int_{0}^t e^{-\alpha \tau} \sin(\theta \tau) dt \\
 &= u(t) \left(\frac{\theta - e^{-t \alpha } \big(\theta  \cos(t \theta)+\alpha  \sin(t \theta)\big)}{M \theta(\alpha ^2+\theta ^2)} \right).
 \end{align*}
 When the system is critically damped the step response is
 \begin{align*}
-Hu = I_\infty(h) &= \frac{1}{ \theta M} \int_{0}^t \frac{1}{M} t e^{-\alpha t} dt \\
+Hu = I_\infty h &= \frac{1}{ \theta M} \int_{0}^t \frac{1}{M} t e^{-\alpha t} dt \\
 &= \frac{1}{M\alpha^2}u(t)\big(1 - e^{-t\alpha s}(1+t\alpha) \big).
 \end{align*}
 These step responses are plotted in Figure~\ref{fig:masspringdamperoscillatorystepresp}.
@@ -733,16 +733,16 @@ These step responses are plotted in Figure~\ref{fig:masspringdamperoscillatoryst
 
 The transfer function of a system described by a linear differential equation with constant coefficients is of the form of~\eqref{eq:findtransferfuncfromdiff}, that is,
 \[
-\lambda H = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
+\lambda H(s) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
 \]
 Factorising the polynomials on the numerator and denominator we obtain
 \[
-\lambda H = C\frac{(s-\alpha_0)(s - \alpha_1)\cdots(s - \alpha_m)}{(s-\beta_0)(s - \beta_1)\cdots(s - \beta_k)},
+\lambda H(s) = C\frac{(s-\alpha_0)(s - \alpha_1)\cdots(s - \alpha_m)}{(s-\beta_0)(s - \beta_1)\cdots(s - \beta_k)},
 \] 
 where $\alpha_0, \dots, \alpha_m$ are the roots of the numerator polynomial $a_0 + a_1s + \dots + a_m s^m$, and $\beta_0, \dots, \beta_k$ are the roots of the denominator polynomial $b_0 + b_1s + \dots + b_k s^k$, and $C = \tfrac{a_m}{b_m}$.  That such a factorisation is always possible is called the \term{fundamental theorem of algebra}~\citep{Fine_fundamental_theorem_of_algebra}.  %,Weierstraß_fundamental_theorem_of_algebra}.  
 If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:transfuncpoleszeros}
-\lambda(H) = C\frac{(s-\alpha_d)(s - \alpha_{d+1})\cdots(s - \alpha_{m})}{(s-\beta_d)(s - \beta_{d+1})\cdots(s - \beta_{k})},
+\lambda H(s) = C\frac{(s-\alpha_d)(s - \alpha_{d+1})\cdots(s - \alpha_{m})}{(s-\beta_d)(s - \beta_{d+1})\cdots(s - \beta_{k})},
 \end{equation}
 where $d$ is the number of shared roots, these shared roots being 
 \[
@@ -795,7 +795,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_m$ are called the \term{ze
 
 It is always possible to apply partial fractions and write~\eqref{eq:transfuncpoleszeros} in the form
 \[
-\lambda H = p(s) + \sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}},
+\lambda H(s) = p(s) + \sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}},
 \]
 where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  % We now restrict attention to the common case when the coefficients of the numerator polynomial $a_0,\dots,a_m$ and the coefficients of the denominator polynomial $b_0,\dots,b_k$ are real.  In this case, the coefficients of the polynomial $p(s)$ are real, and the constant $A_\ell$ is real whenever the corresponding pole $\beta_\ell$ is real.  If the pole $\beta_\ell$ has nonzero imaginary part there always exists another pole $\beta_i$ such that $\beta_\ell = \beta_i^*$, where $\beta_i^*$ is the \term{complex conjugate} of $\beta_i$.  These poles have the same multiplicity, that is, $r_\ell = r_i$, and also the constants $A_\ell = A_i^*$.  Stated another way: the complex poles occur in \term{conjugate pairs}.
 We see that the transfer function contains the summation of two parts: the polynomial $p(s)$, and a sum of terms of the form $\frac{A}{(s-\beta)^r}$.  Let $p(s) = \gamma_0 + \gamma_1 s + \dots + \gamma_{m-k}s^{m-k}$.  This polynomial is the transfer function of the nonregular system
@@ -864,7 +864,7 @@ The system has no zeros and 4 poles.  One of these poles always exists at the or
 
 Consider the specific case when $B=K=M_1=M_2=1$.  Factorising the denominator polynomial gives
 \[
-\lambda H = \frac{1}{s(s-\beta_1)(s-\beta_2)(s-\beta_2^*)},
+\lambda H(s) = \frac{1}{s(s-\beta_1)(s-\beta_2)(s-\beta_2^*)},
 \]
 where 
 \[
@@ -916,7 +916,7 @@ This system has no zeros and two poles.  One pole is at $-\tfrac{a}{b}$ and the 
 
 Applying partial fractions we find that
 \begin{equation}\label{eq:transferfunctionDCmotorpartialfraced}
-\lambda(H) = \frac{1}{as} - \frac{1}{a(s - \beta)},
+\lambda H(s) = \frac{1}{as} - \frac{1}{a(s - \beta)},
 \end{equation}
 where $\beta = -\tfrac{a}{b}$.  Using~\eqref{eq:laplacetneucommon}, the impulse response of $H$ is
 \begin{equation}\label{eq:impulseresponseDCmotor}
@@ -924,7 +924,7 @@ h(t) = \frac{1}{a}u(t)\big( 1  - e^{\beta t} \big).
 \end{equation}
 Other signals with Laplace transform~\eqref{eq:transferfunctionDCmotorpartialfraced} are discarded because they do not lead to a causal system.  The step response $H u$ is obtained by applying the integrator system $I_\infty$ to the impulse response, that is
 \[
-H u = I_\infty(h) = \frac{1}{a\beta}u(t) \big( \beta t + e^{\beta t} - 1 \big).
+H u = I_\infty h = \frac{1}{a\beta}u(t) \big( \beta t + e^{\beta t} - 1 \big).
 \]
 The impulse response and step response are plotted in Figure~\ref{fig:dcmotoranimimpulseresponse} when $K_b= \tfrac{1}{8}$, $K_\tau = 8$ and $B=R=1$ and $J=2$ so that $a = \tfrac{1}{4}$, $b=\tfrac{1}{4}$ and $\beta = -1$.
 
