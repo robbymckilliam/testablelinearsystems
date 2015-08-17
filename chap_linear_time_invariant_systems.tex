@@ -340,6 +340,9 @@ Hx &= H_2H_1 x \\
 \end{align*}
 and so, $H$ is a regular system with impulse response $h = h_2 * h_1$.  %Thus, if $H$ is the composition of regular systems $H_1$ and $H_2$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $H_1$ and $H_2$.  
 
+%BLERG: The above use of associativity of convolution is hiding use of Fubini's theorem (or Tonelli's theorem).  There's some subtle assumptions about the domain of H_1 and H_2 that are being hidden here.  You can't necessarily use the default domains \fin h_1 and \fin h_2.
+% Use of Tonelli's theorem is probably the way to go here.  Work's on the extended real line, but allows interchanges.  You only get something infinite if all integrals, double, or iteratered (in either direction) are infinite.  So if any are finite they all are and they are all equal.
+
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance=1.5cm,auto,>=latex']

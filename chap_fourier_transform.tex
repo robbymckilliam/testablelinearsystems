@@ -1,10 +1,10 @@
-The \term{Fourier transform} of an absolutely integrable signal $x$ is defined as
+Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
 \begin{equation}\label{eq:fouriertransform}
-\calF(x) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt.
+\calF x(f) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt.
 \end{equation}
-The Fourier transform is a function of the real number $f$. We indicate its value at $f$ by $\calF(x)(f)$ or $\calF(x,f)$. For example, the rectangular pulse $\rect(t)$ from~\eqref{eq:rectfuncdefn} is absolutely integrable and has Fourier transform
+called the Fourier transform.  The Fourier transform is a function of the real number $f$ and so $\calF x \in \reals \to \complex$, that is, $\calF x$ is a signal.  For example, the rectangular pulse $\rect(t)$ from~\eqref{eq:rectfuncdefn} is absolutely integrable and has Fourier transform
 \begin{align}
-\calF(\rect) &= \int_{-\infty}^\infty \rect(t) e^{-j2\pi ft} dt \nonumber \\
+\calF \rect(f) &= \int_{-\infty}^\infty \rect(t) e^{-j2\pi ft} dt \nonumber \\
 &= \int_{-1/2}^{1/2} e^{-j2\pi ft} dt \nonumber  \\
 &= \frac{e^{j\pi f} - e^{-j\pi f}}{j 2 \pi f} = \frac{\sin(\pi f)}{\pi f} = \sinc(f). \label{eq:sincandrect}
 \end{align}
@@ -12,11 +12,11 @@ The $\sinc$ function is plotted in Figure~\ref{fig:sincfunction1}.  %As we will 
 
 The Fourier transform is closely related to the Laplace transform because
 \[
-\calF(x,f) = \calL(x,j 2\pi f)
+\calF x(f) = \calL x(j 2\pi f)
 \]
-for those signals $x$ with region of convergence containing the imaginary axis, that is, for absolutely integrable $x$.  The Fourier transform inherits the properties of the Laplace transform that were described in Section~\ref{sec:transf-funct-lapl}.  For example, if $H$ is a stable regular system with absolutely integrable impulse response $h$ having Fourier transform $\calF(h)$, then the spectrum of $H$ satisfies
+for those signals $x$ with region of convergence containing the imaginary axis, that is, for absolutely integrable $x$.  The Fourier transform inherits the properties of the Laplace transform that were described in Section~\ref{sec:transf-funct-lapl}.  For example, if $H$ is a stable regular system with absolutely integrable impulse response $h$ having Fourier transform $\calF h$, then the spectrum of $H$ satisfies
 \[
-\Lambda(H, f) = \lambda(H,j2\pi f) = \calL(h,j2\pi f) = \calF(h,f),
+\Lambda H(f) = \lambda H(j2\pi f) = \calL h(j2\pi f) = \calF H(f),
 \]
 that is, the spectrum of a stable regular system is given by the Fourier transform of its impulse response.  
 % The spectrum of the time-shifter and differentiator can be obtained by inspection.  From~\eqref{eq:timeshiftertransferfunction}, the spectrum of the time shifter $T_\tau$ satisfies
@@ -29,49 +29,56 @@ that is, the spectrum of a stable regular system is given by the Fourier transfo
 % \]
  Like the Laplace transform, the Fourier transform obeys the \term{convolution theorem}~\eqref{eq:convtheoremlaplace}, that is,
  \begin{equation}\label{eq:convthmfouriertransform}
- \calF(x * y) = \calF(x)\calF(y)
+ \calF(x * y) = \calF x \calF y
  \end{equation}
-when each of the signals $x$, $y$, and $x * y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is given by the multiplication of the Fourier transforms of those signals.
+when the signals $x$ and $y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is given by the multiplication of the Fourier transforms of those signals.  The convolution of two absolutely integrable signals is always absolutely integrable (Exercises~\ref{excer:convabsisabs}). 
 
-It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with spectrum $\Lambda(H)$ and if $x$ is a signal with Fourier transform $\calF(x)$, then the signal $y = H(x)$ has Fourier transform
+It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with spectrum $\Lambda H$ and if $x$ is a signal with Fourier transform $\calF x$, then the signal $y = H x$ has Fourier transform
 \[
-\calF(y) = \Lambda(H) \calF(x).
+\calF y = \Lambda H \calF x.
 \]
-This property also holds for the differentiator system $D$ and the time shifter system $T_\tau$ (Exercise~\ref{eq:transferLaplcetheorem}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
+This property also holds for the shifter $T_\tau$ (Exercise~\ref{exer:laplacetranstimeshift}) and it holds for the differentiator $D$ under the added assumption that $\lim_{t \to \infty}x(t) = 0$ and $\lim_{t \to -\infty} x(t) = 0$ (Exercise~\ref{exer:laplacetransdiffproperty}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
 %BLERG, it doesn't hold for the differentiator system all the time, but for certain signals, like those of rapid decent it does
 \[
-\Lambda(T_\tau) = e^{-j2\pi f \tau}, \qquad \Lambda(D^k) = (j2\pi f)^k
+\Lambda T_\tau = e^{-j2\pi f \tau}, \qquad \Lambda D^k = (j2\pi f)^k
 \]
 from which we obtain the \term{time shift property},
  \[
- \calF\big(T_\tau(x)\big) = \Lambda(T_\tau) \calF(x) = e^{-j2\pi f \tau} \calF(x),
+ \calF T_\tau x = \Lambda T_\tau \calF x = e^{-j2\pi f \tau} \calF x,
 \]
 and the \term{differentiation property},
 \[
- \calF\big(D^k(x)\big) = \Lambda(D^k) \calF(x) =  (j2\pi f)^k \calF(x),
+ \calF D^k x = \Lambda D^k \calF x =  (j2\pi f)^k \calF x,
 \]
-of the Fourier transform.  These results motivate assigning the following Fourier transforms to the delta ``function'' and its derivatives
+of the Fourier transform.  These results motivate assigning the following Fourier transforms to the delta ``function'', its shift $\delta(t - \tau)$, and its derivatives
 \begin{equation}\label{eqftsofdeltas}
-\calF(\delta) = 1, \qquad \calL(\delta^k) = (j2\pi f)^k.
+\calF \delta = 1, \qquad \calF\big(\delta(t - \tau)\big) = e^{-j2\pi\tau f}, \qquad \calL(\delta^k) = (j2\pi f)^k.
 \end{equation}
-These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.  
+These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 Similarly to the Laplace transform~\eqref{eq:freqshiftrule}, the Fourier transform obeys a \term{frequency shift rule} that relates the transform of a signal $x(t)$ to that of the signal $e^{2\pi j \gamma f t} x(t)$ where $\gamma \in \reals$.  From~\eqref{eq:freqshiftrule}, the frequency shift rule asserts that
 \begin{align}
-\calF\big( e^{2\pi j \gamma t} x(t), f\big) =  \calF(x, f - \gamma). \label{eq:freqshiftrulefourier}
+\calF\big( e^{2\pi j \gamma t} x(t) \big)\big( f\big) =  \calF x(f - \gamma). \label{eq:freqshiftrulefourier}
 \end{align}
 Since $\cos( 2\pi \gamma t) = \tfrac{1}{2}e^{2\pi j \gamma t} + \tfrac{1}{2}e^{-2\pi j \gamma t}$ we also have
 \begin{equation}\label{eq:modulationpropertyft}
-\calF\big( \cos(2\pi \gamma t) x(t), f \big) =  \frac{1}{2}\calF(x, f - \gamma) + \frac{1}{2}\calF(x, f + \gamma).
+\calF\big( \cos(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2}\calF x(f - \gamma) + \frac{1}{2}\calF x(f + \gamma).
 \end{equation}
-% and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} - \tfrac{1}{2j}e^{-2\pi j \gamma t}$ we have
-% \[
-% \calF\big( \sin(2\pi \gamma t) x(t), f \big) =  \frac{1}{2j}\calF(x, f - \gamma) + \frac{1}{2j}\calF(x, f + \gamma)
-% \]
-This is sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  % Combing the frequency shift rule with the convention $\calF(\delta) = 1$ motivates assigning the the following Fourier transform to $e^{2\pi j \gamma t}$
-% \[
-% \calF(e^{2\pi j \gamma t},f) = 
-% \]
+and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} - \tfrac{1}{2j}e^{-2\pi j \gamma t}$ we have
+\[
+ \calF\big( \sin(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2j}\calF x(f - \gamma) - \frac{1}{2j}\calF x( f + \gamma)
+ \]
+These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the the following Fourier transform to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals
+\[
+ \calF(e^{2\pi j  \gamma t}) = \delta(t - \gamma).
+ \]
+\[
+\calF\big( \cos(2\pi \gamma t) \big) = \tfrac{1}{2} \delta(t - \gamma) + \tfrac{1}{2} \delta(t + \gamma),
+\]
+\[
+\calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(t - \gamma) - \tfrac{1}{2j} \delta(t + \gamma),
+\]
+These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}, but must be used caution.  There is no guarantee that mechanical mathematical manipulations involving the delta-``function'' will lead to sensible results.
 %  and the following
 
 Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
