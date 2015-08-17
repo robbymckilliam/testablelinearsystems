@@ -68,7 +68,7 @@ and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} -
 \[
  \calF\big( \sin(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2j}\calF x(f - \gamma) - \frac{1}{2j}\calF x( f + \gamma)
  \]
-These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the the following Fourier transform to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals
+These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the the following Fourier transforms to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals,
 \[
  \calF(e^{2\pi j  \gamma t}) = \delta(t - \gamma).
  \]
@@ -78,12 +78,12 @@ These results are sometimes called the \term{modulation property} of the Fourier
 \[
 \calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(t - \gamma) - \tfrac{1}{2j} \delta(t + \gamma),
 \]
-These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}, but must be used caution.  There is no guarantee that mechanical mathematical manipulations involving the delta-``function'' will lead to sensible results.
+These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996,Proakis_digital_comms}, but must be treated with caution.  There is no guarantee that mechanical mathematical manipulations involving these conventions will lead to sensible results.
 %  and the following
 
-Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
+Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time-scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
 \begin{equation}\label{eq:timescalingpropertryfouriertrans}
-\calF\big( x(\alpha t), f \big) = \frac{1}{\abs{\alpha}} \calF\big( x , f/\alpha \big).
+\calF\big( x(\alpha t)\big)\big( f \big) = \frac{1}{\abs{\alpha}} \calF x (f/\alpha).
 \end{equation}
 
 % The Fourier transform also obeys a reciprocal property
@@ -123,11 +123,13 @@ Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Four
 
 \section{The inverse transform and the Plancherel theorem}\label{sec:square-integr-sign}
 
-Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \calF(x)$.  Observe that $\hat{x}$, like $x$, is a function that maps a real number to a complex number.  Thus, the Fourier transform $\hat{x}$ is a \term{signal} with independent variable representing \term{frequency}.  It is usual to call $x$ the \term{time domain} representation of the signal and $\hat{x}$ the \term{frequency domain} representation.  If $\hat{x}$ is absolutely integrable, then $x$ can be recovered using the \term{inverse Fourier transform}
+Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \calF x$.  Observe that $\hat{x}$, like $x$, is a function that maps a real number to a complex number, that is, $\hat{x}$ is a \term{signal} with independent variable representing frequency.  It is usual to call $\hat{x}$ the \term{frequency-domain} representation of the signal and $x$ the \term{time-domain} representation although the signal $x$ need not be a function of ``time''.  
+
+If $\hat{x}$ is absolutely integrable, then $x$ can be recovered using the \term{inverse Fourier transform}
 \begin{equation}\label{eq:inversefouriertransform}
 x(t) = \calF^{-1}(\hat{x}) =  \int_{-\infty}^\infty \hat{x}(f) e^{j2\pi ft} df.
 \end{equation}
-For example, let $\hat{x} = \calF(x) = \rect$ be the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
+For example, let $\hat{x} = \calF x = \rect$ be the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
 \[
 x(t) = \int_{-\infty}^\infty \rect(f) e^{j2\pi ft} df = \sinc(-t) = \sinc(t).
 \]
@@ -137,11 +139,11 @@ We are lead to the conclusion that the Fourier transform of $\sinc$ is the recta
 The rectangular pulse $\rect$ is finite and absolutely integrable.  The $\sinc$ function is not absolutely integrable (Exercise~\ref{exer:sincnotabsint}). Because of this the integral equation that we have used to define the Fourier transform~\eqref{eq:fouriertransform} cannot be directly applied to the $\sinc$ function.  %The inverse transform provides a method for assigning Fourier transforms to signals even when the formula~\eqref{eq:fouriertransform} does not apply.  
 Although $\sinc$ is not absolutely integrable, it is square integrable (Exercise~\ref{exer:sincnotabsint}).  It happens that all square integrable signals can be assigned a Fourier transform by interpreting the integral in~\eqref{eq:fouriertransform} as what is called its~\term{Cauchy principal value}.  That is, for $x$ a square integrable signal, we assign the Fourier transform
 \[
-\hat{x} = \calF(x) = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
+\hat{x} = \calF x = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
 \]
-This Fourier transform $\hat{x}$ is itself a square integrable signal and the orignal time domain signal $x$ can be recovered almost everywhere by taking the Cauchy principal value of the integral in~\eqref{eq:inversefouriertransform}, that is,
+This Fourier transform $\hat{x}$ is itself a square integrable signal and the orignal time domain signal $x$ can be recovered almost everywhere by taking the Cauchy principal value of the integral for the inverse Fourier transform~\eqref{eq:inversefouriertransform}, that is,
 \[
-x = \calF^{-1}(\hat{x}) = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}.
+x = \calF^{-1} \hat{x} = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}
 \]
 Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that is,
 \begin{equation}\label{eq:parseval}
@@ -173,11 +175,11 @@ where the superscript $^*$ denotes the complex cojugate.  One obtains~\eqref{eq:
 
 Let $x$ be a signal with Fourier transform
 \[
-\calF(x,f) = \int_{-\infty}^{\infty} x(\tau) e^{-j2\pi f \tau} d\tau.
+\calF x(f) = \int_{-\infty}^{\infty} x(\tau) e^{-j2\pi f \tau} d\tau.
 \]
 Evaluating the Fourier transform at $-t$ we find that
 \begin{equation}\label{eq:dualityft}
-\calF(x,-t) = \int_{-\infty}^{\infty} x(\tau) e^{j2\pi t \tau} d\tau = \calF^{-1}(x,t).
+\calF x(-t) = \int_{-\infty}^{\infty} x(\tau) e^{j2\pi t \tau} d\tau = \calF^{-1} x(t).
 \end{equation}
 This is the called the \term{duality} property of the Fourier transform.  In words, if $\hat{x}$ is the Fourier transform of $x$, then $x$ is the Fourier transform of $\hat{x}$ reflected in time.    %Another way to express duality is
 % \[
@@ -326,7 +328,7 @@ For many engineering purposes it is desirable to construct systems that will \te
 
 An \term{ideal lowpass filter} with \term{cuttoff frequency} $c$ is the system $L_c$ with spectrum
 \[
-\Lambda(L_c) = \begin{cases}
+\Lambda L_c = \begin{cases}
 1 & \abs{f} < c \\
 0 & \text{otherwise}
 \end{cases}
@@ -336,11 +338,11 @@ Applying the inverse Fourier transform to $\rect\big(\tfrac{f}{2c}\big)$ gives
 \[
 \int_{-\infty}^\infty \rect\big(\tfrac{f}{2c}\big) e^{j2\pi t f} df = \int_{-c}^c e^{j2\pi t f} df = \frac{\sin(2 c\pi t)}{\pi t} = 2c\sinc(2ct).
 \]
-We conclude that the ideal lowpass filter $L_c$ is a regular linear time invariant system with impulse response $2c\sinc(2ct)$.
+We are lead to the conclude that the ideal lowpass filter $L_c$ is a regular linear time invariant system with impulse response $2c\sinc(2ct)$~\footnote{This conclusion should be taken with scepticism because the signal $2c\sin(2ct)$ is not abolutely integrable and so its transfer function with not contain the imaginary axis in its domain.  Infact, $\roc \sinc = \emptyset$.  Just as an exception is made that allows signals that are not absolutely integrable, but are square integrable, to have a Fourier transform an exception that allows regular systems with square integrable impulse response to have a spectrum must be made. We will have not use of ideal filters beyond this section and so this caveat with not carry thoughout the text.  The concept of an ideal filter is nonethless informative from an intuitive viewpoint.}
 
 An \term{ideal highpass filter} with cuttoff frequency $c$ is given by the linear combination $T_0 - L_c$ where $T_0$ is the identity system.  The spectrum is
 \[
-\Lambda(T_0 - L_c) = \Lambda(T_0) - \Lambda(L_c)  = 1 - \rect\left(\frac{f}{2c}\right) = \begin{cases}
+\Lambda(T_0 - L_c) = \Lambda T_0 - \Lambda L_c  = 1 - \rect\left(\frac{f}{2c}\right) = \begin{cases}
 0 &  \abs{f} < c \\
 1 & \text{otherwise}.
 \end{cases}
