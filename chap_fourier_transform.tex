@@ -1,8 +1,8 @@
 Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
 \begin{equation}\label{eq:fouriertransform}
-\calF x(f) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt.
+\calF x(f) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt
 \end{equation}
-called the Fourier transform.  The Fourier transform is a function of the real number $f$ and so $\calF x \in \reals \to \complex$, that is, $\calF x$ is a signal.  For example, the rectangular pulse $\rect(t)$ from~\eqref{eq:rectfuncdefn} is absolutely integrable and has Fourier transform
+called the \term{Fourier transform}.  The Fourier transform is a complex valued function of the real number $f$, that is, $\calF x \in \reals \to \complex$, or in other words, $\calF x$ is a \term{signal}.  For example, the rectangular pulse $\rect(t)$ from~\eqref{eq:rectfuncdefn} is absolutely integrable and has Fourier transform
 \begin{align}
 \calF \rect(f) &= \int_{-\infty}^\infty \rect(t) e^{-j2\pi ft} dt \nonumber \\
 &= \int_{-1/2}^{1/2} e^{-j2\pi ft} dt \nonumber  \\
@@ -16,9 +16,9 @@ The Fourier transform is closely related to the Laplace transform because
 \]
 for those signals $x$ with region of convergence containing the imaginary axis, that is, for absolutely integrable $x$.  The Fourier transform inherits the properties of the Laplace transform that were described in Section~\ref{sec:transf-funct-lapl}.  For example, if $H$ is a stable regular system with absolutely integrable impulse response $h$ having Fourier transform $\calF h$, then the spectrum of $H$ satisfies
 \[
-\Lambda H(f) = \lambda H(j2\pi f) = \calL h(j2\pi f) = \calF H(f),
+\Lambda H(f) = \lambda H(j2\pi f) = \calL h(j2\pi f) = \calF h(f),
 \]
-that is, the spectrum of a stable regular system is given by the Fourier transform of its impulse response.  
+that is, the spectrum of a stable regular system is the Fourier transform of its impulse response.  
 % The spectrum of the time-shifter and differentiator can be obtained by inspection.  From~\eqref{eq:timeshiftertransferfunction}, the spectrum of the time shifter $T_\tau$ satisfies
 % \[
 % \Lambda(T_\tau,f) = \lambda(T_\tau,j 2\pi f) = e^{-j2\pi f \tau}
@@ -31,7 +31,7 @@ that is, the spectrum of a stable regular system is given by the Fourier transfo
  \begin{equation}\label{eq:convthmfouriertransform}
  \calF(x * y) = \calF x \calF y
  \end{equation}
-when the signals $x$ and $y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is given by the multiplication of the Fourier transforms of those signals.  The convolution of two absolutely integrable signals is always absolutely integrable (Exercises~\ref{excer:convabsisabs}). 
+when the signals $x$ and $y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is the multiplication of the Fourier transforms of those signals.  The convolution of two absolutely integrable signals is always absolutely integrable and so there is no need to include the assumption that $x*y$ is absolutely integrable (Exercises~\ref{excer:convabsisabs}).
 
 It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with spectrum $\Lambda H$ and if $x$ is a signal with Fourier transform $\calF x$, then the signal $y = H x$ has Fourier transform
 \[
@@ -50,9 +50,9 @@ and the \term{differentiation property},
 \[
  \calF D^k x = \Lambda D^k \calF x =  (j2\pi f)^k \calF x,
 \]
-of the Fourier transform.  These results motivate assigning the following Fourier transforms to the delta ``function'', its shift $\delta(t - \tau)$, and its derivatives
+of the Fourier transform.  These results motivate assigning the following Fourier transforms to the delta ``function'' $\delta$, its shift $T_\tau \delta = \delta(t - \tau)$, and its derivatives
 \begin{equation}\label{eqftsofdeltas}
-\calF \delta = 1, \qquad \calF\big(\delta(t - \tau)\big) = e^{-j2\pi\tau f}, \qquad \calL(\delta^k) = (j2\pi f)^k.
+\calF \delta = 1, \qquad \calF\big(\delta(t - \tau)\big) = e^{-j2\pi\tau f}, \qquad \calF \delta^k = (j2\pi f)^k.
 \end{equation}
 These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
