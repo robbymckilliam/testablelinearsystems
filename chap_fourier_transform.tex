@@ -962,7 +962,7 @@ c_n = x(nP) &= \calF^{-1}(\hat{x}, nP) \\
 &= P \int_{-F/2}^{F/2} \hat{c}(Pf) e^{j2\pi f nP } df \\
 &= \int_{-1/2}^{1/2} \hat{c}(\gamma) e^{j 2\pi \gamma n } d\gamma \qquad \text{(change variable $\gamma = fP$)}.
 \end{align*}
-We obtain the following relationship between the square integrable sequence $c$ and its periodic discrete time Fourier transform $\hat{c} = \calD(c)$,
+We obtain the following relationship between the square integrable sequence $c$ and its periodic discrete time Fourier transform $\hat{c} = \calD c$,
 \[
 c_n = \int_{-1/2}^{1/2} \hat{c}(f) e^{j 2\pi f n } df.
 \]
@@ -981,21 +981,21 @@ In this test we consider a \SI{20}{\second} segment of audio taken from the lect
 % }
 % \end{center}
 % %\vspace{0.1cm}
-This \SI{34.8}{\mega\byte} file contains both compressed video (H.264 codec) and audio (mp3 codec) of duration \SI{23}{\minute} and \SI{36}{\second}.  The audio is mono and sampled at rate $F = \SI{22050}{\hertz}$.  The \texttt{avconv} program from the \href{https://libav.org}{\texttt{libav}} library is used to extract a \SI{20}{\second} segment of audio starting at time \SI{85}{\second} and ending at time \SI{105}{\second}.  The segment is decompressed to wav format.  The command used is:
+This \SI{34.8}{\mega\byte} file contains both compressed video (H.264 codec) and audio (mp3 codec) of duration \SI{23}{\minute} and \SI{36}{\second}.  The audio is mono and sampled at rate $F = \SI{22050}{\hertz}$.  The \href{https://www.ffmpeg.org/}{\texttt{ffmpeg}} program is used to extract a \SI{20}{\second} segment of audio starting at time \SI{85}{\second} and ending at time \SI{105}{\second}.  The segment is decompressed to wav format.  The command used is:
 %\vspace{0.1cm}
 \begin{center}
 \parbox[][][c]{10cm}{
-\texttt{avconv -i ch1sec3.mp4 -ss 85 -t 20 audio.wav}
+\texttt{ffmpeg -i ch1sec3.mp4 -ss 85 -t 20 audio.wav}
 }
 \end{center}
 %\vspace{0.1cm}
-The resulting file \texttt{audio.wav} is \SI{882}{\kilo\byte} in size and contains $N = 441216$ samples that we denote by $c_0,c_1,\dots,c_{N-1}$.  Each sample takes a value in the interval $[-1,1]$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  The reconstructed audio signal is given by
+The resulting file \texttt{audio.wav} is \SI{882}{\kilo\byte} in size and contains $N = 440998$ samples that we denote by $c_0,c_1,\dots,c_{N-1}$.  Each sample takes a value in the interval $[-1,1]$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  The reconstructed audio signal is given by
 \[
 x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n) = \sum_{n=0}^{N-1} c_n \sinc(Ft - n).
 \]
 From~\eqref{eq:ftanddftrelationship} the Fourier transform of this signal is $\hat{x}(f) = P \rect(P f) \hat{c}(Pf)$ where 
 \begin{equation}\label{eq:dftsumNterms}
-\hat{c}(f) = \calD(c,f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}  = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n f}
+\hat{c}(f) = \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}  = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n f}
 \end{equation}
 is the discrete time Fourier transform of the sequence of samples.  Figure~\ref{fig:test:fouriertransformlecturevideo} shows a plot of the magnitude of the Fourier transform for frequencies in the interval \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz}.  The plot is constructed by evaluting $\abs{\hat{c}(f)}$ at all $K = 1201$ frequencies
 \[
@@ -1074,7 +1074,7 @@ We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlectur
 
 \section{The fast Fourier transform}\label{sec:fast-four-transf}
 
-In Test~\ref{test:ftlecturerec} the Fourier transform of a \SI{20}{\second} audio signal consisting of $N=441216$ consecutive samples was evaluated.  This scenario where only a finite number, say $N$, of consecutive samples of a signal is available is common in practice.  Let $c$ be a sequence with elements $c_0,c_1,\dots, c_{N-1}$ equal to the $N$ samples.  A convenient assumption is that the remaining samples are equal to zero, that is, $c_n = 0$ when $n < 0$ or $n \geq N$.  This assumption was made in Test~\ref{test:ftlecturerec}.
+In Test~\ref{test:ftlecturerec} the Fourier transform of a \SI{20}{\second} audio signal consisting of $N=440998$ consecutive samples was evaluated.  This scenario where only a finite number, say $N$, of consecutive samples of a signal is available is common in practice.  Let $c$ be a sequence with elements $c_0,c_1,\dots, c_{N-1}$ equal to the $N$ samples.  A convenient assumption is that the remaining samples are equal to zero, that is, $c_n = 0$ when $n < 0$ or $n \geq N$.  This assumption was made in Test~\ref{test:ftlecturerec}.
 
 With this assumption the discrete time Fourier transform of the sequence $c$ is given by the finite sum
 \[
@@ -1109,9 +1109,9 @@ c_n^* = \frac{1}{N} \sum_{k = 0}^{N-1} \calD_N^*(c,k) e^{-j 2\pi n k / N} = \fra
 \]
 A practical consequence of this is that the inverse discrete Fourier transform can be evaluted by applying the complex conjugate, taking the discrete Fourier transform, applying the complex conjugate again, and finally dividing by $N$.  That is, if $d$ is a sequence, then $\calD_N^{-1}(d) = \tfrac{1}{N}\calD_N^*(d^*)$.
 
-Suppose that we wish to evaluate the discrete Fourier transform $\calD_N(c)$ of the \SI{20}{\second} audio signal comprising of $N=441216$ samples from Test~\ref{test:ftlecturerec}.  In Test~\ref{test:ftlecturerec} we hypothesised that approximately $\SI{260}{\nano\second}$ are required to compute each term in the sum~\eqref{eq:dftsumNterms}.  We require to compute the sum for each $k = 0,\dots,N-1$ and so we might expect that
+Suppose that we wish to evaluate the discrete Fourier transform $\calD_N(c)$ of the \SI{20}{\second} audio signal comprising of $N=440998$ samples from Test~\ref{test:ftlecturerec}.  In Test~\ref{test:ftlecturerec} we hypothesised that approximately $\SI{260}{\nano\second}$ are required to compute each term in the sum~\eqref{eq:dftsumNterms}.  We require to compute the sum for each $k = 0,\dots,N-1$ and so we might expect that
 \begin{equation}\label{eq:runtimefftformulaapprox}
-N^2 \times \SI{260}{\nano\second} \approx \SI{50614}{\second} \approx 14 \; \text{hours}
+N^2 \times \SI{260}{\nano\second} \approx \SI{50565}{\second} \approx 14 \; \text{hours}
 \end{equation}
 will be required to compute $\calD_N(c)$ for this \SI{20}{\second} audio signal!  A primary cause of this lengthy computation time is the quadratic term $N^2$ that occurs in the expression above.  The amount of time required grows proportionally with the square of the length of the transform.  Suppose that instead of \SI{20}{\second} of audio we have $1$ hour and $N = 60 \times 60 \times 22050 = 79380000$ samples.  The amount of time required in this case is approximated by $N^2 \times \SI{260}{\nano\second}  \approx 52$ years!
 
@@ -1153,13 +1153,13 @@ Exercise~\ref{exer:fftcomplexity} shows that
 C_{N} = a_{m} = 2^{m+1}m = 2N\log_2 N.
 \]
 
-Observe that the number of operations (and hence the amount of time required) grows proportionally to $N\log_2 N$ rather than $N^2$.  Suppose that each complex operation requires no more than \SI{260}{\nano\second}.  For the \SI{20}{\second} audio signal consisting of $N = 441216$ samples the amount of time required will be less than
+Observe that the number of operations (and hence the amount of time required) grows proportionally to $N\log_2 N$ rather than $N^2$.  Suppose that each complex operation requires no more than \SI{260}{\nano\second}.  For the \SI{20}{\second} audio signal consisting of $N = 440998$ samples the amount of time required will be less than
 \begin{equation}\label{eq:runtimefftcooleytukeyapprox}
 2N \log_2 N \times \SI{260}{\nano\second} \approx \SI{4.3}{\second}.
 \end{equation} 
 This is more reasonable than 14 hours!  If instead we have 1 hour of audio and $N = 79380000$ samples the amount of time required is hypothesised to be less than $\SI{1084}{\second} \approx \SI{18}{\minute}$.  This is very reasonable when compared with the $52$ years hypothesised to be required by direct application of formula~\eqref{eq:dftdefn}.  In practice the computation time will vary based on the computer used and the specific algorithm implementation.  Nevertheless, these numbers indicate that a fast Fourier transform of large length can be computed within a reasonable amount of time.  This is not possible by direct application of formula~\eqref{eq:dftdefn}.  Test~\ref{test:fastftbenchmarks} compares the practical running time of various discrete Fourier transform implementations.
 
-In the above computation of run times we have neglected that the fast Fourier transform we have described required the length $N$ to be a power of two.  Other algorithms exist for the case when $N$ is not a power of two~\citep{Rader_fft_prime_1968,Bluestein_fft_prime_1968,FrigoJohnson_fftw_2005}.  These algorithms deliver similarly dramatic computational savings.  Even so, the restriction of the length to a power of $2$ is often not a significant drawback in practical applications.  Consider again the example from Test~\ref{test:ftlecturerec} with $N=441216$ samples.  Denote by 
+In the above computation of run times we have neglected that the fast Fourier transform we have described required the length $N$ to be a power of two.  Other algorithms exist for the case when $N$ is not a power of two~\citep{Rader_fft_prime_1968,Bluestein_fft_prime_1968,FrigoJohnson_fftw_2005}.  These algorithms deliver similarly dramatic computational savings.  Even so, the restriction of the length to a power of $2$ is often not a significant drawback in practical applications.  Consider again the example from Test~\ref{test:ftlecturerec} with $N=440998$ samples.  Denote by 
 \[
 L = 2^{\ceil{\log_2 N}} = 2^{19} = 524288
 \] 
@@ -1173,7 +1173,7 @@ c_n = \calD_L^{-1}(\calD_L(c), n) \qquad  n = 0, \dots, N-1.
 \]  
 This procedure of increasing the length of the transform is often called \term{zero padding} on account of the fact that the samples $c_N, c_{N+1}, \dots, c_{L-1}$ are assumed to be zero.  Test~\ref{test:fftlecturerec} presents a practical example of zero padding for the purpose of filtering the \SI{20}{\second} audio recording from Test~\ref{test:ftlecturerec}.
 
-%In Test~\ref{test:ftlecturerec} the Fourier transform of a \SI{20}{\second} audio signal consisting of $N=441216$ samples was evaluated at $K=1201$ different frequencies.  It was concluded that approximately \SI{260}{\nano\second} was required to computed each term in the sum defining the Fourier transform~\eqref{eq:dftsumNterms}.  Suppose now that we wish to compute the Fourier transform of \SI{23}{\minute} and \SI{36}{\second} audio recording consisting of $N=?$ sampl
+%In Test~\ref{test:ftlecturerec} the Fourier transform of a \SI{20}{\second} audio signal consisting of $N=440998$ samples was evaluated at $K=1201$ different frequencies.  It was concluded that approximately \SI{260}{\nano\second} was required to computed each term in the sum defining the Fourier transform~\eqref{eq:dftsumNterms}.  Suppose now that we wish to compute the Fourier transform of \SI{23}{\minute} and \SI{36}{\second} audio recording consisting of $N=?$ sampl
 
 \begin{test}\label{test:fastftbenchmarks}
 (\textbf{Benchmarking the fast Fourier transform})
@@ -1208,7 +1208,7 @@ The optimised algorithms from the \href{https://github.com/wendykierp/JTransform
 \begin{test}\label{test:fftlecturerec}
 (\textbf{Filtering a lecture recording by fast Fourier transform})
  
-We again consider the \SI{20}{\second} segment of audio consisting of $N=441216$ samples from Test~\ref{test:ftlecturerec}.  As in Test~\ref{test:ftlecturerec} we let $c$ be the sequence with elements $c_0,\dots,c_{N-1}$ equal to the audio samples and put $c_n = 0$ for $n < 0$ or $n \geq N$.  The reconstructed audio signal is given by
+We again consider the \SI{20}{\second} segment of audio consisting of $N=440998$ samples from Test~\ref{test:ftlecturerec}.  As in Test~\ref{test:ftlecturerec} we let $c$ be the sequence with elements $c_0,\dots,c_{N-1}$ equal to the audio samples and put $c_n = 0$ for $n < 0$ or $n \geq N$.  The reconstructed audio signal is given by
 \[
 x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n) = \sum_{n=0}^{N-1} c_n \sinc(Ft - n)
 \] 
