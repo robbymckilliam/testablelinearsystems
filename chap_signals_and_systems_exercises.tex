@@ -309,7 +309,17 @@ for all $t \in \reals$.  Thus the linear combination $ax+by$ is bounded.  Since 
 
 \item \label{exer:boundconstantnotlinear} Let $K > 0$ be a fixed real number. Show that the set of signals bounded below $K$ is a shift invariant space, but not a linear space. 
 \begin{solution}
+Let $B_K$ be the set of signals bounded less than $K$, that is,
+\[
+B_K = \{ x \in \reals \to \complex \mid \abs{x(t)} < K \text{for all $t \in \reals$} \}.
+\]
+If $x \in B_K$ then $\abs{T_\tau x(t)} < K$ for all $t \in \reals$ and so $B_K$ is $T_\tau x \in B_K$.  Thus, $B_K$ is a shift invariant space.
 
+Consider constant signals $x(t) = K/2$ and $y(t) = 2K/3$. Both $x$ and $y$ are bounded less than $K$ and so are in $B_K$  However, the signal $x + y$ is such that
+\[
+\abs{x(t) + y(t)} = K/2 + 2K/3 = 7K/6 > K
+\]
+and so $x + y \notin B_K$.  Thus $B_K$ is not a linear space.
 \end{solution} 
 
 \item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant spaces.
