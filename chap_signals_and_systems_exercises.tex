@@ -213,7 +213,7 @@ A plot of the signal is below:
 %\captionof{figure}{1-dimensional continuous-time signals} \label{fig:signalsstart}
 \end{center}
 
-The following argument is due to Qiaochu Yuan (http://math.stackexchange.com/questions/1079/sum-of-two-periodic-functions).  Suppose $\sin(t) + \sin(\pi t)$ is periodic.  Then
+The following argument is due to \href{http://math.stackexchange.com/questions/1079/sum-of-two-periodic-functions}{Qiaochu Yuan}.  Suppose $\sin(t) + \sin(\pi t)$ is periodic.  Then
 \[
 \sin(t) + \sin(\pi t) = \sin(t + T) + \sin(\pi t + T)
 \]
@@ -221,8 +221,7 @@ for some $T > 0$.  Differentiating both sides twice with respect to $t$ gives
 \[
 \sin(t) + \pi^2 \sin(\pi t) = \sin(t + T) + \pi^2\sin(\pi t + T)
 \]
-Subtracting the first equation from the second gives $\sin(t) = \sin(t + T)$ and substituting this into the second equation gives $\sin(\pi t) = \sin(\pi t + T)$.  The equation $\sin(t) = \sin(t + T)$ implies that $T = 2\pi k$ for some integer $k \neq 0$.  The equation $\sin(\pi t) = \sin(\pi t + T)$ implies that $T = 2 \ell$ for some integer $\ell \neq 0$.  We would thus have $2\pi k = 2 \ell$ and so $\pi = \tfrac{\ell}{k}$. However, this is impossible because $\pi$ is irrational.  Thus $\sin(t) + \sin(\pi t)$ is not periodic
-.
+Subtracting the first equation from the second gives $\sin(t) = \sin(t + T)$ and substituting this into the second equation gives $\sin(\pi t) = \sin(\pi t + T)$.  The equation $\sin(t) = \sin(t + T)$ implies that $T = 2\pi k$ for some integer $k \neq 0$.  The equation $\sin(\pi t) = \sin(\pi t + T)$ implies that $T = 2 \ell$ for some integer $\ell \neq 0$.  We would thus have $2\pi k = 2 \ell$ and so $\pi = \tfrac{\ell}{k}$. However, this is impossible because $\pi$ is irrational.  Thus $\sin(t) + \sin(\pi t)$ is not periodic.
 \end{solution}
 
 %\item \label{exer:triangleineq} (Triangle inequality) With $a$ and $b$ complex numbers show that $\abs{a + b} \leq \abs{a} + \abs{b}$ and that $\tfrac{1}{2}\abs{a + %b}^2 \leq \abs{a}^2 + \abs{b}^2$.
@@ -283,10 +282,35 @@ and so $L_2$ is a shift-invariant space.
 \end{solution}
 
 \item \label{exer:periodicshiftinvariantnotlinear} Show that the set of periodic signals is a shift-invariant space, but not a linear space.
+\begin{solution}
+Let $P$ be the set of periodic signals.  If $x \in P$ then there exists $T > 0$ such that $x(t + kT) = x(t)$ for all $t \in \reals$ and $k \in \ints$.  The shifted signal $T_\tau x \in P$ since, for the same $T$, we have
+\[
+T_\tau x(t - kT) = x(t - \tau - kT) = x(t - \tau) = T_\tau x(t)
+\]
+for all $t \in \reals$ and all $k \in \ints$.  Since $x \in P$ and $\tau \in \reals$ are arbitrary, this holds for all signals $x \in P$ and all shifts $\tau \in reals$.   Thus, the set of periodic signals is a shift invariant space.
+
+The set of period signals is not a linear space.  Consider the signal $x(t) = \sin(t)$ with period $2\pi$ and $y(t) = \sin(\pi t)$ with period $2$.  Both $x$ and $y$ are in $P$.  However, exercise~\ref{exer:sinplussinnotper} shows that the sum $x(t) + y(t) = \sin(t) + \sin(\pi t)$ is not periodic, that is, $x + y \in P$.
+\end{solution}
 
 \item \label{exer:boundedlinearshiftinvar} Show that the set of bounded signals is a linear shift-invariant space.
+\begin{solution}
+Let $B$ be the set of bounded signals.  If $x \in B$ there exists $M > 0$ such that $\abs{x(t)} < M$ for all $t \in \reals$ then the shift $T_\tau x(t)$ satisfies $\abs{T_\tau x(t)} < M$ for all $t \in \reals$.  Since $x$ and $\tau$ are arbitrary this holds for all $x \in B$ and $\tau \in \reals$.  Thus $B$ is a shift invariant space.
+
+Let $x \in B$ and $y \in B$ be bounded signals.  There exists $M_x > 0$ and $M_y > 0$ such that
+\[
+\abs{x(t)} < M_x \qquad \abs{y(t)} < M_y \qquad \text{for all $t \in \reals$}.
+\]
+Now for $a, b \in \complex$ the signal $ax + by$ satisfies
+\[
+\abs{ax(t) + by(t)} \leq \abs{a}\abs{x(t)} + \abs{b}\abs{y(t)} < \abs{a} M_x + \abs{b} M_y
+\]
+for all $t \in \reals$.  Thus the linear combination $ax+by$ is bounded.  Since $a,b \in \complex$ and $x,y \in B$ are arbtirary this holds for all $a,b \in \complex$ and all $x,y \in B$ and so $B$ is a linear space. 
+\end{solution}
 
 \item \label{exer:boundconstantnotlinear} Let $K > 0$ be a fixed real number. Show that the set of signals bounded below $K$ is a shift invariant space, but not a linear space. 
+\begin{solution}
+
+\end{solution} 
 
 \item \label{exer:evenoddnoshiftinvariant} Show that the set of even signals and the set of odd signals are not shift invariant spaces.
 
