@@ -194,6 +194,37 @@ but
 so the step function $u$ is not differentiable at $t = 0$.  A similar argument at $t=\tfrac{1}{2}$ or $t = -\tfrac{1}{2}$ shows that $\rect$ is not differentiable.
 \end{solution}
 
+\item \label{exer:sinplussinnotper} Plot the signal $\sin(t) + \sin(\pi t)$.  Show that this signal is not periodic.
+\begin{solution}
+A plot of the signal is below:
+
+\begin{center}
+\begin{tikzpicture}[domain=-1:39,xscale=0.25]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+  \draw[->] (-2,0) -- (40,0) node[above] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[right] {$\sin(t) + \sin(\pi t)$};
+    \draw[smooth,color=black,thick,samples=200] plot function{sin(x) + sin(pi*x)};
+    %\draw[thick, dashed] (-3.4,0)--(0,0);
+    %\htick{1} node[pos=0.5,left] {$0.5$};
+    \vtick{10} node[pos=0.5,below] {$10$};
+    \vtick{20} node[pos=0.5,below] {$20$};
+    \vtick{30} node[pos=0.5,below] {$30$};
+\end{tikzpicture}
+%\captionof{figure}{1-dimensional continuous-time signals} \label{fig:signalsstart}
+\end{center}
+
+The following argument is due to Qiaochu Yuan (http://math.stackexchange.com/questions/1079/sum-of-two-periodic-functions).  Suppose $\sin(t) + \sin(\pi t)$ is periodic.  Then
+\[
+\sin(t) + \sin(\pi t) = \sin(t + T) + \sin(\pi t + T)
+\]
+for some $T > 0$.  Differentiating both sides twice with respect to $t$ gives
+\[
+\sin(t) + \pi^2 \sin(\pi t) = \sin(t + T) + \pi^2\sin(\pi t + T)
+\]
+Subtracting the first equation from the second gives $\sin(t) = \sin(t + T)$ and substituting this into the second equation gives $\sin(\pi t) = \sin(\pi t + T)$.  The equation $\sin(t) = \sin(t + T)$ implies that $T = 2\pi k$ for some integer $k \neq 0$.  The equation $\sin(\pi t) = \sin(\pi t + T)$ implies that $T = 2 \ell$ for some integer $\ell \neq 0$.  We would thus have $2\pi k = 2 \ell$ and so $\pi = \tfrac{\ell}{k}$. However, this is impossible because $\pi$ is irrational.  Thus $\sin(t) + \sin(\pi t)$ is not periodic
+.
+\end{solution}
+
 %\item \label{exer:triangleineq} (Triangle inequality) With $a$ and $b$ complex numbers show that $\abs{a + b} \leq \abs{a} + \abs{b}$ and that $\tfrac{1}{2}\abs{a + %b}^2 \leq \abs{a}^2 + \abs{b}^2$.
 %\begin{solution}
 %We have
@@ -486,7 +517,7 @@ It is  stable because for any $K > 1$,
 \]
 \end{solution}
 
-\item Let $x$ be a signal with period $T$ that is not equal to zero almost everywhere.  Show that $x$ is not absolutely integrable.
+\item \label{exer:periodnotabsint} Let $x$ be a signal with period $T$ that is not equal to zero almost everywhere.  Show that $x$ is neither absolutely integrable nor square integrabl.
 \begin{solution}
 This is plain and does not really require further explanation, but I've found some students desire more rigour.  
 

@@ -88,7 +88,26 @@ We have
 \end{align*}
 \end{solution}
 
-\item \label{exer:finhandroch} Let $H$ be a regular system with impulse response $h$.  Show that the complex exponential signal $e^{st} \in \fin(h)$ if and only if $s \in \roc(h)$.
+\item \label{exer:finhandroch} Let $H$ be a regular system with impulse response $h$.  Show that the complex exponential signal $e^{st} \in \fin h$ if and only if $s \in \roc h$, that is, $\roc h = \cep \fin h$.
+\begin{solution}
+The set $\roc h$ contains all those complex numbers $s$ such that
+\[
+\int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{if and only if $s \in \roc h$}.
+\]
+The set $\fin h$ contains all those signals such that
+\[
+\int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
+\]
+The set $\cep \fin h$ contains the complex numebrs $s$ such that the complex exponential signal $e^{st} \in \fin h$, that is, those complex $s$ such
+\[
+\int_{-\infty}^{\infty} \abs{h(\tau) e^{s(t - \tau)}} d\tau = \abs{e^{st}} \int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
+\]
+Since $\abs{e^{st}}$ is finite for all $t$ this is the same as the set of $s \in \complex$ such that
+\[
+\int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty
+\] 
+which is exactly $\roc h$.
+\end{solution}
 
 \item \label{exer:laplacetranstimeshift} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ the time shifter $T_\tau$. 
 \begin{solution}
@@ -105,7 +124,7 @@ Put $y = T_\tau x = x(t- \tau)$.  Taking Laplace transforms
 as required.  Observe that the region of convergence of $\calL y$ is the same as that of $\calL x$.
 \end{solution}
 
-\item \label{exer:laplacetranstimeshift} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ is the differentiator under the added assumption that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc(x)$. 
+\item \label{exer:laplacetransdiffproperty} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ is the differentiator under the added assumption that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc(x)$. 
 \begin{solution}
 % We now show the result for the differentiator $D$.  The argument we use is based on that of \citet[page~179]{Rudin_real_and_complex_analysis}.  We have just shown that the Laplace transform of the time shifted $T_{-\tau}(x,t) = x(t + \tau)$ is $e^{\tau s}\calL(x,s)$ with region of convergence $R_x$.  Since the Laplace transform is linear
 % \[
@@ -299,6 +318,51 @@ Combining this with the time reversal property we obtain
 as required.
 \end{solution}
 
+% \item \label{exer:numericalintactiverc} Show that the following integrals are equal
+% \[
+% r \int_{0}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau = \frac{1}{2\pi}\int_{-\pi}^{\pi} \frac{\cos(\omega F t) + \omega t \sin(\omega F t)}{1 - V^2\omega^2t^2} \; dt
+% \]
+% where $V = \tfrac{F}{r}$ and $r > 0$.  (Hint: use that $\sinc(t) = \int_{-1/2}^{1/2} e^{-j2\pi ft} df$ from~\eqref{eq:sincandrect} on page~\pageref{eq:sincandrect}).
+% \begin{solution}
+% It is helpful to first make the change of variable $k = r \tau$ so that the integral on the left hand side is
+% \[
+% \int_{0}^\infty e^{-k} \sinc( t - Vk ) dk
+% \]
+% because $r > 0$.  Using the hint we can write this as a double integral
+% \begin{align*}
+% \int_{0}^\infty e^{-\tau} \sinc( t - Vk ) dk &= \int_{0}^\infty e^{-k} \int_{-1/2}^{1/2} e^{-j2\pi f (t-Vk)} \; df \; dk \\
+%  &= \int_{0}^\infty \int_{-1/2}^{1/2} e^{-j2\pi f (t-Vk) - k} \; df \; dk.
+% \end{align*}
+% Exchanging the order of integration we obtain
+% \begin{align*} 
+%  \int_{-1/2}^{1/2} \int_{0}^\infty e^{-j2\pi f (t-Vk) -k} \; dk \; df = \int_{-1/2}^{1/2} e^{-j2\pi f t} \int_{0}^\infty e^{(j 2\pi V f - 1)\tau} \; dk \; df \\
+% \end{align*}
+% The inner integral satisfies
+% \[
+%  \int_{0}^\infty e^{(j 2\pi f V - 1)k} \; dk = \left. \frac{e^{(j 2\pi f V - 1)k}}{j 2\pi f V - 1} \right\vert_0^\infty = -\frac{1}{j 2\pi f V - 1}.
+% \]
+% from which we obtain
+% \[
+% -\int_{-1/2}^{1/2} \frac{e^{-j2\pi f t}}{j 2\pi f V - 1} \; df
+% \]
+% Letting $\omega = 2\pi f$ and changing variable we have
+% \[
+% r \int_{0}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau = \frac{1}{2\pi} \int_{-\pi}^\pi \frac{e^{-j \omega t}}{1 - j V \omega} \; d\omega.
+% \]
+% The integral is real valued and so we may take the real part inside the integral on the right hand side.  Using the fact that $\Re(x) = x + x^*$ for $x 
+% \in \complex$ we have
+% \begin{align*}
+% \Re\left(\frac{e^{-j \omega t}}{1 - j V \omega}\right) &= \frac{e^{-j \omega t}}{1 - j V \omega} + \frac{e^{j \omega t}}{1 + j V \omega} \\
+% &= \frac{e^{-j \omega t}(1 + j V \omega) + e^{j \omega t}(1 - j V \omega)}{(1 - j V \omega)(1 + j V \omega)} \\
+% &= \frac{e^{-j \omega t} + e^{j \omega t} - j V \omega(e^{j \omega t} - e^{-j \omega t})}{1 + V^2 \omega^2} \\
+% &= 2 \frac{\cos(\omega t) + V \omega \sin(\omega t)}{1 + V^2 \omega^2}.
+% \end{align*}
+% This leads to
+% \[
+% r \int_{0}^\infty e^{-r\tau} \sinc( t - F\tau ) d\tau = \frac{1}{\pi} \int_{-\pi}^\pi \frac{\cos(\omega t) + V \omega \sin(\omega t)}{1 + V^2 \omega^2} \; d\omega.
+% \]
+% \end{solution}
+
 % \item \label{exer:thetainfinitelydiff} Plot the signal $\theta(t)$ from~\eqref{eq:thetainfinitediff} and its first 2 derivatives $D(\theta)$ and $D^2(\theta)$. Show that this signal is infinitely differentiable, that is, that it can be differentiated as many times as you like.
 % \begin{solution}
 
@@ -420,6 +484,183 @@ which is finite for all $s$ with $\Re(s) > 0$ as required.  For the derivative w
 &\leq \int_{0}^\infty (t+1) e^{-(\Re(s)-1) t}  dt
 \end{align*}
 which is finite for all $s$ with $\Re(s) > 1$ as required.
+\end{solution}
+
+\item \label{exer:twomassspringtwowallstranfuncpolezeros} Consider the mechanical system in Figure~\ref{mech:twomassspringtwowalls} from Exercise~\ref{exer:twomassspringtwowalls}.  After solving Exercise~\ref{exer:twomassspringtwowalls}, find the transfer function of a linear shift-invariant $H$ system mapping $f$ to $p$.  Now suppose that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$.  Find the poles and zeros of $H$ and draw a pole zero plot.  Determine whether $H$ is stable and/or regular.  Find and plot the impulse response and the step response of $H$ if they exist.
+
+\begin{solution}
+Let $H$ be a linear time invariant system mapping $f$ to $p$.  The transfer function of $H$ is
+\[
+\lambda H(s) = \frac{1}{1 + 2s + 4s^2 + 2s^3 + 2s^4}.
+\]
+Factorising the polynomial on the denominator we obtain
+\[
+\lambda H(s) = \frac{1}{(s-\beta_0)(s-\beta_1)(s-\beta_2)(s-\beta_3)}
+\]
+where the roots are
+\[
+\beta_0 = \beta_1^* = -0.193622 + 1.17046j, \;\;\; \beta_2 = \beta_3^* = -0.306378 + 0.511255j
+\]
+The system has no zeros and four poles.  A pole zero plot is shown below.  
+
+\begin{center}
+  \begin{tikzpicture}
+\begin{scope}[yscale=1.5,xscale=10]
+    % \path [draw=none,fill=lightgray] (-2.5,-2.5)--(-1,-2.5)--(-1,2.5)--(-2.5,2.5)--cycle;
+    %\vtick{-1} node[pos=0.5,below] {$-2$};
+    \poletikz{-0.193622}{1.17046} \node[above left] at (-0.193622,1.17046) {$\beta_0$};
+    \poletikz{-0.193622}{-1.17046} \node[above left] at (-0.193622,-1.17046) {$\beta_1$};
+    \poletikz{-0.306378}{0.511255} \node[above left] at (-0.306378,0.511255) {$\beta_2$};
+    \poletikz{-0.306378}{-0.511255} \node[above left] at (-0.306378,-0.511255) {$\beta_3$};
+    %\poletikz{-5/11}{0} \node[above left] at (-5/11,0) {$-\tfrac{5}{11}\times 10^4$};
+    \polezeroaxis{0.5}{2};
+\end{scope}
+\begin{scope}[yscale=1.5]
+\htick{1} node[pos=0.5,right] {$1$};
+\htick{-1} node[pos=0.5,right] {$-1$};
+\end{scope}
+\begin{scope}[xscale=10]
+\vtick{-0.1} node[pos=0.5,below] {$-\tfrac{1}{10}$};
+\vtick{-0.2} node[pos=0.5,below] {$-\tfrac{2}{10}$};
+\vtick{-0.3} node[pos=0.5,below] {$-\tfrac{3}{10}$};
+%\vtick{-0.4} node[pos=0.5,below] {$-\tfrac{4}{10}$};
+\end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Because there are atleast as many poles as zeros and the real part of all the poles is negative the system is stable.  Because there are more poles than zeros the system is regular and has an impulse response.  Applying partial fractions gives
+\[
+\lambda H(s) = \frac{A_0}{s - \beta_0} + \frac{A_1}{s - \beta_1} + \frac{A_2}{s - \beta_2} + \frac{A_3}{s - \beta_3}
+\]
+where
+\[
+A_0 = A_1^* = -0.0887401 + 0.368434 j, \;\;\; A_2 = A_3^* = 0.0887401 + 0.863059j.
+\]
+The impulse response is
+\[
+h(t) = u(t) \left( A_0 e^{\beta_0 t} + A_1 e^{\beta_1 t} + A_2 e^{\beta_2 t} + A_3 e^{\beta_3 t}  \right).
+\]
+The step response is
+\[
+H u = I_\infty(h) = u(t) \left( C_0 e^{ \beta_0 t} + C_1 e^{\beta_1 t} + C_2 e^{\beta_2 t} + C_3 e^{\beta_3 t} - B  \right)
+\]
+where $C_n = A_n/\beta_n$, $n = 0,1,2,3$ and $B=C_0+C_1+C_2+C_3$.  These responses are plotted below.
+
+\begin{center} 
+  {
+    \def\Azeroabs{0.37897}
+    \def\Azeroarg{-1.80715}
+    \def\Atwoabs{0.867609}
+    \def\Atwoarg{-1.46834}
+    \def\betazerore{-0.193622}
+    \def\betazeroim{-1.17046}
+    \def\betatwore{-0.306378}
+    \def\betatwoim{0.511255}
+    \def\Czeroabs{0.319438}
+    \def\Czeroarg{-0.0724163}
+    \def\Ctwoabs{1.45565}
+    \def\Ctwoarg{2.70417}
+    \def\B{-2}
+    \def\step(#1){ifthenelse(#1>0,1,0)}
+    \def\h(#1){2*\step(#1)*(\Azeroabs*exp(\betazerore*#1)*cos(180/3.145*(\betazeroim*#1 + \Azeroarg)) + \Atwoabs*exp(\betatwore*#1)*cos(180/3.145*(\betatwoim*#1 + \Atwoarg)))}
+    \def\Hu(#1){\step(#1)*(2*\Czeroabs*exp(\betazerore*#1)*cos(180/3.145*(\betazeroim*#1 + \Czeroarg)) + 2*\Ctwoabs*exp(\betatwore*#1)*cos(180/3.145*(\betatwoim*#1 + \Ctwoarg)) - \B)}
+
+    \begin{tikzpicture}
+      \begin{scope}[xscale=0.5,yscale=2]
+        \draw[->] (-2,0) -- (17,0) node[above] {$t$};
+        \draw[->] (0,-0.7) -- (0,1.3) node[right] {$h$};
+        \draw[thick] (-1,0) -- (0,0);
+        \draw[color=black,thick] plot[domain=0:15.5,samples=101] (\x,{\h(\x)});
+      \end{scope}
+      \begin{scope}[xscale=0.5]
+        \vtick{5} node[pos=0.5,below] {$5$};
+        \vtick{10} node[pos=0.5,below] {$10$};
+        \vtick{15} node[pos=0.5,below] {$15$};
+      \end{scope}
+      \begin{scope}[yscale=2]
+        \htick{1} node[pos=0.5,left] {$1$};
+      \end{scope}
+    \end{tikzpicture}
+
+    \vspace{0.5cm}
+
+    \begin{tikzpicture}
+      \begin{scope}[xscale=0.5,yscale=1]
+        \draw[->] (-2,0) -- (17,0) node[above] {$t$};
+        \draw[->] (0,-0.3) -- (0,3.1) node[right] {$H(u)$};
+        \draw[thick] (-1,0) -- (0,0);
+        \draw[color=black,thick] plot[domain=0:15.5,samples=101] (\x,{\Hu(\x)});
+      \end{scope}
+      \begin{scope}[xscale=0.5]
+        \vtick{5} node[pos=0.5,below] {$5$};
+        \vtick{10} node[pos=0.5,below] {$10$};
+        \vtick{15} node[pos=0.5,below] {$15$};
+      \end{scope}
+      \htick{1} node[pos=0.5,left] {$1$};
+      \htick{2} node[pos=0.5,left] {$2$};
+    \end{tikzpicture}
+  }
+\end{center}
+
+\end{solution}
+
+
+\item \label{exer:dcmotorpotfeedbacktranfunc} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback} from Exercise~\ref{exer:dcmotorpotfeedback}.  After solving Exercise~\ref{exer:dcmotorpotfeedback}, find the transfer function of a linear shift-invariant system that maps the input voltage $v$ to the motor angle $\theta$.  Under the assumption that the motor coefficients satisfy $L=0$ and $K_b=K_\tau=B=R=J=1$ draw a pole zero plot and determine whether this system is stable and/or regular.  Find and plot the impulse response and step response if they exist.
+
+\begin{solution}
+Exercise~\zref{exer:dcmotorpotfeedback} finds the following differential equation relating $v$ and $\theta$,
+\[
+v = \theta + \left(\frac{RB}{K_\tau} + K_b\right) D \theta + \frac{RJ}{K_\tau} D^2 \theta.
+\]
+The transfer function is
+\[
+\frac{1}{1 + \left(\frac{RB}{K_\tau} + K_b\right) s  + \frac{RJ}{K_\tau} s^2}.
+\]
+Under the assumption that $K_b=K_\tau=B=R=J=1$ the transfer function is
+\[
+\frac{1}{1 + 2s  + s^2} = \frac{1}{(1 + s)^2}.
+\]
+There are two equal real poles at $s = -1$ and no zeros.  A pole zero plot is below.
+
+\begin{center}
+  \begin{tikzpicture}
+    \poletikz{-1}{0} \node[below] at (-1,0) {$-1$};
+    \polezeroaxis{2}
+  \end{tikzpicture}
+\end{center}
+
+The system is regular because there are more poles than zeros.  The system is stable because there are at least as many poles as zeros and all poles have negative real part.  The impulse response is found to be $h(t) u(t) t e^{-t}$ by application of the inverse Laplace transform.  The step response is given by application of the integrator system
+\[ 
+Hu = I_\infty(h) = \int_{-\infty}^t u(\tau) t e^{-\tau} d\tau = \int_{0}^t t e^{-\tau} d\tau = u(t) \big( 1 - e^{-t}(t+1) \big).
+\] 
+These responses are plotted below
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[yscale=4]
+    \draw[->] (-1,0) -- (10,0) node[above] {$t$};
+    \draw[->] (0,-0.1) -- (0,0.5) node[right] {$u(t) t e^{-t}$};
+    \draw[thick] (-0.5,0) -- (0,0) {};
+    \draw[color=black,thick] plot[domain=0:9,samples=101,smooth] function{x*exp(-x)};
+    \htick{0.3} node[pos=0.5,left] {$0.3$};
+\end{scope}
+    \vtick{1} node[pos=0.5,below] {$1$};
+    \vtick{7} node[pos=0.5,below] {$7$};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{scope}[yscale=2]
+    \draw[->] (-1,0) -- (10,0) node[above] {$t$};
+    \draw[->] (0,-0.2) -- (0,1.3) node[right] {$u(t) \big( 1 - e^{-t}(t+1) \big)$};
+    \draw[thick] (-0.5,0) -- (0,0) {};
+    \draw[color=black,thick] plot[domain=0:9,samples=101,smooth] function{1-(x+1)*exp(-x)};
+    \htick{1} node[pos=0.5,left] {$1$};
+\end{scope}
+    \vtick{1} node[pos=0.5,below] {$1$};
+    \vtick{7} node[pos=0.5,below] {$7$};
+\end{tikzpicture}
+\end{center}
+
 \end{solution}
 
 

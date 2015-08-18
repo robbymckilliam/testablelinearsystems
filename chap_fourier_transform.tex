@@ -1,10 +1,10 @@
-The \term{Fourier transform} of an absolutely integrable signal $x$ is defined as
+Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
 \begin{equation}\label{eq:fouriertransform}
-\calF(x) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt.
+\calF x(f) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt
 \end{equation}
-The Fourier transform is a function of the real number $f$. We indicate its value at $f$ by $\calF(x)(f)$ or $\calF(x,f)$. For example, the rectangular pulse $\rect(t)$ from~\eqref{eq:rectfuncdefn} is absolutely integrable and has Fourier transform
+called the \term{Fourier transform}.  The Fourier transform is a complex valued function of the real number $f$, that is, $\calF x \in \reals \to \complex$, or in other words, $\calF x$ is a \term{signal}.  For example, the rectangular pulse $\rect(t)$ from~\eqref{eq:rectfuncdefn} is absolutely integrable and has Fourier transform
 \begin{align}
-\calF(\rect) &= \int_{-\infty}^\infty \rect(t) e^{-j2\pi ft} dt \nonumber \\
+\calF \rect(f) &= \int_{-\infty}^\infty \rect(t) e^{-j2\pi ft} dt \nonumber \\
 &= \int_{-1/2}^{1/2} e^{-j2\pi ft} dt \nonumber  \\
 &= \frac{e^{j\pi f} - e^{-j\pi f}}{j 2 \pi f} = \frac{\sin(\pi f)}{\pi f} = \sinc(f). \label{eq:sincandrect}
 \end{align}
@@ -12,13 +12,13 @@ The $\sinc$ function is plotted in Figure~\ref{fig:sincfunction1}.  %As we will 
 
 The Fourier transform is closely related to the Laplace transform because
 \[
-\calF(x,f) = \calL(x,j 2\pi f)
+\calF x(f) = \calL x(j 2\pi f)
 \]
-for those signals $x$ with region of convergence containing the imaginary axis, that is, for absolutely integrable $x$.  The Fourier transform inherits the properties of the Laplace transform that were described in Section~\ref{sec:transf-funct-lapl}.  For example, if $H$ is a stable regular system with absolutely integrable impulse response $h$ having Fourier transform $\calF(h)$, then the spectrum of $H$ satisfies
+for those signals $x$ with region of convergence containing the imaginary axis, that is, for absolutely integrable $x$.  The Fourier transform inherits the properties of the Laplace transform that were described in Section~\ref{sec:transf-funct-lapl}.  For example, if $H$ is a stable regular system with absolutely integrable impulse response $h$ having Fourier transform $\calF h$, then the spectrum of $H$ satisfies
 \[
-\Lambda(H, f) = \lambda(H,j2\pi f) = \calL(h,j2\pi f) = \calF(h,f),
+\Lambda H(f) = \lambda H(j2\pi f) = \calL h(j2\pi f) = \calF h(f),
 \]
-that is, the spectrum of a stable regular system is given by the Fourier transform of its impulse response.  
+that is, the spectrum of a stable regular system is the Fourier transform of its impulse response.  
 % The spectrum of the time-shifter and differentiator can be obtained by inspection.  From~\eqref{eq:timeshiftertransferfunction}, the spectrum of the time shifter $T_\tau$ satisfies
 % \[
 % \Lambda(T_\tau,f) = \lambda(T_\tau,j 2\pi f) = e^{-j2\pi f \tau}
@@ -29,54 +29,61 @@ that is, the spectrum of a stable regular system is given by the Fourier transfo
 % \]
  Like the Laplace transform, the Fourier transform obeys the \term{convolution theorem}~\eqref{eq:convtheoremlaplace}, that is,
  \begin{equation}\label{eq:convthmfouriertransform}
- \calF(x * y) = \calF(x)\calF(y)
+ \calF(x * y) = \calF x \calF y
  \end{equation}
-when each of the signals $x$, $y$, and $x * y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is given by the multiplication of the Fourier transforms of those signals.
+when the signals $x$ and $y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is the multiplication of the Fourier transforms of those signals.  The convolution of two absolutely integrable signals is always absolutely integrable and so there is no need to include the assumption that $x*y$ is absolutely integrable (Exercises~\ref{excer:convabsisabs}).
 
-It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with spectrum $\Lambda(H)$ and if $x$ is a signal with Fourier transform $\calF(x)$, then the signal $y = H(x)$ has Fourier transform
+It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with spectrum $\Lambda H$ and if $x$ is a signal with Fourier transform $\calF x$, then the signal $y = H x$ has Fourier transform
 \[
-\calF(y) = \Lambda(H) \calF(x).
+\calF y = \Lambda H \calF x.
 \]
-This property also holds for the differentiator system $D$ and the time shifter system $T_\tau$ (Exercise~\ref{eq:transferLaplcetheorem}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
+This property also holds for the shifter $T_\tau$ (Exercise~\ref{exer:laplacetranstimeshift}) and it holds for the differentiator $D$ under the added assumption that $\lim_{t \to \infty}x(t) = 0$ and $\lim_{t \to -\infty} x(t) = 0$ (Exercise~\ref{exer:laplacetransdiffproperty}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
 %BLERG, it doesn't hold for the differentiator system all the time, but for certain signals, like those of rapid decent it does
 \[
-\Lambda(T_\tau) = e^{-j2\pi f \tau}, \qquad \Lambda(D^k) = (j2\pi f)^k
+\Lambda T_\tau = e^{-j2\pi f \tau}, \qquad \Lambda D^k = (j2\pi f)^k
 \]
 from which we obtain the \term{time shift property},
  \[
- \calF\big(T_\tau(x)\big) = \Lambda(T_\tau) \calF(x) = e^{-j2\pi f \tau} \calF(x),
+ \calF T_\tau x = \Lambda T_\tau \calF x = e^{-j2\pi f \tau} \calF x,
 \]
 and the \term{differentiation property},
 \[
- \calF\big(D^k(x)\big) = \Lambda(D^k) \calF(x) =  (j2\pi f)^k \calF(x),
+ \calF D^k x = \Lambda D^k \calF x =  (j2\pi f)^k \calF x,
 \]
-of the Fourier transform.  These results motivate assigning the following Fourier transforms to the delta ``function'' and its derivatives
+of the Fourier transform.  These results motivate assigning the following Fourier transforms to the delta ``function'' $\delta$, its shift $T_\tau \delta = \delta(t - \tau)$, and its derivatives
 \begin{equation}\label{eqftsofdeltas}
-\calF(\delta) = 1, \qquad \calL(\delta^k) = (j2\pi f)^k.
+\calF \delta = 1, \qquad \calF\big(\delta(t - \tau)\big) = e^{-j2\pi\tau f}, \qquad \calF \delta^k = (j2\pi f)^k.
 \end{equation}
-These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.  
+These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 Similarly to the Laplace transform~\eqref{eq:freqshiftrule}, the Fourier transform obeys a \term{frequency shift rule} that relates the transform of a signal $x(t)$ to that of the signal $e^{2\pi j \gamma f t} x(t)$ where $\gamma \in \reals$.  From~\eqref{eq:freqshiftrule}, the frequency shift rule asserts that
 \begin{align}
-\calF\big( e^{2\pi j \gamma t} x(t), f\big) =  \calF(x, f - \gamma). \label{eq:freqshiftrulefourier}
+\calF\big( e^{2\pi j \gamma t} x(t) \big)\big( f\big) =  \calF x(f - \gamma). \label{eq:freqshiftrulefourier}
 \end{align}
 Since $\cos( 2\pi \gamma t) = \tfrac{1}{2}e^{2\pi j \gamma t} + \tfrac{1}{2}e^{-2\pi j \gamma t}$ we also have
 \begin{equation}\label{eq:modulationpropertyft}
-\calF\big( \cos(2\pi \gamma t) x(t), f \big) =  \frac{1}{2}\calF(x, f - \gamma) + \frac{1}{2}\calF(x, f + \gamma).
+\calF\big( \cos(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2}\calF x(f - \gamma) + \frac{1}{2}\calF x(f + \gamma).
 \end{equation}
-% and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} - \tfrac{1}{2j}e^{-2\pi j \gamma t}$ we have
-% \[
-% \calF\big( \sin(2\pi \gamma t) x(t), f \big) =  \frac{1}{2j}\calF(x, f - \gamma) + \frac{1}{2j}\calF(x, f + \gamma)
-% \]
-This is sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  % Combing the frequency shift rule with the convention $\calF(\delta) = 1$ motivates assigning the the following Fourier transform to $e^{2\pi j \gamma t}$
-% \[
-% \calF(e^{2\pi j \gamma t},f) = 
-% \]
+and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} - \tfrac{1}{2j}e^{-2\pi j \gamma t}$ we have
+\[
+ \calF\big( \sin(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2j}\calF x(f - \gamma) - \frac{1}{2j}\calF x( f + \gamma)
+ \]
+These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the the following Fourier transforms to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals,
+\[
+ \calF(e^{2\pi j  \gamma t}) = \delta(t - \gamma).
+ \]
+\[
+\calF\big( \cos(2\pi \gamma t) \big) = \tfrac{1}{2} \delta(t - \gamma) + \tfrac{1}{2} \delta(t + \gamma),
+\]
+\[
+\calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(t - \gamma) - \tfrac{1}{2j} \delta(t + \gamma),
+\]
+These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996,Proakis_digital_comms}, but must be treated with caution.  There is no guarantee that mechanical mathematical manipulations involving these conventions will lead to sensible results.
 %  and the following
 
-Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
+Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Fourier transform obeys a~\term{time-scaling property}.  If $x$ is an absolutely integrable signal then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has Fourier transform
 \begin{equation}\label{eq:timescalingpropertryfouriertrans}
-\calF\big( x(\alpha t), f \big) = \frac{1}{\abs{\alpha}} \calF\big( x , f/\alpha \big).
+\calF\big( x(\alpha t)\big)\big( f \big) = \frac{1}{\abs{\alpha}} \calF x (f/\alpha).
 \end{equation}
 
 % The Fourier transform also obeys a reciprocal property
@@ -116,11 +123,13 @@ Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Four
 
 \section{The inverse transform and the Plancherel theorem}\label{sec:square-integr-sign}
 
-Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \calF(x)$.  Observe that $\hat{x}$, like $x$, is a function that maps a real number to a complex number.  Thus, the Fourier transform $\hat{x}$ is a \term{signal} with independent variable representing \term{frequency}.  It is usual to call $x$ the \term{time domain} representation of the signal and $\hat{x}$ the \term{frequency domain} representation.  If $\hat{x}$ is absolutely integrable, then $x$ can be recovered using the \term{inverse Fourier transform}
+Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \calF x$.  Observe that $\hat{x}$, like $x$, is a function that maps a real number to a complex number, that is, $\hat{x}$ is a \term{signal} with independent variable representing frequency.  It is usual to call $\hat{x}$ the \term{frequency-domain} representation of the signal and $x$ the \term{time-domain} representation although the signal $x$ need not be a function of ``time''.  
+
+If $\hat{x}$ is absolutely integrable, then $x$ can be recovered using the \term{inverse Fourier transform}
 \begin{equation}\label{eq:inversefouriertransform}
-x(t) = \calF^{-1}(\hat{x}) =  \int_{-\infty}^\infty \hat{x}(f) e^{j2\pi ft} df.
+x(t) = \calF^{-1}\hat{x}(t) =  \int_{-\infty}^\infty \hat{x}(f) e^{j2\pi ft} df.
 \end{equation}
-For example, let $\hat{x} = \calF(x) = \rect$ be the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
+For example, let $\hat{x} = \calF x = \rect$ be the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
 \[
 x(t) = \int_{-\infty}^\infty \rect(f) e^{j2\pi ft} df = \sinc(-t) = \sinc(t).
 \]
@@ -130,11 +139,11 @@ We are lead to the conclusion that the Fourier transform of $\sinc$ is the recta
 The rectangular pulse $\rect$ is finite and absolutely integrable.  The $\sinc$ function is not absolutely integrable (Exercise~\ref{exer:sincnotabsint}). Because of this the integral equation that we have used to define the Fourier transform~\eqref{eq:fouriertransform} cannot be directly applied to the $\sinc$ function.  %The inverse transform provides a method for assigning Fourier transforms to signals even when the formula~\eqref{eq:fouriertransform} does not apply.  
 Although $\sinc$ is not absolutely integrable, it is square integrable (Exercise~\ref{exer:sincnotabsint}).  It happens that all square integrable signals can be assigned a Fourier transform by interpreting the integral in~\eqref{eq:fouriertransform} as what is called its~\term{Cauchy principal value}.  That is, for $x$ a square integrable signal, we assign the Fourier transform
 \[
-\hat{x} = \calF(x) = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
+\hat{x}(f) = \calF x(f) = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
 \]
-This Fourier transform $\hat{x}$ is itself a square integrable signal and the orignal time domain signal $x$ can be recovered almost everywhere by taking the Cauchy principal value of the integral in~\eqref{eq:inversefouriertransform}, that is,
+This Fourier transform $\hat{x}$ is itself a square integrable signal and the orignal time domain signal $x$ can be recovered almost everywhere by taking the Cauchy principal value of the integral for the inverse Fourier transform~\eqref{eq:inversefouriertransform}, that is,
 \[
-x = \calF^{-1}(\hat{x}) = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}.
+x(t) = \calF^{-1} \hat{x}(t) = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}
 \]
 Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that is,
 \begin{equation}\label{eq:parseval}
@@ -166,11 +175,11 @@ where the superscript $^*$ denotes the complex cojugate.  One obtains~\eqref{eq:
 
 Let $x$ be a signal with Fourier transform
 \[
-\calF(x,f) = \int_{-\infty}^{\infty} x(\tau) e^{-j2\pi f \tau} d\tau.
+\calF x(f) = \int_{-\infty}^{\infty} x(\tau) e^{-j2\pi f \tau} d\tau.
 \]
 Evaluating the Fourier transform at $-t$ we find that
 \begin{equation}\label{eq:dualityft}
-\calF(x,-t) = \int_{-\infty}^{\infty} x(\tau) e^{j2\pi t \tau} d\tau = \calF^{-1}(x,t).
+\calF x(-t) = \int_{-\infty}^{\infty} x(\tau) e^{j2\pi t \tau} d\tau = \calF^{-1} x(t).
 \end{equation}
 This is the called the \term{duality} property of the Fourier transform.  In words, if $\hat{x}$ is the Fourier transform of $x$, then $x$ is the Fourier transform of $\hat{x}$ reflected in time.    %Another way to express duality is
 % \[
@@ -319,7 +328,7 @@ For many engineering purposes it is desirable to construct systems that will \te
 
 An \term{ideal lowpass filter} with \term{cuttoff frequency} $c$ is the system $L_c$ with spectrum
 \[
-\Lambda(L_c) = \begin{cases}
+\Lambda L_c = \begin{cases}
 1 & \abs{f} < c \\
 0 & \text{otherwise}
 \end{cases}
@@ -329,11 +338,11 @@ Applying the inverse Fourier transform to $\rect\big(\tfrac{f}{2c}\big)$ gives
 \[
 \int_{-\infty}^\infty \rect\big(\tfrac{f}{2c}\big) e^{j2\pi t f} df = \int_{-c}^c e^{j2\pi t f} df = \frac{\sin(2 c\pi t)}{\pi t} = 2c\sinc(2ct).
 \]
-We conclude that the ideal lowpass filter $L_c$ is a regular linear time invariant system with impulse response $2c\sinc(2ct)$.
+We are lead to the conclude that the ideal lowpass filter $L_c$ is a regular linear time invariant system with impulse response $2c\sinc(2ct)$~\footnote{This conclusion should be taken with scepticism because the signal $2c\sin(2ct)$ is not abolutely integrable and so its transfer function with not contain the imaginary axis in its domain.  Infact, $\roc \sinc = \emptyset$.  An exception has been made to allow square integrable signals to have a Fourier transform and a similar exception must be made to allow regular systems with square integrable impulse response to have a spectrum. We will have not use of ideal filters beyond this section and so this caveat with not carry thoughout the text.  The concept of an ideal filter is nonethless informative from an intuitive viewpoint.}
 
 An \term{ideal highpass filter} with cuttoff frequency $c$ is given by the linear combination $T_0 - L_c$ where $T_0$ is the identity system.  The spectrum is
 \[
-\Lambda(T_0 - L_c) = \Lambda(T_0) - \Lambda(L_c)  = 1 - \rect\left(\frac{f}{2c}\right) = \begin{cases}
+\Lambda(T_0 - L_c) = \Lambda T_0 - \Lambda L_c  = 1 - \rect\left(\frac{f}{2c}\right) = \begin{cases}
 0 &  \abs{f} < c \\
 1 & \text{otherwise}.
 \end{cases}
@@ -348,7 +357,7 @@ An \term{ideal bandpass filter} with upper cuttoff frequency $u$ and lower cutto
 0 & \text{otherwise}.
 \end{cases}
 \]
-It follows that the ideal bandpass filter has impulse response $2u\sinc(2ut) - 2\ell\sinc(2\ell t)$.  The spectrum and impulse response of the ideal lowpass, highpass, and bandpass filters are plotted in Figure~\ref{fig:idealfilters}.
+We conclude that the ideal bandpass filter has impulse response $2u\sinc(2ut) - 2\ell\sinc(2\ell t)$.  The spectrum and impulse response of the ideal lowpass, highpass, and bandpass filters are plotted in Figure~\ref{fig:idealfilters}.
 
 
 \begin{figure}[p]
@@ -413,25 +422,34 @@ It follows that the ideal bandpass filter has impulse response $2u\sinc(2ut) - 2
 
 %The ideal filters described in the previous section are not realisable in practice.  One reason for this is that they are not causal because the $\sinc$ function is unbounded in time.
 %Popular practical electrical filters include Tschecyshev filters, elliptic filters, and Bessel filters.  
-Ideal filters are not realisable in practice.  One reason for this is that they are not causal because the $\sinc$ function is unbounded in time.  We now describe a popular practical low-pass filter discovered by \citet{Butterworth1930}.  A \term{normalised low pass Butterworth filter} of order $m$, denoted by $B_m$, has transfer function
+Ideal filters are not realisable in practice.  %One reason for this is that they are not causal because the $\sinc$ function is unbounded in time.  
+We now describe a popular practical low-pass filter discovered by \citet{Butterworth1930}.  A \term{normalised low pass Butterworth filter} of order $m$, denoted by $B_m$, has transfer function
 \[
-\lambda(B_m) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi} - \beta_i)} = \frac{(2\pi)^m}{\prod_{i=1}^m(s - 2\pi\beta_i)},
+\lambda B_m(s) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi} - \beta_i)} = \frac{(2\pi)^m}{\prod_{i=1}^m(s - 2\pi\beta_i)},
 \] 
-where $\beta_1,\dots,\beta_m$ are the roots of the polynomial $s^{2m} + (-1)^m$ that lie strictly in the left half of the complex plane (have negative real part).  It is convenient to precisely define these roots as
+where $\beta_1,\dots,\beta_m$ are the roots of the polynomial $s^{2m} + (-1)^m$ that lie strictly in the left half of the complex plane (have negative real part).  Specifically, these roots are
 \[
 \beta_{k} = \begin{cases}
 \exp\big(j\tfrac{\pi}{2}( 1 + \tfrac{2k-1}{m} )\big) , & k = 1, \dots, m \\
-\exp\big(j\tfrac{\pi}{2}( 1 - \tfrac{2k-1}{m} )\big) , & k = m+1, \dots, 2m
+\exp\big(j\tfrac{\pi}{2}( 1 - \tfrac{2k-1}{m} )\big) , & k = m+1, \dots, 2m.
 \end{cases}
 \]
-or equivalently
+% or equivalently
+% \[
+% \beta_k= \begin{cases}
+% j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) -\sin\big(\tfrac{\pi(2k-1)}{2m}\big), & k = 1, \dots, m \\
+% j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) + \sin\big(\tfrac{\pi(2k-1)}{2m}\big) , & k = m+1, \dots, 2m.
+% \end{cases}
+% \]
+The roots are plotted in Figure~\ref{fig:rootofunityplot}.  The spectrum of $B_m$ is
 \[
-\beta_k= \begin{cases}
-j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) -\sin\big(\tfrac{\pi(2k-1)}{2m}\big), & k = 1, \dots, m \\
-j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) + \sin\big(\tfrac{\pi(2k-1)}{2m}\big) , & k = m+1, \dots, 2m.
-\end{cases}
+\Lambda B_m(f) = \frac{1}{\prod_{i=1}^m( j f - \beta_i)}
 \]
-The roots are plotted in Figure~\ref{fig:rootofunityplot}.  Observe that the roots $\beta_{m+1},\dots,\beta_{2m}$ are given by negating the real parts of $\beta_1,\dots,\beta_m$, that is, $\beta_{m+i} = j (\beta_{i}/j)^*$.
+and the magnitude spectrum of $B_m$ can be shown to satisfy
+\[
+\abs{\Lambda B_m(f)} = \sqrt{\frac{1}{f^{2m} + 1}}. \qquad \text{(Exercise~\ref{exer:magspecbutterworth})} 
+\]
+The magnitude and phase spectrum of the filters $B_1$, $B_2$, $B_3$, and $B_4$ are plotted in Figure~\ref{fig:butterworthspectrum}.
 
 {
 %\colorlet{gray}{black!25}
@@ -460,32 +478,6 @@ The roots are plotted in Figure~\ref{fig:rootofunityplot}.  Observe that the roo
     \caption{Roots of the polynomial $s^{2m} + (-1)^m$ for $m=1$ (top left), $m=2$ (top right), $m=3$ (bottom left), and $m=4$ (bottom right).  All the roots lie on the complex unit circle and have magnitude one.  The poles of the normalised Butterworth filter $B_m$ are those roots from the left half of the complex plane (unshaded).}\label{fig:rootofunityplot}
   \end{figure}
 }
-
-The spectrum of $B_m$ is
-\[
-\Lambda(B_m) = \frac{1}{\prod_{i=1}^m( j f - \beta_i)}.
-\]
-The squared magnitude of the polynomial on the denominator is
-\begin{align*}
-\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 &= \left(\prod_{i=1}^m( j  f - \beta_i)\right)\left(\prod_{i=1}^m( j  f - \beta_i)\right)^* \\
-&= \prod_{i=1}^m( j  f - \beta_i)(  j f - \beta_i)^* \\
-&= \prod_{i=1}^m ( j f - \beta_i) j^* (  f - (\beta_i/j)^*)
-\end{align*}
-and because $j^*/j = -1$ we have
-\begin{align*}
-\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 &= (-1)^m\prod_{i=1}^m ( j f - \beta_i) (  j f - j (\beta_i/j)^*) \\
-&= (-1)^m\prod_{i=1}^m ( j f - \beta_i) (  j f - \beta_{m+i}) \\
-&= (-1)^m\prod_{i=1}^{2m} ( j f - \beta_i).
-\end{align*}
-Because $\beta_1,\dots,\beta_{2m}$ are the roots of the polynomial $s^{2m}+(-1)^m$ we have
-\[
-\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 = (-1)^m \big( ( j f)^{2m} + (-1)^m \big) = f^{2m} + 1.
-\]
-It follows that the magnitude spectrum of $B_m$ is
-\[
-\abs{\Lambda(B_m)} = \sqrt{\frac{1}{f^{2m} + 1}}.
-\]
-The magnitude and phase spectrum of the filters $B_1$, $B_2$, $B_3$, and $B_4$ are plotted in Figure~\ref{fig:butterworthspectrum}.
 
 {
   \def\scalex{3}
@@ -559,36 +551,36 @@ The magnitude and phase spectrum of the filters $B_1$, $B_2$, $B_3$, and $B_4$ a
   \end{figure}
 }
 
-The \term{cuttoff frequency} of the lowpass filter $B_m$ is defined as the positive real number $c$ such that $\abs{\Lambda(B_m,f)}^2 < \tfrac{1}{2}$ for all $f > c$.  The normalised Butterworth filters have cuttoff frequency $c = 1\si{\hertz}$.  A lowpass Butterworth filter of order $m$ and cuttoff frequency $c$, denoted $B_m^c$, has transfer function
+The \term{cuttoff frequency} of the lowpass filter $B_m$ is defined as the positive real number $c$ such that $\abs{\Lambda B_m(f)}^2 < \tfrac{1}{2}$ for all $f > c$.  The normalised Butterworth filters have cuttoff frequency $c = 1\si{\hertz}$.  A lowpass Butterworth filter of order $m$ and cuttoff frequency $c$, denoted $B_m^c$, has transfer function
 \[
-\lambda(B_m^c,s) = \lambda(B_m, \tfrac{s}{c}) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi c} - \beta_i)}.
+\lambda B_m^c(s) = \lambda B_m\big(\tfrac{s}{c}\big) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi c} - \beta_i)}.
 \] 
 The magnitude spectrum satisfies
 \begin{equation}\label{eq:butterworthspectrum}
-\sabs{\Lambda(B_m^c,f)}^2 =  \sabs{\Lambda(B_m,\tfrac{f}{c})}^2 = \frac{1}{\big(\tfrac{f}{c}\big)^{2m} + 1} =  \frac{c^{2m}}{f^{2m} + c^{2m}}.
+\sabs{\Lambda B_m^c(f)}^2 =  \sabs{\Lambda B_m\big(\tfrac{f}{c}\big)}^2 = \frac{1}{\big(\tfrac{f}{c}\big)^{2m} + 1} =  \frac{c^{2m}}{f^{2m} + c^{2m}}.
 \end{equation}
 
 A first order Butterworth filter $B_1^c$ has spectrum 
 \[
-\Lambda(B_1^c) = \frac{1}{j\tfrac{f}{c} + 1} = \frac{c}{jf + c}.
+\Lambda B_1^c(f) = \frac{1}{j\tfrac{f}{c} + 1} = \frac{c}{jf + c}.
 \]  
 Putting $\tfrac{1}{c} = 2\pi RC$ we find that this is the same as the spectrum of the RC electrical circuit (Figure~\ref{circ:seriesRC1}) or the active RC circuit after negation~\eqref{eq:specactiveRC}.  Thus, the RC electrical circuit is a first order Butterworth filter with cuttoff frequency $c = \tfrac{1}{2\pi RC}$.  In Test~\ref{test:activeRCspectrumtest} we constructed the active RC circuit with $R \approx 27\si{\kilo\ohm}$ and $C \approx 10\si{\nano\farad}$ and measured its magnitude spectrum.  The cuttoff frequency was $c = \tfrac{5\times10^4}{27\pi} \approx 589\si{\hertz}$.
 
 A second order electrical Butterworth filter can be constructed using the Sallen-Key circuit described in Section~\ref{sec:active-circuits} and Figure~\ref{elec:sallenkey}.  The input voltage $x$ and output voltage $y$ of the Sallen-Key satisfy the differential equation~\eqref{eq:sallenkeydiffeq}
 \[
-x = y + C_2(R_1 + R_2) D(y) + R_1 R_2 C_1 C_2 D^2(y).
+x = y + C_2(R_1 + R_2) D y + R_1 R_2 C_1 C_2 D^2 y.
 \]
-The transfer function is
+The transfer function corresponding with this equation is
 \[
-\frac{\calL(y)}{\calL(x)} = \frac{1}{1 + C_2(R_1 + R_2) s + R_1 R_2 C_1 C_2 s^2}.
+\frac{1}{1 + C_2(R_1 + R_2) s + R_1 R_2 C_1 C_2 s^2}.
 \]
 The second order Butterworth filter $B_2^c$ has transfer function
 \[
-\Lambda(B_2^c) = \frac{1}{(\tfrac{1}{2\pi c}s - \beta_1)(\tfrac{1}{2\pi c}s - \beta_2)},
+\Lambda B_2^c(s) = \frac{1}{(\tfrac{1}{2\pi c}s - \beta_1)(\tfrac{1}{2\pi c}s - \beta_2)},
 \]
 where $\beta_1 = \beta_2^* = e^{j3\pi/4}$.  Expanding the quadratic on the denominator gives
 \[
-\Lambda(B_2^c) = \frac{1}{1 + \tfrac{1}{\sqrt{2} \pi c} s + \tfrac{1}{4\pi^2 c^2} s^2}.
+\Lambda B_2^c(s) = \frac{1}{1 + \tfrac{1}{\sqrt{2} \pi c} s + \tfrac{1}{4\pi^2 c^2} s^2}.
 \]
 Choosing the resistors and capacitors of the Sallen-Key to satisfy 
 \[
@@ -616,9 +608,9 @@ Sinusoids of the form
 \]
 are input to the filter using a computer soundcard and the magnitude and phase spectrum are measured using the procedure described in Test~\ref{test:activeRCspectrumtest}.  Figure~\ref{fig:test:butterworthspectrum} shows the measurements (dots) plotted alongside the hypothesised magnitude spectrum
 \[
-\abs{\Lambda(B_{2}^c)} = \sqrt{\frac{1}{(f/c)^4 + 1}}
+\abs{\Lambda B_{2}^c(f)} = \sqrt{\frac{1}{(f/c)^4 + 1}}
 \]
-and the hypothesised phase spectrum $\angle{\Lambda(B_{2}^c)}$.
+and the hypothesised phase spectrum $\angle{\Lambda B_{2}^c(f)}$.
 
 % \begin{center}
 % \captionsetup{type=figure}
@@ -655,18 +647,18 @@ and the hypothesised phase spectrum $\angle{\Lambda(B_{2}^c)}$.
 
 \section{Real and complex valued sequences}
 
-Let $x$ be a signal with Fourier transform $\hat{x} = \calF(x)$.  The signal $x$ is said to be \term{bandlimited} if there exists a positive real number $b$ such that 
+Let $x$ be a signal with Fourier transform $\hat{x} = \calF x$.  The signal $x$ is said to be \term{bandlimited} if there exists a positive real number $b$ such that 
 \[
-\hat{x}(f) = \calF(x,f) = 0 \qquad \text{for all $\abs{f} > b$}.
+\hat{x}(f) = \calF x(f) = 0 \qquad \text{when $\abs{f} > b$}.
 \]  
-The value $b$ is called the \term{bandwidth} of the signal $x$.  For example, the $\sinc$ function is bandlimited with bandwidth $\tfrac{1}{2}$ because its Fourier transform $\calF(\sinc,f) = \rect(f) = 0$ for all $\abs{f} > \tfrac{1}{2}$.
+The value $b$ is called the \term{bandwidth} of the signal $x$.  For example, the $\sinc$ function is bandlimited with bandwidth $\tfrac{1}{2}$ because its Fourier transform $\calF \sinc(f) = \rect(f) = 0$ for all $\abs{f} > \tfrac{1}{2}$.
 Bandlimited signals have a number of properties that make them suitable for representation and manipulation by a computer.  They are of particular importance for this reason.  Before we can study bandlimited signals we first require some properties of real and complex valued~\term{sequences}.
 
-A \term{sequence} is a function with domain given by the integers $\ints$.  The value of the sequence corresponding with the integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take real or complex values, that is, $x_n \in \reals$ or $x_n \in \complex$.  For example,
+A \term{sequence} is a function with domain given by the integers $\ints$.  The value of a sequence $x$ at integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take complex (or real) values, that is, functions the set $\ints \to \complex$.  For example,
 \[
 \sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad e^{-\sabs{n}/2}
 \]
-each denote a real valued sequence.  In what follows the term~\term{sequence} will always mean a real or complex valued sequence unless otherwise stated.  Real and complex valued sequences are commonly called~\term{discrete time signals} and the $n$th element in the sequence is denoted by $x[n]$ using squared brackets~\citep{Oppenheiim_sigs_sys_1996}.  Here, we use the subscript notation $x_n$. This notation is also common~\citep{vetterli_fund_sig_proc,Rudin_real_and_complex_analysis}.
+each denote a real (and so also complex) valued sequence.  In what follows the term~\term{sequence} will always mean a complex valued sequence unless otherwise stated.  Complex valued sequences are commonly called~\term{discrete time signals} and the $n$th element in the sequence is denoted by $x[n]$ using squared brackets~\citep{Oppenheiim_sigs_sys_1996}.  Here, we use the subscript notation $x_n$. This notation is also common~\citep{vetterli_fund_sig_proc,Rudin_real_and_complex_analysis}.
 Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fig:realvaluedsequence} and have a number of properties analogous to the properties of signals (Section~\ref{sec:properties-signals}).
 
 \begin{figure}[tp]
@@ -724,7 +716,7 @@ A sequence $x$ is bounded if there exists a real number $M$ such that
 \[
 \sabs{x_n} < M \qquad \text{for all $n \in \ints$}.
 \]
-Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded sequences, but $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin.  A sequence $x$ is periodic if there exists a nonnegative integer $T$ such that
+Both $\sin( \tfrac{\pi}{4} n)$ and $e^{-\sabs{n}/2}$ are examples of bounded sequences, but $n^3$ is not bounded because its magnitude grows indefinitely as $n$ moves away from the origin.  A sequence $x$ is periodic if there exists a positive integer $T$ such that
 \[
 x_n = x_{n + kT} \qquad \text{for all integers $k$ and $n$.}
 \] 
@@ -755,14 +747,14 @@ u_n = \begin{cases}
 0 & n < 0 
 \end{cases}
 \end{equation}
-is right sided  (Figure~\ref{fig:stepsided}).  The reflected sequence $u_{-n}$ is left sided.  A sequence is said to be \term{finite} if it is both left and right sided.  For example the sequence $\delta$ with $n$th element 
+is right sided  (Figure~\ref{fig:stepsided}).  The reflected sequence $u_{-n}$ is left sided.  A sequence is said to be of \term{finite support} or just \term{finite} if it is both left and right sided.  For example the sequence $\delta$ with $n$th element 
 \begin{equation} \label{eq:deltasequence}
 \delta_n = \begin{cases}
 1 & n = 0 \\
 0 & \text{otherwise},
 \end{cases}
 \end{equation}
-called the \term{delta sequence}, is finite.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, but only a notational device.  Contrastingly, the delta sequence is a well defined sequence.
+called the \term{delta sequence}, is finite.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, only a notational device.  Contrastingly, the delta sequence is a well defined sequence.
 
 A sequence $x$ is \term{absolutely summable} if
 \[
@@ -772,7 +764,7 @@ that is, if the sum of absolute values of the elements in the sequence converges
 \[
 \sum_{n \in \ints} \sabs{e^{-\sabs{n}/2}} = \sum_{n \in \ints} e^{-\sabs{n}/2} = 1 + \frac{2}{\sqrt{e} - 1}. \qquad \text{(Exercise~\ref{excer:sumgeomeabsn})}
 \]
-It is common to denote the set of absolutely summable sequences by $\ell^1$.  So, $e^{-\sabs{n}/2} \in \ell^1$ and $\sin(\tfrac{\pi}{4} n) \notin \ell^1$.
+It is common to denote the set of absolutely summable sequences by $\ell^1$ or $\ell^1(\ints)$.  So, $e^{-\sabs{n}/2} \in \ell^1$ and $\sin(\tfrac{\pi}{4} n) \notin \ell^1$.
 
 A sequence $x$ is \term{square summable} if
 \[
@@ -787,9 +779,9 @@ It is common to denote the set of square summable sequences by $\ell^2$.  So, $e
 
 \section{Bandlimited signals}\label{sec:bandlimited-signals}
 
-Let $b$ be a positive real number and let $x$ be a signal with Fourier transform $\hat{x} = \calF(x)$.  The signal $x$ is said to be \term{bandlimited} with \term{bandwidth} $b$ if 
+Let $b$ be a positive real number and let $x$ be a signal with Fourier transform $\hat{x} = \calF x$.  The signal $x$ is said to be \term{bandlimited} with \term{bandwidth} $b$ if 
 \[
-\hat{x}(f) = \calF(x,f) = 0 \qquad \text{for all $\abs{f} > b$}.
+\hat{x}(f) = \calF x(f) = 0 \qquad \text{for all $\abs{f} > b$}.
 \]  
 For example, the sinc function $\sinc(t)$ that has Fourier transform $\rect(f)$ is bandlimited with bandwidth $b \geq \tfrac{1}{2}$.  Another example is the signal with Fourier transform given by a~\term{raised cosine}
 \[
@@ -812,7 +804,7 @@ f + 1 & -1 < f < 0 \\
 \]
 that is bandlimited with bandwidth $b \geq 1$.  The corresponding time domain signal is given by the square of the sinc function $\sinc^2(t)$ (Exercises~\ref{exer:triangle_pulse_ft}).  These bandlimited signals and their Fourier transforms are plotted in Figure~\ref{fig:bandlimittedsignals}.
 
-It happens that bandlimited signals are not finite.  We can reasonably suppose that all signals ever encountered in practice are finite and so no signals encountered in practice are truely bandlimited.  However, many practically occuring signals are approximately bandlimited, that is, their Fourier transform is small for frequencies larger than some positive number $b$.  For example, in Test~\ref{test:ftlecturerec} the Fourier transform of an audio signal taken from a lecture recording is plotted  (Figure~\ref{fig:test:fouriertransformlecturevideo}).  This signal appears approximately bandlimited with bandwidth a little larger than \SI{8}{\kilo\hertz}.
+It happens that bandlimited signals are never finite.  We can reasonably suppose that all signals ever encountered in practice are finite and so no signals encountered in practice are truely bandlimited.  However, many practically occuring signals are approximately bandlimited, that is, their Fourier transform is small for frequencies larger than some positive number $b$.  For example, in Test~\ref{test:ftlecturerec} the Fourier transform of an audio signal taken from a lecture recording is plotted  (Figure~\ref{fig:test:fouriertransformlecturevideo}).  This signal appears approximately bandlimited with bandwidth a little larger than \SI{8}{\kilo\hertz}.
 
 % If $x$ is a bandlimited signal with bandwith $b$ then the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ has bandwidth $\abs{\alpha} b$ because, from the time scaling property of the Fourier transform,
 % \[
@@ -953,15 +945,15 @@ This theorem motivated use of this recontruction method in Tests~\ref{test:volta
 
 Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
 \begin{align}
-\hat{x}(f) = \calF(x,f) &= \sum_{n \in \ints} c_n \calF\big(\sinc(F t - n) \big)  \nonumber \\
+\hat{x}(f) = \calF x(f) &= \sum_{n \in \ints} c_n \calF\sinc(F t - n)  \nonumber \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
-&= P \rect( f P ) \calD(c, Pf) \qquad \label{eq:ftanddftrelationship}
+&= P \rect( f P ) \calD c(Pf) \qquad \label{eq:ftanddftrelationship}
 \end{align}
 where
 \[
-\calD(c, f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
+\calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \]
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD(c)$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD(c)$ is a periodic signal with period $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic signal with period $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
 
 The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}
