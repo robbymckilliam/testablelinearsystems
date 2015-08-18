@@ -16,7 +16,7 @@ val f1 = 500
 val f2 = 1333
 val Fs = 44100
 val xtrue : Double => Double = t => sin(2*Pi*f1*t)/3 + sin(2*Pi*f2*t)/3
-val (left, right) = playRecord(xtrue, 0, 2.0, Fs)
+val (right, left) = playRecord(xtrue, 0, 2.0, Fs)
 //playSamples(left)
 //playSamples(right)
 

@@ -497,9 +497,9 @@ g(t) = \int_{-\infty}^\infty h(\tau) \sinc( t - F\tau ) d\tau = -r \int_{0}^\inf
 \]
 It is helpful to transform $g(t)$ into the form more ammenable to numerical integration
 \[
-g(t) = \int_{-\pi}^{\pi} \frac{\cos(\omega t) + \omega t \sin(\omega t)}{1 + \omega^2t^2} \; dt \qquad \text{(Exercise~\ref{?})}
+g(t) = \int_{-\pi}^{\pi} \frac{\cos(\omega t) + \omega t \sin(\omega t)}{1 + V^2\omega^2t^2} \; dt \qquad \text{(Exercise~\ref{?})}
 \]
-An approximation of $g(t)$ is made using the trapezoidal sum
+where $V = \tfrac{F}{r}$.  An approximation of $g(t)$ is made Reiman sum the trapezoidal sum
 \[
 f(t) \approx \frac{K}{2N} \left( p(0) + p(K) + 2 \sum_{n=1}^{N-1} p( \Delta n ) \right),
 \]
