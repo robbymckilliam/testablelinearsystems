@@ -127,7 +127,7 @@ Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \cal
 
 If $\hat{x}$ is absolutely integrable, then $x$ can be recovered using the \term{inverse Fourier transform}
 \begin{equation}\label{eq:inversefouriertransform}
-x(t) = \calF^{-1}(\hat{x}) =  \int_{-\infty}^\infty \hat{x}(f) e^{j2\pi ft} df.
+x(t) = \calF^{-1}\hat{x}(t) =  \int_{-\infty}^\infty \hat{x}(f) e^{j2\pi ft} df.
 \end{equation}
 For example, let $\hat{x} = \calF x = \rect$ be the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
 \[
@@ -139,11 +139,11 @@ We are lead to the conclusion that the Fourier transform of $\sinc$ is the recta
 The rectangular pulse $\rect$ is finite and absolutely integrable.  The $\sinc$ function is not absolutely integrable (Exercise~\ref{exer:sincnotabsint}). Because of this the integral equation that we have used to define the Fourier transform~\eqref{eq:fouriertransform} cannot be directly applied to the $\sinc$ function.  %The inverse transform provides a method for assigning Fourier transforms to signals even when the formula~\eqref{eq:fouriertransform} does not apply.  
 Although $\sinc$ is not absolutely integrable, it is square integrable (Exercise~\ref{exer:sincnotabsint}).  It happens that all square integrable signals can be assigned a Fourier transform by interpreting the integral in~\eqref{eq:fouriertransform} as what is called its~\term{Cauchy principal value}.  That is, for $x$ a square integrable signal, we assign the Fourier transform
 \[
-\hat{x} = \calF x = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
+\hat{x}(f) = \calF x(f) = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
 \]
 This Fourier transform $\hat{x}$ is itself a square integrable signal and the orignal time domain signal $x$ can be recovered almost everywhere by taking the Cauchy principal value of the integral for the inverse Fourier transform~\eqref{eq:inversefouriertransform}, that is,
 \[
-x = \calF^{-1} \hat{x} = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}
+x(t) = \calF^{-1} \hat{x}(t) = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}
 \]
 Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that is,
 \begin{equation}\label{eq:parseval}
@@ -338,7 +338,7 @@ Applying the inverse Fourier transform to $\rect\big(\tfrac{f}{2c}\big)$ gives
 \[
 \int_{-\infty}^\infty \rect\big(\tfrac{f}{2c}\big) e^{j2\pi t f} df = \int_{-c}^c e^{j2\pi t f} df = \frac{\sin(2 c\pi t)}{\pi t} = 2c\sinc(2ct).
 \]
-We are lead to the conclude that the ideal lowpass filter $L_c$ is a regular linear time invariant system with impulse response $2c\sinc(2ct)$~\footnote{This conclusion should be taken with scepticism because the signal $2c\sin(2ct)$ is not abolutely integrable and so its transfer function with not contain the imaginary axis in its domain.  Infact, $\roc \sinc = \emptyset$.  Just as an exception is made that allows signals that are not absolutely integrable, but are square integrable, to have a Fourier transform an exception that allows regular systems with square integrable impulse response to have a spectrum must be made. We will have not use of ideal filters beyond this section and so this caveat with not carry thoughout the text.  The concept of an ideal filter is nonethless informative from an intuitive viewpoint.}
+We are lead to the conclude that the ideal lowpass filter $L_c$ is a regular linear time invariant system with impulse response $2c\sinc(2ct)$~\footnote{This conclusion should be taken with scepticism because the signal $2c\sin(2ct)$ is not abolutely integrable and so its transfer function with not contain the imaginary axis in its domain.  Infact, $\roc \sinc = \emptyset$.  An exception has been made to allow square integrable signals to have a Fourier transform and a similar exception must be made to allow regular systems with square integrable impulse response to have a spectrum. We will have not use of ideal filters beyond this section and so this caveat with not carry thoughout the text.  The concept of an ideal filter is nonethless informative from an intuitive viewpoint.}
 
 An \term{ideal highpass filter} with cuttoff frequency $c$ is given by the linear combination $T_0 - L_c$ where $T_0$ is the identity system.  The spectrum is
 \[
@@ -357,7 +357,7 @@ An \term{ideal bandpass filter} with upper cuttoff frequency $u$ and lower cutto
 0 & \text{otherwise}.
 \end{cases}
 \]
-It follows that the ideal bandpass filter has impulse response $2u\sinc(2ut) - 2\ell\sinc(2\ell t)$.  The spectrum and impulse response of the ideal lowpass, highpass, and bandpass filters are plotted in Figure~\ref{fig:idealfilters}.
+We conclude that the ideal bandpass filter has impulse response $2u\sinc(2ut) - 2\ell\sinc(2\ell t)$.  The spectrum and impulse response of the ideal lowpass, highpass, and bandpass filters are plotted in Figure~\ref{fig:idealfilters}.
 
 
 \begin{figure}[p]
@@ -422,25 +422,34 @@ It follows that the ideal bandpass filter has impulse response $2u\sinc(2ut) - 2
 
 %The ideal filters described in the previous section are not realisable in practice.  One reason for this is that they are not causal because the $\sinc$ function is unbounded in time.
 %Popular practical electrical filters include Tschecyshev filters, elliptic filters, and Bessel filters.  
-Ideal filters are not realisable in practice.  One reason for this is that they are not causal because the $\sinc$ function is unbounded in time.  We now describe a popular practical low-pass filter discovered by \citet{Butterworth1930}.  A \term{normalised low pass Butterworth filter} of order $m$, denoted by $B_m$, has transfer function
+Ideal filters are not realisable in practice.  %One reason for this is that they are not causal because the $\sinc$ function is unbounded in time.  
+We now describe a popular practical low-pass filter discovered by \citet{Butterworth1930}.  A \term{normalised low pass Butterworth filter} of order $m$, denoted by $B_m$, has transfer function
 \[
-\lambda(B_m) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi} - \beta_i)} = \frac{(2\pi)^m}{\prod_{i=1}^m(s - 2\pi\beta_i)},
+\lambda B_m(s) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi} - \beta_i)} = \frac{(2\pi)^m}{\prod_{i=1}^m(s - 2\pi\beta_i)},
 \] 
-where $\beta_1,\dots,\beta_m$ are the roots of the polynomial $s^{2m} + (-1)^m$ that lie strictly in the left half of the complex plane (have negative real part).  It is convenient to precisely define these roots as
+where $\beta_1,\dots,\beta_m$ are the roots of the polynomial $s^{2m} + (-1)^m$ that lie strictly in the left half of the complex plane (have negative real part).  Specifically, these roots are
 \[
 \beta_{k} = \begin{cases}
 \exp\big(j\tfrac{\pi}{2}( 1 + \tfrac{2k-1}{m} )\big) , & k = 1, \dots, m \\
-\exp\big(j\tfrac{\pi}{2}( 1 - \tfrac{2k-1}{m} )\big) , & k = m+1, \dots, 2m
+\exp\big(j\tfrac{\pi}{2}( 1 - \tfrac{2k-1}{m} )\big) , & k = m+1, \dots, 2m.
 \end{cases}
 \]
-or equivalently
+% or equivalently
+% \[
+% \beta_k= \begin{cases}
+% j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) -\sin\big(\tfrac{\pi(2k-1)}{2m}\big), & k = 1, \dots, m \\
+% j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) + \sin\big(\tfrac{\pi(2k-1)}{2m}\big) , & k = m+1, \dots, 2m.
+% \end{cases}
+% \]
+The roots are plotted in Figure~\ref{fig:rootofunityplot}.  The spectrum of $B_m$ is
 \[
-\beta_k= \begin{cases}
-j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) -\sin\big(\tfrac{\pi(2k-1)}{2m}\big), & k = 1, \dots, m \\
-j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) + \sin\big(\tfrac{\pi(2k-1)}{2m}\big) , & k = m+1, \dots, 2m.
-\end{cases}
+\Lambda B_m(f) = \frac{1}{\prod_{i=1}^m( j f - \beta_i)}
 \]
-The roots are plotted in Figure~\ref{fig:rootofunityplot}.  Observe that the roots $\beta_{m+1},\dots,\beta_{2m}$ are given by negating the real parts of $\beta_1,\dots,\beta_m$, that is, $\beta_{m+i} = j (\beta_{i}/j)^*$.
+and the magnitude spectrum of $B_m$ can be shown to satisfy
+\[
+\abs{\Lambda B_m(f)} = \sqrt{\frac{1}{f^{2m} + 1}}. \qquad \text{(Exercise~\ref{exer:magspecbutterworth})} 
+\]
+The magnitude and phase spectrum of the filters $B_1$, $B_2$, $B_3$, and $B_4$ are plotted in Figure~\ref{fig:butterworthspectrum}.
 
 {
 %\colorlet{gray}{black!25}
@@ -469,32 +478,6 @@ The roots are plotted in Figure~\ref{fig:rootofunityplot}.  Observe that the roo
     \caption{Roots of the polynomial $s^{2m} + (-1)^m$ for $m=1$ (top left), $m=2$ (top right), $m=3$ (bottom left), and $m=4$ (bottom right).  All the roots lie on the complex unit circle and have magnitude one.  The poles of the normalised Butterworth filter $B_m$ are those roots from the left half of the complex plane (unshaded).}\label{fig:rootofunityplot}
   \end{figure}
 }
-
-The spectrum of $B_m$ is
-\[
-\Lambda(B_m) = \frac{1}{\prod_{i=1}^m( j f - \beta_i)}.
-\]
-The squared magnitude of the polynomial on the denominator is
-\begin{align*}
-\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 &= \left(\prod_{i=1}^m( j  f - \beta_i)\right)\left(\prod_{i=1}^m( j  f - \beta_i)\right)^* \\
-&= \prod_{i=1}^m( j  f - \beta_i)(  j f - \beta_i)^* \\
-&= \prod_{i=1}^m ( j f - \beta_i) j^* (  f - (\beta_i/j)^*)
-\end{align*}
-and because $j^*/j = -1$ we have
-\begin{align*}
-\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 &= (-1)^m\prod_{i=1}^m ( j f - \beta_i) (  j f - j (\beta_i/j)^*) \\
-&= (-1)^m\prod_{i=1}^m ( j f - \beta_i) (  j f - \beta_{m+i}) \\
-&= (-1)^m\prod_{i=1}^{2m} ( j f - \beta_i).
-\end{align*}
-Because $\beta_1,\dots,\beta_{2m}$ are the roots of the polynomial $s^{2m}+(-1)^m$ we have
-\[
-\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 = (-1)^m \big( ( j f)^{2m} + (-1)^m \big) = f^{2m} + 1.
-\]
-It follows that the magnitude spectrum of $B_m$ is
-\[
-\abs{\Lambda(B_m)} = \sqrt{\frac{1}{f^{2m} + 1}}.
-\]
-The magnitude and phase spectrum of the filters $B_1$, $B_2$, $B_3$, and $B_4$ are plotted in Figure~\ref{fig:butterworthspectrum}.
 
 {
   \def\scalex{3}
