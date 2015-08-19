@@ -19,7 +19,7 @@ val f1 = 500
 val f2 = 1333
 val Fs = 44100
 val xtrue : Double => Double = t => sin(2*Pi*f1*t)/3 + sin(2*Pi*f2*t)/3
-val (left, right) = playRecord(xtrue, 0, 2.0, Fs)
+val (right, left) = playRecord(xtrue, 0, 2.0, Fs)
 //playSamples(left)
 //playSamples(right)
 
@@ -54,9 +54,9 @@ def trapezoidal(func : Double => Double, a : Double, b : Double, N : Int) : Doub
 }
 
 //circuit parameters
-val R1 = 2200
+val R1 = 3300
 val C1 = 100e-9 
-val R2 = 3300
+val R2 = 15000
 val C2 = 10e-9
 val a = -R2*C1
 val b = R2*C2 + R1*C1
@@ -70,7 +70,7 @@ println(alpha,beta,A,B)
 
 //the function f from the tests.  Requires numerical integration
 def f(t : Double) : Double = {
-  val K = -log(1e-4)/(alpha-beta) //log(1e-4) should get around 1e-4 error in the trapezoidal sum
+  val K = -log(1e-4)/min(alpha.abs,beta.abs) //log(1e-4) should get around 1e-4 error in the trapezoidal sum
   val N = ceil(K*10*Fs).toInt //number of intervals in the trapezoidal sum, 10 points per sample.
   val g : Double=>Double = tau => (A*exp(alpha*tau) - B*exp(beta*tau)) * sinc(t - Fs*tau) //g function from Test (Active RC again)
   return trapezoidal(g,0,K,N)
