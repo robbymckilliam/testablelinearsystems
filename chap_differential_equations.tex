@@ -720,7 +720,7 @@ Given the position signal $\theta$ we can find the corresponding voltage signal 
 \[
 \theta(t) = 2\pi (1 + \operatorname{erf}(t) )
 \]
-where $\operatorname{erf}(t) = \frac{2}{\pi} \int_{-\infty}^{t} e^{-\tau^2} d\tau$ is the \term{error function}.  The corresponding angular velocity $D\theta$ and voltage $v$ satisfy
+where $\operatorname{erf}(t) = \frac{2}{\pi} \int_{0}^{t} e^{-\tau^2} d\tau$ is the \term{error function}.  The corresponding angular velocity $D\theta$ and voltage $v$ satisfy
 \[
 D\theta(t) = 4\sqrt{\pi} e^{-t^2}, \qquad v(t) = 8 \sqrt{\pi} e^{-t^2} (1-t).
 \]
