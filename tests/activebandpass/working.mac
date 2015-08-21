@@ -1,0 +1,17 @@
+R1:15*10^3;
+R2:3300;
+C1:100*10^-9;
+C2:10*10^-9;
+a:-R2*C1;
+b:R2*C2+R1*C1;
+c:C1*C2*R1*R2;
+print(a, b, c);
+roots:solve(1+b*x+c*x^2=0,x);
+print(roots);
+alpha:rhs(first(roots)); /*get first root*/
+beta:rhs(second(roots)); /*get second root*/
+print(alpha,beta);
+A:a*alpha/c/(alpha-beta);
+B:a*beta/c/(alpha-beta);
+print(A,B);
+/*lambda(s):=a*s/c/(s-alpha)*/
