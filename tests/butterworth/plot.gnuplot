@@ -4,6 +4,7 @@ set xlabel 'frequency (Hz)'
 set ylabel 'magnitude spectrum'
 set xrange [0:10400]
 set yrange [0:1.1]
+
 set output 'abs.pdf'
 plot 'hypothesised.csv' using 1:2 t 'hypothesised' with lines, \
      'measured.csv' using 1:2 t 'measured'
