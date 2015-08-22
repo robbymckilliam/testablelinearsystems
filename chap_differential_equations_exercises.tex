@@ -1,49 +1,59 @@
 
 \section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \begin{excersizelist}
 
 \item \label{exer:multiplieropampwithmodel}  Analyse the inverting amplifier circuit in Figure~\zref{circ:opampinvertingamplifierequivalent} to obtain the relationship between input voltage $x$ and output voltage $y$ given by~\zeqref{eq:intertingopampmodel}.  You may wish to use a symbolic programming language (for example Maxima, Sage, Mathematica, or Maple).
 \begin{solution}
-We provide two solutions.  Let $v_i$, $v_o$, $v_1$ and $v_2$ be the voltages over the input resistor $R_i$, the output resistor $R_o$, and resistors $R_1$ and $R_2$ respectively.  Observe that $v_+ - v_i = v_i$ and so the voltage over the dependent source is $A v_i$.  The voltages satisfy,
+We provide two solutions.  Let $v_i$, $v_o$, $v_1$ and $v_2$ be the voltages over the input resistor $R_i$, the output resistor $R_o$, and resistors $R_1$ and $R_2$ respectively.  We have 8 unknown voltages $x,y,v_i,v_1,v_2,v_o,v_+,v_-$.  We will need 7 independent equations to find an equation relating $x$ and $y$.  All currents are considered to be flowing either downwards or to the right in the circuit diagram.  The first 4 equations are given by voltages over each resitor,
 \begin{align*}
-x &= v_1 - v_i \\
-y &= -v_i - v_2 \\
-y &=  v_o + Av_i
+x &= v_- + v_1 \\
+v_- &= y + v_2 \\
+v_- &= v_+ + v_i \\
+y &= v_o + A(v_+ - v_-) 
 \end{align*}
-The currents into the 3 way connection between $R_i, R_1$ and $R_2$ sum to zero, and so
+The next two equations apply Kirchoff's current law to each node betweeen resistors.  The currents into the 3 way connection between $R_i, R_1$ and $R_2$ sum to zero, and so
 \[
 \frac{v_1}{R_1} + \frac{v_i}{R_i} = \frac{v_2}{R_2}
 \]
-by Ohm's law, the direction of current moving from positive to negative voltage.  Finally the currents through $R_o$ and $R_2$ are the same, and so
+by Ohm's law.  Finally the currents through $R_o$ and $R_2$ are the same, and so
 \[
 \frac{v_o}{R_o} = \frac{v_2}{R_2}.
 \]
-We now have 5 linearly independent equations for the six unknowns $v_1, v_2, v_o, v_i, x, y$.  We can use these to find an equation that describes $y$ in terms of $x$.  The Mathematica command
+The final equation simply observes that the non-inverting terminal $v_+$ is connected to ground
+\[
+v_+ = 0.
+\]
+We now have 7 linearly independent equations for the 8 unknowns $x,y,v_i,v_1,v_2,v_o,v_+,v_-$.  We can use these to find an equation that describes $y$ in terms of $x$.  The Mathematica command
 \begin{verbatim}
-Simplify[Solve[{x == v1 - vi,
-   y == vo + A*vi,
-   y == -vi - v2,
+Simplify[Solve[{x == vm + v1,
+   vm == y + v2,
+   vm == vp + vi,
+   y == vo + A*(vp - vm),
    v1/r1 + vi/ri == v2/r2,
    vo/ro == v2/r2,
+   vp == 0,
    r1 > 0, r2 > 0, ro > 0, ri > 0, A > 0},
-  {y, vi, vo, v2, v1}, Reals]]
+  {y,vi,vo,v2,v1,vp,vm}, Reals]]
 \end{verbatim}
 or Maxima command
 \begin{verbatim}
-linsolve([x = v1 - vi,
-   y = vo + A*vi,
-   y = -vi - v2,
-   v1/r1 + vi/ri = v2/r2,
-   vo/ro = v2/r2],
-   [y, vi, vo, v2, v1]);
+linsolve([x=vm+v1,
+          vm=y+v2,
+          vm=vp+vi,
+          y=vo+A(vp-vm),
+          v1/R1=v2/R2+vi/Ri,
+          v2/R2=vo/Ro,
+          vp=0],
+          [y,vp,vm,v1,v2,vo,vi]);
 \end{verbatim}
 readily obtains
 \[
 y = \frac{R_i (R_o - A R_2) }{R_i (R_2+R_o)+R_1 (R_2+R_i + A R_i+R_o)}x.
 \]
 
-The second solution is thanks to Badri Vellambi.  Consider the operational amplifier circuit with feedback presented in Fig.~\ref{Fig-Prob2.1a}. Suppose that the voltage signal fed into the circuit is $x(t)$ and the voltage signal measured at the output of the opamp is $y(t)$. 
+The second solution is thanks to Badri Vellambi.  Badri sets $v_i = v_+ - v_-$ so that the voltage over the dependent voltage source is $Av_i$.  Consider the operational amplifier circuit with feedback presented in Fig.~\ref{Fig-Prob2.1a}. Suppose that the voltage signal fed into the circuit is $x(t)$ and the voltage signal measured at the output of the opamp is $y(t)$. 
 
 {
 \centering

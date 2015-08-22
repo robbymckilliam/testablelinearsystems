@@ -36,7 +36,7 @@ val Q : Seq[Complex] = ks.map { k =>
   print(f(k) + "Hz ")
 
   def xtrue(t : Double) = sin(2*Pi*f(k)*t)
-  val (xs, ys) = playRecord(xtrue, 0, 1.0, Fs) //play for 1 second and record
+  val (ys, xs) = playRecord(xtrue, 0, 1.0, Fs) //play for 1 second and record
 
   if(min(xs.length, ys.length) < (discard+L)) throw new java.lang.ArrayIndexOutOfBoundsException("Number of samples recorded isn't enough for some reason")
 
@@ -56,9 +56,9 @@ val Q : Seq[Complex] = ks.map { k =>
 }
 
 //circuit parameters
-val R1 = 2200
+val R1 = 3300
 val C1 = 100e-9 
-val R2 = 3300
+val R2 = 15000
 val C2 = 10e-9
 val a = -R2*C1
 val b = R2*C2 + R1*C1

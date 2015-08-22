@@ -35,7 +35,6 @@ val Q : Seq[Complex] = ks.map { k =>
   def xtrue(t : Double) = sin(2*Pi*f(k)*t)
   val (ys, xs) = playRecord(xtrue, 0, 1.0, Fs) //play for 1 second and record
 
-  if(min(xs.length, ys.length) < (discard+L)) throw new java.lang.ArrayIndexOutOfBoundsException("Number of samples recorded isn't enough for some reason")
 
   //chop off first discard=10000 samples  to avoid distortion when the soundcard
   //starts up and take the following L=8820

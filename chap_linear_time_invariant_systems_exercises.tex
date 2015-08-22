@@ -1,4 +1,5 @@
 \section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \begin{excersizelist}
 
@@ -65,6 +66,26 @@ a (x * w) + b (y * w) &= a \int_{-\infty}^{\infty} x(\tau) w(t - \tau) d\tau + b
 \end{align*}
 The exchange of integration order can be justified using Fubini's theorem whenever the all of the convolutions involved in $x*(y*z) = (x*y)*z$ exist.
 \end{solution}
+
+\item \label{excer:convabsisabs} Show that the convolution of two absolutely integrable signals is absolutely integrable.
+\begin{solution}
+Let $x$ and $y$ be absolutely integrable.  We want to show that the convolution
+\[
+(x * y)(t) = \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau
+\]
+is absolutely integrable.  Write
+\begin{align*}
+\|x * y\|_1 &= \int_{-\infty}^\infty \abs{(x * y)(t)}dt \\
+&= \int_{-\infty}^\infty \abs{\int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau } dt \\
+ &\leq \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau) y(t - \tau) } d\tau dt \\
+ &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau)  }{ y(t - \tau) } dt d\tau \qquad \text{(change order integration (Tonelli's theorem))} \\
+ &= \int_{-\infty}^\infty \int_{-\infty}^\infty { y(t - \tau) } dt \abs{ x(\tau) } d\tau \\
+  &= \|y\|_1 \int_{-\infty}^\infty \abs{ x(\tau) } d\tau \\
+  &= \|y\|_1 \|x\|_1
+\end{align*}
+which is finite by our assumption that $x$ and $y$ are absolutely integrable.  This result also follows as a special case of Young's Theorem~\cite{Rudin_real_and_complex_analysis}.
+\end{solution}
+
 
 \item \label{excer:bibostableimpulseresp} Show that a regular system is stable if and only if its impulse response is absolutely integrable.
 \begin{solution}

@@ -1,6 +1,10 @@
 \section*{Exercises}
+<<<<<<< HEAD
  \addcontentsline{toc}{section}{Exercises}
 
+=======
+\addcontentsline{toc}{section}{Exercises}
+>>>>>>> bafcdf16bbe291038558c24837078fad285503a6
 
 \begin{excersizelist}
 
@@ -170,6 +174,52 @@ The figure below plots $\sinc^2$ (dashed) and the bounding function $g$.
   \end{tikzpicture}
 \end{center}
 
+\end{solution}
+
+\item \label{exer:magspecbutterworth} Show the the magnitude spectrim of the normalised Butterworth filter $B_m$ satisfies
+\[
+\abs{\Lambda B_m(f)} = \sqrt{\frac{1}{f^{2m} + 1}}.
+\]
+\begin{solution}
+Recall that the transfer function of $B_m$ is
+\[
+\lambda B_m(s) = \frac{1}{\prod_{i=1}^m(\tfrac{s}{2\pi} - \beta_i)} = \frac{(2\pi)^m}{\prod_{i=1}^m(s - 2\pi\beta_i)},
+\] 
+where $\beta_1,\dots,\beta_m$ are the roots of the polynomial $s^{2m} + (-1)^m$ that lie strictly in the left half of the complex plane (have negative real part).  Specifically, these roots are
+\[
+\beta_{k} = \begin{cases}
+\exp\big(j\tfrac{\pi}{2}( 1 + \tfrac{2k-1}{m} )\big) , & k = 1, \dots, m \\
+\exp\big(j\tfrac{\pi}{2}( 1 - \tfrac{2k-1}{m} )\big) , & k = m+1, \dots, 2m
+\end{cases}
+\]
+or equivalently
+\[
+\beta_k= \begin{cases}
+j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) -\sin\big(\tfrac{\pi(2k-1)}{2m}\big), & k = 1, \dots, m \\
+j \cos\big(\tfrac{\pi(2k-1)}{2m}\big) + \sin\big(\tfrac{\pi(2k-1)}{2m}\big) , & k = m+1, \dots, 2m.
+\end{cases}
+\]
+Observe that the roots $\beta_{m+1},\dots,\beta_{2m}$ are given by negating the real parts of $\beta_1,\dots,\beta_m$, that is, $\beta_{m+i} = j (\beta_{i}/j)^*$.
+The squared magnitude of the polynomial on the denominator is
+\begin{align*}
+\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 &= \left(\prod_{i=1}^m( j  f - \beta_i)\right)\left(\prod_{i=1}^m( j  f - \beta_i)\right)^* \\
+&= \prod_{i=1}^m( j  f - \beta_i)(  j f - \beta_i)^* \\
+&= \prod_{i=1}^m ( j f - \beta_i) j^* (  f - (\beta_i/j)^*)
+\end{align*}
+and because $j^*/j = -1$ we have
+\begin{align*}
+\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 &= (-1)^m\prod_{i=1}^m ( j f - \beta_i) (  j f - j (\beta_i/j)^*) \\
+&= (-1)^m\prod_{i=1}^m ( j f - \beta_i) (  j f - \beta_{m+i}) \\
+&= (-1)^m\prod_{i=1}^{2m} ( j f - \beta_i).
+\end{align*}
+Because $\beta_1,\dots,\beta_{2m}$ are the roots of the polynomial $s^{2m}+(-1)^m$ we have
+\[
+\abs{\prod_{i=1}^m( j  f - \beta_i)}^2 = (-1)^m \big( ( j f)^{2m} + (-1)^m \big) = f^{2m} + 1.
+\]
+It follows that the magnitude spectrum of $B_m$ is
+\[
+\abs{\Lambda(B_m)} = \sqrt{\frac{1}{f^{2m} + 1}}.
+\]
 \end{solution}
 
 

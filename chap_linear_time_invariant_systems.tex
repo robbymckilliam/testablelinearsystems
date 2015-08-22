@@ -62,7 +62,7 @@ Taking $\gamma \to \infty$ we find that
 
 %BLERG Young's inequality gives a neat way of knowing when convolutions exist or don't exists based on what Lp space the signals lie in.  This becomes useful in the Fourier transform section?
 
-As an example, consider the integrator system $I_\infty$ described in Section~\ref{sec:some-import-syst}.  This response of $_\infty$ to $p_\gamma$ is 
+As an example, consider the integrator system $I_\infty$ described in Section~\ref{sec:some-import-syst}.  This response of $I_\infty$ to $p_\gamma$ is 
 \[
 I_\infty p_\gamma(t) = \int_{-\infty}^{t} p_\gamma(\tau) d\tau = \begin{cases}
 0, & t \leq 0 \\
@@ -137,7 +137,7 @@ T_\tau x &= \delta(t - \tau) * x \\
 &= \int_{-\infty}^{\infty} \delta(k) x(t - \tau - k) dk & \text{(change variable $k = \kappa - \tau$)}\\
 &= x(t-\tau).
 \end{align*}
-For $a \in \reals$ it is common to plot $a\delta(t - \tau)$ using an arrow of height $a$ at $t = \tau$ as indicated in Figure~\ref{fig:deltafuncplotexample}.  It is important to realise that $\delta$ is not actually a signal.  It is not a function.  However, it can be convenient to treat $\delta$ as if it were a function.  The manipulations in the last set of equations, such as the change of variables, are not formally justified, but they do lead to the desired result $T_\tau x = x(t-\tau)$ in this case.  In general, there is no guarantee that mechanical mathematical manipulations involving $\delta$ will lead to sensible results.
+For $a \in \reals$ it is common to plot $a\delta(t - \tau)$ using an arrow of height $a$ at $t = \tau$ as indicated in Figure~\ref{fig:deltafuncplotexample}.  It is important to realise that $\delta$ is not actually a signal.  It is not a function in $\reals \to \complex$.  However, it can be convenient to treat $\delta$ as if it were a signal.  The manipulations in the last set of equations, such as the change of variables, are not formally justified, but they do lead to the desired result $T_\tau x = x(t-\tau)$ in this case.  In general, there is no guarantee that mechanical mathematical manipulations involving $\delta$ will lead to sensible results.
 
 \begin{figure}[tp]
 \centering
@@ -340,6 +340,9 @@ Hx &= H_2H_1 x \\
 \end{align*}
 and so, $H$ is a regular system with impulse response $h = h_2 * h_1$.  %Thus, if $H$ is the composition of regular systems $H_1$ and $H_2$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $H_1$ and $H_2$.  
 
+%BLERG: The above use of associativity of convolution is hiding use of Fubini's theorem (or Tonelli's theorem).  There's some subtle assumptions about the domain of H_1 and H_2 that are being hidden here.  You can't necessarily use the default domains \fin h_1 and \fin h_2.
+% Use of Tonelli's theorem is probably the way to go here.  Work's on the extended real line, but allows interchanges.  You only get something infinite if all integrals, double, or iteratered (in either direction) are infinite.  So if any are finite they all are and they are all equal.
+
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance=1.5cm,auto,>=latex']
@@ -486,17 +489,23 @@ H T_{\tau} e^{st} = T_{\tau} H  e^{st} = y(t - \tau) %\qquad \text{for all $t, \
 \]
 and by linearity
 \[
-H e^{s(t-\tau)} = e^{-s\tau} H e^{st}  = e^{-s\tau} y(t). %\qquad \text{for all $t, \tau \in \reals$}.
+H T_\tau e^{st} = H e^{s(t-\tau)} = e^{-s\tau} H e^{st}  = e^{-s\tau} y(t). %\qquad \text{for all $t, \tau \in \reals$}.
 \]
 Combining these equations we obtain
 \[
 y(t - \tau) = e^{-s\tau} y(t) \qquad \text{for all $t,\tau \in \reals$}.
 \]
-This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear shift-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear shift-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number.  Letting $S$ be the set of complex number $s$ such $e^{st} \in X$ we have $\lambda H \in S \to \complex$.  The transfer function satisfies
+This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear shift-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear shift-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number.
+
+Denote by $\cep X$ the set of complex numbers $s$ such that $e^{st} \in X$, that is,
+\[
+\cep X = \{ s \in \complex \mid e^{st} \in X \}.
+\]
+We take $\cep X$ as the domain of the transfer function $\lambda H$, that is $\lambda H \in \cep X \to \complex$.  The transfer function satisfies
 \begin{equation}\label{eq:transfuneigenproperty}
-H e^{st} = \lambda H(s) e^{st}
+H e^{st} = \lambda H(s) e^{st} \qquad s \in \cep X
 \end{equation}
-whenever $e^{st} \in X$.  This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
+This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
 
 We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  Consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
 \[
@@ -507,7 +516,7 @@ Suppose that $H$ is a linear shift-invariant system that maps the input voltage 
 \[
 e^{st} = - \lambda e^{st}- R C D (\lambda e^{st}) = -\lambda e^{st} (1  - R C s)
 \]
-where, to simplify notation, we have written simply $\lambda$ for $\lambda H(s)$ above.  Solving for $\lambda$ be obtain the transfer function of the system $H$ describing the active RC circuit
+where, to simplify notation, we have written simply $\lambda$ for $\lambda H(s)$ above.  Solving for $\lambda$ leads to the transfer function of the system $H$ describing the active RC circuit
 \begin{equation}\label{eq:transferRCH}
 \lambda H(s) = -\frac{1}{1 + R C s}.
 \end{equation}
@@ -580,11 +589,12 @@ It is of interest to focus on the transfer function when $s$ is purely imaginary
 \[
 e^{j\omega t} = e^{j 2\pi f} = \cos( 2\pi f t) + j \sin( 2\pi f t)
 \] 
-where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ containing the signal $e^{j 2\pi f t}$.  We denote by $\Lambda H$ the function satisfying
+where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does not decay or explode as $\abs{t} \rightarrow \infty$.  Let $H \in X \to Y$ be a linear shift-invariant system with domain $X$ containing the signal $e^{j 2\pi f t}$, that is, $j 2\pi f t \in \cep X$.  We denote by $\Lambda H$ the function satisfying
 \[
-\Lambda H(f) = \lambda H( j 2\pi f )
+\Lambda H(f) = \lambda H( j 2\pi f ) \qquad j 2\pi f \in \cep X
 \]
-called the \term{spectrum} of $H$.  %The spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  
+called the \term{spectrum} of $H$.  It will regularly be the case that $\cep X$ contains the entire imaginary axis and so the domain of the spectrum is the set of real numbers $\reals$.  In this case  the spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  
+
 It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
 \[
 H e^{j 2\pi f t}  = \lambda H (j 2\pi f) e^{j 2\pi f t} = \Lambda H(f) e^{j 2\pi f t}
