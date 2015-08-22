@@ -1,5 +1,5 @@
-R1:15*10^3;
-R2:3300;
+R1:3300;
+R2:15*10^3;
 C1:100*10^-9;
 C2:10*10^-9;
 a:-R2*C1;
@@ -14,4 +14,19 @@ print(alpha,beta);
 A:a*alpha/c/(alpha-beta);
 B:a*beta/c/(alpha-beta);
 print(A,B);
-/*lambda(s):=a*s/c/(s-alpha)*/
+
+lambdaH(s):=a*s/(s^2*c+s*b+1);
+LambdaH(f):=lambdaH(2*%pi*f*%i);
+plot2d(abs(LambdaH(f)),[f,0,7000]);
+
+absLambdaH:realpart(LambdaH(f)*conjugate(LambdaH(f)));
+dLambdaH:diff(absLambdaH,f);
+print(absLambdaH);
+print(dLambdaH);
+solf:solve(dLambdaH=0,f);
+print(solf);
+
+maxf:rhs(fourth(solf));
+print(maxf, " is approximately ", float(maxf));
+maxLambda:abs(LambdaH(maxf));
+print(maxLambda);

@@ -290,7 +290,7 @@ for all finite constants $a$ and $b$, where $< \infty$ means that the integral e
 % Similarly two discrete time signals $x$ and $y$ are equal if $x(n) = y(n)$ for all $n \in \ints$.
 %BLERG: Potentially equality of signals could be defined using local integrability, i.e. two signals are equal if they are equal everywhere except a set of measure zero.
 %BERLG: Another relevant term is ``locally bounded'', i.e, a function is locally bounded if for each finite $a$ and $b$ there exists an $M$ such that $\abs{f(x) }< M$ for all $.  ACTUALLY THIS WONT BE GOOD, SINCE THEN FOURIER TRANSFORMS WONT BE SIGNALS.  It's still a useful concept potentially.  
-A signal $x$ is \term{absolutely integrable} if
+A signal $x$ is \term{absolutely integrable} or \term{Lebesgue integrable} if
 \begin{equation}\label{eq:l1normdefncontinuous}
 \|x\|_1 = \int_{-\infty}^{\infty} \abs{x(t)} dt < \infty.
 \end{equation}
