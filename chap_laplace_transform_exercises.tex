@@ -145,14 +145,14 @@ as required.  Observe that the region of convergence of $\calL y$ is the same as
 % \]
 % Observe that
 % \[
-% \lim_{\tau \to 0} \frac{x(t+\tau) - x(t)}{\tau} = D(x)
+% \lim_{\tau \to 0} \frac{x(t+\tau) - x(t)}{\tau} = Dx
 % \]
 % by definition of the differentiator $D$.  Lebesgue's dominated convergence theorem~\cite[page~26]{Rudin_real_and_complex_analysis} can be used to justify exchanging limits and integration so that
 % \begin{align*}
 %  \lim_{\tau \to 0} \int_{-\infty}^\infty  \frac{x(t+\tau) - x(t)}{\tau} e^{-st} dt &=  \int_{-\infty}^\infty  \lim_{\tau \to 0} \frac{x(t+\tau) - x(t)}{\tau} e^{-st} dt \\
-% &= \int_{-\infty}^\infty D(x,t) e^{-st} dt = \calL\big(D(x)\big).
+% &= \int_{-\infty}^\infty D x(t) e^{-st} dt = \calL D x.
 % \end{align*}
-% We now have  $\calL\big(D(x)\big) = s\calL(x) = \lambda(D) \calL(x)$ as required.
+% We now have  $\calLDx = s\calLx = \lambda D \calL x$ as required.
 
 Put $y = Dx$.  Taking Laplace transforms
 \[
@@ -174,11 +174,11 @@ The result follows for the $k$th differentiator $D^k$ under the assumption that
 \]
 for all $c = 1, 2, \dots, k-1$ because
 \[
-\calL\big( D^k(x) \big) = \calL\big( D(D^{k-1}(x)) \big) = s \calL\big( D^{k-1}(x) \big)
+\calL D^k x = \calL D D^{k-1} x= s \calL D^{k-1}x 
 \]
 and unravelling this recursion gives
 \[
-\calL\big( D^k(y) \big) = \underbrace{s \times s \times \dots \times s}_{\text{$k-1$ times}} \times \calL\big( D(y) \big) = s^k \calL( y ) = \lambda(D^k)\calL(y).
+\calL D^k y  = \underbrace{s \times s \times \dots \times s}_{\text{$k-1$ times}} \times \calL D y = s^k \calL y  = \lambda D^k \calL y.
 \]
 \end{solution}
 
@@ -364,7 +364,7 @@ as required.
 % \]
 % \end{solution}
 
-% \item \label{exer:thetainfinitelydiff} Plot the signal $\theta(t)$ from~\eqref{eq:thetainfinitediff} and its first 2 derivatives $D(\theta)$ and $D^2(\theta)$. Show that this signal is infinitely differentiable, that is, that it can be differentiated as many times as you like.
+% \item \label{exer:thetainfinitelydiff} Plot the signal $\theta(t)$ from~\eqref{eq:thetainfinitediff} and its first 2 derivatives $D \theta$ and $D^2 \theta$. Show that this signal is infinitely differentiable, that is, that it can be differentiated as many times as you like.
 % \begin{solution}
 
 % \end{solution}
@@ -387,7 +387,7 @@ as required.
 \begin{solution}
 The differential equation modelling the circuit is
 \[
--\frac{x}{R_1} - C_1 D(x) = \frac{y}{R_2} + C_2 D(y),
+-\frac{x}{R_1} - C_1 D x = \frac{y}{R_2} + C_2 D y,
 \]
 and taking Laplace transforms on both sides of this equation
 \[
@@ -438,7 +438,7 @@ H(f) = H\big(u - T_{1}(u)\big) = H(u) - T_{1}\big(H(u)\big),
 and so, $H(f,t) = H(u,t) - H(u,t-1)$, where $H(u)$ is the step response of the system.  The step responses are described in Section~\zref{sec:second-order-systems}.  As described in Section~\zref{sec:second-order-systems}, the system is underdamped when $B = \tfrac{\pi}{3}$, critically damped when $B = \pi$ and overdamped when $B = 2\pi$.
 \end{solution}
 
-\item Plot the signal $x(t) = \sin(t e^t) u(t)$ and find and plot its derivative $D(x)$.  Show that the region of convergence of $x$ contains those complex numbers $s$ with $\Re(s) > 0$ and that the region of convergence of $D(x)$ contains those with $\Re(s) > 1$.
+\item Plot the signal $x(t) = \sin(t e^t) u(t)$ and find and plot its derivative $D x$.  Show that the region of convergence of $x$ contains those complex numbers $s$ with $\Re(s) > 0$ and that the region of convergence of $D x$ contains those with $\Re(s) > 1$.
 \begin{solution}
 By application of the chain rule the derivative of $\sin(t e^t)$ is $(t+1)e^t \cos(e^t) u(t)$.  These signals are plotted below.
 \begin{center}
@@ -479,7 +479,7 @@ We have $\abs{x(t)} = \abs{\sin(t e^t) u(t)} < 1$ for all $t \in \reals$ and so
 \end{align*}
 which is finite for all $s$ with $\Re(s) > 0$ as required.  For the derivative we have
 \begin{align*}
-\calL\big( D(x) , s\big) &= \int_{-\infty}^\infty (t+1)e^t \cos(t e^t) u(t) e^{-s t} dt \\
+\calL D x (s) &= \int_{-\infty}^\infty (t+1)e^t \cos(t e^t) u(t) e^{-s t} dt \\
 &= \int_{0}^\infty (t+1) \cos(t e^t) e^{-(s-1) t}  dt \\
 &\leq \int_{0}^\infty \abs{(t+1) \cos(t e^t) e^{-(s-1) t}}  dt \\
 &\leq \int_{0}^\infty (t+1) e^{-(\Re(s)-1) t}  dt

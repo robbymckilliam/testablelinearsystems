@@ -8,7 +8,14 @@
 % The convergence is pointwise.  If $t \leq 0$ then $I_\infty(p_\gamma,t) = 0 = u(t)$ so only remains to consider what happens for $t > 0$.  Fix $t > 0$ and for any $\epsilon > 0$ we can choose $\gamma$ large enough that $I_\infty(p_\gamma,t) = 1$
 % \end{solution}
 
-\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\fin(h)$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
+\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\fin h$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
+\begin{solution}
+The set $\fin h$ contains those signals $y$ for which
+\[
+\int_{-\infty}^\infty \abs{h(\tau)y(t - \tau)} d\tau < \infty
+\]
+for all $t \in \reals$.
+\end{solution}
 
 \item Show that $\fin(u)$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
 \begin{solution}
@@ -78,8 +85,8 @@ is absolutely integrable.  Write
 \|x * y\|_1 &= \int_{-\infty}^\infty \abs{(x * y)(t)}dt \\
 &= \int_{-\infty}^\infty \abs{\int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau } dt \\
  &\leq \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau) y(t - \tau) } d\tau dt \\
- &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau)  }{ y(t - \tau) } dt d\tau \qquad \text{(change order integration (Tonelli's theorem))} \\
- &= \int_{-\infty}^\infty \int_{-\infty}^\infty { y(t - \tau) } dt \abs{ x(\tau) } d\tau \\
+ &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau)  }\abs{ y(t - \tau) } dt d\tau \qquad \text{(change order of integration (Tonelli's theorem))} \\
+ &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ y(t - \tau) } dt \abs{ x(\tau) } d\tau \\
   &= \|y\|_1 \int_{-\infty}^\infty \abs{ x(\tau) } d\tau \\
   &= \|y\|_1 \|x\|_1
 \end{align*}
@@ -197,34 +204,34 @@ on the interval $t \in [\tfrac{1}{\gamma}-1 ,1)$.  It remains to show what happe
 
 The step response can be found directly by inputing the step function $u$ to the system.  That is
 \[ 
-H(u,t) = \int_{-1}^{1} \sin(\pi\tau) u(t + \tau) d\tau.
+Hu(t) = \int_{-1}^{1} \sin(\pi\tau) u(t + \tau) d\tau.
 \]  
 To find an explicit expression for this integral 3 cases must be considered separately.  Observe that $u(t + \tau)$ is nozero only when $\tau > -t$.  If $t < -1$ then $u(t + \tau) = 0$ for all $\tau \in [-1,1]$ and so
 \[
-H(u,t) = \int_{-1}^{1} \sin(\pi\tau) u(t + \tau) d\tau = 0 \qquad t < -1.
+Hu(t) = \int_{-1}^{1} \sin(\pi\tau) u(t + \tau) d\tau = 0 \qquad t < -1.
 \] 
 If $t > 1$ then $u(t + \tau) = 1$ for all $\tau \in [-1,1]$ and so
 \[
-H(u,t) = \int_{-1}^{1} \sin(\pi\tau) d\tau = -\frac{\cos(\pi\tau)}{\pi} \big\vert_{-1}^1 = \frac{-\cos(\pi) + \cos(-\pi)}{\pi} = 0 \qquad t > 1.
+Hu(t) = \int_{-1}^{1} \sin(\pi\tau) d\tau = -\frac{\cos(\pi\tau)}{\pi} \big\vert_{-1}^1 = \frac{-\cos(\pi) + \cos(-\pi)}{\pi} = 0 \qquad t > 1.
 \]
 Finally, if $-1 \leq t \leq 1$ then $u(t + \tau)$ is $1$ for $\tau \in [-t,1]$ and $0$ for $\tau \in [-1,-t)$ and so
 \begin{align*}
-H(u,t) &= \int_{-t}^{1} \sin(\pi\tau) d\tau \\
+Hu(t) &= \int_{-t}^{1} \sin(\pi\tau) d\tau \\
 &= -\frac{\cos(\pi\tau)}{\pi} \big\vert_{-t}^1 \\
 &= \frac{-\cos(\pi) + \cos(-\pi t)}{\pi} = \frac{\cos(\pi t) + 1}{\pi} \qquad 1 \leq t \leq 1.
 \end{align*}
 
 An alternative way to find the step response is to apply the integrator system $I_\infty$ to the impulse response $h(t) = -\rect(t/2) \sin(\pi t)$ we derived earlier.  We have
 \[
-H(u) = I_\infty(h) = -\int_{-\infty}^t \rect(\tau/2) \sin(\pi \tau) d\tau.
+Hu(t) = I_\infty h(t) = -\int_{-\infty}^t \rect(\tau/2) \sin(\pi \tau) d\tau.
 \]
 Again the integral needs to be split into cases.  When $t < -1$ the $\rect(\tau/2)$ occuring inside the integral is always zero and so $H(u,t) = 0$ for $t < -1$.  When $t > 1$ 
 \[
-H(u) = -\int_{-1}^1 \sin(\pi \tau) d\tau = 0.
+Hu(t) = -\int_{-1}^1 \sin(\pi \tau) d\tau = 0.
 \]
 Finally, when $-1 \leq t \leq 1$ we have
 \[
-H(u) = -\int_{-1}^t \sin(\pi \tau) d\tau  = \frac{\cos(\pi \tau)}{\pi} \big\vert_{-1}^t = \frac{\cos(\pi t) + 1}{\pi}.
+Hu(t) = -\int_{-1}^t \sin(\pi \tau) d\tau  = \frac{\cos(\pi \tau)}{\pi} \big\vert_{-1}^t = \frac{\cos(\pi t) + 1}{\pi}.
 \]
 Observe that this is the same as previously.  The step response is plotted below.
 
