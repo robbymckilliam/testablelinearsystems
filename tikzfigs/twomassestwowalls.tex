@@ -39,9 +39,9 @@
       % \draw[color=black] plot[id=x] function{1/x^2} 
       % node[right] {$f(t) = t^{-2}$};
       \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{exp(-x*x)};
-      \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{exp(-x*x)*(1+4*x-8*x*x-4*x*x*x+4*x*x*x*x)};
+      \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{exp(-x*x)*(1+2*x-6*x*x-4*x*x*x+4*x*x*x*x)};
      % \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{exp(-x*x)*(1-8*x -8*x*x + 4*x*x*x + 4*x*x*x*x)};
-      \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{2*exp(-x*x)*x*x - 2.5};
+      \draw[smooth,color=black,thick,domain=-3.3:3.3,samples=100] plot function{(1+2*x*x)*exp(-x*x)-2.5};
       \vtick{-3} node[pos=0.5,below] {$-3$};
       \vtick{-2} node[pos=0.5,below] {$-2$};
       \vtick{-1} node[pos=0.5,below] {$-1$};
@@ -58,7 +58,7 @@
   }
 \newcommand{\animations}[1]{
     \pgfmathparse{exp(-#1*#1)}\pgfmathresult \let\p\pgfmathresult
-    \pgfmathparse{(2 - 8*#1*#1)*exp(-#1*#1)}\pgfmathresult \let\g\pgfmathresult
+    \pgfmathparse{(1+2*#1*#1)*exp(-#1*#1)}\pgfmathresult \let\g\pgfmathresult
     %draw animated line
     \begin{scope}[xscale=\plotxscale]
       \clip (-3.8,-1) rectangle (3.8,1);
@@ -83,12 +83,12 @@
       \node (Wleft) [wall] {};
       \draw (Wleft.north east)--(Wleft.south east);
 
-      \node (M1) [minimum width=1cm,minimum height=2cm,style={draw,outer sep=0pt,thick},xshift=2.65cm+\p cm] {$M_1$};
+      \node (M1) [minimum width=1cm,minimum height=2cm,style={draw,outer sep=0pt,thick},xshift=2.65cm+\g cm] {$M_1$};
       \draw [damper] (Wleft.east)--(M1.west) node[pos=0.5,above,minimum height=30pt] {$B$};
       % \draw [-latex,thick] (M1.north) ++(-0.5cm,0.3cm) -- +(1cm,0) node[pos=0.5,above] {$f(t)$};
       \draw [-latex,thick] (M1.south) ++(-0.5cm,-0.3cm) -- +(1cm,0) node[pos=0.5,below] {$f(t)$};
 
-      \node (M2) [minimum width=1cm,minimum height=2cm,style={draw,outer sep=0pt,thick},xshift=5.15cm+\g cm] {$M_2$};
+      \node (M2) [minimum width=1cm,minimum height=2cm,style={draw,outer sep=0pt,thick},xshift=5.15cm+\p cm] {$M_2$};
       \draw [spring] (M1.east)--(M2.west) node[pos=0.5,above,minimum height=20pt] {$K_1$};
       \draw [-latex,thick] (M2.south) ++(-0.5cm,-0.3cm) -- +(1cm,0) node[pos=0.5,below] {$p(t)$};
 
@@ -97,7 +97,7 @@
       \draw [spring] (M2.east)--(Wright.west) node[pos=0.5,above,minimum height=20pt] {$K_2$};
       % \draw [thick,<->] (Wleft.north east)++(0,0.25cm) -- ++(7.5cm,0) node[pos=0.5,above] {$d$};
       
-      \begin{scope}[xshift=5cm,yshift=-1.5cm]
+      \begin{scope}[xshift=5.15cm,yshift=-2cm]
         \draw (-4.3,0) -- (2.3cm,0);
         \vtick{2} node[pos=0.5,below] {$2$};
         \vtick{1} node[pos=0.5,below] {$1$};
@@ -111,8 +111,8 @@
 }
 
 \begin{document}
-%\multido{\rtime=-4+0.0625}{128}
- \multido{\rtime=-1.5+2}{6}
+\multido{\rtime=-4+0.0625}{128}
+% \multido{\rtime=-4+0.5}{20}
 {
   \begin{tikzpicture}
     \background

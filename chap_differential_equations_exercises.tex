@@ -122,7 +122,7 @@ y(t)= \left( \frac{R_iR_0 - R_2R_iA}{(1+A) R_iR_1+R_0R_1+R_2R_1+R_0R_i+R_2R_i} \
 \end{solution}
 
 
-\item \label{exer:twomassspringtwowalls} Figure~\ref{mech:twomassspringtwowalls} depicts a mechanical system involving two masses, two springs, and a damper connected between two walls.  Suppose that the spring $K_2$ is at rest when the mass $M_2$ is at position $p(t) = 0$.  A force, represented by the signal $f$, is applied to mass $M_1$.  Derive a differential equation relating the force $f$ and the position $p$ of mass $M_2$.  Determine the force $f$ in the case that the position $p(t) = e^{-t^2}$ and the coefficients $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$.
+\item \label{exer:twomassspringtwowalls} Figure~\ref{mech:twomassspringtwowalls} depicts a mechanical system involving two masses, two springs, and a damper connected between two walls.  Suppose that the spring $K_2$ is at rest when the mass $M_2$ is at position $p(t) = 0$.  A force, represented by the signal $f$, is applied to mass $M_1$.  Derive a differential equation relating the force $f$ and the position $p$ of mass $M_2$.  Determine the force $f$ in the case that the position $p(t) = e^{-t^2}$ and $M_1=M_2=\tfrac{1}{2}$ and $K_1 = K_2 = B = 1$.
 
 \begin{solution}
 Let $p_1$ be a signal representing the position of mass $M_1$.  Suppose that the spring $K_1$ connecting masses $M_1$ and $M_2$ is a rest when the masses are distance $d_1$ apart, i.e., $p - p_1 = d_1$.  The force applied by spring $K_1$ on mass $M_2$ is 
@@ -147,7 +147,7 @@ M_2 D^2p = f_1 + f_2 =  -K_1(p - g) - K_2p.
 \]
 Rearranging gives
 \[
--K_1 g = (K_1+K_2)p + M_2 D^2p
+K_1 g = (K_1+K_2)p + M_2 D^2p
 \]
 and
 \[
@@ -165,6 +165,20 @@ In the case that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$ we have
 \[
 p + 2Dp + 4D^2p + 2D^3p + 2D^4p = f.
 \]
+and if $p(t) = e^{-t^2}$ we have
+\[
+f(t) = (32 t^4-16 t^3-80 t^2+20 t+17) e^{-t^2}, \qquad g(t)=(8 t^2 - 2) e^{- t^2 }
+\]
+The solultion is animated in Figure~\ref{} under the assumption that $d = 2.5$.
+
+\begin{figure}[tp]
+  \centering
+  \defaultanimation{tikzfigs/twomassestwowalls}
+%\animategraphics[autoplay,loop,every=\every]{\defaultframerate}{}{}{}
+  \caption{Motion of masses $M_1$ and $M_2$ when postition of masses $M_1$ is $p(t) = e^{-t^2}$.} \label{fig:twomassestwowallsanimanim}
+\end{figure}
+
+
 \end{solution}
 
 \begin{figure}[p]
