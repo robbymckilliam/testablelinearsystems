@@ -1,47 +1,40 @@
-We have so far studied linear time invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  One particular linear time invariant system has so far been absent. This is the time shifter $T_\tau$ with non zero time shift $\tau \neq 0$.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
+We have so far studied linear time invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  %One particular linear time invariant system has so far been absent. 
+This is the time-shifter $T_\tau$ with non zero time shift $\tau \neq 0$ has so far been absent.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
 
-We now consider systems constructed from linear combinations of time shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
+We now consider systems constructed from linear combinations of time-shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
 \[
-H(x) = \sum_{n \in \ints} h_n T_{ P n}(x)
+H x = \sum_{n \in \ints} h_n T_{ P n} x
 \]
-where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
+where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
 The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_n = 0$ for all $n < 0$, then $H$ is causal because 
 \[
-H(x,t) = \sum_{n \in \ints} h_n T_{ P n}(x,t) = \sum_{n =0}^\infty h_n x(t - Pn)
+Hx(t) = \sum_{n \in \ints} h_n T_{ P n}x(t) = \sum_{n =0}^\infty h_n x(t - Pn)
 \] 
 only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
-Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let 
-\[
-H = a F + b G \qquad a,b\in\complex
-\]
-be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x$ is
+Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x$ is
 \begin{align*}
-H(x) &= a \sum_{n \in \ints} f_{n} T_{ P n}(x) + b \sum_{n \in \ints} g_{n} T_{ P n}(x) \\
-&=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}(x),
+Hx &= a \sum_{n \in \ints} f_{n} T_{ P n}x + b \sum_{n \in \ints} g_{n} T_{ P n}x \\
+&=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}x,
 \end{align*}
 and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.
 
-Now suppose that
-\[
-H(x) = F\big( G(x) \big)
-\]
-is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
+Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
-H(x) &= F \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
-&= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}(x)  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}(x).
+H x &= F \big( \sum_{n \in \ints} g_n T_{ P n} x  \big) \\
+&= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n} x  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}x  \big) \\
+&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}x.
 \end{align*}
 By putting $k = m+n$ we have
 \begin{align}
-H(x) &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}(x) \nonumber \\
-&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}(x) \qquad \text{(interchange summation)} \label{eq:discconvinterchangesummation}\\
-&= \sum_{k \in \ints} h_k T_{Pk}(x) \nonumber
+Hx &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}x \nonumber \\
+&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}x \qquad \text{(interchange summation)} \label{eq:discconvinterchangesummation}\\
+&= \sum_{k \in \ints} h_k T_{Pk}x \nonumber
 \end{align}
 where $h$ is the sequence with elements given by
 \[
