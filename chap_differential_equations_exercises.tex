@@ -220,7 +220,7 @@ The solultion is animated in Figure~\ref{} under the assumption that $d = 2.5$.
 
 
 
-\item \label{exer:dcmotorpotfeedback} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback}.  A direct current motor is connected to a potentiometer in such a way that the voltage at the output of the potentiometer is equal to the angle of the motor $\theta$.  This voltage is fed back to the input terminal of the motor.  An input voltage $v$ is applied to the other terminal on the motor.  Find the differential equation relating $v$ and $\theta$.  What is the input voltage $v$ if the motor angle satisfies $\theta(t) = \frac{\pi}{2} (1 + \operatorname{erf}(t) )$?  Plot $\theta$ and $v$ in this case when the motor coefficients satisfy $L=0$, $R = \tfrac{3}{4}$, and $K_b=K_\tau=B=J=1$.
+\item \label{exer:dcmotorpotfeedback} Consider the electromechanical system in Figure~\ref{fig:dcmotorpotfeedback}.  A direct current motor is connected to a potentiometer in such a way that the voltage at the output of the potentiometer is equal to the angle of the motor $\theta$.  This voltage is fed back via a unity gain amplifier to the input terminal of the motor.  An input voltage $v$ is applied to the other terminal on the motor.  Find the differential equation relating $v$ and $\theta$.  What is the input voltage $v$ if the motor angle satisfies $\theta(t) = \frac{\pi}{2} (1 + \operatorname{erf}(t) )$?  Plot $\theta$ and $v$ in this case when the motor coefficients satisfy $L=0$, $R = \tfrac{3}{4}$, and $K_b=K_\tau=B=J=1$.
 %Find the transfer function of the system that maps the input voltage $v$ to the motor angle $\theta$.  %Under the assumption that the motor coefficients satisfy $L=0$ and $K_b=K_\tau=B=R=J=1$ draw a pole zero plot and determine whether this system is stable and/or regular.  Find and plot the impulse response and step response if they exist.
 
 {
@@ -232,11 +232,14 @@ The solultion is animated in Figure~\ref{} under the assumption that $d = 2.5$.
     %to[short] (0,4);
     %to[short] (7.75,4) to[short,-o] (7.75,1.5);
     \draw (7,2.5) to[potentiometer,*-*] (7,0.5);
-    \draw (0,-1) to[open, v^>=$v$,o-o] (0,3);
-    \draw (7.75,1.5) to[short] (7.75,0) to[short] (4,0);
+    \draw (0,-1.5) to[open, v^>=$v$,o-o] (0,3);
+    \draw (5.5,-0.5) node[op amp,yscale=0.50,xscale=-0.50] {};
+    \draw (7.75,1.5) to[short] (7.75,-0.75) to[short] (6,-0.75);
+    \draw (5,-0.5) to[short] (4,-0.5) to[short] (4,0);
+    \draw (4.75,-0.5) to[short] (4.75,0.4) to[short] (6.5,0.4) to[short] (6.5,-0.25) to[short] (6,-0.25);
     \draw (7.5,1.5) to[short,-o] (9,1.5);
     %\draw (3,-1) node[ground] {};
-    \draw (0,-1) to[short] (9,-1) to[open,o-o,v>=$\theta$] (9,1.5);
+    \draw (0,-1.5) to[short] (9,-1.5) to[open,o-o,v>=$\theta$] (9,1.5);
     \begin{scope}[xshift=4cm,yshift=1.5cm]
       \node (M) [circle,style={draw,thick}] {motor};
       \node [right of=M, minimum width=1cm,rectangle,style={draw,thick},node distance=1.8cm] (J) {$J$};

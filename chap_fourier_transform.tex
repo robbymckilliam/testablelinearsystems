@@ -828,11 +828,11 @@ It happens that bandlimited signals are never finite.  We can reasonably suppose
 % \]
 % has bandwidth $b$ because the signals $\sinc(2bt - n)$ have bandwidth $b$.  
 
-A surprising result is that every square integrable bandlimited signal $x$ with bandwidth $b$ can be written as a sum of time scaled and time shifted $\sinc$ functions, that is, in the form
+A surprising result is that every square integrable bandlimited signal $x$ with bandwidth $b$ can be written as a sum of time-scaled and time-shifted $\sinc$ functions, that is, in the form
 \begin{equation}\label{eq:sincinterformula}
 x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
 \end{equation}
-where $c$ is a square integrable complex valued sequence and $F = 2b$.  This is a consequence of the~\term{Riesz-Fischer theorem}~\cite[page~91]{Rudin_real_and_complex_analysis}.  Evaluating the signal $x$ at integer multiples of $P = \tfrac{1}{F}$ we find that
+where $c$ is a square integrable complex valued sequence and $F = 2b$.  This is a consequence of a property of the space of square integrable signals $L_2$ called \term{completeness}~\cite[Theorem~3.11]{Rudin_real_and_complex_analysis}.  This property is sometimes also called the \term{Riesz-Fischer theorem}~\cite[page~91]{Rudin_real_and_complex_analysis}.  Evaluating the signal $x$ at integer multiples of $P = \tfrac{1}{F}$ we find that
 \[
 x(\ell P) = \sum_{n \in \ints} c_n \sinc( \ell - n ) = c_\ell
 \]
