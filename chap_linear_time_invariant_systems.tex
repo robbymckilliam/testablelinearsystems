@@ -1,5 +1,5 @@
 
-In the previous section we derived differential equations that model mechanical, electrical, and electro-mechanical systems.  The equations themselves often do not provide sufficient information.  For example, we were able to find a signal $p$ representing the position of the mass-spring-damper in Figure~\ref{mech:massspring1} given a particular force signal $f$ is applied to the mass.  However, it is not immediately obvious how to find the force signal $f$ given a particular position signal $p$.  We will be able to solve this problem and, more generally, to describe properties of systems modelled by linear differential equations with constant coefficient, if we make the added assumptions that the systems are \term{linear} and \term{shift-invariant}.  We study linear shift-invariant systems in this chapter.  Throughout this chapter $H$ will denote a linear shift-invariant system.
+In the previous section we derived differential equations that model mechanical, electrical, and electro-mechanical systems.  The equations themselves often do not provide sufficient information.  For example, we were able to find a signal $p$ representing the position of the mass-spring-damper in Figure~\ref{mech:massspring1} given a particular force signal $f$ is applied to the mass.  However, it is not immediately obvious how to find the force signal $f$ given a particular position signal $p$.  We will be able to solve this problem and, more generally, to describe properties of systems modelled by linear differential equations with constant coefficient, if we make the added assumptions that the systems are \term{linear} and \term{shift-invariant}.  We study linear shift-invariant systems in this chapter.  %Throughout this chapter $H$ will denote a linear shift-invariant system.
 
 \section{Convolution, regular systems and the delta ``function''} \label{sec:conv-regul-syst}
 
@@ -16,13 +16,14 @@ Those systems that have an impulse response we call \term{regular systems}\footn
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
 \]
-This set of signals is denoted by $\fin(h)$ and so $H \in \fin(h) \to \reals \to \complex$.  Observe that for all $x \in \fin(h)$ the response 
-\[
-Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau \leq \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty 
-\]
-for all $t \in \reals$.  It can be shown that $\fin(h)$ is a linear shift-invariance space (Exercise~\ref{exer:finhlinshiftinv}).
+This set of signals is denoted by $\fin h$ and so $H \in \fin h \to \reals \to \complex$.  % Observe that for all $x \in \fin h$ the response 
+% \[
+% Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau \leq \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty 
+% \]
+% for all $t \in \reals$.  
+It can be shown that $\fin h$ is a linear shift-invariance space (Exercise~\ref{exer:finhlinshiftinv}).
 
-Regular systems are linear because, for all $x, y \in \fin(h)$ and all $a, b \in \complex$,
+Regular systems are linear because, for all $x, y \in \fin h$ and all $a, b \in \complex$,
 \begin{equation}\begin{split}\label{eq:regsystemislinear}
 H(ax + by) &= h * (ax + by) \\
 &= \int_{-\infty}^{\infty} h(\tau) \big(ax(t - \tau) + by(t - \tau)\big) d\tau \\
@@ -34,7 +35,7 @@ The above equation shows that convolution commutes with scalar multiplication an
 \[
 h * (ax + by) =  a (h * x) + b(h*y).
 \]
-Regular systems are also shift-invariant because for all $x \in \fin(h)$
+Regular systems are also shift-invariant because for all $x \in \fin h$
 \begin{align*}
 T_\kappa H x &= T_\kappa(h * x ) \\
 &= \int_{-\infty}^{\infty} h(\tau) x(t- \kappa - \tau) d\tau \\
@@ -56,18 +57,18 @@ H p_\gamma = h * p_\gamma = \int_{-\infty}^\infty h(\tau) p_\gamma(t - \tau) d\t
 \end{align*}
 Taking $\gamma \to \infty$ we find that
 \[
-\lim_{\gamma \rightarrow \infty} H p_\gamma = \lim_{\gamma \rightarrow \infty} \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau = h \;\; \text{a.e.}.
+\lim_{\gamma \rightarrow \infty} H p_\gamma = \lim_{\gamma \rightarrow \infty} \gamma \int_{t- 1/\gamma}^{t} h(\tau) d\tau = h \;\; \text{a.e.}
 \]
 %that is, the impulse response satisfies $h = \lim_{\gamma \rightarrow \infty} H p_\gamma$ almost everywhere.  %If this limit does not converge for any $t$, then the system is not regular and does not have an impulse response.  %The reader unclear on the meaning of the limit above might want to review Section~\ref{sec:convergence-signals}.
 
 %BLERG Young's inequality gives a neat way of knowing when convolutions exist or don't exists based on what Lp space the signals lie in.  This becomes useful in the Fourier transform section?
 
-As an example, consider the integrator system $I_\infty$ described in Section~\ref{sec:some-import-syst}.  This response of $I_\infty$ to $p_\gamma$ is 
+As an example, consider the integrator system $I_\infty$ described in Section~\ref{sec:some-import-syst}.  The response of $I_\infty$ to $p_\gamma$ is 
 \[
 I_\infty p_\gamma(t) = \int_{-\infty}^{t} p_\gamma(\tau) d\tau = \begin{cases}
 0, & t \leq 0 \\
 \gamma t, & 0 < t \leq \frac{1}{\gamma} \\
-1, & t > \frac{1}{\gamma}
+1, & t > \frac{1}{\gamma}.
 \end{cases}
 \]
 The response is plotted in Figure~\ref{fig:rectpulsedelta}.  Taking the limit as $\gamma \rightarrow\infty$ we find that the impulse response of the integrator is the step function
