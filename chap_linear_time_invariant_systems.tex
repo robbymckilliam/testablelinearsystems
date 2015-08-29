@@ -16,14 +16,14 @@ Those systems that have an impulse response we call \term{regular systems}\footn
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
 \]
-This set of signals is denoted by $\fin h$ and so $H \in \fin h \to \reals \to \complex$.  % Observe that for all $x \in \fin h$ the response 
+This set of signals is denoted by $\dom h$ and so $H \in \dom h \to \reals \to \complex$.  % Observe that for all $x \in \dom h$ the response 
 % \[
 % Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau \leq \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty 
 % \]
 % for all $t \in \reals$.  
-It can be shown that $\fin h$ is a linear shift-invariance space (Exercise~\ref{exer:finhlinshiftinv}).
+It can be shown that $\dom h$ is a linear shift-invariance space (Exercise~\ref{exer:finhlinshiftinv}).
 
-Regular systems are linear because, for all $x, y \in \fin h$ and all $a, b \in \complex$,
+Regular systems are linear because, for all $x, y \in \dom h$ and all $a, b \in \complex$,
 \begin{equation}\begin{split}\label{eq:regsystemislinear}
 H(ax + by) &= h * (ax + by) \\
 &= \int_{-\infty}^{\infty} h(\tau) \big(ax(t - \tau) + by(t - \tau)\big) d\tau \\
@@ -35,7 +35,7 @@ The above equation shows that convolution commutes with scalar multiplication an
 \[
 h * (ax + by) =  a (h * x) + b(h*y).
 \]
-Regular systems are also shift-invariant because for all $x \in \fin h$
+Regular systems are also shift-invariant because for all $x \in \dom h$
 \begin{align*}
 T_\kappa H x &= T_\kappa(h * x ) \\
 &= \int_{-\infty}^{\infty} h(\tau) x(t- \kappa - \tau) d\tau \\
@@ -230,16 +230,17 @@ x * y = \int_{-\infty}^\infty u(\tau) u(t - \tau) d\tau =  \begin{cases}
 0 & t \leq 0
 \end{cases}
 \]
-if finite for all $t$.  % The convolution $x * y$ always exists if both $x$ and $y$ are right sided because, in this case, there exists a $T \in \reals$ such that $x(t) = y(t) = 0$ for all $t < T$, and so
-% \[
-% z(t) = x * y = \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau = \int_{t-T}^Tx(\tau) y(t - \tau) d\tau.
-% \]
-% This integral exists because both $x$ and $y$ are locally integrable (see Section~\ref{sec:properties-signals}).  Similarly $x*y$ exists if both $x$ and $y$ are left sided or if one of $x$ or $y$ is finite.
+is finite for all $t$.  If $x \in \dom y$ or equivalently $y \in \dom x$ then the convolution $x * y$ exists because, in this case,
+\[
+\abs{(x*y)(t)} = \int_{-\infty}^{\infty} x(\tau) y(t - \tau) d\tau \leq \int_{-\infty}^{\infty} \abs{x(\tau) y(t - \tau)} d\tau < \infty 
+\]
+for all $t \in \reals$.  
 
 We have already shown in~\eqref{eq:regsystemislinear} that convolution commutes with scalar multiplication and is distributive with addition, that is, for signals $x,y,w$ and complex numbers $a,b$,
 \[
 a (x * w) + b (y * w) = (ax + by) * w.
 \]
+The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if $w \in \dom x \cap \dom y$ for example.
 
 Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
 \begin{align*}
@@ -247,10 +248,12 @@ x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 &= \int_{-\infty}^\infty x(t - \kappa) y(\kappa) d\kappa \qquad (\text{change variable $\kappa = t - \tau$}) \\
 &= y * x.
 \end{align*}
-Convolution is also associative, that is, for signals $x,y,z$, 
+Under approriate assumptions, convolution is associative, that is, for signals $x,y,z$, we have $(x*y)*z = x*(y*z)$.  To describe conditions under which associativity holds let us first define the set $\dom(x,y)$ to contain all those signals $z$ such that the double integral
 \[
-(x*y)*z = x*(y*z). \qquad \text{(Exercise~\ref{excer:convassociative})}
-\]
+\int_{-\infty}^\infty \int_{-\infty}^\infty  
+\] 
+
+
 By combining the associative and commutative properties we find that the order in which the convolutions in $x * y * z$ are performed does not mater, that is
 \[
 x*y*z = y*z*x = z*x*y = y*x*z = x*z*y = z*y*x
@@ -341,7 +344,7 @@ Hx &= H_2H_1 x \\
 \end{align*}
 and so, $H$ is a regular system with impulse response $h = h_2 * h_1$.  %Thus, if $H$ is the composition of regular systems $H_1$ and $H_2$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $H_1$ and $H_2$.  
 
-%BLERG: The above use of associativity of convolution is hiding use of Fubini's theorem (or Tonelli's theorem).  There's some subtle assumptions about the domain of H_1 and H_2 that are being hidden here.  You can't necessarily use the default domains \fin h_1 and \fin h_2.
+%BLERG: The above use of associativity of convolution is hiding use of Fubini's theorem (or Tonelli's theorem).  There's some subtle assumptions about the domain of H_1 and H_2 that are being hidden here.  You can't necessarily use the default domains \dom h_1 and \dom h_2.
 % Use of Tonelli's theorem is probably the way to go here.  Work's on the extended real line, but allows interchanges.  You only get something infinite if all integrals, double, or iteratered (in either direction) are infinite.  So if any are finite they all are and they are all equal.
 
 \begin{figure}

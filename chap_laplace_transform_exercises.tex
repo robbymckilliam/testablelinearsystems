@@ -89,17 +89,17 @@ We have
 \end{align*}
 \end{solution}
 
-\item \label{exer:finhandroch} Let $H$ be a regular system with impulse response $h$.  Show that the complex exponential signal $e^{st} \in \fin h$ if and only if $s \in \roc h$, that is, $\roc h = \cep \fin h$.
+\item \label{exer:finhandroch} Let $H$ be a regular system with impulse response $h$.  Show that the complex exponential signal $e^{st} \in \dom h$ if and only if $s \in \roc h$, that is, $\roc h = \cep \dom h$.
 \begin{solution}
 The set $\roc h$ contains all those complex numbers $s$ such that
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{if and only if $s \in \roc h$}.
 \]
-The set $\fin h$ contains all those signals such that
+The set $\dom h$ contains all those signals such that
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
 \]
-The set $\cep \fin h$ contains the complex numebrs $s$ such that the complex exponential signal $e^{st} \in \fin h$, that is, those complex $s$ such
+The set $\cep \dom h$ contains the complex numebrs $s$ such that the complex exponential signal $e^{st} \in \dom h$, that is, those complex $s$ such
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) e^{s(t - \tau)}} d\tau = \abs{e^{st}} \int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
 \]

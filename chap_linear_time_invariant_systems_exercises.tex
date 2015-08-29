@@ -8,33 +8,33 @@
 % The convergence is pointwise.  If $t \leq 0$ then $I_\infty(p_\gamma,t) = 0 = u(t)$ so only remains to consider what happens for $t > 0$.  Fix $t > 0$ and for any $\epsilon > 0$ we can choose $\gamma$ large enough that $I_\infty(p_\gamma,t) = 1$
 % \end{solution}
 
-\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\fin h$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
+\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\dom h$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
 \begin{solution}
-The set $\fin h$ contains those signals $x$ for which
+The set $\dom h$ contains those signals $x$ for which
 \[
 \int_{-\infty}^\infty \abs{h(\tau)x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$.}
 \]
-Suppose that $x, y \in \fin h$ and $a, b \in \complex$.  Then
+Suppose that $x, y \in \dom h$ and $a, b \in \complex$.  Then
 \begin{align*}
 \int_{-\infty}^\infty &\abs{h(\tau)(ax(t - \tau) + by(t - \tau)} d\tau \\
 &\leq \abs{a} \int_{-\infty}^\infty \abs{h(\tau) x(t - \tau)} d\tau + \abs{b} \int_{-\infty}^\infty \abs{h(\tau) y(t - \tau)} d\tau.
 \end{align*}
-Both integrals on the right hand side are finite for all $t \in \reals$ becase $x$ and $y$ are in $\fin h$.  Thus the right hand side is finite for all $t\in\reals$ and so the linear combination $ax + by \in \fin h$.  It follows that $\fin h$ is a linear space.
+Both integrals on the right hand side are finite for all $t \in \reals$ becase $x$ and $y$ are in $\dom h$.  Thus the right hand side is finite for all $t\in\reals$ and so the linear combination $ax + by \in \dom h$.  It follows that $\dom h$ is a linear space.
 
-If $x \in \fin h$ then
+If $x \in \dom h$ then
 \[
 \int_{-\infty}^\infty \abs{h(\tau) T_k x(t - \tau)} d\tau = \int_{-\infty}^\infty \abs{h(\tau) x(t - \tau - k)} d\tau < \infty
 \]
-for all $t \in \reals$ and so the shifted signal $T_k x \in \fin h$.  It follows that $\fin h$ is a shift-invariant space.
+for all $t \in \reals$ and so the shifted signal $T_k x \in \dom h$.  It follows that $\dom h$ is a shift-invariant space.
 \end{solution}
 
-\item Show that $\fin u$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
+\item Show that $\dom u$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
 \begin{solution}
-By definition $\fin u$ is the set of signals $x$ such that
+By definition $\dom u$ is the set of signals $x$ such that
 \[
 \int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
 \]
-Denote by $B$ the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.  We first show that $\fin u$ is a subset of $B$, that is $\fin u \subseteq B$.  We do so by contraposition, that is, we show that if $x \notin B$ then $x \notin \fin u$.  Suppose that $x$ is not locally integrable, that is, suppose there exists $a, b \in \reals$ such that $\int_{a}^{b} \abs{x(t)} d\tau$ is not finite.  Then $x \notin B$.  Now
+Denote by $B$ the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.  We first show that $\dom u$ is a subset of $B$, that is $\dom u \subseteq B$.  We do so by contraposition, that is, we show that if $x \notin B$ then $x \notin \dom u$.  Suppose that $x$ is not locally integrable, that is, suppose there exists $a, b \in \reals$ such that $\int_{a}^{b} \abs{x(t)} d\tau$ is not finite.  Then $x \notin B$.  Now
 \[
 \int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{\infty} \abs{u(t - k) x(k)} dk = \int_{-\infty}^{t} \abs{x(k)} dk
 \]
@@ -42,9 +42,9 @@ the second equation following from the change of variable $k = t - \tau$.  Choos
 \[
 \int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau \geq \int_{a}^{b} \abs{x(\tau)} d\tau
 \]
-which, by assumption, is not finite, and so $x \notin \fin u$.  
+which, by assumption, is not finite, and so $x \notin \dom u$.  
 
-We now show that $B \subseteq \fin u$.  Suppose that $x \in \fin u$, that is, suppose that
+We now show that $B \subseteq \dom u$.  Suppose that $x \in \dom u$, that is, suppose that
 \[
 \int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty
 \]
@@ -60,7 +60,7 @@ for all $a, t \in \reals$ and so $x$ is locally integrabls and putting $a = 0$ w
 \[
 \int_{-\infty}^{0} \abs{x(\tau)} d\tau < \infty.
 \]
-It follows that $x \in B$.  We have now show that $\fin u \subseteq B$ and that $B \subseteq \fin u$ and so it must be that $B = \fin u$.
+It follows that $x \in B$.  We have now show that $\dom u \subseteq B$ and that $B \subseteq \dom u$ and so it must be that $B = \dom u$.
 \end{solution} 
 
 \item \label{excer:distributivecommutive} Show that convolution distributes with addition and commutes with scalar multiplication, that is, show that $a(x*w) + b(y*w) = (ax+by)*w$.
@@ -109,7 +109,7 @@ which is finite by our assumption that $x$ and $y$ are absolutely integrable.  T
 
 \item \label{excer:bibostableimpulseresp} Show that a regular system is stable if and only if its impulse response is absolutely integrable.
 \begin{solution}
-Let $H$ be a regular system and $h$ its impulse response.  By default the domain of $H$ is supposed to be $\fin h$, that is $H \in \fin h \to \complex$.  If $h$ is absolutely integrable then for all signals $x \in \fin h$ such that $\sabs{x(t)} < M$ for all $t$,
+Let $H$ be a regular system and $h$ its impulse response.  By default the domain of $H$ is supposed to be $\dom h$, that is $H \in \dom h \to \complex$.  If $h$ is absolutely integrable then for all signals $x \in \dom h$ such that $\sabs{x(t)} < M$ for all $t$,
 \begin{align*}
 \abs{H x(t)} &= \abs{(h * x)(t)} \\
 &= \abs{\int_{-\infty}^\infty h(\tau)  x(t - \tau) d\tau} \\
@@ -126,7 +126,7 @@ s(t) = \begin{cases}
 -1 & h(-t) \leq 0.
 \end{cases}
 \]
-Observe that $s$ is not in the domain $\fin h$ because
+Observe that $s$ is not in the domain $\dom h$ because
 \[
 \int_{-\infty}^\infty \abs{h(\tau)  s(-\tau)} d\tau = \int_{-\infty}^\infty \abs{h(\tau)} d\tau = \infty
 \]
@@ -138,11 +138,11 @@ s(t) & \abs{t} < \kappa \\
 0 & \text{otherwise}
 \end{cases}
 \]
-is in $\fin h$ since
+is in $\dom h$ since
 \[
 \int_{-\infty}^\infty \abs{h(\tau)  r_\kappa(-\tau)} d\tau = \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau < \infty
 \]
-because $h$ is locally integrable (the impulse response is always locally integrable by assumption.  See Section~\ref{sec:conv-regul-syst}).  Put $M > 1$ and suppose that $H$ was stable.  Then there exists $K > 0$ such that $\abs{H x(t)} < K$ for all $t \in \reals$ and all $x \in \fin h$ bounded less that $M$.  Observe that $r_\kappa$ is bounded less than $M$, that is, $\abs{r_\kappa(t)} \leq 1 < M$ for all $\kappa \in \reals$ and all $t \in \reals$.  The response of $H$ to $r_\kappa$ at time zero is
+because $h$ is locally integrable (the impulse response is always locally integrable by assumption.  See Section~\ref{sec:conv-regul-syst}).  Put $M > 1$ and suppose that $H$ was stable.  Then there exists $K > 0$ such that $\abs{H x(t)} < K$ for all $t \in \reals$ and all $x \in \dom h$ bounded less that $M$.  Observe that $r_\kappa$ is bounded less than $M$, that is, $\abs{r_\kappa(t)} \leq 1 < M$ for all $\kappa \in \reals$ and all $t \in \reals$.  The response of $H$ to $r_\kappa$ at time zero is
 \[
 H r_\kappa(0) = \int_{-\infty}^\infty h(\tau)  r_\kappa(-\tau) d\tau =  \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau
 \]
