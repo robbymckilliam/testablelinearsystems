@@ -250,15 +250,18 @@ x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 \end{align*}
 Under approriate assumptions, convolution is associative, that is, for signals $x,y,z$, we have $(x*y)*z = x*(y*z)$.  To describe conditions under which associativity holds let us first define the set $\dom(x,y)$ to contain all those signals $z$ such that the double integral
 \[
-\int_{-\infty}^\infty \int_{-\infty}^\infty  
+\int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\kappa)y(\tau)z(t - \kappa - \tau)} \; d\tau \; d\kappa < \infty
 \] 
-
+for all $t \in \reals$.  We will often drop the brackets and right simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
+\[
+(x * (y * z))(t) = \int_{-\infty}^\infty
+\]
 
 By combining the associative and commutative properties we find that the order in which the convolutions in $x * y * z$ are performed does not mater, that is
 \[
 x*y*z = y*z*x = z*x*y = y*x*z = x*z*y = z*y*x
 \]
-provided that all the convolutions involved exist.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
+provided that all the convolutions involved exist.  For example, this holds if $z \in \dom x\,y$.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
 
 \section{Linear combination and composition}\label{sec:line-comb-comp}
 
