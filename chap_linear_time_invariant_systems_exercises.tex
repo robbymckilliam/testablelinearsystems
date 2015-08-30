@@ -8,61 +8,6 @@
 % The convergence is pointwise.  If $t \leq 0$ then $I_\infty(p_\gamma,t) = 0 = u(t)$ so only remains to consider what happens for $t > 0$.  Fix $t > 0$ and for any $\epsilon > 0$ we can choose $\gamma$ large enough that $I_\infty(p_\gamma,t) = 1$
 % \end{solution}
 
-\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\dom h$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
-\begin{solution}
-The set $\dom h$ contains those signals $x$ for which
-\[
-\int_{-\infty}^\infty \abs{h(\tau)x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$.}
-\]
-Suppose that $x, y \in \dom h$ and $a, b \in \complex$.  Then
-\begin{align*}
-\int_{-\infty}^\infty &\abs{h(\tau)(ax(t - \tau) + by(t - \tau)} d\tau \\
-&\leq \abs{a} \int_{-\infty}^\infty \abs{h(\tau) x(t - \tau)} d\tau + \abs{b} \int_{-\infty}^\infty \abs{h(\tau) y(t - \tau)} d\tau.
-\end{align*}
-Both integrals on the right hand side are finite for all $t \in \reals$ becase $x$ and $y$ are in $\dom h$.  Thus the right hand side is finite for all $t\in\reals$ and so the linear combination $ax + by \in \dom h$.  It follows that $\dom h$ is a linear space.
-
-If $x \in \dom h$ then
-\[
-\int_{-\infty}^\infty \abs{h(\tau) T_k x(t - \tau)} d\tau = \int_{-\infty}^\infty \abs{h(\tau) x(t - \tau - k)} d\tau < \infty
-\]
-for all $t \in \reals$ and so the shifted signal $T_k x \in \dom h$.  It follows that $\dom h$ is a shift-invariant space.
-\end{solution}
-
-\item Show that $\dom u$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
-\begin{solution}
-By definition $\dom u$ is the set of signals $x$ such that
-\[
-\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
-\]
-Denote by $B$ the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.  We first show that $\dom u$ is a subset of $B$, that is $\dom u \subseteq B$.  We do so by contraposition, that is, we show that if $x \notin B$ then $x \notin \dom u$.  Suppose that $x$ is not locally integrable, that is, suppose there exists $a, b \in \reals$ such that $\int_{a}^{b} \abs{x(t)} d\tau$ is not finite.  Then $x \notin B$.  Now
-\[
-\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{\infty} \abs{u(t - k) x(k)} dk = \int_{-\infty}^{t} \abs{x(k)} dk
-\]
-the second equation following from the change of variable $k = t - \tau$.  Choosing $k > b$ we have
-\[
-\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau \geq \int_{a}^{b} \abs{x(\tau)} d\tau
-\]
-which, by assumption, is not finite, and so $x \notin \dom u$.  
-
-We now show that $B \subseteq \dom u$.  Suppose that $x \in \dom u$, that is, suppose that
-\[
-\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty
-\]
-for all $t$.  Then
-\[
-\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau = \int_{-\infty}^{a} \abs{x(\tau)} d\tau + \int_{a}^{t} \abs{x(\tau)} d\tau
-\]
-for all $a, t \in \reals$ and so, the two integrals on the right are finite for all $a,t \in \reals$.  In particular
-\[
-\int_{a}^{t} \abs{x(\tau)} d\tau < \infty
-\]
-for all $a, t \in \reals$ and so $x$ is locally integrabls and putting $a = 0$ we have that
-\[
-\int_{-\infty}^{0} \abs{x(\tau)} d\tau < \infty.
-\]
-It follows that $x \in B$.  We have now show that $\dom u \subseteq B$ and that $B \subseteq \dom u$ and so it must be that $B = \dom u$.
-\end{solution} 
-
 \item \label{excer:distributivecommutive} Show that convolution distributes with addition and commutes with scalar multiplication, that is, show that $a(x*w) + b(y*w) = (ax+by)*w$.
 \begin{solution}
 \begin{align*}
@@ -490,6 +435,61 @@ I_\infty h(t) = \int_{-\infty}^t h(\tau) d\tau = \begin{cases}
 \end{center}
 
 \end{solution}
+
+\item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\dom h$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
+\begin{solution}
+The set $\dom h$ contains those signals $x$ for which
+\[
+\int_{-\infty}^\infty \abs{h(\tau)x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$.}
+\]
+Suppose that $x, y \in \dom h$ and $a, b \in \complex$.  Then
+\begin{align*}
+\int_{-\infty}^\infty &\abs{h(\tau)(ax(t - \tau) + by(t - \tau)} d\tau \\
+&\leq \abs{a} \int_{-\infty}^\infty \abs{h(\tau) x(t - \tau)} d\tau + \abs{b} \int_{-\infty}^\infty \abs{h(\tau) y(t - \tau)} d\tau.
+\end{align*}
+Both integrals on the right hand side are finite for all $t \in \reals$ becase $x$ and $y$ are in $\dom h$.  Thus the right hand side is finite for all $t\in\reals$ and so the linear combination $ax + by \in \dom h$.  It follows that $\dom h$ is a linear space.
+
+If $x \in \dom h$ then
+\[
+\int_{-\infty}^\infty \abs{h(\tau) T_k x(t - \tau)} d\tau = \int_{-\infty}^\infty \abs{h(\tau) x(t - \tau - k)} d\tau < \infty
+\]
+for all $t \in \reals$ and so the shifted signal $T_k x \in \dom h$.  It follows that $\dom h$ is a shift-invariant space.
+\end{solution}
+
+\item Show that $\dom u$ where $u$ is the step function is the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.
+\begin{solution}
+By definition $\dom u$ is the set of signals $x$ such that
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
+\]
+Denote by $B$ the subset of locally integrable signals such that $\int_{-\infty}^0\abs{x(t)}dt < \infty$.  We first show that $\dom u$ is a subset of $B$, that is $\dom u \subseteq B$.  We do so by contraposition, that is, we show that if $x \notin B$ then $x \notin \dom u$.  Suppose that $x$ is not locally integrable, that is, suppose there exists $a, b \in \reals$ such that $\int_{a}^{b} \abs{x(t)} d\tau$ is not finite.  Then $x \notin B$.  Now
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{\infty} \abs{u(t - k) x(k)} dk = \int_{-\infty}^{t} \abs{x(k)} dk
+\]
+the second equation following from the change of variable $k = t - \tau$.  Choosing $k > b$ we have
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau \geq \int_{a}^{b} \abs{x(\tau)} d\tau
+\]
+which, by assumption, is not finite, and so $x \notin \dom u$.  
+
+We now show that $B \subseteq \dom u$.  Suppose that $x \in \dom u$, that is, suppose that
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau < \infty
+\]
+for all $t$.  Then
+\[
+\int_{-\infty}^{\infty} \abs{u(\tau) x(t - \tau)} d\tau = \int_{-\infty}^{t} \abs{x(\tau)} d\tau = \int_{-\infty}^{a} \abs{x(\tau)} d\tau + \int_{a}^{t} \abs{x(\tau)} d\tau
+\]
+for all $a, t \in \reals$ and so, the two integrals on the right are finite for all $a,t \in \reals$.  In particular
+\[
+\int_{a}^{t} \abs{x(\tau)} d\tau < \infty
+\]
+for all $a, t \in \reals$ and so $x$ is locally integrabls and putting $a = 0$ we have that
+\[
+\int_{-\infty}^{0} \abs{x(\tau)} d\tau < \infty.
+\]
+It follows that $x \in B$.  We have now show that $\dom u \subseteq B$ and that $B \subseteq \dom u$ and so it must be that $B = \dom u$.
+\end{solution} 
 
 % \item \label{excer:activeRCinverseislinear}  Let $H$ be a system describing the mapping from input voltage signal $x$ to output voltage signal $y = H(x)$ for the active RC electrical circuit described by the differential equation
 % \[

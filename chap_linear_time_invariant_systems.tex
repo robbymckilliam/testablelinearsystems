@@ -240,21 +240,32 @@ We have already shown in~\eqref{eq:regsystemislinear} that convolution commutes 
 \[
 a (x * w) + b (y * w) = (ax + by) * w.
 \]
-The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if $w \in \dom x \cap \dom y$ for example.
-
-Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
+The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if $w \in \dom x \cap \dom y$ for example.  Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
 \begin{align*}
 x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 &= \int_{-\infty}^\infty x(t - \kappa) y(\kappa) d\kappa \qquad (\text{change variable $\kappa = t - \tau$}) \\
 &= y * x.
 \end{align*}
+
 Under approriate assumptions, convolution is associative, that is, for signals $x,y,z$, we have $(x*y)*z = x*(y*z)$.  To describe conditions under which associativity holds let us first define the set $\dom(x,y)$ to contain all those signals $z$ such that the double integral
 \[
-\int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\kappa)y(\tau)z(t - \kappa - \tau)} \; d\tau \; d\kappa < \infty
+\int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\tau)y(\kappa)z(t - \kappa - \tau)} \, d\kappa \, d\tau < \infty
 \] 
 for all $t \in \reals$.  We will often drop the brackets and right simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
+\begin{align*}
+x*(y*z) &= \int_{-\infty}^\infty x(\tau) (y*z)(t - \tau) d\tau \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\kappa \, d\tau
+\end{align*}
+Since $z \in \dom x\,y$ Fubini's theorem justifies exchanging the order of integration 
+\begin{align*}
+x*(y*z) &= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\tau \, d\kappa \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \nu) \, d\tau \, d\nu \qquad \text{(change variables $\nu = \kappa + \tau$)} \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(\nu) \, d\nu \, d\tau
+\end{align*}
+
+Aiming at 
 \[
-(x * (y * z))(t) = \int_{-\infty}^\infty
+(x*y)*z = \int_{-\infty}^\infty  (x*y)(\tau) z(t - \tau) d\tau = \int_{-\infty}^\infty \int_{-\infty}^\infty x(\kappa) y(\tau - \kappa)  z(t - \tau) d\kappa d\tau
 \]
 
 By combining the associative and commutative properties we find that the order in which the convolutions in $x * y * z$ are performed does not mater, that is
