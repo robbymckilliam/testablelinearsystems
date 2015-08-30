@@ -247,26 +247,25 @@ x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 &= y * x.
 \end{align*}
 
-Under approriate assumptions, convolution is associative, that is, for signals $x,y,z$, we have $(x*y)*z = x*(y*z)$.  To describe conditions under which associativity holds let us first define the set $\dom(x,y)$ to contain all those signals $z$ such that the double integral
+Convolution is associative under appropriate assumptions, that is, for signals $x,y,z$, we have $x*(y*z) = (x*y)*z$.  To describe conditions under which associativity holds let us first define the set $\dom(x,y)$ to contain all those signals $z$ such that the double integral
 \[
-\int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\tau)y(\kappa)z(t - \kappa - \tau)} \, d\kappa \, d\tau < \infty
+\int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\tau)y(\kappa)z(t - \kappa - \tau)} \, d\kappa \, d\tau < \infty \qquad \text{for all $t \in \reals$}.
 \] 
-for all $t \in \reals$.  We will often drop the brackets and right simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
+We will often drop the brackets and right simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
 \begin{align*}
 x*(y*z) &= \int_{-\infty}^\infty x(\tau) (y*z)(t - \tau) d\tau \\
-&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\kappa \, d\tau
+&= \int_{-\infty}^\infty  x(\tau) \int_{-\infty}^\infty y(\kappa) z(t - \kappa - \tau) \, d\kappa \, d\tau.
 \end{align*}
-Since $z \in \dom x\,y$ Fubini's theorem justifies exchanging the order of integration 
-\begin{align*}
-x*(y*z) &= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\tau \, d\kappa \\
-&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \nu) \, d\tau \, d\nu \qquad \text{(change variables $\nu = \kappa + \tau$)} \\
-&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\tau) y(\kappa) z(\nu) \, d\nu \, d\tau
-\end{align*}
-
-Aiming at 
+Because $z \in \dom x\,y$ Fubini's theorem~\cite[Theorem~?]{Rudin_real_and_complex_analysis} justifies swapping the order of integration leading to
 \[
-(x*y)*z = \int_{-\infty}^\infty  (x*y)(\tau) z(t - \tau) d\tau = \int_{-\infty}^\infty \int_{-\infty}^\infty x(\kappa) y(\tau - \kappa)  z(t - \tau) d\kappa d\tau
+x*(y*z) = \int_{-\infty}^\infty  \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\tau \, d\kappa 
 \]
+and by making the change of variable $\nu = \kappa + \tau$ we find that
+\begin{align*}
+x*(y*z) &= \int_{-\infty}^\infty  \int_{-\infty}^\infty x(\tau) y(\nu - \tau)  z(t - \nu) \, d\tau \, d\nu \\
+&= \int_{-\infty}^\infty  (x*y)(\nu)  z(t - \nu)  \, d\nu \\
+&= (x*y)*z.
+\end{align*}
 
 By combining the associative and commutative properties we find that the order in which the convolutions in $x * y * z$ are performed does not mater, that is
 \[

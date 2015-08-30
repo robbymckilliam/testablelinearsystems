@@ -17,18 +17,18 @@ a (x * w) + b (y * w) &= a \int_{-\infty}^{\infty} x(\tau) w(t - \tau) d\tau + b
 \end{align*}
 \end{solution}
 
-\item \label{excer:convassociative} Show that convolution is associative.  That is, if $x,y,z$ are signals then $x*(y*z) = (x*y)*z$. 
-\begin{solution}
-\begin{align*}
-(x*y)*z &= \int_{-\infty}^\infty (x*y)(\tau) z(t - \tau) d\tau \\
-&= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\kappa) y(\tau-\kappa) z(t - \tau) d\kappa d\tau \\
-&= \int_{-\infty}^\infty x(\kappa)  \int_{-\infty}^\infty y(\tau-\kappa) z(t - \tau)  d\tau d\kappa  \qquad \text{(swap order of integration)} \\
-&= \int_{-\infty}^\infty x(\kappa)  \int_{-\infty}^\infty y(\nu) z(t - \kappa - \nu)  d\tau d\kappa  \qquad \text{(change variable $\nu = \tau-\kappa$)} \\
-&= \int_{-\infty}^\infty x(\kappa)  (y * z)(t - \kappa) d\kappa \\
-&= x*(y*z).
-\end{align*}
-The exchange of integration order can be justified using Fubini's theorem whenever the all of the convolutions involved in $x*(y*z) = (x*y)*z$ exist.
-\end{solution}
+% \item \label{excer:convassociative} Show that convolution is associative.  That is, if $x,y,z$ are signals then $x*(y*z) = (x*y)*z$. 
+% \begin{solution}
+% \begin{align*}
+% (x*y)*z &= \int_{-\infty}^\infty (x*y)(\tau) z(t - \tau) d\tau \\
+% &= \int_{-\infty}^\infty \int_{-\infty}^\infty x(\kappa) y(\tau-\kappa) z(t - \tau) d\kappa d\tau \\
+% &= \int_{-\infty}^\infty x(\kappa)  \int_{-\infty}^\infty y(\tau-\kappa) z(t - \tau)  d\tau d\kappa  \qquad \text{(swap order of integration)} \\
+% &= \int_{-\infty}^\infty x(\kappa)  \int_{-\infty}^\infty y(\nu) z(t - \kappa - \nu)  d\tau d\kappa  \qquad \text{(change variable $\nu = \tau-\kappa$)} \\
+% &= \int_{-\infty}^\infty x(\kappa)  (y * z)(t - \kappa) d\kappa \\
+% &= x*(y*z).
+% \end{align*}
+% The exchange of integration order can be justified using Fubini's theorem whenever the all of the convolutions involved in $x*(y*z) = (x*y)*z$ exist.
+% \end{solution}
 
 \item Let $x(t) = u(t)$, $y(t) = u(-t)$ and $z(t) = \rect(t) - \rect(t - 1)$ where $u$ is the step function that $\rect$ is the rectangular pulse.  Show that $x * (y * z) \neq (x * y) * z$, that is, show that the associative property of convolution does not hold for these signals.
 
