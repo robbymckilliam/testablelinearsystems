@@ -9,9 +9,9 @@ Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau,
 \]
 that is, the response of $H$ to input signal $x$ can be represented as an integral equation involving $x$ and the impulse response $h$.  The integral is called a \term{convolution} and appears so often that a special notation is used for it.  We write $h * x$ to  indicate the signal that results from convolution of signals $h$ and $x$, that is, $h * x$ is the signal
 \[
-h * x = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau.
+h * x = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau
 \]
-%where $(h*x)(t)$ indicates $h*x$ evaluated at $t$.  
+where the right hand side is to be interpreted as a signal, a function of $t \in \reals$.  We write $(h*x)(t)$ to indicate the value of $h*x$ at $t \in \reals$.  
 Those systems that have an impulse response we call \term{regular systems}\footnote{The name \term{regular system} is motivated by the term \term{regular distribution}~\citep{Zemanian_dist_theory_1965}}.  Unless otherwise stated the domain of the regular system $H$ is assumed to be the set of signals $x$ such that the integral
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
@@ -211,7 +211,7 @@ I_\infty u(t) = \int_{-\infty}^t u(\tau) d\tau = \begin{cases}
 0 & t \leq 0.
 \end{cases}
 \]
-This signal is often called the \term{ramp function}.  Not all systems have a step response.  For example, the system with impulse response $u(-t)$ does not because convolution of the step $u(t)$ and its reflection $u(-t)$ is not possible.  If a system $H$ has both an impulse response $h$ and a step response $H u$, then these two signals are related.  To see this, observe that the step response is
+This signal is often called the \term{ramp function}.  A system has a step response only if $u$ is inside its domain.  For example, the regular system with impulse response $u(-t)$ does not have a step response because $u \notin \dom u(-t)$.  Convolution of the step function $u$ and its reflection $u(-t)$ is not possible.  If a system $H$ has both an impulse response $h$ and a step response $H u$, then these two signals are related.  To see this, observe that the step response is
 \begin{equation}\label{eq:stepresponseintegrateimpulseresponse}
 Hu = h * u = \int_{-\infty}^{\infty}h(\tau)u(t - \tau) d\tau = \int_{-\infty}^{t} h(\tau) d\tau = I_\infty h. 
 \end{equation}
@@ -240,7 +240,7 @@ We have already shown in~\eqref{eq:regsystemislinear} that convolution commutes 
 \[
 a (x * w) + b (y * w) = (ax + by) * w.
 \]
-The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if $w \in \dom x \cap \dom y$ for example.  Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
+The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if, for example, $w$ is in both  $\dom x$ and $\dom y$, that is, $w \in \dom x \cap \dom y$.  Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
 \begin{align*}
 x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 &= \int_{-\infty}^\infty x(t - \kappa) y(\kappa) d\kappa \qquad (\text{change variable $\kappa = t - \tau$}) \\
@@ -251,16 +251,16 @@ Convolution is associative under appropriate assumptions, that is, for signals $
 \[
 \int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\tau)y(\kappa)z(t - \kappa - \tau)} \, d\kappa \, d\tau < \infty \qquad \text{for all $t \in \reals$}.
 \] 
-We will often drop the brackets and right simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
+We will often drop the brackets and write simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
 \begin{align*}
 x*(y*z) &= \int_{-\infty}^\infty x(\tau) (y*z)(t - \tau) d\tau \\
 &= \int_{-\infty}^\infty  x(\tau) \int_{-\infty}^\infty y(\kappa) z(t - \kappa - \tau) \, d\kappa \, d\tau.
 \end{align*}
-Because $z \in \dom x\,y$ Fubini's theorem~\cite[Theorem~?]{Rudin_real_and_complex_analysis} justifies swapping the order of integration leading to
+Because $z \in \dom x\,y$ Fubini's theorem~\cite[Theorem~8.8]{Rudin_real_and_complex_analysis} justifies swapping the order of integration leading to
 \[
 x*(y*z) = \int_{-\infty}^\infty  \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\tau \, d\kappa 
 \]
-and by making the change of variable $\nu = \kappa + \tau$ we find that
+and by the change of variable $\nu = \kappa + \tau$ we find that
 \begin{align*}
 x*(y*z) &= \int_{-\infty}^\infty  \int_{-\infty}^\infty x(\tau) y(\nu - \tau)  z(t - \nu) \, d\tau \, d\nu \\
 &= \int_{-\infty}^\infty  (x*y)(\nu)  z(t - \nu)  \, d\nu \\
@@ -271,7 +271,7 @@ By combining the associative and commutative properties we find that the order i
 \[
 x*y*z = y*z*x = z*x*y = y*x*z = x*z*y = z*y*x
 \]
-provided that all the convolutions involved exist.  For example, this holds if $z \in \dom x\,y$.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
+provided that all the convolutions involved exist.  For example, this holds if $z \in \dom x\,y$ or equivalently $x \in \dom y\,z$ or $y \in \dom x\;z$.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
 
 \section{Linear combination and composition}\label{sec:line-comb-comp}
 
