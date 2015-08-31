@@ -9,9 +9,9 @@ Hx(t) = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau,
 \]
 that is, the response of $H$ to input signal $x$ can be represented as an integral equation involving $x$ and the impulse response $h$.  The integral is called a \term{convolution} and appears so often that a special notation is used for it.  We write $h * x$ to  indicate the signal that results from convolution of signals $h$ and $x$, that is, $h * x$ is the signal
 \[
-h * x = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau.
+h * x = \int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau
 \]
-%where $(h*x)(t)$ indicates $h*x$ evaluated at $t$.  
+where the right hand side is to be interpreted as a signal, a function of $t \in \reals$.  We write $(h*x)(t)$ to indicate the value of $h*x$ at $t \in \reals$.  
 Those systems that have an impulse response we call \term{regular systems}\footnote{The name \term{regular system} is motivated by the term \term{regular distribution}~\citep{Zemanian_dist_theory_1965}}.  Unless otherwise stated the domain of the regular system $H$ is assumed to be the set of signals $x$ such that the integral
 \[
 \int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau)} d\tau < \infty \qquad \text{for all $t \in \reals$}.
@@ -211,7 +211,7 @@ I_\infty u(t) = \int_{-\infty}^t u(\tau) d\tau = \begin{cases}
 0 & t \leq 0.
 \end{cases}
 \]
-This signal is often called the \term{ramp function}.  Not all systems have a step response.  For example, the system with impulse response $u(-t)$ does not because convolution of the step $u(t)$ and its reflection $u(-t)$ is not possible.  If a system $H$ has both an impulse response $h$ and a step response $H u$, then these two signals are related.  To see this, observe that the step response is
+This signal is often called the \term{ramp function}.  A system has a step response only if $u$ is inside its domain.  For example, the regular system with impulse response $u(-t)$ does not have a step response because $u \notin \dom u(-t)$.  Convolution of the step function $u$ and its reflection $u(-t)$ is not possible.  If a system $H$ has both an impulse response $h$ and a step response $H u$, then these two signals are related.  To see this, observe that the step response is
 \begin{equation}\label{eq:stepresponseintegrateimpulseresponse}
 Hu = h * u = \int_{-\infty}^{\infty}h(\tau)u(t - \tau) d\tau = \int_{-\infty}^{t} h(\tau) d\tau = I_\infty h. 
 \end{equation}
@@ -240,7 +240,7 @@ We have already shown in~\eqref{eq:regsystemislinear} that convolution commutes 
 \[
 a (x * w) + b (y * w) = (ax + by) * w.
 \]
-The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if $w \in \dom x \cap \dom y$ for example.  Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
+The property holds provided that the convolutions $x*w$ and $y*w$ exist.  This is the case if, for example, $w$ is in both  $\dom x$ and $\dom y$, that is, $w \in \dom x \cap \dom y$.  Convolution is commutative, that is, $x*y = y*x$ whenever these convolutions exist.  To see this, write
 \begin{align*}
 x*y &= \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau \\
 &= \int_{-\infty}^\infty x(t - \kappa) y(\kappa) d\kappa \qquad (\text{change variable $\kappa = t - \tau$}) \\
@@ -251,16 +251,16 @@ Convolution is associative under appropriate assumptions, that is, for signals $
 \[
 \int_{-\infty}^\infty \int_{-\infty}^\infty  \abs{x(\tau)y(\kappa)z(t - \kappa - \tau)} \, d\kappa \, d\tau < \infty \qquad \text{for all $t \in \reals$}.
 \] 
-We will often drop the brackets and right simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
+We will often drop the brackets and write simply $\dom x\,y$.  If $z \in \dom x\,y$ then 
 \begin{align*}
 x*(y*z) &= \int_{-\infty}^\infty x(\tau) (y*z)(t - \tau) d\tau \\
 &= \int_{-\infty}^\infty  x(\tau) \int_{-\infty}^\infty y(\kappa) z(t - \kappa - \tau) \, d\kappa \, d\tau.
 \end{align*}
-Because $z \in \dom x\,y$ Fubini's theorem~\cite[Theorem~?]{Rudin_real_and_complex_analysis} justifies swapping the order of integration leading to
+Because $z \in \dom x\,y$ Fubini's theorem~\cite[Theorem~8.8]{Rudin_real_and_complex_analysis} justifies swapping the order of integration leading to
 \[
 x*(y*z) = \int_{-\infty}^\infty  \int_{-\infty}^\infty x(\tau) y(\kappa) z(t - \kappa - \tau) \, d\tau \, d\kappa 
 \]
-and by making the change of variable $\nu = \kappa + \tau$ we find that
+and by the change of variable $\nu = \kappa + \tau$ we find that
 \begin{align*}
 x*(y*z) &= \int_{-\infty}^\infty  \int_{-\infty}^\infty x(\tau) y(\nu - \tau)  z(t - \nu) \, d\tau \, d\nu \\
 &= \int_{-\infty}^\infty  (x*y)(\nu)  z(t - \nu)  \, d\nu \\
@@ -271,48 +271,48 @@ By combining the associative and commutative properties we find that the order i
 \[
 x*y*z = y*z*x = z*x*y = y*x*z = x*z*y = z*y*x
 \]
-provided that all the convolutions involved exist.  For example, this holds if $z \in \dom x\,y$.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
+provided that all the convolutions involved exist.  For example, this holds if $z \in \dom x\,y$ or equivalently $x \in \dom y\,z$ or $y \in \dom x\;z$.  More generally, the order in which any sequence of convolutions is performed does not change the final result.
 
 \section{Linear combination and composition}\label{sec:line-comb-comp}
 
 %\todo{This could feasibly be connected back to the abstract concept of a vector space in the new Section~\ref{sec:spaces-signals}}
 
-Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems with domain $X \subseteq \reals \to \complex$ and range $Y \subseteq \reals \to \complex$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
+Let $F \in X \to Y$ and $G \in X \to Y$ be linear shift-invariant systems with domain $X \subseteq \reals \to \complex$ and range $Y \subseteq \reals \to \complex$.  For complex numbers $c$ and $d$, let $H \in X \to Y$ be the system satisfying
 \[
-Hx = cH_1x + dH_2x.
+Hx = cFx + dGx.
 \]
-The system $H$ is said to be a \term{linear combination} of $H_1$ and $H_2$.  The system $H$ is linear because for all signals $x,y \in X$ and $a,b \in \complex$,
+The system $H$ is said to be a \term{linear combination} of $F$ and $G$.  The system $H$ is linear because for all signals $x,y \in X$ and $a,b \in \complex$,
 \begin{align*}
-H(ax + by) &= cH_1(ax+by) + dH_2(ax+by) \\
-&= acH_1 x +bcH_1y + adH_2x+ bdH_2y & \text{(linearity $H_1, H_2$)} \\
-&= a ( cH_1x  + dH_2x ) + b ( cH_1y + dH_2y ) \\
+H(ax + by) &= cF(ax+by) + dG(ax+by) \\
+&= acF x +bcFy + adGx+ bdGy & \text{(linearity $F, G$)} \\
+&= a ( cFx  + dGx ) + b ( cFy + dGy ) \\
 &= aHx + bHy.
 \end{align*}
 The system $H$ is also shift-invariant because
 \begin{align*}
-HT_\tau x &= cH_1T_\tau x + dH_2T_\tau x  \\
-&= c T_\tau H_1 x + dT_\tau H_2 x & \text{(shift-invariance $H_1,H_2$)} \\
-&= T_\tau( cH_1 x + dH_2 x ) & \text{(linearity $T_\tau$)} \\
+HT_\tau x &= cFT_\tau x + dGT_\tau x  \\
+&= c T_\tau F x + dT_\tau G x & \text{(shift-invariance $F,G$)} \\
+&= T_\tau( cF x + dG x ) & \text{(linearity $T_\tau$)} \\
 &= T_\tau H x.
 \end{align*}
-So, linear shift-invariant systems can be constructed as linear combinations of other linear shift-invariant systems.  If $H_1$ and $H_2$ are regular systems with impulse responses $h_1$ and $h_2$ then
+So, linear shift-invariant systems can be constructed as linear combinations of other linear shift-invariant systems.  If $F$ and $G$ are regular systems with impulse responses $f$ and $g$ then, for $x \in \dom f \cap \dom g$,
 \begin{align*}
-Hx &= a H_1 x + b H_2 x \\
-&= a h_1 * x + b h_2 * x \\
-&= (a h_1 + bh_2) * x &\text{(distributivity of convolution)}\\
+Hx &= a F x + b G x \\
+&= a f * x + b g * x \\
+&= (a f + bg) * x &\text{(distributivity of convolution)}\\
 &= h * x,
 \end{align*}
-and so, $H$ is a regular system with impulse response $h = ah_1 + bh_2$.  %Thus, if $H$ is the linear combination of regular systems $H_1$ and $H_2$, then the impulse response of $H$ is the same linear combination of the impulse responses of $H_1$ and $H_2$.
+and so, $H$ is a regular system with impulse response $h = af + bg$.  From here on, unless otherwise stated, the domain of a system $H = aF + bG$ formed by a linear combination of regular systems $F$ and $G$ is assumed to be $\dom f \cap \dom g$.  %Thus, if $H$ is the linear combination of regular systems $F$ and $G$, then the impulse response of $H$ is the same linear combination of the impulse responses of $F$ and $G$.
 
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance=1.5cm,auto,>=latex']
     \node[dspadder] (adder) {};
-    \node [dspnodeopen] (res) [right of=adder,node distance=1.5cm,label=right:{$Hx=cH_1x+dH_2x$}] {};
+    \node [dspnodeopen] (res) [right of=adder,node distance=1.5cm,label=right:{$Hx=cFx+dGx$}] {};
     \node[dspmixer,dsp/label=right] (amult) [above of=adder,node distance=1cm] {$c$};
-    \node [dspsquare] (H1) [left of=amult] {$H_1$};
+    \node [dspsquare] (H1) [left of=amult] {$F$};
     \node[dspmixer,dsp/label=right] (bmult) [below of=adder,node distance=1cm] {$d$};
-    \node [dspsquare] (H2) [left of=bmult] {$H_2$};
+    \node [dspsquare] (H2) [left of=bmult] {$G$};
      \node [dspnodeopen] (x) [left of=adder,node distance=3cm,label=left:$x$] {};
    
      \draw[dspflow] (x) -- ($ (H1) !.5! (H2) $);
@@ -327,116 +327,49 @@ and so, $H$ is a regular system with impulse response $h = ah_1 + bh_2$.  %Thus,
     \node (H) at (-0.7,0) [draw,thick,dashed,minimum width=3.5cm,minimum height=3cm,label=above:$H$] {};
     
 \end{tikzpicture}
-\caption{Block diagram depicting the linear combination of linear shift-invariant systems. The system $cH_1x+dH_2x$ can be expressed as a single linear shift-invariant system $Hx$.}\label{blockdiag:lineartisystem}
+\caption{Block diagram depicting the linear combination of linear shift-invariant systems. The system $cFx+dGx$ can be expressed as a single linear shift-invariant system $Hx$.}\label{blockdiag:lineartisystem}
 \end{figure}
 
-Another way to construct linear shift-invariant systems is by \term{composition}.  Let $X, Y, Z$ be linear shift-invariant spaces of signals.  Let $H_1 \in X \to Y$ and $H_2 \in Y \to Z$ be linear shift-invariant systems and let $H \in X \to Z$ be the system satisfying
+Another way to construct linear shift-invariant systems is by \term{composition}.  Let $X, Y, Z$ be linear shift-invariant spaces of signals.  Let $F \in X \to Y$ and $G \in Y \to Z$ be linear shift-invariant systems and let $H \in X \to Z$ be the system satisfying
 \[
-H x = H_2 H_1 x,
+H x = G F x,
 \]
-that is, $H$ first applies $H_1$ and then applies $H_2$.  The system $H$ is said to be the \term{composition} of $H_1$ and $H_2$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
+that is, $H$ first applies $F$ and then applies $G$.  The system $H$ is said to be the \term{composition} of $F$ and $G$.  The system $H$ is linear because, for signals $x,y \in X$ and complex numbers $a,b$,
 \begin{align*}
-H(ax + by) &= H_2 H_1(ax + by) \\
-&= H_2(aH_1 x + bH_1 y )  &\text{(linearity $H_1$)}\\
-&= aH_2 H_1 x + bH_2 H_1 y  &\text{(linearity $H_2$)} \\
+H(ax + by) &= G F(ax + by) \\
+&= G(aF x + bF y )  &\text{(linearity $F$)}\\
+&= aG F x + bG F y  &\text{(linearity $G$)} \\
 &= aHx + bHy.
 \end{align*}
 The system is also shift-invariant because
 \begin{align*}
-H T_\tau x &= H_2H_1 T_\tau x \\
-&= H_2 T_\tau H_1 x  &\text{(shift-invariance $H_1$)}\\
-&= T_\tau H_2 H_1 x  &\text{(shift-invariance $H_2$)} \\
+H T_\tau x &= GF T_\tau x \\
+&= G T_\tau F x  &\text{(shift-invariance $F$)}\\
+&= T_\tau G F x  &\text{(shift-invariance $G$)} \\
 &= T_\tau H x .
 \end{align*}
-If $H_1$ and $H_2$ are regular systems the composition property can be expressed using their impulse responses $h_1$ and $h_2$.  It follows that
-\begin{align*}
-Hx &= H_2H_1 x \\
-&= h_2 * (h_1 * x) \\
-&= (h_2* h_1) * x &\text{(associativity of convolution)} \\
-&= h * x,
-\end{align*}
-and so, $H$ is a regular system with impulse response $h = h_2 * h_1$.  %Thus, if $H$ is the composition of regular systems $H_1$ and $H_2$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $H_1$ and $H_2$.  
-
-%BLERG: The above use of associativity of convolution is hiding use of Fubini's theorem (or Tonelli's theorem).  There's some subtle assumptions about the domain of H_1 and H_2 that are being hidden here.  You can't necessarily use the default domains \dom h_1 and \dom h_2.
-% Use of Tonelli's theorem is probably the way to go here.  Work's on the extended real line, but allows interchanges.  You only get something infinite if all integrals, double, or iteratered (in either direction) are infinite.  So if any are finite they all are and they are all equal.
+If $F$ and $G$ are regular systems the composition property can be expressed using their impulse responses $f$ and $g$.  We must first make some assumptions about the domain $X$ of $F$.  Suppose that $X = \dom f\;g$.  In this case, for $x \in X$, the associative property of convolution asserts that $g * (f * x) = (g* f) * x$ (Section~\ref{sec:prop-conv}).  It follows that 
+\[
+Hx = GF x = g * (f * x) = (g* f) * x = h * x
+\]
+and so $H$ is a regular system with impulse response $h = g * f$.  From here on, unless otherwise stated, the domain of a system $H = GF$ formed by compositioin of regular systems $F$ and $G$ is assumed to be $\dom f\;g$.  %Thus, if $H$ is the composition of regular systems $F$ and $G$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $F$ and $G$.  
 
 \begin{figure}
 \centering
 \begin{tikzpicture}[node distance=1.5cm,auto,>=latex']
     \node[dspnodeopen] (x) [label=left:{$x$}] {};
-    \node [dspsquare] (H1) [right of=x] {$H_1$};
-    \node [dspsquare] (H2) [right of=H1] {$H_2$};
-    \node[dspnodeopen] (res) [right of=H2,label=right:{$Hx=H_2H_1x$}] {};
+    \node [dspsquare] (H1) [right of=x] {$F$};
+    \node [dspsquare] (H2) [right of=H1] {$G$};
+    \node[dspnodeopen] (res) [right of=H2,label=right:{$Hx=GFx$}] {};
     \draw[dspconn] (x) -- (H1);
     \draw[dspconn] (H1) -- (H2);
     \draw[dspflow] (H2) -- (res);
     \node (H) at ($ (x) !.5! (res) $) [draw,thick,dashed,minimum width=3cm,minimum height=1.5cm,label=above:$H$] {};
 \end{tikzpicture}
-\caption{Block diagram depicting composition of linear shift-invariant systems. The system $H_2H_1$ can be expressed as a single linear shift-invariant system $H$.}\label{blockdiag:compositionlti}
+\caption{Block diagram depicting composition of linear shift-invariant systems. The system $GF$ can be expressed as a single linear shift-invariant system $H$.}\label{blockdiag:compositionlti}
 \end{figure}
 
 A wide variety of linear shift-invariant systems can be constructed by linear combinination and composition of simpler systems.  
-
-% \section{Commutative (sometimes)}
-% %\section{Commutative and invertible (sometimes)}
-
-% Let $H$ and $G$ be regular systems with impulse response $h$ and $g$.  If $h$ and $g$ can be convolved then $h*g = g*h$ and the corresponding systems $H$ and $G$ commute, that is
-% \[
-% H\big(G(x)\big) = h * g * x = g * h * x = G\big(H(x)\big),
-% \]
-% whenever the convolutions involved exist.  This commutative property is depicted by the block diagram in Figure~\ref{blockdiag:commutativesystems}.
-
-% The commutative property is very useful when it holds.  It allows us to construct large systems by composing smaller systems without concern for the order in which systems are composed.  However, linear shift-invariant systems do not always commute, and so, some care must be taken.  For example, applying a differentiator $D$ followed by the integrator $I_\infty$ to the signal $x(t) = 1$ gives
-% \[
-% I_\infty\big( D(x), t) = I_0\big( 0 , t) = 0 \qquad \text{for all $t$}
-% \] 
-% because $D(x,t) = 0$ for all $t$.  However, applying the integrator to $x$ gives
-% \[
-% I_\infty(x, t) = \int_{-\infty}^t dt = \infty 
-% \]
-% which does not exists, and so $D(I_0(x),t)$ does not exist.  In the previous example problems arise because the signal $x(t) = 1$ is in the domain 
-% %(more specifically the \term{null space}) 
-% of the differentiator $D$, but it is not in the domain of the integrator $I_\infty$.  We will be able to more precisely specify conditions under which linear shift-invariant systems commute when we introduce the Laplace transform in Section~\ref{sec:laplace-transform}.
-
-% Many linear shift-invariant systems are invertible, for example, the inverse of the time shifter $T_\tau$ is $T_{-\tau}$  and, by the fundamental theorem of calculus, the inverse of the integrator $I_\infty$ is the differentiator.  Consider the system
-% \[
-% H(x,t) = x(t) + x(t - 1).
-% \]
-% We can guess its inverse to be
-% \[
-% H^{-1}(x,t) = 
-% \]
-% In Section~\ref{sec:laplace-transform} we will use the Laplace transform to construct the inverse of some regular systems.  Not all linear shift-invariant systems are invertible.  For example, 
-
-%BLERG: YOU CAN SPECIFY WHEN THEY ARE INVERTIBLE ONCE YOU HAVE THE FOURIER TRANSFORM
-
-%BLERG: YOU CAN SPECIFY WHEN THEY WILL COMUTE ONCE YOU HAVE THE LAPLACE TRANSFORM
-
-%BLERG: Add a test where you concatenate two circuits. The two masses, and spring and a damper system might give some interesting insight into commutivity.
-
-% \begin{figure}[tbp]
-% \centering
-% \begin{tikzpicture}[node distance=1.3cm,auto,>=latex']
-%     \node[dspnodeopen,dsp/label=above] (x) {$x$};
-%     \node[dspsquare] (H) [right of=x] {$H$};
-%     \node[dspsquare] (D) [right of=H] {$G$};  
-%     \node[dspnodeopen,dsp/label=above] (out) [right of=D,node distance=1.7cm,label=above:$H\big(G(x)\big)$] {};
-%     \draw[dspconn] (x) -- (H);
-%     \draw[dspconn] (H) -- (D);
-%     \draw[dspflow] (D) -- (out);
-% \end{tikzpicture}
-% \qquad
-% \begin{tikzpicture}[node distance=1.3cm,auto,>=latex']
-%   \node[dspnodeopen,dsp/label=above] (x) {$x$};
-%   \node[dspsquare] (D) [right of=x] {$G$};  
-%   \node[dspsquare] (H) [right of=D] {$H$};
-%   \node[dspnodeopen,dsp/label=above] (out) [right of=H,node distance=1.7cm,label=above:$G\big(H(x)\big)$] {};
-%   \draw[dspconn] (x) -- (D);
-%   \draw[dspconn] (D) -- (H);
-%   \draw[dspflow] (H) -- (out);
-% \end{tikzpicture}
-% \caption{If $H$ and $G$ commute the outputs of these two diagrams are the same, that is, $H\big(G(x)\big) = G\big(H(x)\big)$.}\label{blockdiag:commutativesystems}
-% \end{figure}
 
 
 \section{Eigenfunctions and the transfer function}\label{sec:eigenf-line-time}
@@ -514,13 +447,13 @@ y(t - \tau) = e^{-s\tau} y(t) \qquad \text{for all $t,\tau \in \reals$}.
 \]
 This equation is satisfied by signals of the form $y(t) = \lambda e^{st}$ where $\lambda$ is a complex number.  That is, the response of a linear shift-invariant system $H$ to a complex exponential signal $e^{st}$ is the same signal $e^{st}$ multiplied by some constant complex number $\lambda$.  Due to this property complex exponential signals are called \term{eigenfunctions} of linear shift-invariant systems.  The constant $\lambda$ does not depend on $t$, but it does usually depend on the complex number $s$ and the system $H$.  To highlight this dependence on $H$ and $s$ we write $\lambda H(s)$ or $\lambda(H)(s)$ or $\lambda(H,s)$ and do not distinguish between these notations.  Considered as a function of $s$, the expression $\lambda H$ is called the \term{transfer function} of the system $H$.  Observe that the transfer function $\lambda H$ maps a complex number to a complex number.
 
-Denote by $\cep X$ the set of complex numbers $s$ such that $e^{st} \in X$, that is,
+Denote by $\cep X$ the set of complex numbers $s$ such that $e^{st} \in X$,
 \[
 \cep X = \{ s \in \complex \mid e^{st} \in X \}.
 \]
 We take $\cep X$ as the domain of the transfer function $\lambda H$, that is $\lambda H \in \cep X \to \complex$.  The transfer function satisfies
 \begin{equation}\label{eq:transfuneigenproperty}
-H e^{st} = \lambda H(s) e^{st} \qquad s \in \cep X
+H e^{st} = \lambda H(s) e^{st} \qquad s \in \cep X.
 \end{equation}
 This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
 
@@ -528,7 +461,7 @@ We can use these eigenfunctions to better understand the properties of systems m
 \[
 x = - y - R_1 C_2 Dy.
 \]
-We called this the \term{active RC} circuit.  To simplify notation put $R = R_1$ and $C = C_2$ so that $x = -y - RCD(y)$.   
+We called this the \term{active RC} circuit.  To simplify notation put $R = R_1$ and $C = C_2$ so that $x = -y - RCD y$.   
 Suppose that $H$ is a linear shift-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  If the input voltage is a complex exponential signal $x = e^{st}$, then the ouput voltage is the same complex exponential signal mulitpled by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$.  Substituting this into the differential equation for the active RC circuit we obtain
 \[
 e^{st} = - \lambda e^{st}- R C D (\lambda e^{st}) = -\lambda e^{st} (1  - R C s)
@@ -537,6 +470,12 @@ where, to simplify notation, we have written simply $\lambda$ for $\lambda H(s)$
 \begin{equation}\label{eq:transferRCH}
 \lambda H(s) = -\frac{1}{1 + R C s}.
 \end{equation}
+Now, if $e^{st}$ is input to the circuit, we expect the output to be
+\[
+H e^{st} = \lambda H(s) e^{st} = -\frac{e^{st}}{1 + R C s}.
+\]
+This satifies the differential equation for the active RC circuit.
+
 % In Section~\ref{sec:active-circuits} we were able to solve for the input signal $x$, given the output signal $y$.  We will now show how to solve for $y$ given $x$ in the special case that $x$ is of the form
 % \begin{equation}\label{eq:xinputlincombexpsigs}
 % x = \sum_{\ell=1}^m c_\ell e^{s_\ell t},
@@ -610,13 +549,13 @@ where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does no
 \[
 \Lambda H(f) = \lambda H( j 2\pi f ) \qquad j 2\pi f \in \cep X
 \]
-called the \term{spectrum} of $H$.  It will regularly be the case that $\cep X$ contains the entire imaginary axis and so the domain of the spectrum is the set of real numbers $\reals$.  In this case  the spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  
+called the \term{spectrum} of $H$.  It will typically be the case that $\cep X$ contains the entire imaginary axis and so the domain of the spectrum is the set of real numbers $\reals$.  In this case  the spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  The independent variable $f$ typically represents frequency in Hertz. 
 
-It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft}$ satisfies
+It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft} \in X$ satisfies
 \[
 H e^{j 2\pi f t}  = \lambda H (j 2\pi f) e^{j 2\pi f t} = \Lambda H(f) e^{j 2\pi f t}
 \]
-whenever $e^{j 2\pi f t} \in X$.  It is of interest to consider the \term{magnitude spectrum} $\abs{\Lambda H(f)}$ and the \term{phase spectrum} $\angle{\Lambda H(f)}$ separately.  The notation $\angle$ denotes the \term{argument} (or \term{phase}) of a complex number.  We have,
+It is of interest to consider the \term{magnitude spectrum} $\abs{\Lambda H(f)}$ and the \term{phase spectrum} $\angle{\Lambda H(f)}$ separately.  The notation $\angle$ denotes the \term{argument} (or \term{phase}) of a complex number.  We have,
 \[
 \Lambda H(f) = \abs{\Lambda H(f)} e^{j \angle{\Lambda H(f)}}
 \]  
@@ -635,7 +574,7 @@ H\cos(2\pi f t) = \abs{\Lambda H (f)} \cos\big(2\pi f t + \angle{\Lambda H(f)}\b
 \begin{equation}\label{eq:spectrumrealvaluedsinsolution}
 H \sin(2\pi f t)  = \abs{\Lambda H(f)} \sin\big(2\pi f t + \angle{\Lambda H(f)}\big).
 \end{equation}
-Consider again the active RC circuit with $H$ the system mapping the input voltage $x$ to the output voltage $y$.  According to~\eqref{eq:transferRCH} the spectrum of $H$ is
+Consider again the active RC circuit with $H$ the system mapping input voltage $x$ to output voltage $y$.  According to~\eqref{eq:transferRCH} the spectrum of $H$ is
 \begin{equation}\label{eq:specactiveRC}
 \Lambda H(f) = -\frac{1}{1 + 2 \pi RC f j}.
 \end{equation}
