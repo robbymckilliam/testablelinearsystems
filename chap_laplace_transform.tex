@@ -16,11 +16,11 @@ The set $\roc x \subseteq \complex$ is called the \term{region of convergence} o
 \]
 We take $\roc x$ as the domain of $\calL x$ and so the Laplace transform is a complex valued function of its region of convergence, that is, $\calL x \in \roc x \to \complex$.
 
-For example, consider the right sided signal $e^{ \alpha t}u(t)$.  The integral
+For example, consider the right sided signal $e^{ \alpha t}u(t)$.  We have
 \[
-\int_{-\infty}^{\infty} \abs{e^{\alpha t} u(t) e^{-s t}} dt = \int_{0}^{\infty} e^{\Re(\alpha - s)t} dt = \lim_{t \to \infty} \frac{e^{\Re(\alpha - s)t}}{\Re(\alpha - s)}  - \frac{1}{\Re(\alpha - s)}
+\int_{-\infty}^{\infty} \abs{e^{\alpha t} u(t) e^{-s t}} dt = \int_{0}^{\infty} e^{\Re(\alpha - s)t} dt = \lim_{t \to \infty} \frac{e^{\Re(\alpha - s)t}}{\Re(\alpha - s)}  - \frac{1}{\Re(\alpha - s)}.
 \]
-is finite if and only if $\Re(\alpha - s) < 0$ and so the region of convergence of the Laplace transform of $e^{\alpha t}u(t)$ is
+The limit above converges if and only if $\Re(\alpha - s) < 0$ and so the region of convergence of the Laplace transform of $e^{\alpha t}u(t)$ is
 \[
 \roc e^{ \alpha t}u(t) = \{ s \in \complex \mid \Re(s) > \Re(\alpha) \}.
 \]
@@ -121,7 +121,7 @@ Given the Laplace transform $\calL x \in \roc x \to \complex$ the signal $x$ can
 \[
 x(t) = \frac{1}{2\pi j} \lim_{\omega \rightarrow\infty} \int_{\sigma - j\omega}^{\sigma - j\omega} \calL x(s) e^{st} ds,
 \]
-where $\sigma$ is a real number that is inside the region of convergence $\roc x$.  Solving the integral above typically requires a special type of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following Laplace transform pair
+where $\sigma$ is any real number inside the region of convergence $\roc x$.  Solving the integral above typically requires a special type of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following Laplace transform pair
 \begin{equation}\label{eq:laplacetranscommonsimple}
 \calL\big(t^n u(t)\big) = \frac{n!}{s^{n+1}} \qquad \Re(s) > 0,
 \end{equation}
@@ -141,7 +141,7 @@ A useful relationship exists between the Laplace transform of a signal $x(t)$ an
 \begin{equation}\label{eq:timescalingpropertrylaplacetrans}
  \calL\big(x(\alpha t)\big)\big(s\big) = \frac{1}{\abs{\alpha}}\calL x(s/\alpha), \qquad \Re(s/\alpha) \in \roc x.
 \end{equation}
-The region of convergence of $\calL\big(x(\alpha t)\big)$ is those complex number $s$ such that $s/\alpha \in \roc x$.  This is called the \term{time-scaling property} of the Laplace transform (Excercise~\ref{excer:timescalelaplace}).
+The region of convergence of $\calL\big(x(\alpha t)\big)$ is those complex numbers $s$ such that $s/\alpha \in \roc x$.  This is called the \term{time-scaling property} of the Laplace transform (Excercise~\ref{excer:timescalelaplace}).
 
  
 % Observe that the signal $t^n e^{\alpha t} u(t)$ is right sided.  It is nonzero only when $t > 0$.  The region of convergence is a right half plane $\Re(s) > \alpha$.  The Laplace transform $n!/s^{n+1}$ also corresponds with the left sided signal $(-t)^n e^{-\alpha t} u(-t)$.  That is,
@@ -175,12 +175,12 @@ Recall from Section~\ref{sec:eigenf-line-time} that complex exponential signals 
 
 Let $H \in \dom h \to Y$ be a regular system with impulse response $h$.  The complex exponential signal $e^{st} \in \dom h$ if and only if $s \in \roc h$, that is, $\roc h = \cep \dom h$ (Exercise~\ref{exer:finhandroch}).  The response of $H$ to $e^{st} \in \dom h$ satisfies
 \begin{align*}
-H e^{st} = e^{st} \lambda H(s) &= h * e^{st} \\
+H e^{st} = \lambda H(s) e^{st} &= h * e^{st} \\
 &= \int_{-\infty}^{\infty} h(\tau) e^{s(t - \tau)} d\tau \\
 &= e^{st} \int_{-\infty}^{\infty} h(\tau) e^{-s \tau} d\tau \\
 &= e^{st} \calL h(s)
 \end{align*}
-and so $\lambda H  = \calL h$.  That is, the transfer function of a regular system is precisely the Laplace transform of its impulse response.  %The region of convervence of the Laplace transform $\roc(h)$ corresponds with the domain of the regular system $\dom h$.  %The region of convergence of the impulse response describes a set of complex exponential signals $e^{st}$ in the domain of the system and we refer to this as the region of convergence of the \emph{system}.  In this way, both signals and systems have regions of convergence.
+and so $\lambda H  = \calL h$.  That is, the transfer function of a regular system is precisely the Laplace transform of its impulse response.  Observe that the domains of $\lambda H$ and $\cal h$ are the same, that is, $\cep\dom h = \roc h$.  %The region of convervence of the Laplace transform $\roc(h)$ corresponds with the domain of the regular system $\dom h$.  %The region of convergence of the impulse response describes a set of complex exponential signals $e^{st}$ in the domain of the system and we refer to this as the region of convergence of the \emph{system}.  In this way, both signals and systems have regions of convergence.
 
 The transfer functions of the shifter and differentiator can be obtained by inspection.  For the shifter
 \begin{equation}\label{eq:timeshiftertransferfunction}
@@ -196,7 +196,7 @@ More generally, for the $k$th differentiator
 \begin{equation}\label{eq:lambdadifferentiator}
 D^k e^{st} = \frac{d^k}{d t^k} e^{st} = s^k e^{st} \qquad \text{and so} \qquad  \lambda D^k = s^k.
 \end{equation}
-The domain of $\lambda T_\tau$ and of $\lambda D^k$ is the entire complex plane $s$.
+The domain of $\lambda T_\tau$ and of $\lambda D^k$ is the entire complex plane $\complex$.
 %The region of convergence is again the whole complex plane.  
 These results motivate assigning the following Laplace transforms to the delta ``function'' $\delta$, its shift $T_\tau \delta = \delta(t - \tau)$, and the $\delta^k$ symbol,
 \[
@@ -206,40 +206,40 @@ These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 %\subsection{The transfer function of a linear combination of systems}
 
-Let $H_1 \in X \to Y$ and $H_2 \in X \to Y$ be linear shift-invariant systems and let $H = a H_1 + bH_2$ be the system formed by a  linear combination of $H_1$ and $H_2$.  The response of $H$ to the complex exponential signal $e^{st} \in X$ is
+Let $F \in X \to Y$ and $G \in X \to Y$ be linear shift-invariant systems and let $H = a F + bG$ be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to the complex exponential signal $e^{st} \in X$ is
 \begin{align*}
-H e^{st} &= a H_1 e^{st} + b H_2 e^{st} \\
-&= a\lambda H_1(s) e^{st} + b\lambda H_2(s) e^{st}  \\
-&= \big( a\lambda H_1(s) + b\lambda H_2(s) \big) e^{st} \\
-&= \lambda H(s)  e^{st} 
+H e^{st} &= a F e^{st} + b G e^{st} \\
+&= a\lambda F(s) e^{st} + b\lambda G(s) e^{st}  \\
+&= \big( a\lambda F(s) + b\lambda G(s) \big) e^{st} \\
+&= \lambda H(s)  e^{st} \qquad s \in \cep X
 \end{align*}
-and so $\lambda H = a\lambda H_1 + b\lambda H_2$.  That is, the transfer function of a linear combination of systems is the same linear combination of the transfer functions.  %The region of convergence of the linear combination is the intersection of the regions of convergence of the systems being combined.
+and so $\lambda H = a\lambda F + b\lambda G$.  That is, the transfer function of a linear combination of systems is the same linear combination of the transfer functions.  We can take the domain of $\lambda H$ to be $\cep X$.  %The region of convergence of the linear combination is the intersection of the regions of convergence of the systems being combined.
 
-Now let $H_1 \in X \to Y$ and $H_2 \in Y \to Z$ be linear shift-invariant systems and let $H \in X \to Z$ be the system formed by the composition $H = H_2 H_1$.  For $s \in \cep X \cap \cep Y$ the response of $H$ to the signal $e^{st}$ is
-\begin{align*}
-H e^{st} &= H_2 H_1 e^{st} \\
-&= H_2 \big(\lambda H_1(s) e^{st} \big) \\
-&= \lambda H_1(s) H_2 e^{st}  \\
-&=  \lambda H_1(s) \lambda H_2(s) e^{st}  \\
-&= \lambda(H) e^{st} 
-\end{align*}
-and so, 
+Now let $F \in X \to Y$ and $G \in Y \to Z$ be linear shift-invariant systems and let $H \in X \to Z$ be the system formed by the composition $H = G F$.  The response of $H$ to the signal $e^{st} \in X$ is
+\[
+H e^{st} = G F e^{st} = G \big(\lambda F(s) e^{st} \big) = \lambda F(s) G e^{st}
+\]
+We will only require the case when $\cep X \subset \cep Y$.  In this case $e^{st} \in Y$ and 
+\[
+H e^{st} = \lambda F(s) \lambda G(s) e^{st} = \lambda H(s) e^{st}.
+\]
+It follows that
 \begin{equation}\label{eq:composedtransferfunction}
-\lambda H = \lambda H_1 \lambda H_2 
+\lambda H(s) = \lambda F(s) \lambda G(s) \qquad $s \in \cep X \subset \cep Y$
 \end{equation}
-with domain given by the intersection $\cep X \cap \cep Y$.  That is, the transfer function of a composition of linear shift-invariant systems is the multiplication of the transfer functions of those systems.  %The region of convergence of the composition is the intersection of the regions of convergence of the systems being composed.
+That is, the transfer function of a composition of linear shift-invariant systems is the multiplication of the transfer functions of those systems.  %The region of convergence of the composition is the intersection of the regions of convergence of the systems being composed.
 
 %\subsection{The convolution theorem}
 
-Suppose that $H_1$ and $H_2$ are also regular systems with impulse responses $h_1$ and $h_2$. We showed in Section~\ref{sec:line-comb-comp} that the composition $H = H_2 H_1$ is a regular system with impulse response given by the convolution $h = h_1 * h_2$.  Because,
+Suppose that $F$ and $G$ are also regular systems with impulse responses $f$ and $g$ and that the domain of $F$ is $X \in \dom g\;f$ and the domain of $G$ is $Y = \dom g$.  We showed in Section~\ref{sec:line-comb-comp} that the composition $H = G F$ is a regular system with impulse response given by the convolution $h = f * g$.  Because,
 \[
-\lambda H = \calL h \qquad \lambda H_1 = \calL h_1 \qquad \lambda H_2 = \calL h_2,
+\lambda H = \calL h \qquad \lambda F = \calL f \qquad \lambda G = \calL g,
 \] 
 and using~\eqref{eq:composedtransferfunction}, we obtain,
 \[
-\calL(h_1 * h_2) = \calL h =  \lambda H = \lambda H_1 \lambda H_2 = \calL h_1 \calL h_2
+\calL(f * g) = \calL h =  \lambda H = \lambda F \lambda G = \calL f \calL g
 \]
-that holds for $s \in \dom h_1 \cap \dom h_2 = \roc h_1 \cap \roc h_2$.  Putting $x = h_1$ and $y = h_2$, we obtain the \term{convolution theorem},
+that holds for $s \in \dom f \cap \dom g = \roc f \cap \roc g$.  Putting $x = f$ and $y = g$, we obtain the \term{convolution theorem},
 \begin{equation}\label{eq:convtheoremlaplace}
 \calL(x*y) = \calL x \calL y \qquad s \in \roc x \cap \roc y.
 \end{equation}
@@ -264,11 +264,11 @@ with region of convergence is $\roc(x)$ under the added assumptions that $x$ is 
 
 % \subsection{Commutivity (again)}
 
-% We can now state something about the commutivity of two linear shift-invariant systems $H_1$ and $H_2$.  From~\eqref{eq:composedtransferfunction} the composition $H_1\big(H_2(x)\big)$ and the composition $H_2\big(H_1(x)\big)$ have the same transfer functions and the same regions of convergence $R_1 \cap R_2$.  From~\eqref{eq:transferLaplcetheorem} we have that the Laplace transform of the output signal $y_1 = H_1\big(H_2(x)\big)$ and of the output signal $y_2 =H_2\big(H_1(\cdot)\big) H_1\big(H_2(x)\big)$ satisfy
+% We can now state something about the commutivity of two linear shift-invariant systems $F$ and $G$.  From~\eqref{eq:composedtransferfunction} the composition $F\big(G(x)\big)$ and the composition $G\big(F(x)\big)$ have the same transfer functions and the same regions of convergence $R_1 \cap R_2$.  From~\eqref{eq:transferLaplcetheorem} we have that the Laplace transform of the output signal $y_1 = F\big(G(x)\big)$ and of the output signal $y_2 =G\big(F(\cdot)\big) F\big(G(x)\big)$ satisfy
 % \[
-% \calL(y_1) = \lambda(H_1)\lambda(H_2) = \lambda(H_2)\lambda(H_1) = \calL(y_2), \qquad s \in R_1 \cap R_2 \cap R_x.
+% \calL(y_1) = \lambda(F)\lambda(G) = \lambda(G)\lambda(F) = \calL(y_2), \qquad s \in R_1 \cap R_2 \cap R_x.
 % \]
-% It follows that $y_1 = y_2$ because $\calL(y_1) = \calL(y_2)$ and these signals have the same region of convergence $R_1 \cap R_2 \cap R_x$.  Thus, $H_1$ and $H_2$ commute for all input signal $x$ with region of convergence $R_x$ intersecting $R_1 \cap R_2$, i.e., such that $R_1 \cap R_2 \cap R_x \neq \emptyset$.
+% It follows that $y_1 = y_2$ because $\calL(y_1) = \calL(y_2)$ and these signals have the same region of convergence $R_1 \cap R_2 \cap R_x$.  Thus, $F$ and $G$ commute for all input signal $x$ with region of convergence $R_x$ intersecting $R_1 \cap R_2$, i.e., such that $R_1 \cap R_2 \cap R_x \neq \emptyset$.
 
 % \begin{theorem}\label{thm:laplacetranslti}
 % Let $H$ be a linear shift-invariant system and let $y$ be the reponse of $H$ to intput signal $x$, that is $y = H(x)$.  The Laplace transforms of $x$ and $y$ are related by
@@ -799,19 +799,19 @@ It is always possible to apply partial fractions and write~\eqref{eq:transfuncpo
 where $r_\ell$ are positive integers, $A_\ell$ are complex constants, $K$ is a subset of the indices from $\{d,d+1,\dots,k\}$, and $p(s)$ is a polynomial of degree $m-k$.  If $k > m$ then $p(s) = 0$.  The integer $r_\ell$ is called the \term{multiplicity} of the pole $\beta_\ell$.  % We now restrict attention to the common case when the coefficients of the numerator polynomial $a_0,\dots,a_m$ and the coefficients of the denominator polynomial $b_0,\dots,b_k$ are real.  In this case, the coefficients of the polynomial $p(s)$ are real, and the constant $A_\ell$ is real whenever the corresponding pole $\beta_\ell$ is real.  If the pole $\beta_\ell$ has nonzero imaginary part there always exists another pole $\beta_i$ such that $\beta_\ell = \beta_i^*$, where $\beta_i^*$ is the \term{complex conjugate} of $\beta_i$.  These poles have the same multiplicity, that is, $r_\ell = r_i$, and also the constants $A_\ell = A_i^*$.  Stated another way: the complex poles occur in \term{conjugate pairs}.
 We see that the transfer function contains the summation of two parts: the polynomial $p(s)$, and a sum of terms of the form $\frac{A}{(s-\beta)^r}$.  Let $p(s) = \gamma_0 + \gamma_1 s + \dots + \gamma_{m-k}s^{m-k}$.  This polynomial is the transfer function of the nonregular system
 \[
-H_1 = \gamma_0 T_0 + \gamma_1 D + \gamma_2 D^2 + \dots + \gamma_{m-k} D^{m-k}.
+F = \gamma_0 T_0 + \gamma_1 D + \gamma_2 D^2 + \dots + \gamma_{m-k} D^{m-k}.
 \]
 This system is a linear combination of the identity system $T_0$ and differentiators of order at most $m-k$.  From~\eqref{eq:laplacetneucommon},
 \[
 \calL\left( \frac{A}{r!} t^{r-1} e^{\beta t} u(t) \right) = \frac{A}{(s-\beta)^{r}} \qquad \Re(s) > \Re(\beta)
 \]
-and so the terms of the form $\frac{A}{(s-\beta)^r}$ correspond with the transfer function of a regular system with impulse response $\frac{A}{r!} t^{r-1} e^{\beta t} u(t)$.  Other signals with Laplace transform $\frac{A}{(s-\beta)^{r}}$ are discarded because they do not correspond with the impulse response of a causal system.  Thus, $\sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}}$ is the transfer function of the regular system $H_2$ with impulse response 
+and so the terms of the form $\frac{A}{(s-\beta)^r}$ correspond with the transfer function of a regular system with impulse response $\frac{A}{r!} t^{r-1} e^{\beta t} u(t)$.  Other signals with Laplace transform $\frac{A}{(s-\beta)^{r}}$ are discarded because they do not correspond with the impulse response of a causal system.  Thus, $\sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}}$ is the transfer function of the regular system $G$ with impulse response 
 \begin{equation}\label{eq:H2implrespcleanedup}
-h_2(t) = u(t) \sum_{\ell\in K} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t}.
+g(t) = u(t) \sum_{\ell\in K} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t}.
 \end{equation}
-% Let $K_r = \{\ell \in K \mid \Im\beta_\ell = 0\}$ be the indices from $K$ corresponding with the real poles, and let $K_i=\{\ell \in K \mid \Im\beta_\ell > 0\}$ be the indices corresponding with those poles with positive imaginary part.  Because the imaginary poles occur in conjugate pairs the impulse response $h_2$ can be written as
+% Let $K_r = \{\ell \in K \mid \Im\beta_\ell = 0\}$ be the indices from $K$ corresponding with the real poles, and let $K_i=\{\ell \in K \mid \Im\beta_\ell > 0\}$ be the indices corresponding with those poles with positive imaginary part.  Because the imaginary poles occur in conjugate pairs the impulse response $g$ can be written as
 % \[
-% h_2(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{t^{r_\ell-1}}{r_\ell!}  \big( A_\ell e^{\beta_\ell t} + A_\ell^* e^{\beta_\ell^* t} \big).
+% g(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{t^{r_\ell-1}}{r_\ell!}  \big( A_\ell e^{\beta_\ell t} + A_\ell^* e^{\beta_\ell^* t} \big).
 % \]
 % The terms
 % \begin{align*}
@@ -820,7 +820,7 @@ h_2(t) = u(t) \sum_{\ell\in K} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell
 % \end{align*}
 % and so, the impulse response is
 % \[
-% h_2(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{2\abs{A_\ell}}{r_\ell!}  t^{r_\ell-1} e^{\Re\beta_\ell t} \cos\big(\Im\beta_\ell t + \angle A_\ell\big).
+% g(t) = u(t) \sum_{\ell\in K_r} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell t} + u(t) \sum_{\ell\in K_i} \frac{2\abs{A_\ell}}{r_\ell!}  t^{r_\ell-1} e^{\Re\beta_\ell t} \cos\big(\Im\beta_\ell t + \angle A_\ell\big).
 % \]
 % This expression can be simplified by putting
 % \[
@@ -831,15 +831,15 @@ h_2(t) = u(t) \sum_{\ell\in K} \frac{A_\ell}{r_\ell!} t^{r_\ell-1} e^{\beta_\ell
 % \]
 % so that
 % \begin{equation}\label{eq:H2implrespcleanedup}
-% h_2(t) = u(t) \sum_{\ell\in K_r \cup K_i} B_\ell t^{r_\ell-1} e^{\Re{\beta_\ell} t} \cos\big( \Im \beta_\ell t + \angle B_\ell \big).
+% g(t) = u(t) \sum_{\ell\in K_r \cup K_i} B_\ell t^{r_\ell-1} e^{\Re{\beta_\ell} t} \cos\big( \Im \beta_\ell t + \angle B_\ell \big).
 % \end{equation}
 % Observe that the impulse response is a real valued signal (as expected).
 
-The system $H$ mapping $x$ to $y$ is the sum of the regular system $H_2$ and nonregular system $H_1$, that is,
+The system $H$ mapping $x$ to $y$ is the sum of the regular system $G$ and nonregular system $F$, that is,
 \[
-y = Hx = H_1x + H_2x.
+y = Hx = Fx + Gx.
 \] 
-Observe that $H$ is regular only if the system $H_1 = 0$, that is, only if $H_1$ maps all input signals to the signal $x(t) = 0$ for all $t \in \reals$.  This occurs only when the polynomial $p(s) = 0$, that is, only when the number of poles exceeds the number of zeros.  The system $H$ will be stable if both $H_1$ and $H_2$ are stable.  Because the differentiator $D^\ell$ is not stable (Exercise~\ref{excer:diffnotstable}) the system $H_1$ is stable if only if the order of the polynomial $p(s)$ is zero, that is, if $p(s) = \gamma_0$ is a constant (potentially $\gamma_0 = 0$).  In this case $H_1x = \gamma_0 T_0x$ is the identity system multiplied by a constant.  The polynomial $p(s)$ is a constant only when the order of the denominator polynomial is greater than or equal to the order of the numerator polynomial, that is, when the number of poles is greater than or equal to the number of zeros.  The regular system $H_2$ is stable if and only if its impulse response $h_2$ is absolutely integrable.  This occurs only when the terms $e^{\beta_\ell t}$ inside the sum~\eqref{eq:H2implrespcleanedup} are decreasing as $t \rightarrow \infty$, that is, only if the real part of the poles $\Re{\beta_\ell}$ are negative.  Thus, the system $H_2$ is stable if and only if the real part of the poles are strictly negative.
+Observe that $H$ is regular only if the system $F = 0$, that is, only if $F$ maps all input signals to the signal $x(t) = 0$ for all $t \in \reals$.  This occurs only when the polynomial $p(s) = 0$, that is, only when the number of poles exceeds the number of zeros.  The system $H$ will be stable if both $F$ and $G$ are stable.  Because the differentiator $D^\ell$ is not stable (Exercise~\ref{excer:diffnotstable}) the system $F$ is stable if only if the order of the polynomial $p(s)$ is zero, that is, if $p(s) = \gamma_0$ is a constant (potentially $\gamma_0 = 0$).  In this case $Fx = \gamma_0 T_0x$ is the identity system multiplied by a constant.  The polynomial $p(s)$ is a constant only when the order of the denominator polynomial is greater than or equal to the order of the numerator polynomial, that is, when the number of poles is greater than or equal to the number of zeros.  The regular system $G$ is stable if and only if its impulse response $g$ is absolutely integrable.  This occurs only when the terms $e^{\beta_\ell t}$ inside the sum~\eqref{eq:H2implrespcleanedup} are decreasing as $t \rightarrow \infty$, that is, only if the real part of the poles $\Re{\beta_\ell}$ are negative.  Thus, the system $G$ is stable if and only if the real part of the poles are strictly negative.
 
 The stability of the system $H$ can be immediately determined from its pole-zero plot.  The system is stable if and only if: 
 \begin{enumerate}
