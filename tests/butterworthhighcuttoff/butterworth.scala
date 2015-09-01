@@ -51,10 +51,10 @@ val Q : Seq[Complex] = ks.map { k =>
   Qk //return estimate of the spectrum
 }
 
-val C2 = 1e-8 //capacitor C2 value
+val C2 = 1e-7 //capacitor C2 value
 val C1 = 2*C2 //capacitor C1 value
-val R1 = 4700 //resistor values
-val R2 = 4700
+val R1 = 560 //resistor values
+val R2 = 560
 val c = 1.0/sqrt(2.0)/Pi/R1/C1 //cuttoff frequency 1/(sqrt(2)*pi*R1*C1) is approximately 1125
 println("Cuttoff frequency is " + c)
 

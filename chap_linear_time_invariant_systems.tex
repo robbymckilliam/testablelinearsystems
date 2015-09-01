@@ -476,6 +476,37 @@ H e^{st} = \lambda H(s) e^{st} = -\frac{e^{st}}{1 + R C s}.
 \]
 This satifies the differential equation for the active RC circuit.
 
+In Chapter~\ref{sec:syst-modell-diff} we modelled electrical, mechanical, and electromechanical devices by differential equations of the form
+\begin{equation}\label{eq:diffinlintersection}
+\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y
+\end{equation}
+%  Taking Laplace transforms of both sides of this equation,
+% \begin{align*}
+% \calL\left( \sum_{\ell=0}^{m} a_\ell D^\ell x \right) &= \calL\left( \sum_{\ell=0}^{k} b_\ell D^\ell(y) \right) & \\
+% \sum_{\ell=0}^{m} a_\ell \calL\big(D^\ell(x)\big) &= \sum_{\ell=0}^{k} b_\ell \calL\big(D^\ell(y)\big) & \text{(linearity~\eqref{eq:laplacetransislinear})} \\
+% \sum_{\ell=0}^{m} a_\ell \lambda(D^\ell) \calL(x) &= \sum_{\ell=0}^{k} b_\ell \lambda(D^\ell) \calL(y) & \text{(using \eqref{eq:transferLaplcetheorem})} \\
+% \sum_{\ell=0}^{m} a_\ell s^\ell \calL(x) &= \sum_{\ell=0}^{k} b_\ell s^\ell \calL(y). & \text{(since $\lambda(D^\ell) = s^\ell$ by~\eqref{eq:lambdadifferentiator})}
+% \end{align*}
+% We have obtained an equation relating the Laplace transforms of $x$ and $y$,
+% \[
+% \calL(x) (a_0 + a_1s + \dots a_m s^m) =  \calL(y) (b_0 + b_1s + \dots b_k s^k). 
+% \]
+% Rearranging this equation we obtain 
+% \[
+% \calL(y) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k} \calL(x).
+% \]
+%Given the input signal $x$ and its Laplace transform $\calL(x)$ we can find the output signal $y$ (provided it exists) by applying the inverse Laplace transform to the right hand side of the equation above.  
+Suppose that $H$ is a linear shift-invariant system such that $y = Hx$ if $x$ and $y$ satisfy a differential equation of this form.  Since $H$ is linear and shift-invariant the response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into the differential equation gives
+\[
+\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st} = \sum_{\ell=0}^{k} b_\ell s^{\ell} \lambda H(s) e^{st} = \lambda H(s) \sum_{\ell=0}^{k} b_\ell s^{\ell} e^{st}
+\]
+and rearrnaging we find that the transfer function $\lambda H$ satisfies
+\begin{equation} \label{eq:findtransferfuncfromdiff}
+\lambda H(s) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
+\end{equation}
+The transfer function takes the form of a polynomial divided by a polynomial.  The transfer function associated with a linear differential equation with constant coefficients~\eqref{eq:diffinlintersection} always takes this form.  
+
+
 % In Section~\ref{sec:active-circuits} we were able to solve for the input signal $x$, given the output signal $y$.  We will now show how to solve for $y$ given $x$ in the special case that $x$ is of the form
 % \begin{equation}\label{eq:xinputlincombexpsigs}
 % x = \sum_{\ell=1}^m c_\ell e^{s_\ell t},
