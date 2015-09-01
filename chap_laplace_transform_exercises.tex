@@ -89,27 +89,6 @@ We have
 \end{align*}
 \end{solution}
 
-\item \label{exer:finhandroch} Let $H$ be a regular system with impulse response $h$.  Show that the complex exponential signal $e^{st} \in \dom h$ if and only if $s \in \roc h$, that is, $\roc h = \cep \dom h$.
-\begin{solution}
-The set $\roc h$ contains all those complex numbers $s$ such that
-\[
-\int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{if and only if $s \in \roc h$}.
-\]
-The set $\dom h$ contains all those signals such that
-\[
-\int_{-\infty}^{\infty} \abs{h(\tau) x(t - \tau} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
-\]
-The set $\cep \dom h$ contains the complex numebrs $s$ such that the complex exponential signal $e^{st} \in \dom h$, that is, those complex $s$ such
-\[
-\int_{-\infty}^{\infty} \abs{h(\tau) e^{s(t - \tau)}} d\tau = \abs{e^{st}} \int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
-\]
-Since $\abs{e^{st}}$ is finite for all $t$ this is the same as the set of $s \in \complex$ such that
-\[
-\int_{-\infty}^{\infty} \abs{h(\tau) e^{-s \tau}} d\tau < \infty
-\] 
-which is exactly $\roc h$.
-\end{solution}
-
 \item \label{exer:laplacetranstimeshift} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ the time shifter $T_\tau$. 
 \begin{solution}
 Put $y = T_\tau x = x(t- \tau)$.  Taking Laplace transforms
@@ -487,6 +466,12 @@ which is finite for all $s$ with $\Re(s) > 0$ as required.  For the derivative w
 which is finite for all $s$ with $\Re(s) > 1$ as required.
 \end{solution}
 
+\item \label{exer:eReslimsinclike} Show that the limit as $\abs{s} \to 0$ of 
+\[
+\frac{ e^{s/2} - e^{-s/2}}{s}
+\]
+is equal to $1$.
+
 \item \label{exer:twomassspringtwowallstranfuncpolezeros} Consider the mechanical system in Figure~\ref{mech:twomassspringtwowalls} from Exercise~\ref{exer:twomassspringtwowalls}.  After solving Exercise~\ref{exer:twomassspringtwowalls}, find the transfer function of a linear shift-invariant $H$ system mapping $f$ to $p$.  Now suppose that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$.  Find the poles and zeros of $H$ and draw a pole zero plot.  Determine whether $H$ is stable and/or regular.  Find and plot the impulse response and the step response of $H$ if they exist.
 
 \begin{solution}
@@ -663,6 +648,30 @@ These responses are plotted below
 \end{center}
 
 \end{solution}
+
+\item \label{exer:finhandroch} Let $x$ be a signal.  Show that the complex exponential signal $e^{st} \in \dom x$ if and only if the signal $x(t)e^{-st}$ is absolutely integrable.
+\begin{solution}
+The set $\dom x$ contains all those signals such that
+\[
+\int_{-\infty}^{\infty} \abs{x(\tau) x(t - \tau} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
+\]
+If $e^{st} \in \dom x$ then
+\[
+\int_{-\infty}^{\infty} \abs{x(\tau) e^{s(t - \tau)}} d\tau = \abs{e^{st}} \int_{-\infty}^{\infty} \abs{x(\tau) e^{-s \tau}} d\tau < \infty  \qquad \text{for all $t \in \reals$}.
+\]
+Setting $t = 0$ we find that
+\[
+\int_{-\infty}^{\infty} \abs{x(\tau) e^{-s \tau}} d\tau < \infty
+\] 
+and so $x(t) e^{-st}$ is absolutely integrable.  On the other hand, if $x(t) e^{-st}$ is absolutely integrable then
+\[
+\int_{-\infty}^{\infty} \abs{x(\tau) e^{s(t - \tau)}} d\tau = \abs{e^{st}} \| x(t) e^{-st}\|_1 < \infty  \qquad \text{for all $t \in \reals$}.
+\]
+since $e^{st}$ is finite for all $t$, and so, $e^{st} \in \dom x$.
+\end{solution}
+
+
+\item \label{exer:domfgrocfrocg} Show that the complex exponential signal $e^{st} \in \dom f\;g$ if and only if $s \in \roc f \cap \roc g$, that is $\cep \dom f\;g = \roc f \cap \roc g$.
 
 
 \end{excersizelist}

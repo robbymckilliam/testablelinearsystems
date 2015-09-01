@@ -945,7 +945,7 @@ This theorem motivated use of this recontruction method in Tests~\ref{test:volta
 
 Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
 \begin{align}
-\hat{x}(f) = \calF x(f) &= \sum_{n \in \ints} c_n \calF\sinc(F t - n)  \nonumber \\
+\hat{x}(f) = \calF x(f) &= \sum_{n \in \ints} c_n \calF\sinc(F t - n)  \label{eq:interchangefoursummation} \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
 &= P \rect( f P ) \calD c(Pf) \qquad \label{eq:ftanddftrelationship}
 \end{align}
@@ -953,7 +953,10 @@ where
 \[
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \]
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and infinite summation in~\eqref{eq:interchangefoursummation} can be justified using the completeness of $L_2$.  
+%TODO Introduce completeness in an advanced section?  I still don't really like how the domains are incorporated at the moment.  It might be better to just state
+%results and when they hold.  Certainly definitions like stability etc only really make sense it you set the domain in advance though?  And things like sin(x(t)) are/are not stable depending on the domain. This is tricky.
+We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
 
 The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}

@@ -302,7 +302,7 @@ Hx &= a F x + b G x \\
 &= (a f + bg) * x &\text{(distributivity of convolution)}\\
 &= h * x,
 \end{align*}
-and so, $H$ is a regular system with impulse response $h = af + bg$.  From here on, unless otherwise stated, the domain of a system $H = aF + bG$ formed by a linear combination of regular systems $F$ and $G$ is assumed to be $\dom f \cap \dom g$.  %Thus, if $H$ is the linear combination of regular systems $F$ and $G$, then the impulse response of $H$ is the same linear combination of the impulse responses of $F$ and $G$.
+and so, $H$ is a regular system with impulse response $h = af + bg$ and we can take its domain to be $\dom f \cap \dom g$.  %From here on, unless otherwise stated, the domain of a system $H = aF + bG$ formed by a linear combination of regular systems $F$ and $G$ is assumed to be $\dom f \cap \dom g$.  %Thus, if $H$ is the linear combination of regular systems $F$ and $G$, then the impulse response of $H$ is the same linear combination of the impulse responses of $F$ and $G$.
 
 \begin{figure}
 \centering
@@ -348,11 +348,11 @@ H T_\tau x &= GF T_\tau x \\
 &= T_\tau G F x  &\text{(shift-invariance $G$)} \\
 &= T_\tau H x .
 \end{align*}
-If $F$ and $G$ are regular systems the composition property can be expressed using their impulse responses $f$ and $g$.  We must first make some assumptions about the domain $X$ of $F$.  Suppose that $X = \dom f\;g$.  In this case, for $x \in X$, the associative property of convolution asserts that $g * (f * x) = (g* f) * x$ (Section~\ref{sec:prop-conv}).  It follows that 
+If $F$ and $G$ are regular systems the composition property can be expressed using their impulse responses $f$ and $g$.  For $x \in \dom f\;g$, the associative property of convolution asserts that $g * (f * x) = (g* f) * x$ (Section~\ref{sec:prop-conv}).  It follows that 
 \[
-Hx = GF x = g * (f * x) = (g* f) * x = h * x
+Hx = GF x = g * (f * x) = (g* f) * x = h * x \qquad x \in \dom f\;g
 \]
-and so $H$ is a regular system with impulse response $h = g * f$.  From here on, unless otherwise stated, the domain of a system $H = GF$ formed by compositioin of regular systems $F$ and $G$ is assumed to be $\dom f\;g$.  %Thus, if $H$ is the composition of regular systems $F$ and $G$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $F$ and $G$.  
+and so $H$ is a regular system with impulse response $h = g * f$ and we can take its domain to be $\dom f\;g$.  %From here on, unless otherwise stated, the domain of a system $H = GF$ formed by composition of regular systems $F$ and $G$ is assumed to be $\dom f\;g$.  %Thus, if $H$ is the composition of regular systems $F$ and $G$, then $H$ is a regular system with impulse given by the convolution of the impulse responses of $F$ and $G$.  
 
 \begin{figure}
 \centering
@@ -369,7 +369,7 @@ and so $H$ is a regular system with impulse response $h = g * f$.  From here on,
 \caption{Block diagram depicting composition of linear shift-invariant systems. The system $GF$ can be expressed as a single linear shift-invariant system $H$.}\label{blockdiag:compositionlti}
 \end{figure}
 
-A wide variety of linear shift-invariant systems can be constructed by linear combinination and composition of simpler systems.  
+A wide variety of linear shift-invariant systems can be constructed by linear combination and composition of simpler systems.  
 
 
 \section{Eigenfunctions and the transfer function}\label{sec:eigenf-line-time}
@@ -455,14 +455,14 @@ We take $\cep X$ as the domain of the transfer function $\lambda H$, that is $\l
 \begin{equation}\label{eq:transfuneigenproperty}
 H e^{st} = \lambda H(s) e^{st} \qquad s \in \cep X.
 \end{equation}
-This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$, that is, $\lambda H(s)$,  multiplied by the same complex exponential signal $e^{st}$.
+This is an important equation.  Stated in words: the response of a linear shift-invariant system $H \in X \to Y$ to a complex exponential signal $e^{st} \in X$ is the transfer function $\lambda H$ evaluated at $s$ multiplied by the same complex exponential signal $e^{st}$.
 
 We can use these eigenfunctions to better understand the properties of systems modelled by differential equations, such as those in Section~\ref{sec:syst-modell-diff}.  Consider the active electrical circuit from Figure~\ref{elec:activeRC}.  In the case that the resistors $R_1 = R_2$, and the capacitor $C_1 = 0$ (an open circuit) the differential equation relating the input voltage $x$ and output voltage $y$ is
 \[
 x = - y - R_1 C_2 Dy.
 \]
 We called this the \term{active RC} circuit.  To simplify notation put $R = R_1$ and $C = C_2$ so that $x = -y - RCD y$.   
-Suppose that $H$ is a linear shift-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  If the input voltage is a complex exponential signal $x = e^{st}$, then the ouput voltage is the same complex exponential signal mulitpled by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$.  Substituting this into the differential equation for the active RC circuit we obtain
+Suppose that $H$ is a linear shift-invariant system that maps the input voltage $x$ to the output voltage $y$, that is, $H$ is a system that describes the active RC circuit.  If the input voltage is a complex exponential signal $x = e^{st}$, then the output voltage is the same complex exponential signal multiplied by the transfer function, that is, $y = Hx = \lambda H(s) e^{st}$.  Substituting this into the differential equation for the active RC circuit we obtain
 \[
 e^{st} = - \lambda e^{st}- R C D (\lambda e^{st}) = -\lambda e^{st} (1  - R C s)
 \]
@@ -474,11 +474,11 @@ Now, if $e^{st}$ is input to the circuit, we expect the output to be
 \[
 H e^{st} = \lambda H(s) e^{st} = -\frac{e^{st}}{1 + R C s}.
 \]
-This satifies the differential equation for the active RC circuit.
+This satisfies the differential equation $x = -y - RCDy$ for the active RC circuit.
 
 In Chapter~\ref{sec:syst-modell-diff} we modelled electrical, mechanical, and electromechanical devices by differential equations of the form
 \begin{equation}\label{eq:diffinlintersection}
-\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y
+\sum_{\ell=0}^{m} a_\ell D^\ell x = \sum_{\ell=0}^{k} b_\ell D^\ell y.
 \end{equation}
 %  Taking Laplace transforms of both sides of this equation,
 % \begin{align*}
@@ -496,15 +496,15 @@ In Chapter~\ref{sec:syst-modell-diff} we modelled electrical, mechanical, and el
 % \calL(y) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k} \calL(x).
 % \]
 %Given the input signal $x$ and its Laplace transform $\calL(x)$ we can find the output signal $y$ (provided it exists) by applying the inverse Laplace transform to the right hand side of the equation above.  
-Suppose that $H$ is a linear shift-invariant system such that $y = Hx$ if $x$ and $y$ satisfy a differential equation of this form.  Since $H$ is linear and shift-invariant the response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into the differential equation gives
+Suppose that $H$ is a linear shift-invariant system such that $y = Hx$ if $x$ and $y$ satisfy a differential equation of this form.  The response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into the differential equation gives
 \[
-\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st} = \sum_{\ell=0}^{k} b_\ell s^{\ell} \lambda H(s) e^{st} = \lambda H(s) \sum_{\ell=0}^{k} b_\ell s^{\ell} e^{st}
+\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st} = \sum_{\ell=0}^{k} b_\ell s^{\ell} \lambda H(s) e^{st} = \lambda H(s) \sum_{\ell=0}^{k} b_\ell s^{\ell} e^{st}.
 \]
-and rearrnaging we find that the transfer function $\lambda H$ satisfies
+Rearranging we find that the transfer function $\lambda H$ satisfies
 \begin{equation} \label{eq:findtransferfuncfromdiff}
-\lambda H(s) = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
+\lambda H(s) = \frac{\sum_{\ell=0}^{m} a_\ell s^{\ell} e^{st}}{\sum_{\ell=0}^{k} b_\ell s^{\ell} e^{st}} = \frac{a_0 + a_1s + \dots a_m s^m}{b_0 + b_1s + \dots b_k s^k}.
 \end{equation}
-The transfer function takes the form of a polynomial divided by a polynomial.  The transfer function associated with a linear differential equation with constant coefficients~\eqref{eq:diffinlintersection} always takes this form.  
+The transfer function takes the form of a polynomial divided by a polynomial.  The transfer function associated with a linear differential equation with constant coefficients~\eqref{eq:diffinlintersection} always takes this form.  We will study these transfer functions in greater detail when we introduce the Laplace transform in Chapter~\ref{sec:laplace-transform}.
 
 
 % In Section~\ref{sec:active-circuits} we were able to solve for the input signal $x$, given the output signal $y$.  We will now show how to solve for $y$ given $x$ in the special case that $x$ is of the form
@@ -580,7 +580,7 @@ where $\omega = 2\pi f$.  This signal is oscillatory when $f \neq 0$ and does no
 \[
 \Lambda H(f) = \lambda H( j 2\pi f ) \qquad j 2\pi f \in \cep X
 \]
-called the \term{spectrum} of $H$.  It will typically be the case that $\cep X$ contains the entire imaginary axis and so the domain of the spectrum is the set of real numbers $\reals$.  In this case  the spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  The independent variable $f$ typically represents frequency in Hertz. 
+called the \term{spectrum} of $H$.  It will typically be the case that $\cep X$ contains the entire imaginary axis and so the domain of $\Lambda H$ is the set of real numbers $\reals$.  In this case  the spectrum is a signal, that is, $\lambda H \in \reals \to \complex$.  The independent variable $f$ typically represents frequency in Hertz. 
 
 It follows from~\eqref{eq:transfuneigenproperty} that the response of $H$ to $e^{j2\pi ft} \in X$ satisfies
 \[
@@ -598,7 +598,7 @@ H e^{j 2\pi f t} = \abs{\Lambda H(f)} e^{j ( 2\pi f t + \angle{\Lambda H(f)})}.
 %\[
 %H\big(\cos( 2\pi f  t) + j \sin(2 \pi f t) \big) = \abs{\Lambda H(f)} \big( \cos( 2\pi ft + \angle{\Lambda H(f)} ) + j \sin(2 \pi ft + \angle{\Lambda H(f)} ) \big)
 %\]
-By taking real and imaginary parts we obtain the pair of real valued solutions
+Taking real and imaginary parts we obtain the pair of real valued solutions
 \[
 H\cos(2\pi f t) = \abs{\Lambda H (f)} \cos\big(2\pi f t + \angle{\Lambda H(f)}\big),
 \]
@@ -613,7 +613,7 @@ The magnitude and phase spectrum is
 \[
 \abs{\Lambda H(f)} = \big(1 + 4\pi^2 R^2 C^2 f^2\big)^{-\tfrac{1}{2}}, \qquad \angle \Lambda H(f) = \pi - \atan\big( 2\pi R C f \big).
 \]
-These plotted in Figure~\ref{fig:activeRCspectrum} when $R=27 \times 10^3$ and $C= 10 \times 10^{-9}$.  Observe from the plot of the magnitude spectrum that a low frequency sinusoidal signal, say $100\si{\hertz}$ or less, input to the active RC circuit results in a sinusoidal output signal with the same frequency and approximately the same amplitude.  However, a high frequency sinusoidal signal, say greater than $1000\si{\hertz}$, input to the circuit results in a sinusoidal output signal with the same frequency, but smaller amplitude.  For this reason RC circuits are called \term{low pass filters}.
+These are plotted in Figure~\ref{fig:activeRCspectrum} when $R=27 \times 10^3$ and $C= 10 \times 10^{-9}$.  Observe from the plot of the magnitude spectrum that a low frequency sinusoidal signal, say $100\si{\hertz}$ or less, input to the active RC circuit results in a sinusoidal output signal with the same frequency and approximately the same amplitude.  However, a high frequency sinusoidal signal, say greater than $1000\si{\hertz}$, input to the circuit results in a sinusoidal output signal with the same frequency, but smaller amplitude.  For this reason RC circuits are called \term{low pass filters}.
 
 \begin{figure}[tp]
   \centering
@@ -702,7 +702,7 @@ A = \frac{2j}{L}\sum_{\ell=1}^{L} x_{k,\ell} e^{-j \gamma \ell}
 \end{align*}
 where $\alpha = \rho e^{- j \theta}$ and $\alpha^*$ denotes the complex conjugate of $\alpha$ and
 \[
-C = e^{-\gamma (L+1)} \frac{  \sin( \gamma L)  }{L \sin(\gamma)  } \qquad \text{(Excersize~\ref{excer:sumsinegeomean})} .
+C = e^{-\gamma (L+1)} \frac{  \sin( \gamma L)  }{L \sin(\gamma)  } \qquad \text{(Exercise~\ref{excer:sumsinegeomean})} .
 \]
 Similarly, from the samples of the output signal $y_{k,1},\dots,y_{k,L}$ we compute the complex number
 \[
