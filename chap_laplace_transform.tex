@@ -235,11 +235,11 @@ That is, the transfer function of a composition of linear shift-invariant system
 
 %\subsection{The convolution theorem}
 
-Now suppose that $F$ and $G$ are regular systems with impulse responses $f$ and $g$.  We showed in Section~\ref{sec:line-comb-comp} that the composition $H = G F$ is a regular system with impulse response given by the convolution $h = g * f$ and with domain $\dom f\;g$.  It can be shown that $e^{st} \in \dom f\;g$ if and only if $s \in \roc f \cap \roc g$, that is, $\cep \dom f\;g = \roc f \cap \roc g$ (Exercise~\ref{exer:domfgrocfrocg}).  Thus, for $s \in \roc f \cap \roc g$ we have
+Now suppose that $F$ and $G$ are regular systems with impulse responses $f$ and $g$.  We showed in Section~\ref{sec:line-comb-comp} that the composition $H = G F$ is a regular system with impulse response given by the convolution $h = g * f$ and we take its domain to be $\dom f\;g$.  It can be shown that $e^{st} \in \dom f\;g$ if and only if $s \in \roc f \cap \roc g$, that is, $\cep \dom f\;g = \roc f \cap \roc g$ (Exercise~\ref{exer:domfgrocfrocg}).  Thus, for $s \in \roc f \cap \roc g$ we have
 \[ 
 \lambda H(s) = \calL h(s)  \qquad \lambda F(s) = \calL f(s) \qquad \lambda G(s) = \calL g(s),
 \] 
-and using~\eqref{eq:composedtransferfunction}, dropping the ``(s)'' for notationial clarity, we obtain,
+and using~\eqref{eq:composedtransferfunction} and dropping the ``(s)'''s for notationial clarity, we obtain,
 \[
 \calL(f * g) = \calL h =  \lambda H = \lambda F \lambda G = \calL f \calL g
 \]
@@ -260,11 +260,15 @@ with region of convergence $\roc h \cap \roc x$.  Thus, the Laplace transform of
 \[
 \calL T_{\tau} x = \lambda T_\tau \calL x = e^{-s\tau} \calL x
 \]
-with region of convergence is $\roc x$.  This is called the \term{time-shift property} of the Laplace transform (Exercise~\ref{exer:laplacetranstimeshift}).  The result also holds for the differentiator, that is,
+with region of convergence $\roc x$.  This is called the \term{time-shift property} of the Laplace transform (Exercise~\ref{exer:laplacetranstimeshift}).  The result also holds for the differentiator, that is,
 \[
 \calL D x = \lambda D \calL x = s \calL x
 \]
-with region of convergence is $\roc x$ under the added assumptions that $x$ is differentiable, i.e. $x \in C^1$, and that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc x$.  This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffproperty}).  Observe that the assumption is true if, for example, $x(t)$ is finite. %A of signal that does not satisfy the differentiation property is $u(t) \sin(e^{t^2})$.
+with region of convergence $\roc x$ under the added assumptions that $x$ is differentiable, i.e. $x \in C^1$, and that 
+\[
+\lim_{t\to\infty} x(t) e^{-st} = \lim_{t\to-\infty} x(t) e^{-st} = 0 \qquad \text{when $s \in \roc x$}.
+\]
+This is called the \term{differentiation property} of the Laplace transform (Exercise~\ref{exer:laplacetransdiffproperty}).  Observe that the added assumptions are true if, for example, $x(t)$ is finite. %A of signal that does not satisfy the differentiation property is $u(t) \sin(e^{t^2})$.
 
 % \subsection{Commutivity (again)}
 
