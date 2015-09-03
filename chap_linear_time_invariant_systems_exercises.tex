@@ -30,8 +30,6 @@
 % The exchange of integration order can be justified using Fubini's theorem whenever the all of the convolutions involved in $x*(y*z) = (x*y)*z$ exist.
 % \end{solution}
 
-\item Let $x(t) = u(t)$, $y(t) = u(-t)$ and $z(t) = \rect(t) - \rect(t - 1)$ where $u$ is the step function that $\rect$ is the rectangular pulse.  Show that $x * (y * z) \neq (x * y) * z$, that is, show that the associative property of convolution does not hold for these signals.
-
 \item \label{excer:convabsisabs} Show that the convolution of two absolutely integrable signals is absolutely integrable.
 \begin{solution}
 Let $x$ and $y$ be absolutely integrable.  We want to show that the convolution
@@ -51,54 +49,151 @@ is absolutely integrable.  Write
 which is finite by our assumption that $x$ and $y$ are absolutely integrable.  This result also follows as a special case of Young's Theorem~\citep{Rudin_real_and_complex_analysis}.
 \end{solution}
 
+\item State whether each of the following systems are: causal, linear, shift-invariant, or stable.  Plot the impulse and step response of the systems whenever they exist.  In each case, assume the domain to be the set of locally integrable signals.
+\begin{enumerate}
+\item $Hx(t) = 3x(t - 1) - 2x(t+1)$
+\item $Hx(t) = \sin\big(2\pi x(t)\big)$
+\item $Hx(t) = t^2 x(t)$
+\item $Hx(t) = \int_{-1/2}^{1/2} \cos(\pi\tau) x(t + \tau) d\tau$
+\end{enumerate}
 
-\item \label{excer:bibostableimpulseresp} Show that a regular system is stable if and only if its impulse response is absolutely integrable.
 \begin{solution}
-Let $H$ be a regular system and $h$ its impulse response.  By default the domain of $H$ is supposed to be $\dom h$, that is $H \in \dom h \to \complex$.  If $h$ is absolutely integrable then for all signals $x \in \dom h$ such that $\sabs{x(t)} < M$ for all $t$,
-\begin{align*}
-\abs{H x(t)} &= \abs{(h * x)(t)} \\
-&= \abs{\int_{-\infty}^\infty h(\tau)  x(t - \tau) d\tau} \\
-&\leq \int_{-\infty}^\infty \sabs{h(\tau) x(t - \tau)} d\tau \\
-&< \int_{-\infty}^\infty M \sabs{h(\tau)} d\tau \\
-&= M \|h\|_1
-\end{align*}
-for all $t$, and so $H x(t)$ is bounded.  
 
-On the other hand if $h$ is not absolutely integrable then consider the bounded signal 
+(a) The system can be written as $H(x) = 3T_{1}(x) - 2T_{-1}(x)$ which is a linear combination of shifters.  Since the shifter is linear and shift-invariant $H$ will be also (Section~\zref{sec:line-comb-comp} of the notes).  Linearity can also be shown directly
+\begin{align*}
+H(ax + by)  &= 3\big( a x(t-1) + by(t-1) \big)  - 2\big( a x(t+1) + by(t+1) \big) \\
+&= a\big(3x(t-1)-2x(t+1)\big) + b\big(3y(t-1)-2y(t+1)\big) \\
+&= aHx + bHy.
+\end{align*}
+Shift-invariance can also be shown directly
+\begin{align*}
+T_\tau Hx(t) &= H x(t-\tau) \\
+&= 3x(t-1-\tau)  - 2x(t+1-\tau) \\
+&= 3T_\tau x(t-1)  - 2T_\tau x(t+1) \\
+&= HT_\tau x(t).
+\end{align*}
+The system is stable because for every input signal bounded less than $M > 0$, that is, for all input signals $x$ such that $\abs{x(t)} < M$ for all $t \in \reals$, we can choose $K = 5M$ and
 \[
-s(t) = \begin{cases}
-1 & h(-t) > 0,  \\
--1 & h(-t) \leq 0.
+\sabs{Hx(t)} = \sabs{3x(t-1-\tau)  - 2x(t+1-\tau)} \leq 3\abs{x(t-1-\tau)} + 2\abs{x(t+1-\tau)}  < 5M = K,
+\]
+i.e., the output signal is bounded less than $K$.  The system is not causal, because it depends on the input signal $x$ at time $t+1$, i.e., in the `future'.  The system is not regular because it  is a linear combination of time shifters, and these are not regular, they don't formally have an impulse response (Section~\zref{sec:conv-regul-syst} of the notes).  The system does have a step response equal to $H(u,t) = 3u(t-1)  - 2u(t+1)$ that is plotted in the figures below.
+
+(b) The system is causal, in fact, it is memoryless since it only depends on the input signal $x$ at time $t$, i.e. the `present' time.  The system $Hx(t) = \sin\big(2\pi x(t)\big)$ is shift-invariant because 
+ \[
+ H T_\tau x(t) = \sin\big(2\pi T_\tau x(t)\big) = \sin\big(2\pi x(t-\tau)\big) = T_\tau H x(t).
+ \]
+ The system is not linear since $H(ax,t) = \sin\big(2\pi a x(t)\big) \neq a \sin\big(2\pi x(t)\big)$ in general.  The system is stable, for every input signal $x$ with absolute value bounded below $M$ we have
+\[
+\abs{\sin(x(t))} = \abs{\frac{e^{jx(t)} - e^{-jx(t)}}{2j}} \leq \frac{\abs{e^{jx(t)}} + \abs{e^{-jx(t)}}}{2} < e^M
+\] 
+and so, choosing $K = e^{M}$ we find that $\abs{Hx(t)} < K$.  Because the system is not linear, it is not regular. It does have a step response equal to $Hu(t) = \sin\big(2\pi u(t)\big) = 0$.  Also acceptable is that is doesn't have a step response because this is a feature we developed for linear shift-invariant systems.
+
+(c) The system is causal and also memoryless.  The system $Hx(t) = t^2x(t)$ is linear because 
+\[
+H(ax+by) = t^2(ax+by) = at^2x + bt^2y = aH x + bHy.
+\]
+The system is not shift-invariant because
+\[
+T_\tau H x(t) = (t-\tau)^2x(t-\tau) \neq H T_\tau x(t) = t^2 x(t - \tau)
+\]
+in general.  The system is not regular because it is not shift-invariant.  The system does not have an impulse response.  It does have a step response equal to $Hu(t) = t^2u(t)$.  This is plotted in the figures below.  Also acceptable is that is doesn't have a step response because this is a feature we developed for linear shift-invariant systems.  The system is not stable, for example the input step $u$ is bounded below $M > 1$ but the output $Hu$ is not bounded, it grows indefinitely as $t \to \infty$.
+
+(d) Put $h(t) = \cos(\pi t) \rect(t)$ where $h$ is the rectangle function (see~(\zref{eq:rectfuncdefn}) of the lecture notes).  Now
+\begin{align*}
+Hx(t) &= \int_{-1/2}^{1/2} \cos(\pi\tau) x(t + \tau) d\tau \\
+&=\int_{-1/2}^{1/2} \cos(-\pi\tau) x(t - \tau) d\tau & \text{(change var $\tau=-\tau$)}\\
+&=\int_{-\infty}^{\infty} \cos(-\pi\tau)\rect(t) x(t - \tau) d\tau \\
+&=\int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau \\
+&= (h*x)(t).
+\end{align*}
+Thus, $H$ is the regular system with impulse response $h(t) = \cos(\pi t) \rect(t)$.  A plot of $h$ is given below.  Since $H$ is regular it is also linear and shift-invariant.  The impulse response $h$ is absolutely  integrable with $\|h\|_1 = \tfrac{2}{\pi}$ and so $H$ is stable.  The system $H$ is not causal because $h$ is nonzero with some $t < 0$, specifically those $t \in (-\tfrac{1}{2},\tfrac{1}{2})$.  The step response is given by applying the integrator system $I_\infty$ to $h$, that is, 
+\begin{align*}
+I_\infty h(t) = \int_{-\infty}^t h(\tau) d\tau = \begin{cases}
+0 & t \leq -\tfrac{1}{2} \\
+\int_{-1/2}^t \cos(\pi\tau) d\tau = \big(\sin(\pi t) + 1\big)/\pi & -\tfrac{1}{2} < t \leq \tfrac{1}{2} \\
+\tfrac{2}{\pi} & t > \tfrac{1}{2}.
 \end{cases}
-\]
-Observe that $s$ is not in the domain $\dom h$ because
-\[
-\int_{-\infty}^\infty \abs{h(\tau)  s(-\tau)} d\tau = \int_{-\infty}^\infty \abs{h(\tau)} d\tau = \infty
-\]
-However, for all $\kappa > 0$ the signal 
-\[
-r_\kappa(t) = \rect\big(\tfrac{t}{2\kappa}\big) s(t) = 
-\begin{cases}
-s(t) & \abs{t} < \kappa \\
-0 & \text{otherwise}
-\end{cases}
-\]
-is in $\dom h$ since
-\[
-\int_{-\infty}^\infty \abs{h(\tau)  r_\kappa(-\tau)} d\tau = \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau < \infty
-\]
-because $h$ is locally integrable (the impulse response is always locally integrable by assumption.  See Section~\ref{sec:conv-regul-syst}).  Put $M > 1$ and suppose that $H$ was stable.  Then there exists $K > 0$ such that $\abs{H x(t)} < K$ for all $t \in \reals$ and all $x \in \dom h$ bounded less that $M$.  Observe that $r_\kappa$ is bounded less than $M$, that is, $\abs{r_\kappa(t)} \leq 1 < M$ for all $\kappa \in \reals$ and all $t \in \reals$.  The response of $H$ to $r_\kappa$ at time zero is
-\[
-H r_\kappa(0) = \int_{-\infty}^\infty h(\tau)  r_\kappa(-\tau) d\tau =  \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau
-\]
-and because $h$ is not absolutely integrable the integral on the right diverges as $\kappa$ get large.  Thus, we can choose $\kappa$ large enough that
-\[
-\abs{H r_\kappa(0)} = H r_\kappa(0) = \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau > K
-\]
-violating our assumption that $H$ was stable.  Thus, $H$ is not stable.
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
+    \draw[->] (0,-0.5) -- (0,3.5) node[above] {$H u(t) = 3u(t-1)  - 2u(t+1)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[thick] (-2.2,0)--(-1,0)--(-1,3)--(1,3)--(1,1)--(2.2,1);
+    \htick{3} node[pos=0.5,above left] {$3$};
+    \htick{1} node[pos=0.5,left] {$1$};
+    \vtick{-1} node[pos=0.5,below] {$-1$};
+    \vtick{1} node[pos=0.5,below] {$1$};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} \;\;
+\begin{tikzpicture}
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
+    \draw[->] (0,-0.5) -- (0,3.5) node[above] {$Hu(t) = t^2u(t)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[thick] (-2.2,0)--(0,0);
+    \draw[color=black,thick,domain=0:2.2,samples=50] plot[id=x] function{x*x*3/5};
+    \htick{3*3/5} node[pos=0.5,above left] {$3$};
+    \htick{3/5} node[pos=0.5,left] {$1$};
+    \vtick{-1} node[pos=0.5,below] {$-1$};
+    \vtick{1} node[pos=0.5,below] {$1$};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{tikzpicture} 
+\\ \vspace{0.2cm}
+\begin{tikzpicture}
+\begin{scope}[xscale=2,yscale=2.5]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.5,0) -- (1.5,0) node[above] {$t$};
+    \draw[->] (0,-0.25) -- (0,1.25) node[above] {$h(t) = \cos(\pi t) \rect(t)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[thick] (-1.3,0)--(-1/2,0);
+    \draw[thick] (1.3,0)--(1/2,0);
+    \draw[color=black,thick,domain=-0.5:0.5,samples=50] plot[id=x] function{cos(pi*x)};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{scope}
+\begin{scope}[yscale=2.5]
+    \htick{1} node[pos=0.5,above left] {$1$};
+\end{scope}
+\begin{scope}[xscale=2]
+    \vtick{-1/2} node[pos=0.5,below] {$-\tfrac{1}{2}$};
+    \vtick{1/2} node[pos=0.5,below] {$\tfrac{1}{2}$};
+\end{scope}
+\end{tikzpicture} \;\;
+\begin{tikzpicture}
+\begin{scope}[xscale=2,yscale=2.5]
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    \draw[->] (-1.5,0) -- (1.5,0) node[above] {$t$};
+    \draw[->] (0,-0.25) -- (0,1.25) node[above] {$I_\infty h(t)$};
+    %\draw[color=black] plot[id=x] function{1/x^2} 
+    %    node[right] {$f(t) = t^{-2}$};
+    \draw[thick] (-1.3,0)--(-1/2,0);
+    \draw[thick] (1.3,2/pi)--(1/2,2/pi);
+    \draw[color=black,thick,domain=-0.5:0.5,samples=50] plot[id=x] function{(sin(pi*x)+1)/pi};
+    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
+    %    node[right] {$f(t) = \frac{1}{20} e^t$};
+\end{scope}
+\begin{scope}[yscale=2.5]
+    \htick{1} node[pos=0.5,above left] {$1$};
+\end{scope}
+\begin{scope}[xscale=2]
+    \vtick{-1/2} node[pos=0.5,below] {$-\tfrac{1}{2}$};
+    \vtick{1/2} node[pos=0.5,below] {$\tfrac{1}{2}$};
+\end{scope}
+\end{tikzpicture} 
+\end{center}
+
 \end{solution}
 
-\item Show that the system $Hx(t) = \int_{-1}^{1} \sin(\pi\tau) x(t + \tau) d\tau$ is linear time invariant and regular.  Find and sketch the impulse response and the step response.
+
+\item Show that the system $Hx(t) = \int_{-1}^{1} \sin(\pi\tau) x(t + \tau) d\tau$ is linear shift-invariant and regular.  Find and sketch the impulse response and the step response.
 \begin{solution}
 The easy way is to spot the impulse response directly.  Observe that
 \begin{align*}
@@ -239,203 +334,6 @@ Observe that this is the same as previously.  The step response is plotted below
 
 \end{solution}
 
-\item \label{excer:sumgeomeebeta} Show that $\sum_{\ell = 1}^L e^{\beta \ell} = \frac{e^{\beta (L+1)} - e^\beta}{e^\beta - 1}$  (Hint: sum a geometric progression).
-\begin{solution}
-Put $r = e^\beta$ and put
-\[
-S_L = \sum_{\ell = 1}^L e^{\beta \ell} = \sum_{\ell = 1}^L r^\ell.
-\]
-This is the sum of the first $L$ terms of a geometric progression.  We have
-\[
-r S_L - S_L = r^{L+1} - r
-\]
-and so
-\[
-S_L = \frac{r^{L+1} - r}{r - 1} =  \frac{e^{\beta (L+1)} - e^\beta}{e^\beta - 1}
-\]
-as required.
-\end{solution}
-
-\item Define signals $x(t) = u(t)$, $y = u(-t)$, and $z(t) = \rect(t) - \rect(t-1)$ where $u$ is the step function and $\rect$ is the rectangular pulse.  Show that the associative property of convolution does not hold for these signals.  That is, show that $x*(y*z) \neq (x*y)*z$.
-
-\item \label{excer:sumsinegeomean} Show that 
-\[
-\frac{2j}{L}\sum_{\ell=1}^{L}\sin( \gamma \ell - \theta)  e^{-j \gamma \ell} = \alpha + \alpha^*C
-\]
-where $\alpha = e^{-j\theta}$ and $C = e^{-j\gamma (L+1)}\frac{\sin(\gamma L)}{L\sin(\gamma)}$. (Hint: solve Exercise~\ref{excer:sumgeomeebeta} first and then use the formula $2j\sin(x) = e^{jx} -  e^{-jx}$).
-\begin{solution}
-We have 
-\[
-2j\sin(\gamma \ell - \theta) = e^{j(\gamma \ell - \theta)} -  e^{-j(\gamma \ell - \theta)}
-\]
-and so the sum becomes
-\begin{align*}
-\frac{1}{L}\sum_{\ell=1}^{L}(e^{j(\gamma \ell - \theta)} - e^{-j(\gamma \ell - \theta)})  e^{-j \gamma \ell} &= \frac{1}{L}\sum_{\ell=1}^{L}e^{-j\theta} - \frac{1}{L}\sum_{\ell=1}^{L}e^{-2j\gamma}e^{j\theta} \\
-&= \alpha - \frac{\alpha^*}{L}\sum_{\ell=1}^{L}e^{-2j\gamma}.
-\end{align*}
-The sum is a geometric progression and, using the answer to Exercise~\ref{excer:sumgeomeebeta}, we have
-\[
-\sum_{\ell=1}^{L}e^{-2j\gamma} = \frac{e^{-2j\gamma (L+1)} - e^{-2j\gamma})}{e^{-2j\gamma} - 1}.
-\]
-The denominator satisfies
-\[
-e^{-2j\gamma} - 1 = e^{-j\gamma}(e^{-j\gamma} - e^{j\gamma}) = -2 j e^{-j\gamma} \sin(\gamma). 
-\]
-The numerator satisfies
-\begin{align*}
-e^{-2j\gamma (L+1)} - e^{-2j\gamma} &= e^{-2j\gamma}(e^{-2j\gamma L} - 1) \\
-&= e^{-2j\gamma}e^{-j\gamma L} (e^{-j\gamma L} - e^{j\gamma L}) \\
-&= -2 j e^{-j\gamma(L+2)} \sin(\gamma L).
-\end{align*}
-Thus
-\[
-\sum_{\ell=1}^{L}e^{-2j\gamma} = \frac{-2 j e^{-j\gamma(L+2)} \sin(\gamma L)}{-2 j e^{-j\gamma} \sin(\gamma)} = \frac{e^{-j\gamma(L+1)} \sin(\gamma L)}{ \sin(\gamma)} = L C
-\]
-where $C$ is defined in the question statement.  Now
-\[
-\frac{2j}{L}\sum_{\ell=1}^{L}\sin( \gamma \ell - \theta)  e^{-j \gamma \ell} = \alpha - \frac{\alpha^*}{L}LC = \alpha - \alpha^*C
-\]
-as required.
-\end{solution}
-
-\item State whether each of the following systems are: causal, linear, shift-invariant, or stable.  Plot the impulse and step response of the systems whenever they exist.
-\begin{enumerate}
-\item $Hx(t) = 3x(t - 1) - 2x(t+1)$
-\item $Hx(t) = \sin\big(2\pi x(t)\big)$
-\item $Hx(t) = t^2 x(t)$
-\item $Hx(t) = \int_{-1/2}^{1/2} \cos(\pi\tau) x(t + \tau) d\tau$
-\end{enumerate}
-
-\begin{solution}
-
-(a) The system can be written as $H(x) = 3T_{1}(x) - 2T_{-1}(x)$ which is a linear combination of shifters.  Since the shifter is linear and shift-invariant $H$ will be also (Section~\zref{sec:line-comb-comp} of the notes).  Linearity can also be shown directly
-\begin{align*}
-H(ax + by)  &= 3\big( a x(t-1) + by(t-1) \big)  - 2\big( a x(t+1) + by(t+1) \big) \\
-&= a\big(3x(t-1)-2x(t+1)\big) + b\big(3y(t-1)-2y(t+1)\big) \\
-&= aHx + bHy.
-\end{align*}
-Shift-invariance can also be shown directly
-\begin{align*}
-T_\tau Hx(t) &= H x(t-\tau) \\
-&= 3x(t-1-\tau)  - 2x(t+1-\tau) \\
-&= 3T_\tau x(t-1)  - 2T_\tau x(t+1) \\
-&= HT_\tau x(t).
-\end{align*}
-The system is stable because for every input signal bounded less than $M > 0$, that is, for all input signals $x$ such that $\abs{x(t)} < M$ for all $t \in \reals$, we can choose $K = 5M$ and
-\[
-\sabs{Hx(t)} = \sabs{3x(t-1-\tau)  - 2x(t+1-\tau)} \leq 3\abs{x(t-1-\tau)} + 2\abs{x(t+1-\tau)}  < 5M = K,
-\]
-i.e., the output signal is bounded less than $K$.  The system is not causal, because it depends on the input signal $x$ at time $t+1$, i.e., in the `future'.  The system is not regular because it  is a linear combination of time shifters, and these are not regular, they don't formally have an impulse response (Section~\zref{sec:conv-regul-syst} of the notes).  The system does have a step response equal to $H(u,t) = 3u(t-1)  - 2u(t+1)$ that is plotted in the figures below.
-
-(b) The system is causal, in fact it is memoryless since it only depends on the input signal $x$ at time $t$, i.e. the `present' time.  The system $Hx(t) = \sin\big(2\pi x(t)\big)$ is shift-invariant because 
-\[
-H T_\tau x(t) = \sin\big(2\pi T_\tau x(t)\big) = \sin\big(2\pi x(t-\tau)\big) = T_\tau H x(t).
-\]
-The system is not linear since $H(ax,t) = \sin\big(2\pi a x(t)\big) \neq a \sin\big(2\pi x(t)\big)$ in general.  The system is stable, for every input signal $x$ bounded by $M$, the output is bounded by any $K > 1$.  Because the system is not linear, it is not regular. It does have a step response equal to $Hu(t) = \sin\big(2\pi u(t)\big) = 0$.  Also acceptable is that is doesn't have a step response because this is a feature we developed for linear shift-invariant systems.
-
-(c) The system is causal and also memoryless.  The system $Hx(t) = t^2x(t)$ is linear because 
-\[
-H(ax+by) = t^2(ax+by) = at^2x + bt^2y = aH x + bHy.
-\]
-The system is not shift-invariant because
-\[
-T_\tau H x(t) = (t-\tau)^2x(t-\tau) \neq H T_\tau x(t) = t^2 x(t - \tau)
-\]
-in general.  The system is not regular because it is not shift-invariant.  The system does not have an impulse response.  It does have a step response equal to $Hu(t) = t^2u(t)$.  This is plotted in the figures below.  Also acceptable is that is doesn't have a step response because this is a feature we developed for linear shift-invariant systems.  The system is not stable, for example the input step $u$ is bounded below $M > 1$ but the output $Hu$ is not bounded, it grows indefinitely as $t \to \infty$.
-
-(d) Put $h(t) = \cos(\pi t) \rect(t)$ where $h$ is the rectangle function (see~(\zref{eq:rectfuncdefn}) of the lecture notes).  Now
-\begin{align*}
-Hx(t) &= \int_{-1/2}^{1/2} \cos(\pi\tau) x(t + \tau) d\tau \\
-&=\int_{-1/2}^{1/2} \cos(-\pi\tau) x(t - \tau) d\tau & \text{(change var $\tau=-\tau$)}\\
-&=\int_{-\infty}^{\infty} \cos(-\pi\tau)\rect(t) x(t - \tau) d\tau \\
-&=\int_{-\infty}^{\infty} h(\tau) x(t - \tau) d\tau \\
-&= (h*x)(t).
-\end{align*}
-Thus, $H$ is the regular system with impulse response $h(t) = \cos(\pi t) \rect(t)$.  A plot of $h$ is given below.  Since $H$ is regular it is also linear and shift-invariant.  The impulse response $h$ is absolutely  integrable with $\|h\|_1 = \tfrac{2}{\pi}$ and so $H$ is stable.  The system $H$ is not causal because $h$ is nonzero with some $t < 0$, specifically those $t \in (-\tfrac{1}{2},\tfrac{1}{2})$.  The step response is given by applying the integrator system $I_\infty$ to $h$, that is, 
-\begin{align*}
-I_\infty h(t) = \int_{-\infty}^t h(\tau) d\tau = \begin{cases}
-0 & t \leq -\tfrac{1}{2} \\
-\int_{-1/2}^t \cos(\pi\tau) d\tau = \big(\sin(\pi t) + 1\big)/\pi & -\tfrac{1}{2} < t \leq \tfrac{1}{2} \\
-\tfrac{2}{\pi} & t > \tfrac{1}{2}.
-\end{cases}
-\end{align*}
-
-\begin{center}
-\begin{tikzpicture}
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
-    \draw[->] (0,-0.5) -- (0,3.5) node[above] {$H u(t) = 3u(t-1)  - 2u(t+1)$};
-    %\draw[color=black] plot[id=x] function{1/x^2} 
-    %    node[right] {$f(t) = t^{-2}$};
-    \draw[thick] (-2.2,0)--(-1,0)--(-1,3)--(1,3)--(1,1)--(2.2,1);
-    \htick{3} node[pos=0.5,above left] {$3$};
-    \htick{1} node[pos=0.5,left] {$1$};
-    \vtick{-1} node[pos=0.5,below] {$-1$};
-    \vtick{1} node[pos=0.5,below] {$1$};
-    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-\end{tikzpicture} \;\;
-\begin{tikzpicture}
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-2.5,0) -- (2.5,0) node[above] {$t$};
-    \draw[->] (0,-0.5) -- (0,3.5) node[above] {$Hu(t) = t^2u(t)$};
-    %\draw[color=black] plot[id=x] function{1/x^2} 
-    %    node[right] {$f(t) = t^{-2}$};
-    \draw[thick] (-2.2,0)--(0,0);
-    \draw[color=black,thick,domain=0:2.2,samples=50] plot[id=x] function{x*x*3/5};
-    \htick{3*3/5} node[pos=0.5,above left] {$3$};
-    \htick{3/5} node[pos=0.5,left] {$1$};
-    \vtick{-1} node[pos=0.5,below] {$-1$};
-    \vtick{1} node[pos=0.5,below] {$1$};
-    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-\end{tikzpicture} 
-\\ \vspace{0.2cm}
-\begin{tikzpicture}
-\begin{scope}[xscale=2,yscale=2.5]
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-1.5,0) -- (1.5,0) node[above] {$t$};
-    \draw[->] (0,-0.25) -- (0,1.25) node[above] {$h(t) = \cos(\pi t) \rect(t)$};
-    %\draw[color=black] plot[id=x] function{1/x^2} 
-    %    node[right] {$f(t) = t^{-2}$};
-    \draw[thick] (-1.3,0)--(-1/2,0);
-    \draw[thick] (1.3,0)--(1/2,0);
-    \draw[color=black,thick,domain=-0.5:0.5,samples=50] plot[id=x] function{cos(pi*x)};
-    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-\end{scope}
-\begin{scope}[yscale=2.5]
-    \htick{1} node[pos=0.5,above left] {$1$};
-\end{scope}
-\begin{scope}[xscale=2]
-    \vtick{-1/2} node[pos=0.5,below] {$-\tfrac{1}{2}$};
-    \vtick{1/2} node[pos=0.5,below] {$\tfrac{1}{2}$};
-\end{scope}
-\end{tikzpicture} \;\;
-\begin{tikzpicture}
-\begin{scope}[xscale=2,yscale=2.5]
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    \draw[->] (-1.5,0) -- (1.5,0) node[above] {$t$};
-    \draw[->] (0,-0.25) -- (0,1.25) node[above] {$I_\infty h(t)$};
-    %\draw[color=black] plot[id=x] function{1/x^2} 
-    %    node[right] {$f(t) = t^{-2}$};
-    \draw[thick] (-1.3,0)--(-1/2,0);
-    \draw[thick] (1.3,2/pi)--(1/2,2/pi);
-    \draw[color=black,thick,domain=-0.5:0.5,samples=50] plot[id=x] function{(sin(pi*x)+1)/pi};
-    %\draw[color=black] plot[id=exp] function{0.05*exp(x)} 
-    %    node[right] {$f(t) = \frac{1}{20} e^t$};
-\end{scope}
-\begin{scope}[yscale=2.5]
-    \htick{1} node[pos=0.5,above left] {$1$};
-\end{scope}
-\begin{scope}[xscale=2]
-    \vtick{-1/2} node[pos=0.5,below] {$-\tfrac{1}{2}$};
-    \vtick{1/2} node[pos=0.5,below] {$\tfrac{1}{2}$};
-\end{scope}
-\end{tikzpicture} 
-\end{center}
-
-\end{solution}
 
 \item \label{exer:finhlinshiftinv}  Let $h$ be a locally integrable signal.  Show that the set $\dom h$ defined in Section~\zref{sec:conv-regul-syst} on page~\zpageref{sec:conv-regul-syst} is a linear shift-invariant space.
 \begin{solution}
@@ -491,6 +389,112 @@ for all $a, t \in \reals$ and so $x$ is locally integrabls and putting $a = 0$ w
 \]
 It follows that $x \in B$.  We have now show that $\dom u \subseteq B$ and that $B \subseteq \dom u$ and so it must be that $B = \dom u$.
 \end{solution} 
+
+
+\item \label{excer:bibostableimpulseresp} Show that a regular system is stable if and only if its impulse response is absolutely integrable.
+\begin{solution}
+Let $H$ be a regular system and $h$ its impulse response.  By default the domain of $H$ is assumed to be $\dom h$, that is $H \in \dom h \to \complex$.  If $h$ is absolutely integrable then for all signals $x \in \dom h$ such that $\sabs{x(t)} < M$ for all $t$,
+\begin{align*}
+\abs{H x(t)} &= \abs{(h * x)(t)} \\
+&= \abs{\int_{-\infty}^\infty h(\tau)  x(t - \tau) d\tau} \\
+&\leq \int_{-\infty}^\infty \sabs{h(\tau) x(t - \tau)} d\tau \\
+&< \int_{-\infty}^\infty M \sabs{h(\tau)} d\tau \\
+&= M \|h\|_1
+\end{align*}
+for all $t$, and so $H x(t)$ is bounded.  
+
+On the other hand if $h$ is not absolutely integrable then consider the bounded signal 
+\[
+s(t) = \begin{cases}
+1 & h(-t) > 0,  \\
+-1 & h(-t) \leq 0.
+\end{cases}
+\]
+Observe that $s$ is not in the domain $\dom h$ because
+\[
+\int_{-\infty}^\infty \abs{h(\tau)  s(-\tau)} d\tau = \int_{-\infty}^\infty \abs{h(\tau)} d\tau = \infty
+\]
+However, for all $\kappa > 0$ the signal 
+\[
+r_\kappa(t) = \rect\big(\tfrac{t}{2\kappa}\big) s(t) = 
+\begin{cases}
+s(t) & \abs{t} < \kappa \\
+0 & \text{otherwise}
+\end{cases}
+\]
+is in $\dom h$ since
+\[
+\int_{-\infty}^\infty \abs{h(\tau)  r_\kappa(-\tau)} d\tau = \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau < \infty
+\]
+because $h$ is locally integrable (the impulse response is always locally integrable by assumption.  See Section~\ref{sec:conv-regul-syst}).  Put $M > 1$ and suppose that $H$ was stable.  Then there exists $K > 0$ such that $\abs{H x(t)} < K$ for all $t \in \reals$ and all $x \in \dom h$ bounded less that $M$.  Observe that $r_\kappa$ is bounded less than $M$, that is, $\abs{r_\kappa(t)} \leq 1 < M$ for all $\kappa \in \reals$ and all $t \in \reals$.  The response of $H$ to $r_\kappa$ at time zero is
+\[
+H r_\kappa(0) = \int_{-\infty}^\infty h(\tau)  r_\kappa(-\tau) d\tau =  \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau
+\]
+and because $h$ is not absolutely integrable the integral on the right diverges as $\kappa$ get large.  Thus, we can choose $\kappa$ large enough that
+\[
+\abs{H r_\kappa(0)} = H r_\kappa(0) = \int_{-\kappa}^\kappa \abs{h(\tau)} d\tau > K
+\]
+violating our assumption that $H$ was stable.  Thus, $H$ is not stable.
+\end{solution}
+
+\item Define signals $x(t) = u(t)$, $y = u(-t)$, and $z(t) = \rect(t) - \rect(t-1)$ where $u$ is the step function and $\rect$ is the rectangular pulse.  Plot $x$, $y$, and $z$ and show that the associative property of convolution does not hold for these signals.  That is, show that $x*(y*z) \neq (x*y)*z$.
+
+\item \label{excer:sumgeomeebeta} Show that $\sum_{\ell = 1}^L e^{\beta \ell} = \frac{e^{\beta (L+1)} - e^\beta}{e^\beta - 1}$  (Hint: sum a geometric progression).
+\begin{solution}
+Put $r = e^\beta$ and put
+\[
+S_L = \sum_{\ell = 1}^L e^{\beta \ell} = \sum_{\ell = 1}^L r^\ell.
+\]
+This is the sum of the first $L$ terms of a geometric progression.  We have
+\[
+r S_L - S_L = r^{L+1} - r
+\]
+and so
+\[
+S_L = \frac{r^{L+1} - r}{r - 1} =  \frac{e^{\beta (L+1)} - e^\beta}{e^\beta - 1}
+\]
+as required.
+\end{solution}
+
+\item \label{excer:sumsinegeomean} Show that 
+\[
+\frac{2j}{L}\sum_{\ell=1}^{L}\sin( \gamma \ell - \theta)  e^{-j \gamma \ell} = \alpha + \alpha^*C
+\]
+where $\alpha = e^{-j\theta}$ and $C = e^{-j\gamma (L+1)}\frac{\sin(\gamma L)}{L\sin(\gamma)}$. (Hint: solve Exercise~\ref{excer:sumgeomeebeta} first and then use the formula $2j\sin(x) = e^{jx} -  e^{-jx}$).
+\begin{solution}
+We have 
+\[
+2j\sin(\gamma \ell - \theta) = e^{j(\gamma \ell - \theta)} -  e^{-j(\gamma \ell - \theta)}
+\]
+and so the sum becomes
+\begin{align*}
+\frac{1}{L}\sum_{\ell=1}^{L}(e^{j(\gamma \ell - \theta)} - e^{-j(\gamma \ell - \theta)})  e^{-j \gamma \ell} &= \frac{1}{L}\sum_{\ell=1}^{L}e^{-j\theta} - \frac{1}{L}\sum_{\ell=1}^{L}e^{-2j\gamma}e^{j\theta} \\
+&= \alpha - \frac{\alpha^*}{L}\sum_{\ell=1}^{L}e^{-2j\gamma}.
+\end{align*}
+The sum is a geometric progression and, using the answer to Exercise~\ref{excer:sumgeomeebeta}, we have
+\[
+\sum_{\ell=1}^{L}e^{-2j\gamma} = \frac{e^{-2j\gamma (L+1)} - e^{-2j\gamma})}{e^{-2j\gamma} - 1}.
+\]
+The denominator satisfies
+\[
+e^{-2j\gamma} - 1 = e^{-j\gamma}(e^{-j\gamma} - e^{j\gamma}) = -2 j e^{-j\gamma} \sin(\gamma). 
+\]
+The numerator satisfies
+\begin{align*}
+e^{-2j\gamma (L+1)} - e^{-2j\gamma} &= e^{-2j\gamma}(e^{-2j\gamma L} - 1) \\
+&= e^{-2j\gamma}e^{-j\gamma L} (e^{-j\gamma L} - e^{j\gamma L}) \\
+&= -2 j e^{-j\gamma(L+2)} \sin(\gamma L).
+\end{align*}
+Thus
+\[
+\sum_{\ell=1}^{L}e^{-2j\gamma} = \frac{-2 j e^{-j\gamma(L+2)} \sin(\gamma L)}{-2 j e^{-j\gamma} \sin(\gamma)} = \frac{e^{-j\gamma(L+1)} \sin(\gamma L)}{ \sin(\gamma)} = L C
+\]
+where $C$ is defined in the question statement.  Now
+\[
+\frac{2j}{L}\sum_{\ell=1}^{L}\sin( \gamma \ell - \theta)  e^{-j \gamma \ell} = \alpha - \frac{\alpha^*}{L}LC = \alpha - \alpha^*C
+\]
+as required.
+\end{solution}
 
 % \item \label{excer:activeRCinverseislinear}  Let $H$ be a system describing the mapping from input voltage signal $x$ to output voltage signal $y = H(x)$ for the active RC electrical circuit described by the differential equation
 % \[

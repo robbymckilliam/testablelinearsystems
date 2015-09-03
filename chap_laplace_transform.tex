@@ -1,8 +1,8 @@
-In the previous chapter we studied the properties of linear shift-invariant systems.  We considered regular systems for which the response to input signal $x$ is given by $h*x$, that is, the convolution of $x$ with the impulse response $h$ of the system.  We discovered that complex exponential signals of the form $e^{st}$ were eigenfunctions of linear shift-invariant systems, that is, if $H$ is the linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
+In the previous chapter we studied the properties of linear shift-invariant systems.  We considered regular systems for which the response to input signal $x$ is given by $h*x$, that is, by the convolution of $x$ with the impulse response $h$ of the system.  We discovered that complex exponential signals of the form $e^{st}$ were eigenfunctions of linear shift-invariant systems, that is, if $H$ is the linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
  \[
 He^{st} = \lambda H(s) e^{st}
 \]
-where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that $e^{st} \in X$ and this set is denoted this set by $\cep X$.
+where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that $e^{st} \in X$ and this set is denoted by $\cep X$.
 
 Now consider the special case where $H$ is a regular system with impulse response $h$ and domain $\dom h$.  The response of $H$ to a complex exponential signal $e^{st} \in \dom h$ is given by convolution of $h$ with $e^{st}$, that is,
 \[
@@ -12,7 +12,7 @@ It follows that the transfer function of the regular system $H$ satisfies
 \[
 \lambda H(s) = \int_{-\infty}^\infty h(\tau) e^{-s\tau} d\tau \qquad s \in \cep \dom h.
 \]
-This is also know as the \term{Laplace transform} of the signal $h$.  The set $\cep \dom h$ is called the \term{region of convergence} of the Laplace transform of $h$.  We will denote the region of convergence by the simpler notation $\roc h = \cep \dom h$.
+This is also know as the \term{Laplace transform} of the signal $h$.  The set $\cep \dom h$ is called the \term{region of convergence} of the Laplace transform of $h$.  We will denote the region of convergence by the simpler notation $\roc h = \cep \dom h$ in what follows.
 
 Let $x$ be a signal.  The Laplace transform of $x$ is denoted by $\calL x$.  It is the complex function satisfying
 \begin{equation}\label{eq:laplace_defn}
@@ -32,23 +32,23 @@ For example, consider the right sided signal $e^{ \alpha t}u(t)$.  We have
 \]
 The limit above converges if and only if $\Re(\alpha - s) < 0$ and so the region of convergence of the Laplace transform of $e^{\alpha t}u(t)$ is
 \[
-\roc e^{ \alpha t}u(t) = \{ s \in \complex \mid \Re(s) > \Re(\alpha) \}.
+\roc e^{ \alpha t}u(t) = \{ s \in \complex \mid \Re s > \Re \alpha \}.
 \]
-Figure~\ref{fig:rocexample1} shows the region of convergence when $\Re(\alpha) = -2$.  Applying~\eqref{eq:laplace_defn} we find that
+Figure~\ref{fig:rocexample1} shows the region of convergence when $\Re \alpha = -2$.  Applying~\eqref{eq:laplace_defn} we find that
 \begin{align*}
 \calL(e^{ \alpha t}u(t)) = \int_{-\infty}^{\infty} e^{ \alpha t} e^{-st} u(t) dt = \lim_{t\rightarrow\infty}\frac{e^{(\alpha-s)t}}{\alpha - s} - \frac{1}{\alpha-s}.
 \end{align*}
 The limit converges to zero when $\Re(\alpha - s) < 0$, that is, when $s \in \roc e^{ \alpha t}u(t)$, and so the Laplace transform is
 \[
-\calL(e^{ \alpha t}u(t)) = \frac{1}{s-\alpha} \qquad \Re(s) > \Re(\alpha).
+\calL(e^{ \alpha t}u(t)) = \frac{1}{s-\alpha} \qquad \Re s > \Re \alpha.
 \]
 Now consider the left sided signal $e^{\beta t}u(-t)$.  The region of convergence is 
 \[
-\roc e^{ \beta t}u(-t) = \{ s \in \complex \mid  \Re(s) < \Re(\beta) \}
+\roc e^{ \beta t}u(-t) = \{ s \in \complex \mid  \Re s < \Re \beta \}
 \]
 and the Laplace transform is
 \[
-\calL(e^{\beta t}u(-t)) = \lim_{t\rightarrow -\infty}\frac{e^{(\beta-s)t}}{\beta - s} + \frac{1}{\beta-s} = \frac{1}{\beta-s} \qquad \Re(s) < \Re(\beta).
+\calL(e^{\beta t}u(-t)) = \lim_{t\rightarrow -\infty}\frac{e^{(\beta-s)t}}{\beta - s} + \frac{1}{\beta-s} = \frac{1}{\beta-s} \qquad \Re s < \Re \beta.
 \]
 The signal $a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)$ has Laplace transform
 \begin{align*}
@@ -58,19 +58,19 @@ The signal $a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)$ has Laplace transform
 \end{align*}
 with region of convergence
 \[
-\roc(a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)) = \{ s \in \complex \mid  \Re(\alpha) < \Re(s) < \Re(\beta) \}.
+\roc(a e^{ \alpha t}u(t) + b e^{\beta t}u(-t)) = \{ s \in \complex \mid  \Re \alpha < \Re s < \Re \beta \}.
 \] 
-This region is shown in Figure~\ref{fig:rocexample1} when $\Re(\alpha) = -2$ and $\Re(\beta)=3$.   In the previous equation we have discovered that the Laplace transform is \term{linear}, that is, for signals $x$ and $y$ and non zero complex numbers $a$ and $b$, the Laplace transform of the linear combination $ax + by$ is
+This region is shown in Figure~\ref{fig:rocexample1} when $\Re \alpha = -2$ and $\Re \beta=3$.   In the previous equation we have discovered that the Laplace transform is \term{linear}, that is, for signals $x$ and $y$ and non zero complex numbers $a$ and $b$, the Laplace transform of the linear combination $ax + by$ is
 \begin{equation}\label{eq:laplacetransislinear}
 \calL(ax + by) = a\calL x + b\calL y \qquad s \in \roc(ax + by) = \roc x \cap \roc y.
 \end{equation}
 The region of convergence is the intersection of the regions of convergence of $\calL x$ and $\calL y$.
 
-In the previous example the region of convergence is the empty set $\emptyset$ if $\Re(\alpha) \geq \Re(\beta)$.  The Laplace transform is said not to exist in this case.  Other signals have this property.  For example, the signal $x(t) = 1$ has no Laplace transform because
+In the previous example the region of convergence is the empty set $\emptyset$ if $\Re \alpha \geq \Re \beta$.  The Laplace transform is said not to exist in this case.  Other signals have this property.  For example, the signal $x(t) = 1$ has no Laplace transform because
 \[
-\int_{-\infty}^\infty \abs{e^{-s t}} dt = \lim_{t\to -\infty} \frac{e^{-\Re(s)t}}{s} -  \lim_{t\to \infty} \frac{e^{-\Re(s)t}}{s}
+\int_{-\infty}^\infty \abs{e^{-s t}} dt = \lim_{t\to -\infty} \frac{e^{-\Re st}}{s} -  \lim_{t\to \infty} \frac{e^{-\Re st}}{s}
 \] 
-and the limit as $t\to-\infty$ converges only when $\Re(s) < 0$ while the limit as $t \to \infty$ converges only when $\Re(s) > 0$.  %Infact, the region of convergence of every periodic signal is the empty set (Exercise~\ref{excer:periodicnolaplace}).
+and the limit as $t\to-\infty$ converges only when $\Re s < 0$ while the limit as $t \to \infty$ converges only when $\Re s > 0$.  %Infact, the region of convergence of every periodic signal is the empty set (Exercise~\ref{excer:periodicnolaplace}).
 
 As a final example, consider the rectangular pulse
 \[
@@ -81,13 +81,15 @@ As a final example, consider the rectangular pulse
 \]
 The region of convergence is the entire complex plane, $\roc \rect = \complex$, because
 \[
-\int_{-\infty}^{\infty} \abs{\rect(t) e^{-st}} dt = \int_{-1/2}^{1/2} e^{-\Re(s)t} dt = \frac{ e^{\Re(s)/2} - e^{-\Re(s)/2}}{s} < \infty
+\int_{-\infty}^{\infty} \abs{\rect(t) e^{-st}} dt = \int_{-1/2}^{1/2} e^{-\Re st} dt = \frac{ e^{\Re s/2} - e^{-\Re s/2}}{s} < \infty
 \]
-for all $s \in \complex$.  At $s = 0$ the above expression is given the value $1$ by appealling to continuity (Exercise~\ref{exer:eReslimsinclike}).  The Laplace transform of $\rect$ is
+for all $s \in \complex$.  At $s = 0$ the above expression is given the value $1$ by appealling to continuity (Exercise~\ref{exer:eReslimsinclike}).  
+%TODO.  This could be talked about in more detail in the first chapter, use sinc function as an example, highlight that equality almost everywhere is good enough.
+The Laplace transform of $\rect$ is
 \begin{equation}\label{eq:rectLaplace}
 \calL \rect = \int_{-\infty}^{\infty} \rect(t) e^{-st} dt = \int_{-1/2}^{1/2} e^{-st} dt = \frac{ e^{s/2} - e^{-s/2}}{s} \qquad s \in \complex.
 \end{equation}
-The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.
+The examples just given exhibit all the possible types of regions of convergence.  The region of convergence is either the entire complex plane, a left or right half plane, a vertical strip, or the empty set.  %Because the transfer function of a regular system with impulse response $h$ is the Laplace transform of $h$ it follows that the domain of the transfer function of a regular systems is also one of these types of sets.
  
 \colorlet{lightgray}{black!25}
 
@@ -122,7 +124,7 @@ The examples just given exhibit all the possible types of regions of convergence
   \draw [<->] (-2.5,0) -- (2.5,0) node [above left]  {$\Re$};
   \draw [<->] (0,-2.5) -- (0,2.5) node [below right] {$\Im$};
 \end{tikzpicture}
-\caption{Regions of convergence (unshaded) for the signal $e^{-2t} u(t)$ (top left), the signal $e^{-2t}u(t) + e^{3t}u(-t)$ (top right), the rectangular pulse $\Pi$ (bottom left), and the constant signal $x(t) = 1$ (bottom right). }\label{fig:rocexample1}
+\caption{Regions of convergence (unshaded) of the Laplace transforms of the signal $e^{-2t} u(t)$ (top left), the signal $e^{-2t}u(t) + e^{3t}u(-t)$ (top right), the rectangular pulse $\Pi$ (bottom left), and the constant signal $x(t) = 1$ (bottom right). }\label{fig:rocexample1}
 \end{figure}
 
 %\section{The inverse Laplace transform}
@@ -133,7 +135,7 @@ x(t) = \frac{1}{2\pi j} \lim_{\omega \rightarrow\infty} \int_{\sigma - j\omega}^
 \]
 where $\sigma$ is any real number inside the region of convergence $\roc x$.  Solving the integral above typically requires a special type of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following Laplace transform pair
 \begin{equation}\label{eq:laplacetranscommonsimple}
-\calL\big(t^n u(t)\big) = \frac{n!}{s^{n+1}} \qquad \Re(s) > 0,
+\calL\big(t^n u(t)\big) = \frac{n!}{s^{n+1}} \qquad \Re s > 0,
 \end{equation}
 where $n \geq 0$ is an integer (Exercise~\ref{excer:laplacetransformcommonpolyut}).  The Laplace transforms of the signal $x(t)$ and the signal $e^{\alpha t}x(t)$ are related,
 \begin{align}
@@ -143,7 +145,7 @@ where $n \geq 0$ is an integer (Exercise~\ref{excer:laplacetransformcommonpolyut
 \end{align}
 The region of convergence of $\calL(e^{\alpha t}x(t)\big)$ is all those complex numbers $s$ such that $s - \alpha \in \roc x$.  This is called the \term{frequency-shift rule}.  Combining the frequency-shift rule with~\eqref{eq:laplacetranscommonsimple} we obtain the transform pair
 \begin{equation}\label{eq:laplacetneucommon}
-\calL\big( t^n e^{\alpha t} u(t) \big) = \frac{n!}{(s-\alpha)^{n+1}} \qquad \Re(s) > \Re(\alpha),
+\calL\big( t^n e^{\alpha t} u(t) \big) = \frac{n!}{(s-\alpha)^{n+1}} \qquad \Re s > \Re \alpha,
 \end{equation}
 where $n \geq 0$ is an integer.  This is the only Laplace transform pair we require here.  
 
@@ -154,9 +156,9 @@ A useful relationship exists between the Laplace transform of a signal $x(t)$ an
 The region of convergence of $\calL\big(x(\alpha t)\big)$ is those complex numbers $s$ such that $s/\alpha \in \roc x$.  This is called the \term{time-scaling property} of the Laplace transform (Excercise~\ref{excer:timescalelaplace}).
 
  
-% Observe that the signal $t^n e^{\alpha t} u(t)$ is right sided.  It is nonzero only when $t > 0$.  The region of convergence is a right half plane $\Re(s) > \alpha$.  The Laplace transform $n!/s^{n+1}$ also corresponds with the left sided signal $(-t)^n e^{-\alpha t} u(-t)$.  That is,
+% Observe that the signal $t^n e^{\alpha t} u(t)$ is right sided.  It is nonzero only when $t > 0$.  The region of convergence is a right half plane $\Re s > \alpha$.  The Laplace transform $n!/s^{n+1}$ also corresponds with the left sided signal $(-t)^n e^{-\alpha t} u(-t)$.  That is,
 % \[
-% \calL\big( (-t)^n e^{-\alpha t} u(-t) \big) = \frac{n!}{(s-\alpha)^{n+1}} \qquad \Re(s) < \alpha,
+% \calL\big( (-t)^n e^{-\alpha t} u(-t) \big) = \frac{n!}{(s-\alpha)^{n+1}} \qquad \Re s < \alpha,
 % \]
 % where the region of convergence is now a left half plane.  The practical systems that we analyse in this course are causal, and have right sided impulses responses.  For this reason the left sided signal $(-t)^n e^{-\alpha t} u(-t)$ will not be of significant use.
 
@@ -167,12 +169,12 @@ The region of convergence of $\calL\big(x(\alpha t)\big)$ is those complex numbe
 % \centering
 % \begin{tabular}{lll}
 % $x(t)$ & $\calL(x,s)$ & ROC \\ \toprule
-% $e^{-\alpha t} u(t)$ & $\frac{1}{s+\alpha}$ & $\Re(s) > -\alpha$ \\ 
-% $t e^{-\alpha t} u(t)$ & $\frac{1}{(s+\alpha)^2}$ & $\Re(s) > -\alpha$ \\ 
-% $t^n e^{-\alpha t} u(t)$ & $\frac{n!}{(s+\alpha)^{n+1}}$ & $\Re(s) > -\alpha$ \\ 
-% %$e^{-\alpha{t}} u(t) \cos(\beta t)$ & $\frac{s + \alpha}{(s+\alpha)^2 + \beta^2}$ & $\Re(s) > -\alpha$ \\
-% %$e^{-\alpha{t}} u(t) \sin(\beta t)$ & $\frac{\beta}{(s+\alpha)^2 + \beta^2}$ & $\Re(s) > -\alpha$ \\
-% %$e^{-\alpha{t}} u(t) \big( \cos(\beta t) + \gamma\sin(\beta t) \big)$ & $\frac{s + \alpha + \beta\gamma}{(s+\alpha)^2 + \beta^2}$ &  $\Re(s) > -\alpha$ \\ \bottomrule
+% $e^{-\alpha t} u(t)$ & $\frac{1}{s+\alpha}$ & $\Re s > -\alpha$ \\ 
+% $t e^{-\alpha t} u(t)$ & $\frac{1}{(s+\alpha)^2}$ & $\Re s > -\alpha$ \\ 
+% $t^n e^{-\alpha t} u(t)$ & $\frac{n!}{(s+\alpha)^{n+1}}$ & $\Re s > -\alpha$ \\ 
+% %$e^{-\alpha{t}} u(t) \cos(\beta t)$ & $\frac{s + \alpha}{(s+\alpha)^2 + \beta^2}$ & $\Re s > -\alpha$ \\
+% %$e^{-\alpha{t}} u(t) \sin(\beta t)$ & $\frac{\beta}{(s+\alpha)^2 + \beta^2}$ & $\Re s > -\alpha$ \\
+% %$e^{-\alpha{t}} u(t) \big( \cos(\beta t) + \gamma\sin(\beta t) \big)$ & $\frac{s + \alpha + \beta\gamma}{(s+\alpha)^2 + \beta^2}$ &  $\Re s > -\alpha$ \\ \bottomrule
 % \end{tabular}
 % \caption{Table of common Laplace transforms and their regions of convergence (ROC).}\label{table:laplacetrans}
 % \end{table}
@@ -186,17 +188,17 @@ We have already discovered that the transfer function $\lambda H$ of a regular s
 \]
 The transfer functions of the shifter $T_\tau$ and differentiator $D$ can be obtained by inspection.  For the shifter
 \begin{equation}\label{eq:timeshiftertransferfunction}
-T_\tau e^{st} = e^{s(t-\tau)} = e^{-s\tau} e^{st} \qquad \text{and so} \qquad \lambda T_\tau = e^{-s\tau}.
+T_\tau e^{st} = e^{s(t-\tau)} = e^{-s\tau} e^{st} \qquad \text{and so} \qquad \lambda T_\tau(s) = e^{-s\tau}.
 \end{equation}
 %The region of convergence is the whole complex plane $s \in \complex$.  
 For the special case of the identity system $T_0$ we obtain $\lambda T_0 = 1$.  For the differentiator
 \[
-D e^{st} = \frac{d}{d t} e^{st} = s e^{st} \qquad \text{and so} \qquad \lambda D = s.
+D e^{st} = \frac{d}{d t} e^{st} = s e^{st} \qquad \text{and so} \qquad \lambda D(s) = s.
 \]
 %The region of convergence is the whole complex plane $s \in \complex$.  
 More generally, for the $k$th differentiator
 \begin{equation}\label{eq:lambdadifferentiator}
-D^k e^{st} = \frac{d^k}{d t^k} e^{st} = s^k e^{st} \qquad \text{and so} \qquad  \lambda D^k = s^k.
+D^k e^{st} = \frac{d^k}{d t^k} e^{st} = s^k e^{st} \qquad \text{and so} \qquad  \lambda D^k(s) = s^k.
 \end{equation}
 The domain of $\lambda T_\tau$ and of $\lambda D^k$ is the entire complex plane $\complex$.
 %The region of convergence is again the whole complex plane.  
@@ -208,16 +210,16 @@ These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 %\subsection{The transfer function of a linear combination of systems}
 
-Let $F \in X \to Y$ and $G \in X \to Y$ be linear shift-invariant systems with domain $X$ and let $H = a F + bG$ be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to the complex exponential signal $e^{st} \in X$ is
-\begin{align*}
-H e^{st} &= a F e^{st} + b G e^{st} \\
-&= a\lambda F(s) e^{st} + b\lambda G(s) e^{st}  \\
-&= \big( a\lambda F(s) + b\lambda G(s) \big) e^{st} \\
-&= \lambda H(s)  e^{st}
-\end{align*}
-and so $\lambda H = a\lambda F + b\lambda G$.  That is, the transfer function of a linear combination of systems is the same linear combination of the transfer functions.  %The region of convergence of the linear combination is the intersection of the regions of convergence of the systems being combined.
+% Let $F$ and $G$ be linear shift-invariant systems with domain $X_F$ and $X_G$ and let $H = a F + bG$ be the system with domain $X_F \cap X_G$ formed by a linear combination of $F$ and $G$.  The response of $H$ to the complex exponential signal $e^{st} \in X_F \cap X_G$ is
+% \begin{align*}
+% H e^{st} &= a F e^{st} + b G e^{st} \\
+% &= a\lambda F(s) e^{st} + b\lambda G(s) e^{st}  \\
+% &= \big( a\lambda F(s) + b\lambda G(s) \big) e^{st} \\
+% &= \lambda H(s)  e^{st}
+% \end{align*}
+% and so $\lambda H = a\lambda F + b\lambda G$ with domain $\cep X_G \cap \cep X_F$.  That is, the transfer function of a linear combination of systems is the same linear combination of the transfer functions.  The region of convergence of the linear combination is the intersection of the regions of convergence of the systems being combined.
 
-Now let $F \in X \to Y$ and $G \in Y \to Z$ be linear shift-invariant systems and suppose that the complex exponential signal $e^{st} \in X$ if $e^{st} \in Y$, that is, $\cep X \subset \cep Y$.  This will be the only case of interest to us.  Let $H \in X \to Z$ be the system formed by the composition $H = G F$.  The response of $H$ to the signal $e^{st} \in X$ satisfies
+We now study the transfer function of a system formed by composition.  Let $F \in X \to Y$ and $G \in Y \to Z$ be linear shift-invariant systems with domains $X$ and $Y$ and suppose that the complex exponential signal $e^{st} \in X$ if $e^{st} \in Y$, that is, $\cep X \subset \cep Y$.  This will be the only case of interest to us.  Let $H \in X \to Z$ be the system formed by the composition $H = G F$.  The response of $H$ to the signal $e^{st} \in X$ satisfies
 \[
 H e^{st} = G F e^{st} = G \big(\lambda F(s) e^{st} \big) = \lambda F(s) G e^{st}
 \]
@@ -388,7 +390,7 @@ where $x$ is the input voltage signal, $y$ is the voltage over the capacitor, an
 \[
 \lambda H(s) = \frac{1}{1 + RC s} = \frac{r}{r + s}
 \]
-where $r = \tfrac{1}{RC}$.  The value $\tfrac{1}{r} = RC$ is called the \term{time constant}.  The impulse response of $H$ is given by the inverse of this Laplace transform.  There are two signals with Laplace transform $\frac{r}{r + s}$: the right sided signal $r e^{-r t} u(t)$ with region of convergence $\Re(s) > -r$, and the left sided signal $-r e^{-r t} u(-t)$ with region of convergence $\Re(s) < -r$.  The RC circuit (and in fact all physically realisable systems) are expected to be causal.  For this reason, the left sided signal $ -r e^{-r t} u(-t)$ cannot be the impulse response of $H$.  The impulse response is the right sided signal
+where $r = \tfrac{1}{RC}$.  The value $\tfrac{1}{r} = RC$ is called the \term{time constant}.  The impulse response of $H$ is given by the inverse of this Laplace transform.  There are two signals with Laplace transform $\frac{r}{r + s}$: the right sided signal $r e^{-r t} u(t)$ with region of convergence $\Re s > -r$, and the left sided signal $-r e^{-r t} u(-t)$ with region of convergence $\Re s < -r$.  The RC circuit (and in fact all physically realisable systems) are expected to be causal.  For this reason, the left sided signal $ -r e^{-r t} u(-t)$ cannot be the impulse response of $H$.  The impulse response is the right sided signal
 \[
 h(t) = r e^{-r t} u(t).
 \]
@@ -785,7 +787,7 @@ F = \gamma_0 T_0 + \gamma_1 D + \gamma_2 D^2 + \dots + \gamma_{m-k} D^{m-k}.
 \]
 This system is a linear combination of the identity system $T_0$ and differentiators of order at most $m-k$.  From~\eqref{eq:laplacetneucommon},
 \[
-\calL\left( \frac{A}{r!} t^{r-1} e^{\beta t} u(t) \right) = \frac{A}{(s-\beta)^{r}} \qquad \Re(s) > \Re(\beta)
+\calL\left( \frac{A}{r!} t^{r-1} e^{\beta t} u(t) \right) = \frac{A}{(s-\beta)^{r}} \qquad \Re s > \Re \beta
 \]
 and so the terms of the form $\frac{A}{(s-\beta)^r}$ correspond with the transfer function of a regular system with impulse response $\frac{A}{r!} t^{r-1} e^{\beta t} u(t)$.  Other signals with Laplace transform $\frac{A}{(s-\beta)^{r}}$ are discarded because they do not correspond with the impulse response of a causal system.  Thus, $\sum_{\ell \in K} \frac{A_\ell}{(s - \beta_\ell)^{r_\ell}}$ is the transfer function of the regular system $G$ with impulse response 
 \begin{equation}\label{eq:H2implrespcleanedup}

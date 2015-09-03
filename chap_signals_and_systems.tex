@@ -1,7 +1,7 @@
 
 %\todo{Introduce functions abstractly.}
 
-It is assumed the reader is familiar with the concept of a function!  That is, a map from the elements in a set $X$ to the elements in another set $Y$.  Consider sets
+It is assumed that the reader is familiar with the concept of a function!  That is, a map from the elements in a set $X$ to the elements in another set $Y$.  Consider sets
 \[
 X = \left\{
 \begin{array}{c}
@@ -21,7 +21,7 @@ Y = \left\{
 \end{array} 
 \right\}.
 \]
-An example of function from $X$ to $Y$ is
+An example of a function from $X$ to $Y$ is
 \[
 f(x) = \begin{cases}
 \text{Conker} & x = \text{Mario} \\
@@ -29,13 +29,13 @@ f(x) = \begin{cases}
 \text{Sephiroth} & x = \text{Ness}.
 \end{cases}
 \]
-The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The set $X$ is called the \term{domain} of the function $f$ and the set $Y$ a \term{range}.  The value of $f$ for input $x$ is denoted by $f(x)$ so, for example, $f(\text{Mario}) = \text{Conker}$ and $f(\text{Link}) = \text{Sephiroth}$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
+The function $f$ maps Mario to Conker, Link to Sephiroth, and Ness to Sephiroth.  The value of $f$ for input $x$ is denoted by $f(x)$ and so, for example, $f(\text{Mario}) = \text{Conker}$ and $f(\text{Link}) = \text{Sephiroth}$.  The set $X$ is called the \term{domain} of the function $f$ and the set of values that the functions takes, that is, the set $\{f(x), x \in X\}$, is called the \term{range}.  In the above example the range is the set $\{\text{Conker}, \text{Sephiroth}\}$.  Observe that the range is a subset of $Y$.  The set of all functions mapping $X$ to $Y$ is denoted by $X \to Y$ and so $f \in X \to Y$ in the example above.
 
-A \term{signal} is a function with domain the set of real numbers $\reals$ and range the set of complex numbers $\complex$, that is, a signal is a function from the set $\reals \to \complex$.  For example
+A \term{signal} is a function that maps a real number to a complex number, that is, a function from the set $\reals \to \complex$.  For example
 \[
 \sin( \pi t), \qquad \frac{1}{2} t^3, \qquad e^{-t^2}
 \]   
-all represent signals with $t \in \reals$.  These signals are plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in voltage, current, position, and angle over time.  In these examples, the independent variable $t$ represents ``time''.  However, there is no fundamental reason for this and the techniques developed here can be applied equally well when $t$ represents a quantity other than time.  An example where this occurs is image processing.
+all represent signals with $t \in \reals$.  The real part of these signals is plotted in Figure~\ref{fig:signalsstart}.  Many physical phenomena, such as sound, light, weather, and motion, can be modelled using signals.  In this text we primarily focus on examples from electrical and mechanical engineering where signals are use to model changes in quantities such as voltage, current, position, angle, force, and torque, over time.  In these examples, the independent variable $t$ represents ``time''.  However, there is no fundamental reason for this and the techniques developed here can be applied equally well when $t$ represents a quantity other than time.  An example where this occurs is image processing.
 
 % If $x$ is a signal and $t$ an input variable we write $x(t)$ for the output variable corresponding with $t$.  Signals can be multidimensional.  This page is an example of a 2-dimensional signal, the independent variables are the horizontal and vertical position on the page, and the signal maps this position to a colour, in this case either black or white.  A moving image such as seen on your television or computer monitor is an example of a 3-dimensional signal, the three independent variables being vertical and horizontal screen position and time.  The signal maps each position and time to a colour on the screen.  %Your brain processes an extremely high dimensional signal (many billions of dimensional), each independent variable represented by a electrical or chemical signal in a sensory nerve, such as in your eye, your tongue, your ears and your skin.  The output variable in this case is also in a very large number of dimensions, represented by 
 % In these notes we focus exclusively on 1-dimensional signals such as those in Figure~\ref{fig:signalsstart} and we will only consider signals where the output variable is real or complex valued.  Many of the results presented here can be extended to deal with multidimensional signals.
@@ -129,14 +129,14 @@ The smallest such positive $T$ it is called the \term{fundamental period} or sim
 % \]
 % For example $\sin(\tfrac{\pi}{4} n)$ is periodic but $e^{-n^2/4}$ is not.
 
-A signal $x$ is \term{right sided} if there exists a $T \in \reals$ such that $x(t) = 0$ for all $t < T$.  Correspondingly $x$ is \term{left sided} if $x(t) = 0$ for all $T > t$.  For example, the \term{step function} 
+A signal $x$ is \term{right sided} if there exists $T \in \reals$ such that $x(t) = 0$ for all $t < T$.  Correspondingly $x$ is \term{left sided} if $x(t) = 0$ for all $T > t$.  For example, the \term{step function} 
 \begin{equation} \label{eq:stepfunction}
 u(t) = \begin{cases}
 1 & t \geq 0 \\
 0 & t < 0
 \end{cases}
 \end{equation}
-is right-sided.  Its horizontal reflection $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to be \term{finite} or to have \term{finite support} if it is both left and right sided, that is, if there exits a $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ do not have finite support, but the \term{rectangular pulse}
+is right-sided.  Its horizontal reflection $u(-t)$ is left sided (Figure~\ref{fig:stepsided}).  A signal $x$ is said to be \term{finite} or to have \term{finite support} if it is both left and right sided, that is, if there exists $T\in\reals$ such that $x(t) = x(-t) = 0$ for all $t > T$.  The signals $\sin( \pi t)$ and $e^{-t^2}$ do not have finite support, but the \term{rectangular pulse}
 \begin{equation}\label{eq:rectfuncdefn}
 \rect(t) = \begin{cases} 
 1 & \abs{t} < \frac{1}{2}\\
@@ -208,7 +208,15 @@ does.
 \label{fig:stepsided}
 \end{figure}
 
-A signal $x$ is \term{even} (or \term{symmetric}) if $x(t) = x(-t)$ for all $t \in \reals$ and \term{odd} (or \term{antisymmetric}) if $x(t) = -x(-t)$ for all $t \in \reals$.  For example, $\sin(\pi t)$ and $\tfrac{1}{2}t^3$ are odd and $e^{-t^2}$ is even.  % Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
+A signal $x$ is \term{even} (or \term{symmetric}) if 
+\[
+x(t) = x(-t) \qquad \text{for all $t \in \reals$}
+\] 
+and \term{odd} (or \term{antisymmetric}) if 
+\[
+x(t) = -x(-t) \qquad \text{for all $t \in \reals$}.
+\]  
+For example, $\sin(\pi t)$ and $\tfrac{1}{2}t^3$ are odd and $e^{-t^2}$ is even.  % Every signal $x$ can be expressed as a sum $x = x_e + x_o$ where 
 % \[
 % x_e(t) = \tfrac{1}{2}\big( x(t) + x(-t) \big)
 % \]
@@ -217,7 +225,15 @@ A signal $x$ is \term{even} (or \term{symmetric}) if $x(t) = x(-t)$ for all $t \
 % x_o(t) = \tfrac{1}{2}\big( x(t) - x(-t) \big)
 % \] 
 % is an odd signal called the \term{odd part} of $x$.  For example, put $x(t) = e^{-t^2} + \sin(\pi t)$.  The even part of $x$ is $x_e(t) = e^{-t^2}$ and the odd part is $x_o(t) = \sin(\pi t)$.
-A signal $x$ is \term{conjugate symmetric} if $x(t) = x(-t)^*$ for all $t \in \reals$ and \term{conjugate antisymmetric} if $x(t) = -x(-t)^*$ for all $t \in \reals$, where $*$ denotes the complex conjugate of a complex number.  Equivalently, $x$ is conjugate symmetric if its real part $\Re(x)$ is an even signal and its imaginary part $\Im(x)$ is an odd signal, and $x$ is conjugate antisymmetric if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
+A signal $x$ is \term{conjugate symmetric} if 
+\[
+x(t) = x(-t)^* \qquad \text{for all $t \in \reals$}
+\]
+and \term{conjugate antisymmetric} if 
+\[
+x(t) = -x(-t)^* \qquad \text{for all $t \in \reals$},
+\]
+where $*$ denotes the complex conjugate of a complex number.  Equivalently, $x$ is conjugate symmetric if its real part $\Re x$ is an even signal and its imaginary part $\Im x$ is an odd signal, and $x$ is conjugate antisymmetric if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
 
 A signal $x$ is \term{continuous at} $t \in \reals$ if
 \[
@@ -227,7 +243,7 @@ and $x$ is said to be \term{continuous} if it is continuous at all $t \in \reals
 \[
 \lim_{h \to 0} u(h) = 1 \neq 0 = \lim_{h \to 0} u(-h).
 \]
-The set of continuous signals is denoted by $C^0(\reals)$ or just $C^0$.  A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
+The set of continuous signals is typically denoted by $C^0(\reals)$ or just $C^0$.  A signal $x$ is \term{continuously differentiable} or just \term{differentiable} if
 \[
 \lim_{h \to 0} \frac{x(t + h) - x(t)}{h} = \lim_{h \to 0} \frac{x(t) - x(t-h)}{h} \qquad \text{for all $t \in \reals$}.
 \]
@@ -235,7 +251,7 @@ Considered as a function of $t$ this limit is called the \term{derivative} of $x
 \[
 \pi \cos(\pi t), \qquad \tfrac{3}{2} t^{2}, \qquad -2t e^{-t^2}, \qquad 2t,
 \] 
-but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).  The set of differentiable signals is denoted by $C^1$ or $C^1(\reals)$.  A signal is \term{$k$-times differentiable} if its $k-1$th derivative is differentiable.  The set of $k$-times differentiable signals is denoted by $C^k$ or $C^k(\reals)$.
+but the step function $u$ and the rectangular pulse $\rect$ are not differentiable (Exercise~\ref{exer:steprectnotdiff}).  The set of differentiable signals is denoted by $C^1$ or $C^1(\reals)$.  A signal is \term{$k$-times differentiable} if its $k-1$ th derivative is differentiable.  The set of $k$-times differentiable signals is typically denoted by $C^k$ or $C^k(\reals)$.
 
 
 \begin{figure}[tp]
@@ -284,7 +300,7 @@ A signal $x$ is \term{locally integrable} if
 \[
 \int_{a}^{b} \abs{x(t)} dt < \infty
 \]
-for all finite constants $a$ and $b$, where $< \infty$ means that the integral evaluates to a finite number.  The signals $\sin(\pi t)$, $\tfrac{1}{2}t^3$, and $e^{-t^2}$ are all locally integrable.  An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  The set of locally integrable signals is denoted by $L_{\text{loc}}$ or $L_{\text{loc}}(\reals)$.
+for all finite constants $a$ and $b$, where $< \infty$ means that the integral evaluates finite complex number.  The signals $\sin(\pi t)$, $\tfrac{1}{2}t^3$, and $e^{-t^2}$ are all locally integrable.  An example of a signal that is not locally integrable is $x(t) = \frac{1}{t}$ (Exercise~\ref{exer:oneontnotlocallyint}).  The set of locally integrable signals is typically denoted by $L_{\text{loc}}$ or $L_{\text{loc}}(\reals)$.
 
 %In this course we always assume that signals are locally integrable, that is, signals are locally integrable functions mapping $\reals \to \reals$ or $\reals \to \complex$.  
 % Similarly two discrete time signals $x$ and $y$ are equal if $x(n) = y(n)$ for all $n \in \ints$.
@@ -362,17 +378,23 @@ to indicate that the signals $x$ and $y$ are equal almost everywhere.  %This con
 \section{Spaces of signals}\label{sec:spaces-signals}
 
 %The domain and range of a system are subsets of the set of signals $\reals \to \complex$. Before further describing the properties of systems 
-We will regularly be interested in substets of the set of all signals $\reals \to \complex$.  Two important families of subsets are the \term{linear spaces} and the \term{shift-invariant spaces}.
+We will regularly be interested in subsets of the set of all signals $\reals \to \complex$.  Two important families of subsets are the \term{linear spaces} and the \term{shift-invariant spaces}.
 
-Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a$ a complex number we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$ (Figure~\ref{fig:multiandaddofsignals}).  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
+Let $x$ and $y$ be signals.  We denote by $x + y$ the signal that takes the value $x(t) + y(t)$ for each $t  \in \reals$, that is, the signal that results from adding $x$ and $y$.  For $a \in \complex$ we denote by $ax$ the signal that takes the value $a x(t)$ for each $t \in \reals$, that is, the signal that results from multiplying $x$ by $a$ (Figure~\ref{fig:multiandaddofsignals}).  For signals $x$ and $y$ and complex numbers $a$ and $b$ the signal
 \[
 ax + by
 \]
 is called a \term{linear combination} of $x$ and $y$.  %Figure~\ref{fig:multiandaddofsignals} plots examples of 
 
-Let $X \subseteq \reals \to \complex$ be a set of signals.  The set $X$ is a \term{linear space} (or \term{vector space}) if for all signals $x$ and $y$ from $X$ and all complex numbers $a$ and $b$ the linear combination $ax + by$ is also in $X$.  The set of all signals $\reals \to \complex$ is a linear space.  Another example is the set of differentiable signals, because, if $x$ and $y$ are differentiable, then the linear combination $ax + by$ is differentiable.  The derivative is $a D x + b D y$.  The set of even signals is another example of a linear space because if $x$ and $y$ are even then $ax(t) + by(t) = a x(-t) + b y(-t)$ and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
+Let $X \subseteq \reals \to \complex$ be a set of signals.  The set $X$ is a \term{linear space} (or \term{vector space}) if for all signals $x$ and $y$ from $X$ and all complex numbers $a$ and $b$ the linear combination $ax + by$ is also in $X$.  The set of all signals $\reals \to \complex$ is a linear space.  Another example is the set of differentiable signals, because, if $x$ and $y$ are differentiable, then the linear combination $ax + by$ is differentiable.  The derivative is $a D x + b D y$.  The set of even signals is another example of a linear space because if $x$ and $y$ are even then 
+\[
+ax(t) + by(t) = a x(-t) + b y(-t)
+\]
+and so the linear combination $ax + by$ is even.  The set of locally integrable signals $L_{\text{loc}}$, the set of absolutely integrable signals $L^1$, and the set of square integrable signals $L^2$ are linear spaces (Exercise~\ref{exer:L1L2linearshiftinvariant}).  The set of periodic signals is not a linear space (Exercise~\ref{exer:periodicshiftinvariantnotlinear}).
 
-For a real number $\tau$ the signal $x(t - \tau)$ is called a \emph{time-shift} or just \emph{shift} of the signal $x(t)$.  Figure~\ref{fig:timeshifter} depicts the shift $x(t - \tau)$ for different values of $\tau$ in the case that $x(t) = e^{-t^2}$.   A set of signals $X \subseteq \reals \to \complex$ is a \term{shift-invariant space} if for all $x \in X$ and all $\tau \in \reals$ the shift $x(t - \tau)$ is also in $X$.  Examples of shift-invariant spaces are the set of differentiable signals, the set of periodic signals (Exercise~\ref{exer:periodicshiftinvariantnotlinear}), and $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
+For a real number $\tau$ the signal $x(t - \tau)$ is called a \term{time-shift} or \term{shift} or sometimes \term{translation} of the signal $x(t)$.  Figure~\ref{fig:timeshifter} depicts the shift $x(t - \tau)$ for different values of $\tau$ in the case that $x(t) = e^{-t^2}$.   A set of signals $X \subseteq \reals \to \complex$ is a \term{shift-invariant space} if for all $x \in X$ and all $\tau \in \reals$ the shift $x(t - \tau)$ is also in $X$.  Examples of shift-invariant spaces are the set of differentiable signals, the set of periodic signals (Exercise~\ref{exer:periodicshiftinvariantnotlinear}), and $L_{\text{loc}}$, $L^1$, and $L^2$~\eqref{exer:L1L2linearshiftinvariant}.  The set of even signals and the set of odd signals are not shift-invariant spaces.
+
+Linear spaces and shift-invariant spaces of signals will act as domains for the next type of function that we consider called \term{systems}.
 
 \begin{figure}[tp]
 \centering
@@ -512,7 +534,7 @@ The circuit can be considered as a system mapping the signal $x$ representing th
 % \caption{A \term{voltage divider} circuit including input resistance $R_i$ and output resistance $R_o$.} \label{circ:voltagedividerinpout}
 % \end{figure}
 
-Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be sets of signals.  We denote systems with capital letters such as $H$ and $G$.  A system is a function $H \in X \to Y$ that maps each signal from the domain $X$ to a signal from the range $Y$.  Given \term{input signal} $x \in X$ the \term{output signal} of the system is denoted by $H(x)$.  The output signal is often called the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$\footnote{In the literature it is customary to drop the brackets only when $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  In this text the we occasionally drop the brackets even when $H$ is not linear.  Since we deal primarily with linear systems this Faux Pas will occur rarely.}.  The value of the output signal $Hx$ at $t \in \reals$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.   %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
+Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be sets of signals.  We denote systems with capital letters such as $H$ and $G$.  A system is a function $H \in X \to Y$ that maps each signal from the domain $X$ to a signal from $Y$.  Given \term{input signal} $x \in X$ the \term{output signal} of the system is denoted by $H(x)$.  The output signal is often called the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$\footnote{In the literature it is customary to drop the brackets only when $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  In this text the we occasionally drop the brackets even when $H$ is not linear.  Since we deal primarily with linear systems this faux pas will occur rarely.}.  The value of the output signal $Hx$ at $t \in \reals$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.   %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
 It is sometimes useful to depict systems with a block diagram as in Figure~\ref{fig:blockdiagramH1}.  The electric circuit in Figure~\ref{circ:voltagedivider} corresponds with the system
 \[
 Hx = \frac{R_2}{R_1 + R_2} x = y.
@@ -570,7 +592,7 @@ A plot of $\tilde{y}$, $\tilde{x}$ and $\tfrac{47}{57}\tilde{x}$ over a $20\si{\
 %BLERG Potentially what this next bit is out of place?
 
 
-When specifying a system we are free to choose the domain $X$ and range $Y$ at our convenience.  In cases such as the voltage divider it is reasonable to choose the domain $X = \reals \to \complex$, that is, the domain can contain \emph{all} signals.  However, this is not always convenient or possible.  For example, the system
+When specifying a system we are free to choose the domain $X$ at our convenience.  In cases such as the voltage divider it is reasonable to choose the domain $X = \reals \to \complex$, that is, the domain can contain \emph{all} signals.  However, this is not always convenient or possible.  For example, the system
 \[
 Hx(t) = \frac{1}{x(t)}
 \]
@@ -692,7 +714,7 @@ that returns the derivative of the input signal.  We also define a $k$th differe
 D^k x(t) = \frac{d^k}{dt^k} x(t)
 \]
 that returns the $k$th derivative of the input signal.  %BLERG: existance, special definition at discontinuities?
-The differentiator is only defined for differentiable signals.  The largest possible domain for $D$ is the set of differentiable signals $C^1$ and the largest possible domain for $D^k$ is the set of $k$-times differentiable signals $C^k$.  Unless otherwise stated we will always assume the domain of $D^k$ to be $C^k$.
+The differentiator is only defined for differentiable signals.  A domain for $D$ is the set of differentiable signals $C^1$ and a domain for $D^k$ is the set of $k$-times differentiable signals $C^k$.  Unless otherwise stated we will always assume the domain of $D^k$ to be $C^k$.
 
 % We must be careful when choosing a domain for the differentiator.  For example, consider the step function $u(t)$ from~\eqref{eq:stepfunction}.  We cannot differentiate $u(t)$ at $t = 0$ because
 % \[
@@ -712,26 +734,24 @@ The parameter $a$ describes the lower bound of the integral.  In this course it 
 \end{cases}
 \]
 Observe that the integrator $I_\infty$ cannot be applied to the signal $x(t) = t$ because $\int_{-\infty}^{t} \tau d\tau$ is not finite for any $t$.  A domain for $I_\infty$ cannot contain the signal $x(t) = t$.  %Example of domains for $I_\infty$ are the set of absolutely integrable signals $L^1$ and the set of signals that are both right sided and locally integrable.  
-Unless otherwise stated we will assume the domain of $I_\infty$ to be the subset of locally integrable signals $L_{\text{loc}}$ for which $\int_{-\infty}^0 \abs{x(t)} dt < \infty$ (Exercise~\ref{excer:domainintegrator}).  For finite $a$ we will assume, unless otherwise stated, that the domain of $I_a$ is the set of locally integrable signals $L_{\text{loc}}$. %The set of all linear combinations of signals of $L^1$ and right sided locally integrable signals also forms a domain.
+Unless otherwise stated we will assume the domain of $I_\infty$ to be the subset of locally integrable signals $L_{\text{loc}}$ for which $\int_{-\infty}^0 \abs{x(t)} dt < \infty$ (Exercise~\ref{excer:domainintegrator}).  For finite $a < \infty$ we will assume, unless otherwise stated, that the domain of $I_a$ is the set of locally integrable signals $L_{\text{loc}}$. %The set of all linear combinations of signals of $L^1$ and right sided locally integrable signals also forms a domain.
 
 
 \section{Properties of systems}\label{sec:properties-systems}
 
-%In this section we define a number of important properties that systems can possess.  In what follows $H$ will be a system and the phrase ``for all signals'' will mean for all signals inside some domain for $H$.  %Let $H$ be a system with domain $V$.
-
-A system $H \in X \to Y$ is called \term{memoryless} if, for all input signals $x \in X$, the output signal $Hx$ at time $t$ depends only on $x$ at time $t$.  For example $\frac{1}{x(t)}$ and the identity system $T_0$ are memoryless, but 
+In this section we define a number of important properties that systems can possess.  In what follows $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ are set of signals.  A system $H \in X \to Y$ with domain $X$ is called \term{memoryless} if, for all input signals $x \in X$, the output signal $Hx$ at time $t$ depends only on $x$ at time $t$.  For example $\frac{1}{x(t)}$ with domain the set of signals that do not take the value zero and the identity system $T_0$ with domain the set of all signal $\reals \to \complex$ are memoryless, but 
 \[
-x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau
+x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau \qquad x \in L_{\text{loc}}
 \] 
 are not.  A shifter $T_\tau$ with $\tau \neq 0$ is not memoryless.
 
 A system $H \in X \to Y$ is \term{causal} if, for all input signals $x \in X$, the output signal $Hx$ at time $t$ depends on $x$ at times less than or equal to $t$.  Memoryless systems such as $\frac{1}{x(t)}$ and $T_0$ are also causal.  The shifter $T_\tau$ is causal when $\tau \geq 0$, but is not causal when $\tau < 0$.  The systems 
 \[
-x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau
+x(t) + 3 x(t-1) \qquad \text{and} \qquad \int_{0}^{1} x(t - \tau) d\tau \qquad x \in L_{\text{loc}}
 \] 
 are causal, but the systems 
 \[
-x(t) + 3 x(t+1) \qquad \text{and} \qquad \int_{0}^{1} x(t + \tau) d\tau
+x(t) + 3 x(t+1) \qquad \text{and} \qquad \int_{0}^{1} x(t + \tau) d\tau \qquad x \in L_{\text{loc}}
 \] 
 are not causal.
 
@@ -743,23 +763,23 @@ it holds that the output signal $Hx$ is bounded below $K$, that is,
 \[
 \abs{Hx(t)} < K \qquad \text{for all $t\in\reals$}.
 \]
-For example, the system $x(t) + 3 x(t-1)$ is stable with $K = 4M$ since if $\abs{x(t)} < M$, then 
+For example, the system $x(t) + 3 x(t-1)$ with domain $\reals \to \complex$ is stable with $K = 4M$ since if $\abs{x(t)} < M$, then 
 \[
 \abs{x(t) + 3 x(t-1)} \leq \abs{x(t)} + 3 \abs{x(t-1)} < 4 M = K.
 \]
-The integrator $I_a$ for any $a \in \reals$ and differentiator $D$ are not stable (Exercises~\ref{excer:integratornotstable}~and~\ref{excer:diffnotstable}).
+The integrator $I_a$ for $a \in \reals$ having domain $L_{\text{loc}}$ and the differentiator $D$ with domain $C^1$ are not stable (Exercises~\ref{excer:integratornotstable}~and~\ref{excer:diffnotstable}).
 
-Let $H \in X \to Y$ be a system with domain $X$ and range $Y$ being linear spaces.  The system $H$ is \term{linear} if
+Let $H \in X \to Y$ be a system with both the domain $X$ and $Y$ being linear spaces of signals.  The system $H$ is \term{linear} if
 \[
 H( ax + by) = a Hx + b Hy
 \]
-for all signals $x, y \in X$ and all complex numbers $a$ and $b$.  That is, a linear system has the property: If the input consists of a weighted sum of signals, then the output consists of the same weighted sum of the responses of the system to those signals.  Figure~\ref{blockdiag:linearsystem} indicates the linearity property using a block diagram.  For example, the differentiator is linear because
+for all signals $x, y \in X$ and all complex numbers $a$ and $b$.  That is, a linear system has the property: if the input consists of a weighted sum of signals, then the output consists of the same weighted sum of the responses of the system to those signals.  Figure~\ref{blockdiag:linearsystem} indicates the linearity property using a block diagram.  For example, the differentiator is linear because
 \begin{align*}
 D(ax + by)(t) &= \frac{d}{dt}\big(ax(t) + by(t)\big) 
 &= a\frac{d}{dt}x(t) + b\frac{d}{dt}y(t) 
 &= aDx(t) + bDy(t)
 \end{align*}
-whenever both $x$ and $y$ are differentiable.  
+whenever both $x$ and $y$ are differentiable, that is, when $x,y \in C^1$.  
 %BLERG, there are significant caveats here, what happens when one of x or y is not differentiable, but the sum is!!!!
 However, the system $Hx(t) = \frac{1}{x(t)}$ is not linear because
 \[
@@ -835,7 +855,7 @@ in general.  %Throughout this text the prhase ``Let $H \in X \to Y$ be a linear 
 \caption{If $H$ is a linear system the outputs of these two diagrams are the same signal, i.e. $H(ax+by) = aHx+bHy$.}\label{blockdiag:linearsystem}
 \end{figure}
 
-Let $H \in X \to Y$ be a system with domain $X$ and range $Y$ begin shift-invariant spaces. The system $H$ is \term{shift-invariant} (or \term{time-invariant}) if
+Let $H \in X \to Y$ be a system with both the domain $X$ and $Y$ being shift-invariant spaces. The system $H$ is \term{shift-invariant} (or \term{time-invariant}) if
 \[
 H T_\tau x(t) = Hx(t-\tau)
 \]
@@ -843,13 +863,18 @@ for all signals $x \in X$ and all shifts $\tau\in\reals$.  That is, a system is 
 \[
 H T_\tau x = T_\tau Hx
 \]
-for all $\tau \in \reals$ and all signals $x \in X$.  Figure~\ref{blockdiag:timeinvariance} represents the property of shift-invariance with a block diagram.  % A consequence of time-invariance is
+for all $\tau \in \reals$ and all signals $x \in X$.  Figure~\ref{blockdiag:timeinvariance} represents the property of shift-invariance with a block diagram.  For example, the differentiator is shift-invariant because
+\[
+DT_\tau x(t) = \frac{d}{dt}x(t - \tau) = T_\tau Dx(t)
+\]
+by the chain rule for differentiation.  The integrator $I_\infty$ and shift-invariant (Exercise~\ref{exer:Iinftylineshiftinv}) but the integrator $I_a$ for finite $a < \infty$ is not (Exercise~\ref{exer:Ialineshiftinv}).
+% A consequence of time-invariance is
 % \begin{equation}\label{eq:timeinvvarchange}
 % H(x, t+\tau) = H\big(T_{-\tau}(x), t\big) = H\big(T_{-t}(x), \tau\big).
 % \end{equation}
 % This property will be useful in later sections. 
 
-%We will primarily be interested in systems that are both linear and shift-invariant said to be \term{linear shift-invariant} or \term{linear time-invariant} systems.  The phrase ``Let $H \in X \to Y$ be a linear shift-invariant system'' will occur regularly in this text and it will imp
+We will be primarily interested in systems that are both linear and shift-invariant.  Such systems are said to be \term{linear shift-invariant} or \term{linear time-invariant} systems.  The phrase ``Let $H \in X \to Y$ be a linear shift-invariant system'' will occur regularly and it will always imply that both sets $X$ and $Y$ are linear and shift-invariant spaces of signals.
 
 \begin{figure}[tbp]
 \centering

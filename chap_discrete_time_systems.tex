@@ -1,46 +1,72 @@
-We have so far studied linear time invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  %One particular linear time invariant system has so far been absent. 
-This is the time-shifter $T_\tau$ with non zero time shift $\tau \neq 0$ has so far been absent.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
+We have so far studied linear shift-invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  %One particular linear time invariant system has so far been absent. 
+The time-shifter $T_\tau$ with non zero time shift $\tau \neq 0$ has so far been absent.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
 
-We now consider systems constructed from linear combinations of time-shifters of the form $T_{Pn}$ where $n \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
+We now consider systems constructed from linear combinations of time-shifters of the form $T_{Pm}$ where $m \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
+\begin{equation}\label{eq:discretimesysdefn}
+H x = \sum_{m \in \ints} h_m T_{ P m} x
+\end{equation}
+where $h \in \ints \to \complex$ is complex valued sequence.  Such systems are called \term{discrete time systems}.  It is common in the literature that the term discrete time system refers to a mapping from a sequence $x$ to another sequence $y$ of the form
 \[
-H x = \sum_{n \in \ints} h_n T_{ P n} x
+y_n = \sum_{m \in \ints} h_m x_{n-m}.
 \]
-where $h$ is a real or complex valued sequence.  Such systems are called \term{discrete time systems}.  Discrete time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
+We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$, sampling at the integers, and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  %In this way,~\eqref{eq:discretimesysdefn} provides a more general setting from which to study discrete time systems.  
+We will find that~\eqref{eq:discretimesysdefn} provides a setting in which to study discrete-time systems that closely links with the previous chapters where (what are often called continuous-time) systems have been studied.  Specifically, the complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This notion of a discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
+
+Discrete time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_n = 0$ for all $n < 0$, then $H$ is causal because 
+We first describe a suitable domain for each discrete time system.  It is worth first considering an example.  Suppose that $H$ has discrete impulse response given by the step sequence $u$~\eqref{eq:stepsequence}.  The signal $x(t) = 1$ that takes the value $1$ for all $t \in \reals$ will not be in the domain of $H$ because, in this case,
 \[
-Hx(t) = \sum_{n \in \ints} h_n T_{ P n}x(t) = \sum_{n =0}^\infty h_n x(t - Pn)
+Hx(t) =  \sum_{m \in \ints} u_m T_{ P m} x(t) = \sum_{m \in \ints} u_m = \sum_{m=0}^\infty 1
+\]
+is not finite for any $t \in \reals$.  To define a suitable domain we will reuse the notation $\dom$ that was used to describe the domain of regular systems.  Given a sequence $h$ denote by $\dom h$ the set of signals $x$ such that
+\[
+\sum_{m \in \ints} \abs{h_m x(t - m)} < \infty \qquad \text{for all $t \in \reals$}.
+\]
+If $H$ has discrete impulse response $h$ then, for all signals $x \in \dom h$ we have
+\[
+\abs{Hx(t)} = \abs{\sum_{m \in \ints} h_m T_{ P m} x(t)} \leq \sum_{m \in \ints}  \abs{ h_m T_{ P m} x} < \infty
+\]
+for all $t \in \reals$ and so $Hx(t)$ is finite for all $t \in \reals$.  We take $\dom h$ as the domain of the discrete time system with discrete impulse response $h$ unless otherwise stated.  Be aware that set $\dom h$ is now defined for both signals $h$ and sequences $h$.  This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
+
+The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_m = 0$ for all $m < 0$, then $H$ is causal because 
+\[
+Hx(t) = \sum_{m \in \ints} h_m T_{ P m}x(t) = \sum_{m =0}^\infty h_m x(t - Pm)
 \] 
 only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
-Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x$ is
+Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom f \cap \dom g$ is
 \begin{align*}
 Hx &= a \sum_{n \in \ints} f_{n} T_{ P n}x + b \sum_{n \in \ints} g_{n} T_{ P n}x \\
 &=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}x,
 \end{align*}
-and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.
+and so $H$ is a discrete time system with domain $\dom f \cap \dom g$ and discrete impulse response given by the linear combination of sequences $af + ag$.
 
-Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  The response of $H$ to $x$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
+Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  Denote by $\dom f g$ the set of signals $x$ such that
+\[
+\sum_{m \in \ints} \sum_{k \in \ints} \abs{f_m g_k x(t - m - k)} < \infty.
+\]  
+We will find $\dom f g$ to be a convenient domain for the system $H = FG$.  The response of $H$ to $x \in \dom f g$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
-H x &= F \big( \sum_{n \in \ints} g_n T_{ P n} x  \big) \\
-&= \sum_{m \in \ints} f_m T_{Pm} \big( \sum_{n \in \ints} g_n T_{ P n} x  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{Pm}\big( T_{Pn}x  \big) \\
-&= \sum_{m \in \ints} \sum_{n \in \ints} f_m g_n T_{P(m+n)}x.
+H x &= \sum_{m \in \ints} f_m T_{Pm} G x  \\
+&= \sum_{m \in \ints} f_m  G T_{Pm} x  \qquad \text{(time invariant of $G$} \\
+&= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_k T_{P(m+k)}x.
 \end{align*}
-By putting $k = m+n$ we have
+Since $x \in \dom f\;g$ Fubini's theorem can be used to justify swapping the order of summation so that
+\[
+H x = \sum_{k \in \ints} \sum_{m \in \ints} f_m g_k T_{P(m+k)}x.
+\]
+By putting $n = m+k$ we have
 \begin{align}
-Hx &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_{k-m} T_{Pk}x \nonumber \\
-&=  \sum_{k \in \ints} \sum_{m \in \ints} f_m g_{k-m} T_{Pk}x \qquad \text{(interchange summation)} \label{eq:discconvinterchangesummation}\\
-&= \sum_{k \in \ints} h_k T_{Pk}x \nonumber
+Hx =  \sum_{n \in \ints} \sum_{m \in \ints} f_m g_{n-m} T_{Pn}x = \sum_{n \in \ints} h_n T_{Pn}x \nonumber
 \end{align}
 where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  In what follows we will often use the term \term{convolution} rather than the lengthier term \term{discrete convolution} whenever there is no chance for confusion.
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom f\;g$ unless otherwise stated.  In what follows we will often use the term \term{convolution} rather than the lengthier term \term{discrete convolution} whenever there is no chance for confusion.
 
 Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
 \[
