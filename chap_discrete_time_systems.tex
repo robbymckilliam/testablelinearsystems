@@ -1,7 +1,7 @@
 We have so far studied linear shift-invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  %One particular linear time invariant system has so far been absent. 
 The time-shifter $T_\tau$ with non zero time shift $\tau \neq 0$ has so far been absent.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
 
-We now consider systems constructed from linear combinations of time-shifters of the form $T_{Pm}$ where $m \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
+We now consider linear shift-invariant systems constructed from linear combinations of time-shifters of the form $T_{Pm}$ where $m \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply \term{period}.  That is, we consider systems of the form
 \begin{equation}\label{eq:discretimesysdefn}
 H x = \sum_{m \in \ints} h_m T_{ P m} x
 \end{equation}
@@ -17,7 +17,7 @@ Discrete time systems are not regular because the time-shifter is not regular.  
 
 \section{The discrete time impulse response} \label{sec:discr-time-impulse}
 
-We first describe a suitable domain for each discrete time system.  It is worth first considering an example.  Suppose that $H$ has discrete impulse response given by the step sequence $u$~\eqref{eq:stepsequence}.  The signal $x(t) = 1$ that takes the value $1$ for all $t \in \reals$ will not be in the domain of $H$ because, in this case,
+We first describe a suitable domain for each discrete time system.  It is worth considering an example.  Suppose that $H$ has discrete impulse response given by the step sequence $u$~\eqref{eq:stepsequence}.  The signal $x(t) = 1$ that takes the value $1$ for all $t \in \reals$ will not be in the domain of $H$ because, in this case,
 \[
 Hx(t) =  \sum_{m \in \ints} u_m T_{ P m} x(t) = \sum_{m \in \ints} u_m = \sum_{m=0}^\infty 1
 \]
@@ -66,31 +66,30 @@ where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom f\;g$ unless otherwise stated.  In what follows we will often use the term \term{convolution} rather than the lengthier term \term{discrete convolution} whenever there is no chance for confusion.
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom f\;g$ unless otherwise stated.  In what follows we will often use the term \term{convolution} and \term{impulse response} rather than the lengthier terms \term{discrete convolution} and \term{discrete impulse response} whenever there is no chance for confusion.
 
-Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
-\[
-(u * u)_n = \sum_{m \in \ints} u_m u_{n-m} = \sum_{m = 0}^n 1 = \begin{cases}
-n+1 & n \geq 0 \\
-0 & n < 0.
-\end{cases}
-\] 
-Not all sequences can be convolved.  Denote by $\onebf$ the sequence with all elements equal one.  The convolution $u * \onebf$ is not possible because
-\[
-(u * \onebf)_n =  \sum_{m \in \ints} u_m \onebf_{n-m} = \sum_{m = 0}^\infty 1 = \infty
-\]
-is not finite for any $n$.  The convolution $u * \onebf$ is said not to exist.  When considering convolution of sequences it is important to make sufficient assumptions for the convolution to exist.  For example, the the convoltuion $f * g$ always exists if both $f$ and $g$ are absolutely summable sequences (Exercise~\ref{exer:convabssummableisabssummable}).  Similarly, the interchange of summation in~\eqref{eq:discconvinterchangesummation} only holds under appropriate assumptions about the sequences $f$ and $g$.  For example, the interchange is valid when $f$ and $g$ are absolutely summable.
+% Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
+% \[
+% (u * u)_n = \sum_{m \in \ints} u_m u_{n-m} = \sum_{m = 0}^n 1 = \begin{cases}
+% n+1 & n \geq 0 \\
+% 0 & n < 0.
+% \end{cases}
+% \] 
+% Not all sequences can be convolved.  Denote by $\onebf$ the sequence with all elements equal one.  The convolution $u * \onebf$ is not possible because
+% \[
+% (u * \onebf)_n =  \sum_{m \in \ints} u_m \onebf_{n-m} = \sum_{m = 0}^\infty 1 = \infty
+% \]
+% is not finite for any $n$.  The convolution $u * \onebf$ is said not to exist.  When considering convolution of sequences it is important to make sufficient assumptions for the convolution to exist.  For example, the the convoltuion $f * g$ always exists if both $f$ and $g$ are absolutely summable sequences (Exercise~\ref{exer:convabssummableisabssummable}).  Similarly, the interchange of summation in~\eqref{eq:discconvinterchangesummation} only holds under appropriate assumptions about the sequences $f$ and $g$.  For example, the interchange is valid when $f$ and $g$ are absolutely summable.
 
-Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  Discrete convolution is associative, that is, if $f$, $g$, and $h$ are sequences then
-\[
-(f*g)*h = f*(g*h). \qquad \text{(Exercise~\ref{excer:discrconvassociative})}
-\] 
-Discrete convolution distributes with addition and commutes with scalar multiplication, that is,
-\[
-a (f * h) + b (g * h) = (af + bg) * h
-\]
-where $a$ and $b$ are real or complex constants.  
-
+% Discrete convolution has many properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative, that is, $f * g = g * f$.  Discrete convolution is associative, that is, if $f$, $g$, and $h$ are sequences then
+% \[
+% (f*g)*h = f*(g*h). \qquad \text{(Exercise~\ref{excer:discrconvassociative})}
+% \] 
+% Discrete convolution distributes with addition and commutes with scalar multiplication, that is,
+% \[
+% a (f * h) + b (g * h) = (af + bg) * h
+% \]
+% where $a$ and $b$ are real or complex constants.  
 
 % Discrete time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
 % \[
@@ -114,25 +113,46 @@ where $a$ and $b$ are real or complex constants.
 
 \section{The z-transform}
 
-Let $c$ be a sequence.  The function
-\[
-\calZ(c) = \sum_{n \in \ints} c_n z^{-n}
+Recall that complex exponential signals are eigenfunctions of linear eigenfunctions of linear shift-invariant systems, that is, if $H$ is the linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
+ \[
+He^{st} = \lambda H(s) e^{st}
 \]
-is called the \term{z-transform} of $c$. The z-transform $\calZ(c)$ is a function of the complex plane. To indicate the value of $\calZ(c)$ at $z \in \complex$ we write either $\calZ(c,z)$ or $\calZ(c)(z)$.  The z-transform is not necessarily defined for all complex numbers $z$.  Let $R_c$ be the set of nonnegative real numbers such that the sequence $c_n r^{-n}$ is absolutely summable if and only if $r \in R_c$, that is,
-\[
-\sum_{n \in \ints} \abs{c_n} r^{-n} < \infty \qquad \text{if and only if $r \in R_c$}.
-\]
-In this case, $\calZ(c,z)$ is finite for all $z$ with magnitude satisfying $\abs{z} \in R_c$ because 
-\[
-\sabs{\calZ(c,z)} \leq \sum_{n \in \ints} \abs{c_n z^{-n}} \leq \sum_{n \in \ints} \abs{c_n} r^{-n} < \infty.
-\]
-The subset of the complex plane with magnitude from $R_c$ is called the \term{region of convergence} of the sequence $c$.  The region of convergence of a sequence is analogous to the region of convergence of a signal when considering its Laplace transform.  Recall that the region of convergence of a signal was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of a sequence is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
+where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that $e^{st} \in X$ and this set is denoted by $\cep X$.
 
-The step sequence $u$ has z-transform
+Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom h$.  The response of $H$ to $e^{st} \in dom h$ satifies
+\begin{align*}
+H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
+&= \sum_{n \in \ints} h_n e^{s(t-Pn)} \\
+&= e^{st} \sum_{n \in \ints} h_n e^{-sPn} = e^{st} \lambda H(s).
+\end{align*}
+It follows that the transfer function of $H$ satisfies
 \[
-\calZ(u) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
+\lambda H(s) = \sum_{n \in \ints} h_m e^{-sPn} \qquad s \in \cep \dom h.
 \]
-This sum converges only if the magnitude of $z$ is greater than one, that is, only if $\abs{z} > 1$.  The \term{region of convergence} of the step sequence is the set of complex numbers with magnitude greater than one.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).
+Putting $z = e^{Ps}$ we have
+\[
+\lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}
+\]
+that holds for complex numbers $z = e^{sP}$ such that $\frac{1}{P} \log z = s \in \cep\dom h$.  Denote this set by $\roc_\calZ h$.  The right hand side of the above expression is called the \term{z-transform} of the sequence $h$ and the set $\roc_\calZ h$ is called the region of convergence of the z-transform.
+
+Let $c$ be a complex valued sequence.  The z-transform of $c$ is denoted by $\calZ c$.  It is the complex valued function of $\roc_\calZ c$ satisfying
+\[
+\calZ c(z) = \sum_{n \in \ints} c_n z^{-n} \qquad z \in \roc_\calZ c.
+\]
+The domain of $\calZ c$ is the region of convergence $\roc_\calZ c$.  It happens that the region of convergence $\roc_\calZ c$ is precisely the set of complex numbers $z$ such that the sequence $c_n z^{-n}$ is absolutely summable, that is, such that
+\[
+\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty \qquad \text{if and only if $z \in \roc_\calZ c$}.
+\]
+The z-transform of a complex valued sequence plays a role analogous to the Laplace transform of a signal.  Recall that the region of convergence of the Laplace transform was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
+
+We now consider some example z-transforms.  Consider first the step sequence $u$.  The region of convergence $\roc_\calZ u$ is all those complex numbers with absolutely value greater than one because
+\[
+\sum_{n\in\ints} \abs{u_n z^{-n}} = \sum_{n=0}^\infty \abs{z}^{-n} < \infty
+\]
+only if $\abs{z} > 1$.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  The z-transform of $u$ is
+\[
+\calZ u(z) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
+\]
 
 Consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The z-transform
 \[

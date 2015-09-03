@@ -14,7 +14,7 @@ It follows that the transfer function of the regular system $H$ satisfies
 \]
 This is also know as the \term{Laplace transform} of the signal $h$.  The set $\cep \dom h$ is called the \term{region of convergence} of the Laplace transform of $h$.  We will denote the region of convergence by the simpler notation $\roc h = \cep \dom h$ in what follows.
 
-Let $x$ be a signal.  The Laplace transform of $x$ is denoted by $\calL x$.  It is the complex function satisfying
+Let $x$ be a signal.  The Laplace transform of $x$ is denoted by $\calL x$.  It is the complex valued function of $\roc x$ satisfying
 \begin{equation}\label{eq:laplace_defn}
 \calL x(s) = \int_{-\infty}^{\infty} x(t) e^{-st} dt \qquad s \in \roc x.
 \end{equation}
@@ -22,7 +22,7 @@ The domain of $\calL x$ is the region of convergence $\roc x = \cep \dom x$.
 
 \section{Regions of convergence}
 
-We now study the Laplace transform and the region of convergence in more detail.  The region of convergence $\roc x = \cep \dom x$ is precisely the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable (Exercise~\ref{exer:finhandroch}), that is,
+We now study the Laplace transform and the region of convergence in more detail.  The region of convergence $\roc x = \cep \dom x$ is precisely the set of complex numbers $s$ such that $x(t) e^{-s t}$ is absolutely integrable (Exercise~\ref{exer:finhandroch}), that is, such that,
 \[
 \int_{-\infty}^{\infty} \abs{x(t) e^{-s t}} dt < \infty  \qquad \text{if and only if $s \in \roc x$}.
 \]
