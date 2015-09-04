@@ -44,17 +44,17 @@ Hx &= a \sum_{n \in \ints} f_{n} T_{ P n}x + b \sum_{n \in \ints} g_{n} T_{ P n}
 \end{align*}
 and so $H$ is a discrete time system with domain $\dom_z f \cap \dom_z g$ and discrete impulse response given by the linear combination of sequences $af + ag$.
 
-Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  Denote by $\dom f g$ the set of signals $x$ such that
+Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  Denote by $\dom_z f\,g$ the set of signals $x$ such that
 \[
 \sum_{m \in \ints} \sum_{k \in \ints} \abs{f_m g_k x(t - m - k)} < \infty.
 \]  
-We will find $\dom f g$ to be a convenient domain for the system $H = FG$.  The response of $H$ to $x \in \dom f g$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
+We will find $\dom_z f\,g$ to be a convenient domain for the system $H = FG$.  The response of $H$ to $x \in \dom_z f\,g$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
 H x &= \sum_{m \in \ints} f_m T_{Pm} G x  \\
 &= \sum_{m \in \ints} f_m  G T_{Pm} x  \qquad \text{(shift-invariance of $G$)} \\
 &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_k T_{P(m+k)}x.
 \end{align*}
-Since $x \in \dom f\;g$ Fubini's theorem can be used to justify swapping the order of summation so that
+Since $x \in \dom_z f\,g$ Fubini's theorem can be used to justify swapping the order of summation so that
 \[
 H x = \sum_{k \in \ints} \sum_{m \in \ints} f_m g_k T_{P(m+k)}x
 \]
@@ -66,7 +66,7 @@ where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The special notation $f * g$ is again used to denote the discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom f\;g$ unless otherwise stated.  In what follows we will often use the term \term{convolution} and \term{impulse response} rather than the lengthier terms \term{discrete convolution} and \term{discrete impulse response} whenever there is no chance for confusion.
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_z f\,g$ unless otherwise stated.  In what follows we will often use the term \term{convolution} and \term{impulse response} rather than the lengthier terms \term{discrete convolution} and \term{discrete impulse response} whenever there is no chance for confusion.
 
 % Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
 % \[
@@ -113,13 +113,13 @@ This is called the \term{discrete convolution} of sequences $f$ and $g$.  The sp
 
 \section{The z-transform}
 
-Recall that complex exponential signals are eigenfunctions of linear eigenfunctions of linear shift-invariant systems, that is, if $H$ is the linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
+Recall that complex exponential signals are eigenfunctions of linear shift-invariant systems, that is, if $H$ is a linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
  \[
 He^{st} = \lambda H(s) e^{st}
 \]
 where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that $e^{st} \in X$ and this set is denoted by $\cep X$.
 
-Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom h$.  The response of $H$ to $e^{st} \in dom h$ satifies
+Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom_z h$.  The response of $H$ to $e^{st} \in \dom_z h$ satifies
 \begin{align*}
 H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
 &= \sum_{n \in \ints} h_n e^{s(t-Pn)} \\
@@ -127,25 +127,29 @@ H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
 \end{align*}
 It follows that the transfer function of $H$ satisfies
 \[
-\lambda H(s) = \sum_{n \in \ints} h_m e^{-sPn} \qquad s \in \cep \dom h.
+\lambda H(s) = \sum_{n \in \ints} h_m e^{-sPn} \qquad s \in \cep \dom_z h.
 \]
 Putting $z = e^{Ps}$ we have
 \[
 \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}
 \]
-that holds for complex numbers $z = e^{sP}$ such that $\frac{1}{P} \log z = s \in \cep\dom h$.  Denote this set by $\roc_\calZ h$.  The right hand side of the above expression is called the \term{z-transform} of the sequence $h$ and the set $\roc_\calZ h$ is called the region of convergence of the z-transform.
-
-Let $c$ be a complex valued sequence.  The z-transform of $c$ is denoted by $\calZ c$.  It is the complex valued function of $\roc_\calZ c$ satisfying
+that holds for complex numbers $z = e^{sP}$ such that $s \in \cep\dom_z h$.  Denote this set by $\roc_z h$, that is,
 \[
-\calZ c(z) = \sum_{n \in \ints} c_n z^{-n} \qquad z \in \roc_\calZ c.
+\roc_z h = \{z \in \complex \mid \frac{1}{P} \log z \in \cep \dom_z h \ \}.
 \]
-The domain of $\calZ c$ is the region of convergence $\roc_\calZ c$.  It happens that the region of convergence $\roc_\calZ c$ is precisely the set of complex numbers $z$ such that the sequence $c_n z^{-n}$ is absolutely summable, that is, such that
+The right hand side of the above expression is called the \term{z-transform} of the sequence $h$ and the set $\roc_z h$ is called the region of convergence of the z-transform.  
+
+Let $c$ be a complex valued sequence.  The z-transform of $c$ is denoted by $\calZ c$.  It is the complex valued function of $\roc_z c$ satisfying
 \[
-\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty \qquad \text{if and only if $z \in \roc_\calZ c$}.
+\calZ c(z) = \sum_{n \in \ints} c_n z^{-n} \qquad z \in \roc_z c.
+\]
+The domain of $\calZ c$ is the region of convergence $\roc_z c$.  It happens that the region of convergence $\roc_z c$ is precisely the set of complex numbers $z$ such that the sequence $c_n z^{-n}$ is absolutely summable, that is, such that
+\[
+\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty \qquad \text{if and only if $z \in \roc_z c$}.
 \]
 The z-transform of a complex valued sequence plays a role analogous to the Laplace transform of a signal.  Recall that the region of convergence of the Laplace transform was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
 
-We now consider some example z-transforms.  Consider first the step sequence $u$.  The region of convergence $\roc_\calZ u$ is all those complex numbers with magnitude greater than one because
+We now consider some example z-transforms.  Consider first the step sequence $u$.  The region of convergence $\roc_z u$ is all those complex numbers with magnitude greater than one because
 \[
 \sum_{n\in\ints} \abs{u_n z^{-n}} = \sum_{n=0}^\infty \abs{z}^{-n} < \infty
 \]
@@ -190,7 +194,7 @@ has z-transform
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
-The region of convergence is the entire complex plane, that is, $\roc_\calZ \delta = \complex$.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  Because $\sum_{n \in \ints} \abs{z}^{-n}$ does not converge for any $z \in \complex$ the region of convergence $\roc_\calZ \onebf$ is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
+The region of convergence is the entire complex plane, that is, $\roc_z \delta = \complex$.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  Because $\sum_{n \in \ints} \abs{z}^{-n}$ does not converge for any $z \in \complex$ the region of convergence $\roc_z \onebf$ is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
 
 {
 \def\minn{-4}
@@ -312,11 +316,11 @@ The region of convergence is the entire complex plane, that is, $\roc_\calZ \del
 \newcommand{\stirling}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
 \newcommand{\eulerian}[2]{\genfrac{\langle}{\rangle}{0pt}{}{#1}{#2}}
 
-Given the z-transform $\calZ(c)$ the sequence $c$ can be recovered by the inverse z-transform
+Given the z-transform $\calZ c$ the sequence $c$ can be recovered by the inverse z-transform
 \[
-c_n = \frac{1}{2\pi j} \oint_C \calZ(c,z) z^{n-1} dz
+c_n = \frac{1}{2\pi j} \oint_C \calZ c(z) z^{n-1} dz
 \]
-where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence of $c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair 
+where $C$ is a counterclockwise closed path encircling the origin and within the region of convergence $\roc_z c$.  Similarly to the inverse Laplace transform (Section~\ref{sec:laplace-transform}), direct calculation of the inverse z-transform requires a form of integration called \term{contour integration} that we will not consider here~\citep{Stewart_ComplexAnalysis_2004}.  For our purposes, and for many engineering purposes, it suffices to remember only the following z-transform pair 
 \[
 \calZ\big( [n]_k u_n \big) = \frac{k! z }{(z - 1)^{k+1}} \qquad \abs{z} > 1 \qquad \text{(Exercise~\ref{exer:fallingfacztransform})}
 \]
@@ -326,11 +330,11 @@ where
 \]
 is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
 
-Let $a \in \complex$.  If $c$ is a sequence with z-transform $\calZ(c)$ and region of convergence $R_c$ then the sequence with $n$th element $a^nc_n$ has z-transform 
+Let $a \in \complex$.  The z-transforms of the sequence $c_n$ and the sequence with $n$th element $a^nc_n$ are related by 
 \[
-\calZ(a^n c_n) = \sum_{n \in \ints} a^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/a)^{-n} = \calZ(c, z/a) \qquad \frac{z}{a} \in R_c.
+\calZ(a^n c_n)(z) = \sum_{n \in \ints} a^n c_n z^{-n} = \sum_{n \in \ints} c_n (z/a)^{-n} = \calZ c(z/a) \qquad \frac{z}{a} \in \roc_z c.
 \]
-This is called the \term{scaling} property of the z-transform.  Using this property the z-transform of the sequence $a^n [n]_k u_n$ is
+This is called the \term{scaling} property of the z-transform.  The region of convergence of $\calZ(a^n c_n)$ is the set of complex numbers $z$ such that $z/a \in \roc_z c$.  Using this property the z-transform of the sequence $a^n [n]_k u_n$ is
 \begin{equation}\label{eeq:onlyztrans}
 \calZ\big( a^n [n]_k u_n \big) = \frac{k! a^k z }{(z - a)^{k+1}} \qquad \abs{z} > \abs{a}.
 \end{equation}
@@ -342,13 +346,14 @@ and in the case that $k=1$ we obtain
 \[
 \calZ\big( a^n n u_n \big) = \frac{ a z }{(z - a)^{2}} \qquad \abs{z} > \abs{a}.
 \]
-Let $g$ be a sequence with region of convergence $R_g$.  The z-transform of the shifted sequence with $n$th element $g_{n-\ell}$ where $\ell \in \ints$ is related to that of $g$ by
+
+The z-transform of a sequence $c$ and of the shifted sequence with $n$th element $c_{n-\ell}$ where $\ell \in \ints$ are related by
 \begin{align}
-\calZ(g_{n-\ell}) &= \sum_{n \in \ints} g_{n-\ell} z^{-n} \nonumber \\
-&= \sum_{n \in \ints} g_{n} z^{-(n+\ell)} \nonumber \\
-&= z^{-\ell} \sum_{n \in \ints} g_n z^{-n} = z^{-\ell} \calZ(g) \qquad z \in R_g. \label{eq:timeshiftpropertyztransform}
+\calZ(c_{n-\ell})(z) &= \sum_{n \in \ints} c_{n-\ell} z^{-n} \nonumber \\
+&= \sum_{n \in \ints} c_{n} z^{-(n+\ell)} \nonumber \\
+&= z^{-\ell} \sum_{n \in \ints} c_n z^{-n} = z^{-\ell} \calZ c(z) \qquad z \in \roc_z c. \label{eq:timeshiftpropertyztransform}
 \end{align}
-This is called the \term{time~shift} property of the z-transform.  % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
+This is called the \term{shifting} property of the z-transform.   % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
 % \begin{align*}
 % H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
 % &= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
@@ -363,47 +368,32 @@ This is called the \term{time~shift} property of the z-transform.  % The time-sh
 % \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
 % \]
 
-
-The z-transform of a sequence is related to the transfer function of a discrete time system.  Let $H$ be a discrete time system with discrete impulse response $h$ and period $P$.  Because the transfer function of the time shifter $T_{Pn}$ is $\lambda(T_{Pn}) = e^{-sPn}$~\eqref{eq:timeshiftertransferfunction} the transfer function of $H$ is
+Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Let $H x = F G x$ be the discrete time system formed by the composition $F$ and $G$ and with domain $\dom f\,g$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
 \[
-\lambda(H,s) = \sum_{n \in \ints} h_n \lambda( T_{Pn} ) = \sum_{n \in \ints} h_n e^{-sP n}.
+\lambda H(s)  = \lambda G(s) \lambda F(s) \qquad e^{sP} \in \roc_z f \cap \roc_z g.
 \]
-Putting $z = e^{Ps}$ we have
+For $s$ such that $e^{sP} \in \roc_z f \cap \roc_z g$ we have
 \[
-\calZ(h,z) = \lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} \qquad z \in R_h
+\calZ f(e^{sP}) = \lambda F(s) , \;\;\; \calZ g(e^{sP}) = \lambda G(s), \;\;\; \calZ(f * g)(e^{sP}) = \lambda H(s)
 \]
-where $R_h$ is the region of convergence of $h$.  We see that the transfer function of a discrete time system with period $P$ is related to the z-transform of its discrete impulse response by the equation above or equivalently by
-\begin{equation}\label{eq:reltransferfunztrans}
-\lambda(H,s) = \calZ(h,e^{Ps}) \qquad e^{sP} \in R_h.
-\end{equation}
-This relationship is analogous to the relationship between the transfer function of a regular linear time invariant system and the Laplace transform of its impulse response (Section~\ref{sec:transf-funct-lapl}).  The set of complex numbers $s$ such that $e^{sP} \in R_h$ is called the region of convergence of the discrete time system $H$.  In this way, both sequences and discrete time systems have a region of convergence. 
-
-Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$ having regions of convergence $R_f$ and $R_g$.  Let $H(x) = F(G(x))$ be the discrete time system formed by the composition $F$ and $G$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
+from which it follow that
 \[
-\lambda( H ) = \lambda(G)\lambda(F) \qquad e^{sP} \in R_f \cap R_g.
+\calZ( f * g)(z) = \calZ f(z) \calZ g(z) \qquad z \in \roc_z f \cap \roc_z g.
 \]
-Because
-\[
-\calZ(f, e^{sP}) = \lambda\big( F ,s \big) , \;\;\; \calZ(g, e^{sP}) = \lambda\big( G ,s \big), \;\;\; \calZ(f * g, e^{sP}) = \lambda( H ,s )
-\]
-when $e^{sP} \in R_f \cap R_g$ we have
-\[
-\calZ( f * g) = \calZ(f) \calZ(g) \qquad z \in R_f \cap R_g.
-\]
-That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of the convolution is the intersection of the regions of convergence.  This is called the \term{convolution property} of the z-transform.
+That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of $\calZ(f*g)$ is the intersection of the regions of convergence of $\calZ f$ and $\calZ g$.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
-Let $H$ be discrete time system with discrete impulse response $h$ having region of convergence containing the complex unit circle.  The spectrum of $H$ is
+Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  The spectrum of $H$ is
 \[
-\Lambda(H,f) = \lambda(H, j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n}.
+\Lambda H(f) = \lambda H (j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n} \qquad f \in \reals.
 \]
-The spectrum is periodic with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}. The spectrum is related to the discrete time Fourier transform of $h$ by
+The spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
-\calD(h,f) = \Lambda(H,\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
+\calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
-We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform, of the discrete time system $H$ and its discrete impulse response $h$,
+We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform of a stable discrete time system $H$ and its discrete impulse response $h$,
 \[
-\lambda(H, j2\pi f) = \Lambda(H,f) = \calD(h,f) = \calZ(h, e^{2\pi j P f}).
+\lambda H(j2\pi f) = \Lambda H(f) = \calD h(f) = \calZ h(e^{2\pi j P f}).
 \]
 
 \section{Difference equations}\label{sec:difference-equations}
