@@ -129,14 +129,14 @@ It follows that the transfer function of $H$ satisfies
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_z h.
 \]
 Putting $z = e^{Ps}$ we have
-\[
-\lambda H(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}
-\]
+\begin{equation} \label{eq:reltransferfunztrans}
+\lambda H(s) = \lambda H(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n} 
+\end{equation}
 that holds for complex numbers $z = e^{sP}$ such that $s \in \cep\dom_z h$.  Denote this set by $\roc_z h$, that is,
 \[
 \roc_z h = \{z \in \complex \mid \frac{1}{P} \log z \in \cep \dom_z h \ \}.
 \]
-The right hand side of the above expression is called the \term{z-transform} of the sequence $h$ and the set $\roc_z h$ is called the region of convergence of the z-transform.  
+The right hand side of~\eqref{eq:reltransferfunztrans} is called the \term{z-transform} of the sequence $h$ and the set $\roc_z h$ is called the region of convergence of the z-transform.  
 
 %TODO include description of mapping $z = e^{sP}$ with figure.  Map real part of $s$ to magnitude and imaginary part to angle.  Origin is removed.
 
@@ -146,7 +146,7 @@ Let $c$ be a complex valued sequence.  The z-transform of $c$ is denoted by $\ca
 \]
 The domain of $\calZ c$ is the region of convergence $\roc_z c$.  It happens that the region of convergence $\roc_z c$ is precisely the set of nonzero complex numbers such that the sequence $c_n z^{-n}$ is absolutely summable, that is, those $z \neq 0$ such that
 \[
-\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty. \qquad (Exercise~\ref{exer:roczabssummrel})
+\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty. \qquad \text{(Exercise~\ref{exer:roczabssummrel})}
 \]
 The z-transform of a complex valued sequence plays a role analogous to the Laplace transform of a signal.  Recall that the region of convergence of the Laplace transform was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform is either a circular disk with the origin removed, an annular region in the complex plane, the complex plane with an origin centered disc removed, the entire complex plane, or the empty set.
 
@@ -415,7 +415,7 @@ Another example is the Fibonacci sequence
 \[
 0,1,1,2,3,5,8,13,21,\dots.
 \]
-Each element of the Fibonnacci sequence after the second is given by the sum the previous two elements.  Letting $d_n$ be the elements of the Fibonacci sequence so that $d_0 = 0, d_1 = 1, d_2 = 1, \dots$ and putting $d_n = 0$ for $n < 0$ we have
+Each element of the Fibonnacci sequence after the second is given by the sum of the previous two elements.  Letting $d_n$ be the elements of the Fibonacci sequence so that $d_0 = 0, d_1 = 1, d_2 = 1, \dots$ and putting $d_n = 0$ for $n < 0$ we have
 \[
 d_{n} - d_{n-1} - d_{n-2} = \delta_{n-1}.
 \] 
@@ -423,35 +423,43 @@ This is in the form~\eqref{eq:differenceequform} if we put $c_n = \delta_{n-1}$.
 
 In order to study difference equations it is useful to study the equation
 \begin{equation}\label{eq:differenceequformsystem}
-\sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
+\sum_{\ell=0}^{m} a_\ell T_{P\ell} x = \sum_{\ell=0}^{k} b_\ell T_{P\ell} y
 \end{equation}
 that relates two signals $x$ and $y$.  \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls~\eqref{eq:differenceequformsystem} the \term{continuous variable case} of a linear difference equation with constant coefficients.  If $x$ and $y$ are signals satisfying this equation then the samples of $x$ and $y$ at multiples of $P$ satisfy~\eqref{eq:differenceequform}.  That is, if we define sequences $c$ and $d$ by $c_n = x(nP)$ and $d_n = y(nP)$ then $c$ and $d$ satisfy~\eqref{eq:differenceequform} whenever $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.
 
-Suppose that $H$ is a linear time invariant system with the property that the response $y = H(x)$ to input signal $x$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The transfer function of $H$ is found to be
+Suppose that $H$ is a linear shift-invariant system with the property that the response $y = H x$ to input signal $x$ is such that $x$ and $y$ satisfy~\eqref{eq:differenceequformsystem}.  The response of $H$ to the complex exponential signal $e^{st}$ satisfies $He^{st} = \lambda H(s) e^{st}$.  Substituting $x(t) = e^{st}$ and $y = \lambda H(s) e^{st}$ into~\eqref{eq:differenceequformsystem} gives
 \[
-\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}} \qquad \text{(Exercise~\ref{exer:findtransfuncdiffeq})}
+\sum_{\ell=0}^{m} a_\ell T_{P\ell} e^{st} = \sum_{\ell=0}^{k} b_\ell T_{P\ell} (\lambda e^{st})
+\]
+where, to simplify notation, we have written simply $\lambda$ for $\lambda H(s)$ above.  Since $T_{P\ell} e^{st} = e^{-sP\ell} e^{st}$ we find that
+\[
+e^{st} \sum_{\ell=0}^{m} a_\ell e^{-sP\ell}  = \lambda e^{st} \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}
+\]
+and rearranging we find that the transfer function $\lambda H$ satisfies
+\[
+\lambda H(s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}} = \frac{\sum_{\ell=0}^{m} a_\ell z^{-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{-\ell}} = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}}
 \]
 where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
-\calZ(h,z) = \lambda(H,s) = z^{k-m}\frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
+\calZ h(z) = \lambda H(s) = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}}.
 \]
 It follows from~\eqref{eq:reltransferfunztrans} that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  In the case that $m > k$ the term $z^{k-m}$ can be incorporated into the denominator obtaining
 \[
-\calZ(h) = \frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^m + b_1 z^{k-1} + \dots + b_k z^{m-k}}
+\calZ h(z) = \frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^m + b_1 z^{k-1} + \dots + b_k z^{m-k}}
 \]
 and in the case that $m < k$ the term $z^{m-k}$ can be incorporated into the numerator obtaining
 \[
-\calZ(h) = \frac{a_0z^k + a_1 z^{k-1} + \dots + a_m z^{k-m}}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
+\calZ h(z) = \frac{a_0z^k + a_1 z^{k-1} + \dots + a_m z^{k-m}}{b_0z^k + b_1 z^{k-1} + \dots + b_k}.
 \] 
 In either case the order of the polynomials on the numerator and denominator are the same, that is, the order is $w = \max(m,k)$.
 
 By factorising the polynomials on the numerator and denominator we obtain
 \[
-\calZ(h) = \frac{a_0}{b_0} \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}
+\calZ h(z) = \frac{a_0}{b_0} \frac{(z-\alpha_0)(z - \alpha_1)\cdots(z - \alpha_{w})}{(z-\beta_0)(z - \beta_1)\cdots(z - \beta_{w})}
 \]
 where $\alpha_0, \dots, \alpha_w$ are the roots of the numerator polynomial and $\beta_0, \dots, \beta_w$ are the roots of the denominator polynomial.  If the numerator and denominator polynomials share one or more roots, then these roots cancel leaving the simpler expression
 \begin{equation}\label{eq:ztransfuncpoleszeros}
-\calZ(h) = \frac{a_0}{b_0} \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})},
+\calZ h(z) = \frac{a_0}{b_0} \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})},
 \end{equation}
 where $d$ is the number of shared roots, these shared roots being 
 \[
@@ -520,15 +528,15 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
 
 The z-transform pair~\eqref{eeq:onlyztrans} has the term $z$ on its numerator and so it is convenient to write
 \[
-\calZ(h) = \frac{a_0}{b_0} z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
+\calZ h(z) = \frac{a_0}{b_0} z \frac{(z-\alpha_d)(z - \alpha_{d+1})\cdots(z - \alpha_{w})}{z(z-\beta_d)(z - \beta_{d+1})\cdots(z - \beta_{w})}.
 \]
 Applying partial fraction to polynomial quotient yields
 \[
-\calZ(h) = \frac{a_0}{b_0} z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
+\calZ h(z) = \frac{a_0}{b_0} z \sum_{\ell \in K} \frac{A_\ell }{(z - \beta_\ell)^{r_\ell}}
 \] 
 where $r_\ell$ are positive integers, $A_\ell$ are complex constants, and $K$ is a subset of the indices from $\{d,d+1,\dots,w\}$.  We need to consider those terms where $\beta_\ell = 0$ separately.  Let $K_1$ be the subset of indices from $K$ such that $\beta_\ell = 0$ when $\ell \in K_1$ and let $K_2$ be the subset such that $\beta_\ell \neq 0$ when $\ell \in K_2$.  Now 
 \[
-\calZ(h) = \frac{a_0}{b_0} \sum_{\ell \in K_1} \frac{A_\ell }{z^{r_\ell-1}} + \sum_{\ell \in K} B_\ell \frac{  \beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}.
+\calZ h(z) = \frac{a_0}{b_0} \sum_{\ell \in K_1} \frac{A_\ell }{z^{r_\ell-1}} + \sum_{\ell \in K} B_\ell \frac{  \beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}.
 \] 
 where
 \[
@@ -546,7 +554,7 @@ The discrete impulse response is absolutely summable only if the poles satisfy $
 
 We now consider some specific examples of difference equations and their corresponding discrete time systems.  Consider the difference equation
 \begin{equation}\label{eq:firstorderdifferenceequation}
-c_n = d_n + a d_{n-1} \qquad n \in \ints
+c_n = d_n - a d_{n-1} \qquad n \in \ints
 \end{equation}
 where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies
 \[

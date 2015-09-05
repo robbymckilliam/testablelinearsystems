@@ -20,19 +20,19 @@
 
 \item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
 
-\item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\zeqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
-\begin{solution}
-Substitute $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\zeqref{eq:differenceequformsystem},
-\begin{align*}
-\sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
-\sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
-\sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
-\end{align*}
-Solving for $\lambda$ yeilds the transfer function of $H$,
-\[
-\lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
-\]
-\end{solution}
+% \item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\zeqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
+% \begin{solution}
+% Substitute $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\zeqref{eq:differenceequformsystem},
+% \begin{align*}
+% \sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
+% \sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
+% \sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
+% \end{align*}
+% Solving for $\lambda$ yeilds the transfer function of $H$,
+% \[
+% \lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
+% \]
+% \end{solution}
 
 \item \label{exer:convabssummableisabssummable}  Let $f$ and $g$ be absolutely summable sequences.  Show that the discrete convolution $f * g$ is also absolutely summable.  
 
@@ -100,7 +100,7 @@ as required.
 
 \item \label{exer:fftcomplexity} Let $d_n$ be a sequence satisfying $d_n = 2 d_{n-1} + 2^{n+1}$ and suppose that $d_0 = 0$.  Show that $d_n = 2^{n+1}n$ for $n = 1,2,\dots$.  %Find a similar expression for $d_n$ is the case that $d_0 = a \neq 0$.
 \begin{solution}
-In Section~\zref{sec:difference-equations} we found the discrete time system $H$ with discrete impulse response $h_n = 2^{n}u_n$ is such that the respone $y = H(x)$ is input signal $x$ satisfied the equation
+In Section~\zref{sec:difference-equations} we found the discrete time system $H$ with discrete impulse response $h_n = 2^{n}u_n$ is such that the respone $y = Hx$ is input signal $x$ satisfied the equation
 \[
 x = y - 2 T_{P}(y).
 \] 
