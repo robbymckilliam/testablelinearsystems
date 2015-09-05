@@ -405,9 +405,23 @@ We have previously shown that interesting systems are found by consideration of 
 \begin{equation}\label{eq:differenceequform}
 \sum_{\ell=0}^{m} a_\ell c_{n - \ell} = \sum_{\ell=0}^{k} b_\ell d_{n - \ell} \qquad n \in \ints
 \end{equation}
-where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are real or complex constants.
+where $a_0,\dots,a_m$ and $b_0,\dots,b_k$ are complex constants.  For example, in Section~\ref{sec:fast-four-transf} we found that the number of complex operations required to compute a Cooley-Tukey fast Fourier transform of size $N = 2^n$ was $C_N = C_{2^n} = d_n$ where the sequence $d_n$ satisfied the equation~\eqref{eq:recursiveeqcomplexityfft}
+\[
+2^{n+1} = d_n - 2 d_{n-1} \qquad n \geq 0
+\]
+and where $C_1 = d_0 = 0$.  This is in the form of~\eqref{eq:differenceequform} if we suppose that $d_n = 0$ for $n \leq 0$ and put $c_n = 2^{n+1} u_{n-1}$.
 
-In order to study this equation it is useful to study the equation
+Another example is the Fibonacci sequence
+\[
+0,1,1,2,3,5,8,13,21,\dots.
+\]
+Each element of the Fibonnacci sequence after the second is given by the sum the previous two elements.  Letting $d_n$ be the elements of the Fibonacci sequence so that $d_0 = 0, d_1 = 1, d_2 = 1, \dots$ and putting $d_n = 0$ for $n < 0$ we have
+\[
+d_{n} - d_{n-1} - d_{n-2} = \delta_{n-1}.
+\] 
+This is in the form~\eqref{eq:differenceequform} if we put $c_n = \delta_{n-1}$.
+
+In order to study difference equations it is useful to study the equation
 \begin{equation}\label{eq:differenceequformsystem}
 \sum_{\ell=0}^{m} a_\ell T_{P\ell}(x) = \sum_{\ell=0}^{k} b_\ell T_{P\ell}(y)
 \end{equation}
