@@ -53,7 +53,7 @@ H x &= \sum_{m \in \ints} f_m T_{Pm} G x  \\
 &= \sum_{m \in \ints} f_m  G T_{Pm} x  \qquad \text{(shift-invariance of $G$)} \\
 &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_k T_{P(m+k)}x.
 \end{align*}
-Since $x \in \dom_z f\,g$ Fubini's theorem can be used to justify swapping the order of summation so that
+Since $x \in \dom_z f\,g$ Fubini's theorem~\cite[Theorem~8.8]{Rudin_real_and_complex_analysis} can be used to justify swapping the order of summation so that
 \[
 H x = \sum_{k \in \ints} \sum_{m \in \ints} f_m g_k T_{P(m+k)}x
 \]
@@ -65,7 +65,18 @@ where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  We have found that the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_z f\,g$ unless otherwise stated.  In what follows we will often use the term convolution and impulse response rather than the lengthier terms discrete convolution and discrete impulse response whenever there is no chance for confusion.
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  We have found that the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_z f\,g$ unless otherwise stated.  
+
+Discrete convolution has properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative and associative under approriate assumptions (Exercise~\ref{excer:discrconvassociative}).
+% \[
+% (f*g)*h = f*(g*h). \qquad \text{(Exercise~\ref{excer:discrconvassociative})}
+% \] 
+% Discrete convolution distributes with addition and commutes with scalar multiplication, that is,
+% \[
+% a (f * h) + b (g * h) = (af + bg) * h
+% \]
+% where $a$ and $b$ are real or complex constants.  
+In what follows we will often use the term convolution and impulse response rather than the lengthier terms discrete convolution and discrete impulse response whenever there is no chance for confusion.
 
 % Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
 % \[
@@ -110,7 +121,7 @@ This is called the \term{discrete convolution} of sequences $f$ and $g$.  The no
 % We see that the response $y = H(x)$ is a bandlimited signal with samples $d_n = y(nP)$.
 
 
-\section{The z-transform}
+\section{The transfer function and the spectrum}
 
 Recall that complex exponential signals are eigenfunctions of linear shift-invariant systems, that is, if $H$ is a linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
  \[
@@ -125,6 +136,124 @@ H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
 &= e^{st} \sum_{n \in \ints} h_n e^{-sPn} = e^{st} \lambda H(s).
 \end{align*}
 It follows that the transfer function of $H$ satisfies
+\[
+\lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_z h.
+\]
+
+Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Equivalently the domain of the transfer function $\lambda H$ contains the imaginary axis, that is, the set $\cep \dom_z h$ contains the imaginary axis.  The spectrum of $H$ is
+\[
+\Lambda H(f) = \lambda H (j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n} \qquad f \in \reals.
+\]
+Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  The spectrum is related to the discrete time Fourier transform of $h$ by
+\[
+\calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
+\]
+
+TODO: Examples, rect, sinc, truncated sinc, truncated rrc. 
+
+\section{Finite impulse response filters}
+
+We have found that the spectrum of a stable discrete time system is periodic with period equal to the sample rate $F = \tfrac{1}{P}$.  Because of this periodicity it is not immediately apparent that any useful filters can be constructed from discrete time systems.  For example, periodicity makes it impossible to build a lowpass filter.  However, many signals occuring in practice are approximately bandlimited with some bandwidth $b > 0$ (Section~\ref{sec:bandlimited-signals}).  We will find that it is possible to perform useful filtering operations on bandlimited signals using discrete time systems.  This is most easily achieved when the bandwidth is less than half the sample rate of the system, that is, when $b < \tfrac{F}{2}$.
+
+To see how this works, consider the bandlimited signal $x$ with Fourier transform
+\[
+\calF(x) = \rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2).
+\]
+The Fourier transform is plotted is Figure~\ref{fig:bandlimiteddiscretetimefiltering} (dashed line).  The Fourier transform has a raised cosine pulse centered at the origin and two rectangular pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the raised cosine at the origin and that the two rectangular pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  Because the signal has bandwidth $\tfrac{7}{4}$ the spectrum of this filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  Because of this, a discrete time system with sample rate $F > 2b = \frac{7}{2}$ (and so spectrum with period larger than $\tfrac{7}{2}$) can be configured as a low pass filter.  A discrete time system configured for this purpose is called a low pass~\term{digital filter}.
+
+A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
+\[
+c_n = 3 d_n - 2 d_{n-1}.
+\]
+Let $H$ be the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with this difference equation.  The spectrum of $H$ is
+\[
+\Lambda(H,f) = \frac{e^{\pi f j/2}}{3 e^{\pi f j/2} - 2}.
+\]
+The magnitude spectrum is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (gray).  The magnitude spectrum takes its maximum value $\abs{\Lambda(H,0)} = 1$ at $f$ a multiple of $F = 4$ and minimum value $\abs{\Lambda(H,2)} = \tfrac{1}{5}$ at frequencies $f = (k + \tfrac{1}{2})F$ for $k \in \ints$.  The magnitude spectrum takes the value $\frac{1}{\sqrt{2}}$ at frequences of the form
+\[
+f = 4k + \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 4k + 0.167754.
+\]
+On the interval $[-F/2,F/2]$ this discrete time system acts as a lowpass filter with cuttoff frequency approximately 
+\[
+\frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 0.167754.
+\]
+
+\begin{figure}[tp]
+  \centering
+  \def\sx{1.4}
+  \def\sy{2}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\a{(2.0/3.0)}
+  \colorlet{lightgray}{black!25}
+  \newcommand{\dplot}[1]{\draw[thick,smooth,samples=200,domain=-4:4] plot function{(1-#1)/sqrt(1 - 2*#1*cos(2*\P*pi*x) + #1*#1)}}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      \fill[fill=lightgray] (-4,0) -- plot[samples=200,domain=-4:4] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) -- (4,0) -- cycle;
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {};  
+      
+      % draw filtered Fourier transform magnitude
+      \draw[thick,dashed] (-4,0) -- (-1.75,0) -- (-1.75,1) -- (-1.25,1) -- (-1.25,0) -- (-0.5,0) 
+      -- plot[smooth,domain=-0.5:0.5,samples=50] (\x,{1 + cos(2*pi*\x r)}) 
+      -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
+      
+      % draw filtered Fourier transform magnitude
+      \draw[thick] (-4,0) -- (-1.75,0) 
+      -- plot[samples=40,domain=-1.75:-1.25] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
+      -- (-1.25,0) -- (-0.5,0)
+      -- plot[samples=50,domain=-0.5:0.5] (\x,{(1 + cos(2*pi*\x r))*(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
+      -- (0.5,0) -- (1.25,0) 
+      -- plot[samples=40,domain=1.25:1.75] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
+      -- (1.75,0) -- (4,0);
+
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{2} node[pos=0.5,above left] {$2$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Fourier transform $\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with the first order difference equation $c_n = 3 d_n - 2 d_{n-1}$.  Observe that the higher frequency rectangular pulses centered at $f = \pm \tfrac{3}{2}$ are weakened considerably, but the raised cosine pulse at the origin is minimally affected.  The system acts as a low pass filter on this bandlimited signal.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+\end{figure}
+
+\begin{itemize}
+
+\item Periodicity of the spectrum makes it not immediately clear how discrete time systems will be useful as filter
+
+\item However, bandlimited signals!
+
+\item Picture of 1st order discrete time system filtering something?
+
+\item Test with 1st order system filtering high frequency noise from lecture recording
+
+\item better filters that 1st order are not too hard to realise
+
+\item One approach involves mapping analogue filters, IIR filter,  Bilinear transform
+
+\item Do butterworth as an example.  Implement high order butterworth like filter this way.
+
+\item Filter lecture video with this IIR filter
+
+\item Another approach has no zeros, attempt to design impulse response directly, FIR filters, windowing.
+
+\item Filter lecture video with FIR filter.
+
+\item IIR usually computational advantageous.  FIR better if linear phase important.
+
+\end{itemize}
+
+
+\section{The z-transform}
+
+Recall that the transfer function $\lambda H$ of a discrete time system $H$ with impulse response $h$ satisfies
 \[
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_z h.
 \]
@@ -384,15 +513,7 @@ from which it follow that
 That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of $\calZ(f*g)$ is the intersection of the regions of convergence of $\calZ f$ and $\calZ g$.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
-Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  Equivalently the domain of the transfer function $\lambda H$ contains the imaginary axis, that is, the set $\cep \dom_z h$ contains the imaginary axis.  The spectrum of $H$ is
-\[
-\Lambda H(f) = \lambda H (j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n} \qquad f \in \reals.
-\]
-Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  The spectrum is related to the discrete time Fourier transform of $h$ by
-\[
-\calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
-\]
-We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform of a stable discrete time system $H$ and its discrete impulse response $h$,
+Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform of a stable discrete time system $H$ and its discrete impulse response $h$,
 \[
 \lambda H(j2\pi f) = \Lambda H(f) = \calD h(f) = \calZ h(e^{2\pi j P f}).
 \]
@@ -685,104 +806,7 @@ where $h$ is the discrete impulse response of $H$.  The system has two zeros at 
 
 %\begin{comment}
 
-\section{Digital filters}\label{sec:digital-filters}
 
-The spectrum of a stable discrete time system is periodic with period equal to the sample rate $F = \tfrac{1}{P}$.  Because of this periodicity it is not immediately apparent that any useful filters can be constructed from discrete time systems.  For example, periodicity makes it impossible to build a lowpass filter.  However, many signals occuring in practice are approximately bandlimited with some bandwidth $b > 0$ (Section~\ref{sec:bandlimited-signals}).  We will find that it is possible to perform useful filtering operations on bandlimited signals using discrete time systems.  This is most easily achieved when the bandwidth is less than half the sample rate of the system, that is, when $b < \tfrac{F}{2}$.
-
-To see how this works, consider the bandlimited signal $x$ with Fourier transform
-\[
-\calF(x) = \rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2).
-\]
-The Fourier transform is plotted is Figure~\ref{fig:bandlimiteddiscretetimefiltering} (dashed line).  The Fourier transform has a raised cosine pulse centered at the origin and two rectangular pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the raised cosine at the origin and that the two rectangular pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  Because the signal has bandwidth $\tfrac{7}{4}$ the spectrum of this filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  Because of this, a discrete time system with sample rate $F > 2b = \frac{7}{2}$ (and so spectrum with period larger than $\tfrac{7}{2}$) can be configured as a low pass filter.  A discrete time system configured for this purpose is called a low pass~\term{digital filter}.
-
-A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
-\[
-c_n = 3 d_n - 2 d_{n-1}.
-\]
-Let $H$ be the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with this difference equation.  The spectrum of $H$ is
-\[
-\Lambda(H,f) = \frac{e^{\pi f j/2}}{3 e^{\pi f j/2} - 2}.
-\]
-The magnitude spectrum is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (gray).  The magnitude spectrum takes its maximum value $\abs{\Lambda(H,0)} = 1$ at $f$ a multiple of $F = 4$ and minimum value $\abs{\Lambda(H,2)} = \tfrac{1}{5}$ at frequencies $f = (k + \tfrac{1}{2})F$ for $k \in \ints$.  The magnitude spectrum takes the value $\frac{1}{\sqrt{2}}$ at frequences of the form
-\[
-f = 4k + \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 4k + 0.167754.
-\]
-On the interval $[-F/2,F/2]$ this discrete time system acts as a lowpass filter with cuttoff frequency approximately 
-\[
-\frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 0.167754.
-\]
-
-\begin{figure}[tp]
-  \centering
-  \def\sx{1.4}
-  \def\sy{2}
-  \def\P{0.25}
-  \def\F{(1/\P)}
-  \def\a{(2.0/3.0)}
-  \colorlet{lightgray}{black!25}
-  \newcommand{\dplot}[1]{\draw[thick,smooth,samples=200,domain=-4:4] plot function{(1-#1)/sqrt(1 - 2*#1*cos(2*\P*pi*x) + #1*#1)}}
-  \begin{tikzpicture}
-    \begin{scope}[yscale=\sy,xscale=\sx]
-      % draw light gray region for magnitude spectrum of the discrete time system. 
-      \fill[fill=lightgray] (-4,0) -- plot[samples=200,domain=-4:4] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) -- (4,0) -- cycle;
-      
-      % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
-      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
-      \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {};  
-      
-      % draw filtered Fourier transform magnitude
-      \draw[thick,dashed] (-4,0) -- (-1.75,0) -- (-1.75,1) -- (-1.25,1) -- (-1.25,0) -- (-0.5,0) 
-      -- plot[smooth,domain=-0.5:0.5,samples=50] (\x,{1 + cos(2*pi*\x r)}) 
-      -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
-      
-      % draw filtered Fourier transform magnitude
-      \draw[thick] (-4,0) -- (-1.75,0) 
-      -- plot[samples=40,domain=-1.75:-1.25] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
-      -- (-1.25,0) -- (-0.5,0)
-      -- plot[samples=50,domain=-0.5:0.5] (\x,{(1 + cos(2*pi*\x r))*(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
-      -- (0.5,0) -- (1.25,0) 
-      -- plot[samples=40,domain=1.25:1.75] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
-      -- (1.75,0) -- (4,0);
-
-      % add some axis ticks
-    \end{scope}
-    \begin{scope}[xscale=\sx]
-      \vtick{-2.0} node[pos=0.5,below] {$-2$};
-      \vtick{2} node[pos=0.5,below] {$2$};
-    \end{scope}
-    \begin{scope}[yscale=\sy]
-      \htick{2} node[pos=0.5,above left] {$2$};
-    \end{scope}
-  \end{tikzpicture}
-  \caption{Fourier transform $\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with the first order difference equation $c_n = 3 d_n - 2 d_{n-1}$.  Observe that the higher frequency rectangular pulses centered at $f = \pm \tfrac{3}{2}$ are weakened considerably, but the raised cosine pulse at the origin is minimally affected.  The system acts as a low pass filter on this bandlimited signal.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
-\end{figure}
-
-\begin{itemize}
-
-\item Periodicity of the spectrum makes it not immediately clear how discrete time systems will be useful as filter
-
-\item However, bandlimited signals!
-
-\item Picture of 1st order discrete time system filtering something?
-
-\item Test with 1st order system filtering high frequency noise from lecture recording
-
-\item better filters that 1st order are not too hard to realise
-
-\item One approach involves mapping analogue filters, IIR filter,  Bilinear transform
-
-\item Do butterworth as an example.  Implement high order butterworth like filter this way.
-
-\item Filter lecture video with this IIR filter
-
-\item Another approach has no zeros, attempt to design impulse response directly, FIR filters, windowing.
-
-\item Filter lecture video with FIR filter.
-
-\item IIR usually computational advantageous.  FIR better if linear phase important.
-
-\end{itemize}
 
 
 \section{Multirate filters} \label{sec:multirate-filters}

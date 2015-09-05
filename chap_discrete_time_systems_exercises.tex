@@ -4,20 +4,6 @@
 \begin{excersizelist}
 
 
-% \item \label{excer:discrconvassociative} Show that discrete convolution is associative.
-% \begin{solution}
-% Let $f,g,h$ be sequences.  We have
-% \begin{align*}
-% (f*g)*h &= \sum_{m \in \ints} h_{m} (f*g)_{n-m} \\
-% &= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} g_{k} f_{n-m-k} \\
-% &= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} f_{k} g_{n-m-k} \qquad \text{commutivity $f*g=g*f$} \\
-% &= \sum_{m \in \ints} \sum_{k \in \ints} f_{k} h_m g_{n-m-k} \\
-% &= \sum_{k \in \ints} f_{k} \sum_{m \in \ints}  h_m g_{n-k-m} \\
-% &= \sum_{k \in \ints} f_{k} (g*h)_{n-k} \\
-% &= f*(g*h).
-% \end{align*}
-% \end{solution}
-
 \item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
 
 % \item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\zeqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
@@ -174,6 +160,29 @@ Observe that $d_0 = 0$ and that $d_1 = 1$ as a result of $b - a = 1$.
 % \end{solution}
 
 \item \label{exer:roczabssummrel} Let $H$ be a discrete time system with discrete impulse response $h$.  The set $\roc_z h$ is defined as those complex numbers $z = e^{sP}$ such that $s = \cep \dom h$.  Show that $\roc_z h$ is precisely the set of nonzero complex numbers such that the sequence $h_n z^{-n}$ is absolutely summable.
+
+
+\item \label{excer:discrconvassociative} Let $f,g,h$ be complex valued sequences such that 
+\[
+\sum_{m \in \ints} \sum_{k \in \ints} \abs{f_{k} h_m g_{n-m-k}} < \infty.
+\]
+Show that the discrete convolution is associative for these sequences.  That is, show that $(f*g)*h = f*(g*h)$.
+\begin{solution}
+Let $f,g,h$ be sequences.  We have
+\begin{align*}
+((f*g)*h)_n &= \sum_{m \in \ints} h_{m} (f*g)_{n-m} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} g_{k} f_{n-m-k} \\
+&= \sum_{m \in \ints} h_{m} \sum_{k \in \ints} f_{k} g_{n-m-k} \qquad \text{commutivity $f*g=g*f$} \\
+&= \sum_{m \in \ints} \sum_{k \in \ints} f_{k} h_m g_{n-m-k} \\
+\end{align*}
+Under the assumptions stated on $f,g,h$ Fubini's theorem~\cite[Theorem~8.8]{Rudin_real_and_complex_analysis} may be used to justify swapping the order of summation leading to
+\begin{align*}
+((f*g)*h)_n &= \sum_{k \in \ints} \sum_{m \in \ints}  f_{k} h_m g_{n-k-m} \\
+&= \sum_{k \in \ints} f_{k} \sum_{m \in \ints}  h_m g_{n-k-m} \\
+&= \sum_{k \in \ints} f_{k} (g*h)_{n-k} \\
+&= (f*(g*h))_n.
+\end{align*}
+\end{solution}
 
 
 \end{excersizelist}
