@@ -152,16 +152,16 @@ The z-transform of a complex valued sequence plays a role analogous to the Lapla
 
 We now consider some example z-transforms.  Consider first the step sequence $u$.  The region of convergence $\roc_z u$ is all those complex numbers with magnitude greater than one because
 \[
-\sum_{n\in\ints} \abs{u_n z^{-n}} = \sum_{n=0}^\infty \abs{z}^{-n} < \infty
+\sum_{n\in\ints} \abs{u_n z^{-n}} = \sum_{n=0}^\infty \abs{z}^{-n} < \infty \qquad \text{only if $\abs{z} > 1$}.
 \]
-only if $\abs{z} > 1$.  Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  The z-transform of $u$ is
+Graphically this region of convergence is the complex plane with a disc of radius one centered at the origin removed (Figure~\ref{fig:rocexampleztrans1}).  The z-transform of $u$ is
 \[
 \calZ u(z) = \sum_{n \in \ints} u_n z^{-n} = \sum_{n=0}^\infty z^{-n} = \frac{z}{z - 1} \qquad \abs{z} > 1. \qquad \text{(Exercise~\ref{exer:stepseqZtrans})}
 \]
 
-Now consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The region of convergence is all those complex numbers with magnitude greater than $\tfrac{1}{2}$.   The z-transform
+Now consider the sequence with $n$th element $(\tfrac{1}{2})^{n} u_n$.  The region of convergence is all those complex numbers with magnitude greater than $\tfrac{1}{2}$.   The z-transform is
 \[
-\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} (\tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad \abs{z} > \tfrac{1}{2} 
+\calZ\big( (\tfrac{1}{2})^{n} u_n\big) = \sum_{n \in \ints} (\tfrac{1}{2})^{n} u_n z^{-n} = \sum_{n=0}^\infty (2z)^{-n} = \frac{2z}{2z - 1} \qquad \abs{z} > \tfrac{1}{2} .
 \]
 Graphically, the region of convergence is the complex plane with a disc of radius $\tfrac{1}{2}$ removed.  Now consider the sequence with elements 
 \[
@@ -170,15 +170,15 @@ Graphically, the region of convergence is the complex plane with a disc of radiu
 0 & n > 0.
 \end{cases}
 \]
-In this case the region of convergence is all those complex numbers with magnitude less than $\tfrac{3}{2}$ because
+In this case the region of convergence is all those nonzero complex numbers with magnitude less than $\tfrac{3}{2}$ because
 \[
-\sum_{n\in\ints} \abs{ (\tfrac{3}{2})^{n} u_{-n} z^{-n}} = \sum_{n=0}^\infty \abs{\tfrac{2}{3}z}^{n} < \infty
+\sum_{n\in\ints} \abs{ (\tfrac{3}{2})^{n} u_{-n} z^{-n}} = \sum_{n=0}^\infty \abs{\tfrac{2}{3}z}^{n} < \infty \qquad \text{only if $\abs{z} < \tfrac{3}{2}$}.
 \]
-only if $\abs{z} < \tfrac{3}{2}$.  The z-transform is
+The z-transform is
 \[
 \calZ\big( (\tfrac{3}{2})^n u_{-n} \big) = \sum_{n \in \ints} (\tfrac{3}{2})^{n} u_{-n} z^{-n} = \sum_{n=0}^\infty (\tfrac{2}{3} z)^{n} = \frac{3}{3 - 2z} \qquad \abs{z} < \tfrac{3}{2}
 \]
-The region of convergence is an open disc of radius $\frac{3}{2}$ centered at the origin of the complex plane.  The sequence with $n$th element $(\tfrac{1}{2})^{n} u_n + (\frac{3}{2})^{n} u_{-n}$ has z-transform
+The region of convergence is an open disc of radius $\frac{3}{2}$ with the origin removed.  The sequence with $n$th element $(\tfrac{1}{2})^{n} u_n + (\frac{3}{2})^{n} u_{-n}$ has z-transform
 \[
 \calZ\big((\tfrac{1}{2})^{n} u_n + (\tfrac{3}{2})^{n} u_{-n}\big) =  \frac{2z}{2z - 1} + \frac{3}{3 - 2z} \qquad \tfrac{1}{2} < \abs{z} < \tfrac{3}{2}
 \]
