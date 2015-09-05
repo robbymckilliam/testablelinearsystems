@@ -9,8 +9,7 @@ where $h \in \ints \to \complex$ is complex valued sequence.  Such systems are c
 \[
 y_n = \sum_{m \in \ints} h_m x_{n-m}.
 \]
-We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$, sampling at the integers, and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  %In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete time system.  
-We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete time systems that is closely linked with previous chapters (where what are often called continuous-time systems have been studied).  Specifically, the complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This more general notion of a discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
+We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$ and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete time system.  We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete time systems that is closely linked with previous chapters where what are often called \emph{continuous-time} systems have been studied.  Specifically, the complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This more general notion of a discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
 
 Discrete time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
@@ -46,7 +45,7 @@ and so $H$ is a discrete time system with domain $\dom_z f \cap \dom_z g$ and di
 
 Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  Denote by $\dom_z f\,g$ the set of signals $x$ such that
 \[
-\sum_{m \in \ints} \sum_{k \in \ints} \abs{f_m g_k x(t - m - k)} < \infty.
+\sum_{m \in \ints} \sum_{k \in \ints} \abs{f_m g_k x(t - m - k)} < \infty \qquad \text{for all $t \in \reals$}. 
 \]  
 We will find $\dom_z f\,g$ to be a convenient domain for the system $H = FG$.  The response of $H$ to $x \in \dom_z f\,g$ is %BLERG THIS REQUIRES THE COMPOSITION TO EXIST, again defining domains appropriately is needed!
 \begin{align*}
@@ -66,7 +65,7 @@ where $h$ is the sequence with elements given by
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  The system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_z f\,g$ unless otherwise stated.  In what follows we will often use the term \term{convolution} and \term{impulse response} rather than the lengthier terms \term{discrete convolution} and \term{discrete impulse response} whenever there is no chance for confusion.
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  We have found that the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_z f\,g$ unless otherwise stated.  In what follows we will often use the term convolution and impulse response rather than the lengthier terms discrete convolution and discrete impulse response whenever there is no chance for confusion.
 
 % Consider the convolution $u * u$ of the step sequence~\eqref{eq:stepsequence} with itself.  The $n$th element of the convolution is
 % \[
@@ -117,7 +116,7 @@ Recall that complex exponential signals are eigenfunctions of linear shift-invar
  \[
 He^{st} = \lambda H(s) e^{st}
 \]
-where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that $e^{st} \in X$ and this set is denoted by $\cep X$.
+where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that the signal $e^{st} \in X$ and this set is denoted by $\cep X$.
 
 Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom_z h$.  The response of $H$ to $e^{st} \in \dom_z h$ satifies
 \begin{align*}
@@ -127,11 +126,11 @@ H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
 \end{align*}
 It follows that the transfer function of $H$ satisfies
 \[
-\lambda H(s) = \sum_{n \in \ints} h_m e^{-sPn} \qquad s \in \cep \dom_z h.
+\lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_z h.
 \]
 Putting $z = e^{Ps}$ we have
 \[
-\lambda(H, \tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}
+\lambda H(\tfrac{1}{P} \log z) = \sum_{n \in \ints} h_n z^{-n}
 \]
 that holds for complex numbers $z = e^{sP}$ such that $s \in \cep\dom_z h$.  Denote this set by $\roc_z h$, that is,
 \[
@@ -139,15 +138,17 @@ that holds for complex numbers $z = e^{sP}$ such that $s \in \cep\dom_z h$.  Den
 \]
 The right hand side of the above expression is called the \term{z-transform} of the sequence $h$ and the set $\roc_z h$ is called the region of convergence of the z-transform.  
 
+%TODO include description of mapping $z = e^{sP}$ with figure.  Map real part of $s$ to magnitude and imaginary part to angle.  Origin is removed.
+
 Let $c$ be a complex valued sequence.  The z-transform of $c$ is denoted by $\calZ c$.  It is the complex valued function of $\roc_z c$ satisfying
 \[
 \calZ c(z) = \sum_{n \in \ints} c_n z^{-n} \qquad z \in \roc_z c.
 \]
-The domain of $\calZ c$ is the region of convergence $\roc_z c$.  It happens that the region of convergence $\roc_z c$ is precisely the set of complex numbers $z$ such that the sequence $c_n z^{-n}$ is absolutely summable, that is, such that
+The domain of $\calZ c$ is the region of convergence $\roc_z c$.  It happens that the region of convergence $\roc_z c$ is precisely the set of nonzero complex numbers such that the sequence $c_n z^{-n}$ is absolutely summable, that is, those $z \neq 0$ such that
 \[
-\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty \qquad \text{if and only if $z \in \roc_z c$}.
+\sum_{n \in \ints} \abs{c_n z^{-n}} < \infty. \qquad (Exercise~\ref{exer:roczabssummrel})
 \]
-The z-transform of a complex valued sequence plays a role analogous to the Laplace transform of a signal.  Recall that the region of convergence of the Laplace transform was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform is either a circular disk, an annular region in the complex plane, the complex plane with a disc at the origin removed, the entire complex plane, or the empty set.
+The z-transform of a complex valued sequence plays a role analogous to the Laplace transform of a signal.  Recall that the region of convergence of the Laplace transform was either a half plane, a vertical strip, the entire complex plane, or the empty set (Section~\ref{sec:laplace-transform}).  We will find that the region of convergence of the z-transform is either a circular disk with the origin removed, an annular region in the complex plane, the complex plane with an origin centered disc removed, the entire complex plane, or the empty set.
 
 We now consider some example z-transforms.  Consider first the step sequence $u$.  The region of convergence $\roc_z u$ is all those complex numbers with magnitude greater than one because
 \[
