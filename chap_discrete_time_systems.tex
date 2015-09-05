@@ -182,7 +182,7 @@ The region of convergence is an open disc of radius $\frac{3}{2}$ with the origi
 \[
 \calZ\big((\tfrac{1}{2})^{n} u_n + (\tfrac{3}{2})^{n} u_{-n}\big) =  \frac{2z}{2z - 1} + \frac{3}{3 - 2z} \qquad \tfrac{1}{2} < \abs{z} < \tfrac{3}{2}
 \]
-with region of convergence all those complex numbers such that $\tfrac{1}{2} < \abs{z} < \tfrac{3}{2}$.  The region of convergence is an annulus in the complex plane with inner radius $\tfrac{1}{2}$ and outer radius $\tfrac{3}{2}$.
+with region of convergence all those complex numbers such that $\tfrac{1}{2} < \abs{z} < \tfrac{3}{2}$.  The region of convergence is an annulus (a doughnut) in the complex plane with inner radius $\tfrac{1}{2}$ and outer radius $\tfrac{3}{2}$.
 
 The delta sequence $\delta$ with elements
 \[
@@ -195,7 +195,7 @@ has z-transform
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
-The region of convergence is the entire complex plane, that is, $\roc_z \delta = \complex$.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  Because $\sum_{n \in \ints} \abs{z}^{-n}$ does not converge for any $z \in \complex$ the region of convergence $\roc_z \onebf$ is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
+The region of convergence is the entire complex plane with the origin removed, that is, $\roc_z \delta = \complex \\ 0$.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  Because $\sum_{n \in \ints} \abs{z}^{-n}$ does not converge for any $z \in \complex$ the region of convergence $\roc_z \onebf$ is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
 
 {
 \def\minn{-4}
@@ -262,7 +262,7 @@ The region of convergence is the entire complex plane, that is, $\roc_z \delta =
   %\htick{8*\scaley} node[pos=0.5,left] {$8$};
   %\htick{16*\scaley} node[pos=0.5,left] {$16$};
 \end{tikzpicture}
-\caption{Real valued sequences.  The top left plot show the step sequence $u$.} \label{fig:realvaluedsequencestepetc}
+\caption{Real valued sequences.  The top left plot shows the step sequence $u$.} \label{fig:realvaluedsequencestepetc}
 \end{figure}
 }
 
@@ -310,7 +310,7 @@ The region of convergence is the entire complex plane, that is, $\roc_z \delta =
       \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Regions of convergence (unshaded) for the step sequence $u$ (top left), the sequence $(\tfrac{1}{2})^{n}u_n$ (top right), the sequence $(\tfrac{3}{2})^{n} u_{-n}$ (bottom left), and the sequence $(\tfrac{1}{2})^{n}u_n + (\tfrac{3}{2})^{n} u_{-n}$ (bottom right).  The unit circle is indicated by the dashed circle.  The region of convergence takes the form of the complex plane with a disc at the origin removed (top), a disc at the origin (bottom left), an annulus (bottom right), the entire complex plane, or the empty set. }\label{fig:rocexampleztrans1}
+  \caption{Regions of convergence of the z-transforms of (unshaded) the step sequence $u$ (top left), the sequence $(\tfrac{1}{2})^{n}u_n$ (top right), the sequence $(\tfrac{3}{2})^{n} u_{-n}$ (bottom left), and the sequence $(\tfrac{1}{2})^{n}u_n + (\tfrac{3}{2})^{n} u_{-n}$ (bottom right).  The unit circle is indicated by the dashed circle.  The region of convergence takes the form of the complex plane with a disc an origin centered disc removed (top), a disc with the origin removed (bottom left), an annulus (bottom right), the entire complex plane, or the empty set. }\label{fig:rocexampleztrans1}
 \end{figure}
 }
 
@@ -369,7 +369,7 @@ This is called the \term{shifting} property of the z-transform.   % The time-shi
 % \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
 % \]
 
-Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Let $H x = F G x$ be the discrete time system formed by the composition $F$ and $G$ and with domain $\dom f\,g$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
+The z-transform obeys a convolution property analogous to that of the Laplace transform.  Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Let $H x = F G x$ be the discrete time system formed by the composition $F$ and $G$ and with domain $\dom_z f\,g$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
 \[
 \lambda H(s)  = \lambda G(s) \lambda F(s) \qquad e^{sP} \in \roc_z f \cap \roc_z g.
 \]
@@ -384,11 +384,11 @@ from which it follow that
 That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of $\calZ(f*g)$ is the intersection of the regions of convergence of $\calZ f$ and $\calZ g$.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
-Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  The spectrum of $H$ is
+Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  Equivalently the domain of the transfer function $\lambda H$ contains the imaginary axis, that is, the set $\cep \dom_z h$ contains the imaginary axis.  The spectrum of $H$ is
 \[
 \Lambda H(f) = \lambda H (j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n} \qquad f \in \reals.
 \]
-The spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  The spectrum is related to the discrete time Fourier transform of $h$ by
+Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
 \calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
