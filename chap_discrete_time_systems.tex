@@ -140,7 +140,11 @@ It follows that the transfer function of $H$ satisfies
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_z h.
 \]
 
-Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Equivalently the domain of the transfer function $\lambda H$ contains the imaginary axis, that is, the set $\cep \dom_z h$ contains the imaginary axis.  The spectrum of $H$ is
+Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  The signal $e^{2\pi j f t} \in \dom_z h$ for all $f \in \reals$ since
+\[
+\sum_{m \in \ints} \abs{h_m e^{2\pi j f (t - m)}} = \sum_{m \in \ints} \abs{h_m} < \infty \qquad \text{for all $t \in \reals$}.
+\]
+Equivalently, the domain of the transfer function $\lambda H$ contains the imaginary axis, that is, the set $\cep \dom_z h$ contains the imaginary axis.  The spectrum of $H$ is
 \[
 \Lambda H(f) = \lambda H (j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n} \qquad f \in \reals.
 \]
@@ -148,6 +152,7 @@ Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to 
 \[
 \calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
+%TODO. \calD h is defined even when h is square integrable and not necessary abs integrable, i.e., sinc functions etc.  Some example where the order summation is taken is important would be a good idea. 
 
 TODO: Examples, rect, sinc, truncated sinc, truncated rrc. 
 
