@@ -171,7 +171,7 @@ The figure below plots $\sinc^2$ (dashed) and the bounding function $g$.
 
 \end{solution}
 
-\item \label{exer:magspecbutterworth} Show the the magnitude spectrim of the normalised Butterworth filter $B_m$ satisfies
+\item \label{exer:magspecbutterworth} Show the the magnitude spectrum of the normalised Butterworth filter $B_m$ satisfies
 \[
 \abs{\Lambda B_m(f)} = \sqrt{\frac{1}{f^{2m} + 1}}.
 \]
@@ -571,7 +571,7 @@ as required.
 
 
 
-\item \label{exer:inversedft} Let $d = \calD_N(c)$ be the discrete Fourier transform of the sequence $c$.  Show that
+\item \label{exer:inversedft} Let $d = \calD_N c$ be the discrete Fourier transform of the sequence $c$.  Show that
 \[
 c_n = \frac{1}{N}\sum_{k = 0}^{N-1} d_k e^{j 2\pi n k / N} \qquad n = 0, \dots, N-1.
 \]
@@ -717,130 +717,41 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
 \end{center}
 
 
-
 \end{solution}
 
 
-%BLERG. I'm pretty sure the exercise below requires the completeness of L^2, that probably too hard!
+\item Given~\eqref{eq:parseval} show that~\eqref{eq:parsevalxy} holds.
+\begin{solution}
+\newcommand{\dotprod}[2]{\langle #1, #2 \rangle}
+From~\eqref{eq:parseval} we have that
+\[
+\|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt = \int_{-\infty}^{\infty} \abs{\hat{x}(f)}^2 dt = \|\hat{x}\|_2^2.
+\]
+Denote by
+\[
+\dotprod{x}{y} = \int_{-\infty}^{\infty} x(t)y^*(t) dt
+\]
+typically referred to as the \term{inner product} of signals $x$ and $y$.  We have
+\[
+\|x\|_2^2 = \dotprod{x}{x} =  \|\hat{x}\|_2^2 =  \dotprod{\hat{x}}{\hat{x}}.
+\]
+Replacing $x$ with $x + y$ we have
+\[
+\|x + y\|^2 = \|x\|^2 + 2\dotprod{x}{y} + \|y\|^2 = \| \hat{x} + \hat{y} \|^2 =  \|\hat{x}\|^2 + 2\dotprod{\hat{x}}{\hat{y}} + \|\hat{y}\|^2.
+\]
+And since $\|x\|_2^2 = \|hat{x}\|_2^2$ and $\|y\|_2^2 = \|\hat{y}\|_2^2$ as a result of~\eqref{eq:parseval} we find that
+\[
+\dotprod{x}{y} = \dotprod{\hat{x}}{\hat{y}}
+\]
+which is precisely~\eqref{eq:parsevalxy}.
+\end{solution}
+
+%BLERG. I'm pretty sure the exercise below requires the completeness of L^2, that's probably too hard!
 %\item \label{excer:sqrintseqtosqrintinterp} Let $\{x_n\}$ be a square summable sequence.  Show that the interpolated signal $x(t) = \sum_{n \in \ints} x_n \sinc(R t - n)$ where $R$ is a positive real number is square integrable. 
 
 
 \end{excersizelist}
 
-
-% \chapter{Fourier series}
-
-% BLERG: Laplace transform and Fourier transform does not exist for period signals.
-
-% The Laplace transform and the Fourier transform do not exist for periodic signals.  In this case, the \term{Fourier series} can be used.  Let $x$ be a periodic signal with period $T$.  The $k$th \term{Fourier coefficient} of $x$ is
-% \[
-% \calF_s(x,k) = \int_{-T/2}^{T/2} x(t) e^{-j2\pi k t/T} dt.
-% \]
-% Thus, $\calF_s(x)$ is a function mapping each integer to a real or complex number, i.e., $\calF_s(x)$ is a complex valued \term{sequence}.  We write either $\calF_s(x,k)$ or $\calF_s(x)(k)$ to denote $\calF_s(x)$ evaluated at $k$.  As it was with the Fourier transform it will be convenient to let $\hat{x} = \calF_s(x)$ denote the sequence of Fourier coefficients of the periodic signal $x$.  The $k$th coefficient will be denoted by either $\hat{x}_k$ or $\hat{x}(k)$.  
-
-% Let $x$ be a signal with period $T$.  We will say will say that $x$ is \term{square integrable on its period} if 
-% \[
-% \int_{-T/2}^{T/2} \abs{x(t)}^2 dt < \infty.
-% \]
-% If $x$ is square integrable on its period and has Fourier coefficients $\hat{x} = F_s(x)$ then $x$ can be recovered from its \term{Fourier series}
-% \[
-% x(t) = \sum_{k\in\ints} \hat{x}(k) e^{2\pi j k t} %a.e. 
-% \]
-% %BLERG: This is only true almost everywhere, all this stuff gets rather fiddly!
-
-% For example, consider the signal 
-% \[
-% x(t) = 1 + \cos( \pi t) + \sin(3 \pi t)
-% \]
-% that is periodic with period $T = 2$.  The Fourier coefficients are (Exercise~\ref{eq:fouriercoefficients1})
-% \[
-% \hat{x}(k) = \begin{cases}
-
-% \end{cases}
-% \]
-
-
-% \section{Discrete signals (sequences)}
-
-
-
-% \section{Properties of the Fourier series}
-
-
-
-
-% \section{Poisson summation}
-
-
-
-% \section{Exercises}
-
-% \begin{excersizelist}
-
-
-% \item \label{eq:fouriercoefficients1} Find the Fourier coefficients of the signal $x(t) = 1 + \cos( \pi t) + \sin(3 \pi t)$
-% \begin{solution}
-% It is easier to work with the \term{analytic signal}
-% \[
-% x_a(t) = 1 + e^{j \pi t} - j e^{j 3\pi t}
-% \]
-% that has the property $x = \Re(x_a) = x_a + x_a^*$.  Now the Fourier coefficients of $x_a^*$ are related to the Fourier coefficients of $x_a$ by
-% \begin{align*}
-% \calF_s(x_a^*,k) &= \int_{-T/2}^{T/2} x_a(t)^* e^{-j2\pi k t/T} dt \\
-% &= \int_{-T/2}^{T/2} \big( x_a(t) e^{j2\pi k t/T} \big) dt \\
-% &= \big(  \int_{-T/2}^{T/2} x_a(t) e^{j2\pi k t/T} dt \big)^* \\
-% &= \calF_s(x_a,-k)^* = \hat{x}_a(k).
-% \end{align*}
-% Now, since the period $T = 2$, we have
-% \[
-% \calF_s(x_a,k) = \int_{-1}^{1} x_a(t) e^{-j2\pi k t/T} dt = a_k + b_k + c_k
-% \]
-% where 
-% \[
-% a_k = \int_{-T/2}^{T/2} e^{-j2\pi k t/T} dt = T \sinc(k) = 2 \delta(k),
-% \]
-% \begin{align*}
-% b_k &= \int_{-1}^{1} e^{j \pi t} e^{-j\pi k t} dt \\
-% &= \int_{-1}^{1} e^{-j\pi (k-1) t} dt = 2 \delta(k-1)
-% \end{align*}
-% and similarly
-% \[
-% c_k = -2j \delta(k-3)
-% \]
-% Here $\delta$ denotes the dirac delta sequence with the property $\delta(k) = 1$ when $k=0$ and zero otherwise.  We now have
-% \begin{align*}
-% \hat{x}(k) &= \hat{x}_a(k) + \hat{x}_a(k)^* \\
-% &= 2 \delta(k) + 2\delta(k-1) -2j \delta(k-3) + 2 \delta(-k) + 2\delta(-k-1) + 2j \delta(-k-3) \\
-% &= 2\big( 2\delta(k) + \delta(k-1) - j \delta(k-3) + \delta(k+1) + j \delta(k+3) \big) \\
-% \end{align*}
-% where we use the fact that $\delta(k) = \delta(-k)$, that is, the delta sequence is even.
-% \end{solution}
-
-
-% \item Let $x$ be an absolutely integrable signal and let $x_p(t) = \sum_{m\in\ints} x(t - m)$ be its periodised version.  Show that $x_p$ is a periodic signal satisfying $\int_{-1/2}^{1/2} \abs{ x_p(t) } dt < \infty$.
-% \begin{solution}
-% We have
-% \begin{align*}
-% \int_{-1/2}^{1/2} \abs{ x_p(t) } dt &= \int_{-1/2}^{1/2} \abs{ \sum_{m\in\ints} x(t-m) } dt \\
-% &\leq \int_{-1/2}^{1/2} \sum_{m\in\ints} \abs{  x(t-m) } dt \\
-% &= \sum_{m\in\ints} \int_{-1/2}^{1/2} \abs{  x(t-m) } dt \\
-% &= \sum_{m\in\ints} \int_{-1/2-m}^{1/2-m} \abs{  x(\tau) } d\tau & \text{(change variable $\tau = t - m$)}\\
-% &= \int_{-\infty}^{\infty} \abs{  x(\tau) } d\tau < \infty
-% \end{align*}
-% because $x$ is absolutely integrable.
-% \end{solution}
-
-
-
-% \end{excersizelist}
-
- 
-
-% \chapter{Bandlimited signals}
-
-% We have so far shown that a number of electrical and mechanical devices can be modelled using linear differential equations with constant coefficient.  These equations themselves can be using to describe linear time invariant systems.  The transfer function of these systems can be found be use of the Laplace transform and this has lead to useful methods for analysing the behaviour electrial and mechanical systems.  One particular linear time invariant system has so far been absent in our analysis. This is the time shifter $T_\tau$ with non zero time shift $\tau \neq 0$.  These systems describe pure delays or advances in time of a signal.  As we will see will see in Section~\ref{cha:discr-time-syst} some very useful systems can be constructed by combinations of time shifters.  The most convenient method for implementing these systems is by use of a computer or~\term{digital signal processor}. To do this we first need a way of representing signals inside a computer.  There are many potential ways of doing this, but we will focus on one common practical approach for representing~\term{bandlimited signals}.  We first must introduce the properties of real and complex valued~\term{sequences}.
-
-%\begin{comment}
 
 
 
