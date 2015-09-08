@@ -150,12 +150,11 @@ Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that
 \|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt = \int_{-\infty}^{\infty} \abs{\hat{x}(f)}^2 dt = \|\hat{x}\|_2^2.
 \end{equation}
 These results are known as the \term{Plancherel theorem}~\cite[Th.~9.13]{Rudin_real_and_complex_analysis}.  The equality of energies in~\eqref{eq:parseval} is often called~\term{Parseval's identity}.  For our purposes it will suffice to remember only that the Fourier transform of the $\sinc$ function is the rectangular pulse $\rect$.
-  
-A result more general than~\eqref{eq:parseval} holds.  If $x$ and $y$ are square integrable signals with Fourier transforms  $\hat{x}$ and $\hat{y}$, then
+If $x$ and $y$ are square integrable signals with Fourier transforms $\hat{x}$ and $\hat{y}$, then a consequence of~\eqref{eq:parseval} is
 \begin{equation} \label{eq:parsevalxy}
-\int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt
+\int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt \qquad \text{(Exercise~\ref{})}
 \end{equation}
-where the superscript $^*$ denotes the complex cojugate.  One obtains~\eqref{eq:parseval} by putting $y = x$ in~\eqref{eq:parsevalxy}. This more general result often also goes by the name of Parseval's identity.
+where the superscript $^*$ denotes the complex cojugate. This result often also goes by the name of Parseval's identity.
 
 %One can show that properties of the Fourier transform, such as the differentiation property, and the convolution theorem apply to the sinc function just as they do to absolutely integrable signals (Exercise~\ref{}).
 
@@ -829,13 +828,10 @@ It happens that bandlimited signals are never finite.  We can reasonably suppose
 % has bandwidth $b$ because the signals $\sinc(2bt - n)$ have bandwidth $b$.  
 
 A surprising result is that every square integrable bandlimited signal $x$ with bandwidth $b$ can be written as a sum of time-scaled and time-shifted $\sinc$ functions, that is, in the form
-% \begin{equation}\label{eq:sincinterformula}
-%  x(t) = \lim_{N\to\infty}\sum_{n = -N}^N c_n \sinc(F t - n) \qquad a.e.
-%  \end{equation}
 \begin{equation}\label{eq:sincinterformula}
  x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
  \end{equation}
-%TODO: This really needs to be a principal value type sum.  Needs some nice examples showing that the order of summation matters.
+%This sum is well defined since for fixed t the inside is the product of two square integrable sequences.
 where $c$ is a square integrable complex valued sequence and $F = 2b$.  This is a consequence of a property of the space of square integrable signals $L_2$ called \term{completeness}~\cite[Theorem~3.11]{Rudin_real_and_complex_analysis}.  This property is sometimes also called the \term{Riesz-Fischer theorem}~\cite[page~91]{Rudin_real_and_complex_analysis}.  % If it happens that the sequence $c$ is also absolutely integrable then the order in which the terms in~\eqref{eq:sincinterformula} are summed does not matter and the convergence  
 % \[
 % x(t) = \sum_{n \in \ints} c_n \sinc(F t - n) \qquad a.e.
@@ -961,9 +957,9 @@ where
 \[
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \]
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and infinite summation in~\eqref{eq:interchangefoursummation} can be justified using the completeness of $L_2$.  
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  %The interchange of Fourier transformation and infinite summation in~\eqref{eq:interchangefoursummation} can be justified using the completeness of $L_2$.  
 %TODO Introduce completeness in an advanced section?  I still don't really like how the domains are incorporated at the moment.  It might be better to just state
-%results and when they hold.  Certainly definitions like stability etc only really make sense it you set the domain in advance though?  And things like sin(x(t)) are/are not stable depending on the domain. This is tricky.
+%results and when they hold.  Certainly definitions like stability etc only really make sense it you set the domain in advance though?
 We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
 
 The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
