@@ -739,12 +739,78 @@ Replacing $x$ with $x + y$ we have
 \[
 \|x + y\|^2 = \|x\|^2 + 2\dotprod{x}{y} + \|y\|^2 = \| \hat{x} + \hat{y} \|^2 =  \|\hat{x}\|^2 + 2\dotprod{\hat{x}}{\hat{y}} + \|\hat{y}\|^2.
 \]
-And since $\|x\|_2^2 = \|hat{x}\|_2^2$ and $\|y\|_2^2 = \|\hat{y}\|_2^2$ as a result of~\eqref{eq:parseval} we find that
+And since $\|x\|_2^2 = \|\hat{x}\|_2^2$ and $\|y\|_2^2 = \|\hat{y}\|_2^2$ as a result of~\eqref{eq:parseval} we find that
 \[
 \dotprod{x}{y} = \dotprod{\hat{x}}{\hat{y}}
 \]
 which is precisely~\eqref{eq:parsevalxy}.
 \end{solution}
+
+\harditem \label{exer:ftdftswapsummationldct}Let $c$ be an absolutely summable sequence.  Show that 
+\[
+\calF \sum_{n \in \ints} c_n \sinc(t-n) = \sum_{n \in \ints} c_n \calF (\sinc(t-n)).
+\]
+%TODO.  Finish writting this solution.
+%\begin{solution}
+% We require Lebesgue's dominated convergence theorem \cite[]{Rudin_real_and_complex_analysis}.  First write
+% \[
+% \calF \big( \sum_{n \in \ints} c_n \sinc(t-n) \big) (f) = \lim_{T \to \infty} \int_{-T}^T S(f,t) dt
+% \]
+% where 
+% \[
+% S(f,t) = \sum_{n \in \ints} c_n \sinc(t-n) e^{-2\pi j t f}.
+% \]
+% and define the partial sum
+% \[
+% S_N(f,t) = \sum_{n \in -N}^N c_n \sinc(t-n) e^{-2\pi j t f}.
+% \]
+% We have
+% \begin{align*}
+% \abs{S(f,t) - S_N(f,t)} &= \abs{\sum_{n = -\infty}^{-N-1} c_n \sinc(t-n) e^{-2\pi j t f} + \sum_{n = N+1}^{\infty} c_n \sinc(t-n) e^{-2\pi j t f}} \\
+% &\leq \sum_{n = -\infty}^{-N-1} \abs{c_n} + \sum_{n = N+1}^{\infty} \abs{c_n}
+% \end{align*}
+% where we use that $\abs{\sinc(t)} <  1$.  This converges to zero as $N \to \infty$because $c$ is absolutely summable.  This convergence occurs independently of $f$ and $t$.  It follows that $S_N(f,t)$ converges to $S(f,t)$ uniformly (and so also pointwise) in both $f$ and $t$, that is,
+% \[
+% \sup_{f,t \in \reals}\abs{S(f,t) - S_N(f,t)} \to 0 \qquad \text{as $N \to \infty$}.
+% \]
+% Also
+% \[
+% \abs{S_N(f,t)} \leq \sum_{n \in -N}^N \abs{c_n T_n\sinc(t) e^{-2\pi j t f}} = \sum_{n \in -N}^N \abs{c_n} \leq \|c\|_1 < \infty.
+% \]
+% for all positive integers $N$ and real numbers $f$ and $t$.  Now define the constant signal $g(t) = \|c\|_1$  We have $\abs{S_N(f,t)} \leq g(t)$ and that $\int_{-T}^T g(t) dt = 2T\|c\|_1 < \infty$ and so $g(t)$ is Lebesgue integrable on the interval $[-T,T]$.
+
+% Lebesgue's dominated convergence theorem now implies that
+% \begin{equation}\label{eq:LebeguesDCT1}
+% \lim_{N\to\infty} \int_{-T}^T S_N(f,t) dt  = \int_{-T}^T S(f,t) dt.
+% \end{equation}
+% Since
+% \[
+% \int_{-T}^T S_N(f,t) dt = \int_{-T}^T \sum_{n = -N}^N c_n \sinc(t-n) e^{-2\pi j t f} dt = \sum_{n = -N}^N c_n \int_{-T}^T \sinc(t-n) e^{-2\pi j t f} dt
+% \]
+% and so, from~\eqref{eq:LebeguesDCT1} we have
+% \[
+% \lim_{N\to\infty} \sum_{n = -N}^N c_n \int_{-T}^T \sinc(t-n) e^{-2\pi j t f} dt = 
+% \]
+% From this it can be shows that $S_N(t)$ converges uniformly to 
+%  concentrate on the inner integral
+% \[
+% \int_{-T}^T \sum_{n \in \ints} c_n T_n\sinc(t) e^{-2\pi j t f} dt = 
+% \]
+%\end{solution}
+
+
+\harditem \label{exer:ftdftswapsummationldct}Let $c$ be a square summable sequence and let  
+\[
+x(t) = \sum_{n \in \ints} c_n \sinc(t - n)
+\]
+be the bandlimited signal with samples $x(n) = c_n$.  Show that 
+\[
+\calF x = \lim_{N \to \infty} \sum_{n = -N}^N c_n  \calF\big(\sinc(t - n)\big) \;\;\; \text{a.e.}
+\]
+Find an example where equality does not hold pointwise.
+% \begin{solution}
+%TODO.  Use completeness
+% \end{solution}
 
 %BLERG. I'm pretty sure the exercise below requires the completeness of L^2, that's probably too hard!
 %\item \label{excer:sqrintseqtosqrintinterp} Let $\{x_n\}$ be a square summable sequence.  Show that the interpolated signal $x(t) = \sum_{n \in \ints} x_n \sinc(R t - n)$ where $R$ is a positive real number is square integrable. 

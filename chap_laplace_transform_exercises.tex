@@ -7,7 +7,7 @@
 \[
 x(t) = e^{-2t} u(t) + e^{t} u(-t)
 \]
-where $u(t)$ is the step function.  Find the Laplace transform of $x(t)$ and the corresponding region of convergence (ROC).  Sketch the region of convergence on the complex plane.
+where $u(t)$ is the step function.  Find the Laplace transform of $x(t)$ and the corresponding region of convergence.  Sketch the region of convergence on the complex plane.
 \begin{solution}
 \begin{center}
 \begin{tikzpicture}[samples=200]
@@ -40,7 +40,7 @@ Thus, the Laplace transform of $e^{-2t} u(t) + e^{t} u(-t)$ is
 \[
 \calL(e^{-2t} u(t) + e^{t} u(-t), s) = \frac{1}{s+2} - \frac{1}{s-1}, \qquad -2 < \Re(s) < 1
 \]
-and the region of convergence (ROC) is the subset of the complex plane satisfying $-2 < \Re(s) < 1$.  The unshaded region in the plot below depicts the ROC.
+and the region of convergence is the subset of the complex plane satisfying $-2 < \Re(s) < 1$.  The unshaded region in the plot below depicts the ROC.
 
 \begin{center}
 \begin{tikzpicture}
@@ -162,9 +162,11 @@ and unravelling this recursion gives
 \end{solution}
 
 
-\item What is the transfer function of the integrator system $I_\infty$ and what is its region of convergence? 
+\item What is the transfer function of the integrator system $I_\infty$?  What is the domain of this transfer function? 
 \begin{solution}
-We have
+We can do this in two ways.  First by obtaining the transfer function directly and second by using the fact that the impulse response of $I_\infty$ is the step signal $u$ (Section~\zref{sec:conv-regul-syst}).
+
+Recall from Section~\zref{sec:some-import-syst} that by default the domain of $I_\infty$ is the set of locally integrable signals $x$ for which the integral $\int_{-\infty}^0 \abs{x(t)} dt$.  This set of precisley $\dom u$ (see also Exercise~\ref{exer:domuislcoalinintneg}).  Observe first that $e^{st} \in \dom u$ if and only if the real part of $s$ is nonegative.  Thus, the domain of the transfer function $\lambda I_{\infty}$ is the set of complex numbers $s$ with $\Re s > 0$.  The response of $I_\infty$ to $e^{st}$ is
 \[
 I_\infty(e^{st}) = \int_{-\infty}^t e^{s\tau} d\tau = \frac{e^{st}}{s} - \lim_{t\to -\infty}\frac{e^{st}}{s}
 \]
@@ -172,7 +174,17 @@ and the limit exists only when $\Re{s} > 0$ and in this case it is zero.  So
 \[
 I_\infty(e^{st}) = \frac{1}{s} e^{st} \qquad \Re{s} > 0
 \]
-and $\lambda(I_\infty) = \tfrac{1}{s}$.
+and $\lambda I_\infty(s) = \tfrac{1}{s}$.
+
+The second approach is to use that $\lambda H = \calL u$.  We have, from Section~\ref{sec:regions-convergence}, that that the Laplace transform of the signal $e^{\alpha t} u(t)$ takes the form
+\[
+\calL(e^{ \alpha t}u(t)) = \frac{1}{s-\alpha} \qquad \Re s > \Re \alpha.
+\]
+Setting $\alpha = 0$ we find that
+\[
+\calL u(s) = \lambda I_\infty(s) = \frac{1}{s} \qquad \Re s > 0
+\]
+as before.
 \end{solution}
 
 
@@ -242,11 +254,11 @@ as required.
 \end{solution}
 
 
-\item Let
+\item Let $y$ be a signal with Laplace transform taking the form
 \[
 \calL y(s) = \frac{2s + 1}{s^2 + s - 2}
 \]
-be the Laplace transform of a signal $y$.  By partial fractions, or otherwise, find all possible signals $y$ and their regions of convergence. 
+By partial fractions, or otherwise, find all possible signals $y$ with this Laplace transform and the corresponding region of convergence. 
 \begin{solution}
 Factorise the polynomial on the denominator
 \[
