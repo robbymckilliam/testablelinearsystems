@@ -33,11 +33,11 @@ that is, the spectrum of a stable regular system is the Fourier transform of its
  \end{equation}
 when the signals $x$ and $y$ are absolutely integrable.  In words: the Fourier transform of a convolution of signals is the multiplication of the Fourier transforms of those signals.  The convolution of two absolutely integrable signals is always absolutely integrable and so there is no need to include the assumption that $x*y$ is absolutely integrable (Exercises~\ref{excer:convabsisabs}).
 
-It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with spectrum $\Lambda H$ and if $x$ is a signal with Fourier transform $\calF x$, then the signal $y = H x$ has Fourier transform
+It follows from~\eqref{eq:transferLaplcetheorem} that if $H$ is a regular system with impulse response $h$ and spectrum $\Lambda H = \calL h$ and if $x \in \dom h$ is a signal with Fourier transform $\calF x$, then the signal $H x$ has Fourier transform
 \[
-\calF y = \Lambda H \calF x.
+\calF H x = \Lambda H \, \calF x,
 \]
-This property also holds for the shifter $T_\tau$ (Exercise~\ref{exer:laplacetranstimeshift}) and it holds for the differentiator $D$ under the added assumption that $\lim_{t \to \infty}x(t) = 0$ and $\lim_{t \to -\infty} x(t) = 0$ (Exercise~\ref{exer:laplacetransdiffproperty}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
+that is, the Fourier transform of $Hx$ is the multiplication of the transfer function of the system $H$ and the Fourier transform of the input signal $x$.  This property also holds for the shifter $T_\tau$ (Exercise~\ref{exer:laplacetranstimeshift}) and it holds for the differentiator $D$ under the added assumption that $\lim_{t \to \infty}x(t) = 0$ and $\lim_{t \to -\infty} x(t) = 0$ (Exercise~\ref{exer:laplacetransdiffproperty}).  From~\eqref{eq:timeshiftertransferfunction} and~\eqref{eq:lambdadifferentiator} the spectrum of $T_\tau$ and the $k$th differentiator $D^k$ satisfy 
 %BLERG, it doesn't hold for the differentiator system all the time, but for certain signals, like those of rapid decent it does
 \[
 \Lambda T_\tau = e^{-j2\pi f \tau}, \qquad \Lambda D^k = (j2\pi f)^k
@@ -68,15 +68,15 @@ and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} -
 \[
  \calF\big( \sin(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2j}\calF x(f - \gamma) - \frac{1}{2j}\calF x( f + \gamma)
  \]
-These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the the following Fourier transforms to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals,
+These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the following Fourier transforms to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals,
 \[
- \calF(e^{2\pi j  \gamma t}) = \delta(t - \gamma).
+ \calF(e^{2\pi j  \gamma t}) = \delta(f - \gamma).
  \]
 \[
-\calF\big( \cos(2\pi \gamma t) \big) = \tfrac{1}{2} \delta(t - \gamma) + \tfrac{1}{2} \delta(t + \gamma),
+\calF\big( \cos(2\pi \gamma t) \big) = \tfrac{1}{2} \delta(f - \gamma) + \tfrac{1}{2} \delta(f + \gamma),
 \]
 \[
-\calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(t - \gamma) - \tfrac{1}{2j} \delta(t + \gamma),
+\calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(f - \gamma) - \tfrac{1}{2j} \delta(f + \gamma),
 \]
 These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996,Proakis_digital_comms}, but must be treated with caution.  There is no guarantee that mechanical mathematical manipulations involving these conventions will lead to sensible results.
 %  and the following
@@ -138,9 +138,9 @@ We are lead to the conclusion that the Fourier transform of $\sinc$ is the recta
 
 The rectangular pulse $\rect$ is finite and absolutely integrable.  The $\sinc$ function is not absolutely integrable (Exercise~\ref{exer:sincnotabsint}). Because of this the integral equation that we have used to define the Fourier transform~\eqref{eq:fouriertransform} cannot be directly applied to the $\sinc$ function.  %The inverse transform provides a method for assigning Fourier transforms to signals even when the formula~\eqref{eq:fouriertransform} does not apply.  
 Although $\sinc$ is not absolutely integrable, it is square integrable (Exercise~\ref{exer:sincnotabsint}).  It happens that all square integrable signals can be assigned a Fourier transform by interpreting the integral in~\eqref{eq:fouriertransform} as what is called its~\term{Cauchy principal value}.  That is, for $x$ a square integrable signal, we assign the Fourier transform
-\[
+\begin{equation}\label{eq:cauchyprinvalint}
 \hat{x}(f) = \calF x(f) = \lim_{T \to \infty}  \int_{-T}^T x(t) e^{-j2\pi ft} dt.
-\]
+\end{equation}
 This Fourier transform $\hat{x}$ is itself a square integrable signal and the orignal time domain signal $x$ can be recovered almost everywhere by taking the Cauchy principal value of the integral for the inverse Fourier transform~\eqref{eq:inversefouriertransform}, that is,
 \[
 x(t) = \calF^{-1} \hat{x}(t) = \lim_{T \to \infty}  \int_{-T}^T \hat{x}(f) e^{j2\pi f t} df \qquad \text{a.e.}
@@ -947,20 +947,30 @@ This theorem motivated use of this recontruction method in Tests~\ref{test:volta
 
 \section{The discrete time Fourier transform}
 
-Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
+Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the square summable sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  Suppose temporarily that $c$ is also absolutely summable.  
+From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
 \begin{align}
-\hat{x}(f) = \calF x(f) &= \sum_{n \in \ints} c_n \calF\sinc(F t - n)  \label{eq:interchangefoursummation} \\
+\hat{x}(f) = \calF x(f) &= \sum_{n \in \ints} c_n \calF(\sinc(F t - n))(f)  \label{eq:ftanddftrelationshipswapsumf} \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
 &= P \rect( f P ) \calD c(Pf) \qquad \label{eq:ftanddftrelationship}
 \end{align}
 where
-\[
+\begin{equation}\label{eq:disctransintro}
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
+\end{equation}
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} can be justified using \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  
+We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  Under our assumption that $c$ is absolutely summable
+\[
+\abs{\calD c(f)} \leq \sum_{n \in \ints} \abs{c_n e^{-j 2\pi n f}} = \sum_{n \in \ints} \abs{c_n} = \|c\|_1 < \infty
 \]
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  %The interchange of Fourier transformation and infinite summation in~\eqref{eq:interchangefoursummation} can be justified using the completeness of $L_2$.  
-%TODO Introduce completeness in an advanced section?  I still don't really like how the domains are incorporated at the moment.  It might be better to just state
-%results and when they hold.  Certainly definitions like stability etc only really make sense it you set the domain in advance though?
-We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
+and so the discrete Fourier transform $\calD c(f)$ is finite for all $f$.  A discrete time Fourier transform can also be assigned to sequences that are only square integrable and not necessarily absolutely integrable.  In this case one interprets the sum in~\eqref{eq:disctransintro} as
+\[
+\calD c(f) = \lim_{N \to \infty} \sum_{n = -N}^N c_n e^{-j 2\pi n f}.
+\]
+This is analogous to how the Fourier transform of a square integrable signal was assigned using the Cauchy principal value~\eqref{eq:cauchyprinvalint}.  The relationship~\eqref{eq:ftanddftrelationship} still holds in this case provided that equality is weakened to equality almost everywhere.% that is, if $c$ is square integrable, then $\hat{x}(t) = P \rect( f P ) \calD c(Pf)$
+%TODO Introduce completeness in an advanced section?
+
+The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
 
 The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}
