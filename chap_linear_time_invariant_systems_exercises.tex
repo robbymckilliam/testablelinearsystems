@@ -30,25 +30,6 @@
 % The exchange of integration order can be justified using Fubini's theorem whenever the all of the convolutions involved in $x*(y*z) = (x*y)*z$ exist.
 % \end{solution}
 
-\item \label{excer:convabsisabs} Show that the convolution of two absolutely integrable signals is absolutely integrable.
-\begin{solution}
-Let $x$ and $y$ be absolutely integrable.  We want to show that the convolution
-\[
-(x * y)(t) = \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau
-\]
-is absolutely integrable.  Write
-\begin{align*}
-\|x * y\|_1 &= \int_{-\infty}^\infty \abs{(x * y)(t)}dt \\
-&= \int_{-\infty}^\infty \abs{\int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau } dt \\
- &\leq \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau) y(t - \tau) } d\tau dt \\
- &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau)  }\abs{ y(t - \tau) } dt d\tau \qquad \text{(change order of integration, Tonelli's theorem)} \\
- &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ y(t - \tau) } dt \abs{ x(\tau) } d\tau \\
-  &= \|y\|_1 \int_{-\infty}^\infty \abs{ x(\tau) } d\tau \\
-  &= \|y\|_1 \|x\|_1
-\end{align*}
-which is finite by our assumption that $x$ and $y$ are absolutely integrable.  This result also follows as a special case of Young's Theorem~\citep{Rudin_real_and_complex_analysis}.
-\end{solution}
-
 \item State whether each of the following systems are: causal, linear, shift-invariant, or stable.  Plot the impulse and step response of the systems whenever they exist.  In each case, assume the domain to be the set of locally integrable signals.
 \begin{enumerate}
 \item $Hx(t) = 3x(t - 1) - 2x(t+1)$
@@ -495,6 +476,27 @@ where $C$ is defined in the question statement.  Now
 \]
 as required.
 \end{solution}
+
+
+\harditem \label{excer:convabsisabs} Show that the convolution of two absolutely integrable signals is absolutely integrable.
+\begin{solution}
+Let $x$ and $y$ be absolutely integrable.  We want to show that the convolution
+\[
+(x * y)(t) = \int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau
+\]
+is absolutely integrable.  Write
+\begin{align*}
+\|x * y\|_1 &= \int_{-\infty}^\infty \abs{(x * y)(t)}dt \\
+&= \int_{-\infty}^\infty \abs{\int_{-\infty}^\infty x(\tau) y(t - \tau) d\tau } dt \\
+ &\leq \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau) y(t - \tau) } d\tau dt \\
+ &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ x(\tau)  }\abs{ y(t - \tau) } dt d\tau \qquad \text{(change order of integration, Tonelli's theorem)} \\
+ &= \int_{-\infty}^\infty \int_{-\infty}^\infty \abs{ y(t - \tau) } dt \abs{ x(\tau) } d\tau \\
+  &= \|y\|_1 \int_{-\infty}^\infty \abs{ x(\tau) } d\tau \\
+  &= \|y\|_1 \|x\|_1
+\end{align*}
+which is finite by our assumption that $x$ and $y$ are absolutely integrable.  This result also follows as a special case of Young's Theorem~\citep{Rudin_real_and_complex_analysis}.
+\end{solution}
+
 
 % \item \label{excer:activeRCinverseislinear}  Let $H$ be a system describing the mapping from input voltage signal $x$ to output voltage signal $y = H(x)$ for the active RC electrical circuit described by the differential equation
 % \[
