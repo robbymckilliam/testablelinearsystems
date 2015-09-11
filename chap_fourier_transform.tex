@@ -58,17 +58,21 @@ These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996}.
 
 Similarly to the Laplace transform~\eqref{eq:freqshiftrule}, the Fourier transform obeys a \term{frequency shift rule} that relates the transform of a signal $x(t)$ to that of the signal $e^{2\pi j \gamma f t} x(t)$ where $\gamma \in \reals$.  From~\eqref{eq:freqshiftrule}, the frequency shift rule asserts that
 \begin{align}
-\calF\big( e^{2\pi j \gamma t} x(t) \big)\big( f\big) =  \calF x(f - \gamma). \label{eq:freqshiftrulefourier}
+\calF\big( e^{2\pi j \gamma t} x(t) \big)\big( f\big) =  \calF x(f - \gamma), \label{eq:freqshiftrulefourier}
 \end{align}
-Since $\cos( 2\pi \gamma t) = \tfrac{1}{2}e^{2\pi j \gamma t} + \tfrac{1}{2}e^{-2\pi j \gamma t}$ we also have
+that is, the Fourier transform of the signal $e^{2\pi j \gamma f t} x(t)$ is given by shifting that of $x$ by $\gamma$.  The property can be expressed using the shifter system $T_\gamma$ by $\calF \big( e^{2\pi j \gamma t} x(t) \big) = T_\gamma \calF x$.  The signal $e^{2\pi j \gamma f t} x(t)$ is often referred to as a frequency shifted version of $x$.
+ 
+%BLERG: THIS COULD PROBABLY BE HELPED BY A FIGURE, THOUGH WE DON'T REALLY USE THIS PROPERTY MUCH?
+
+Because $\cos( 2\pi \gamma t) = \tfrac{1}{2}e^{2\pi j \gamma t} + \tfrac{1}{2}e^{-2\pi j \gamma t}$ it follows from the frequency shift rule that
 \begin{equation}\label{eq:modulationpropertyft}
 \calF\big( \cos(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2}\calF x(f - \gamma) + \frac{1}{2}\calF x(f + \gamma).
 \end{equation}
 and, similarly, since $\sin( 2\pi \gamma t) = \tfrac{1}{2j}e^{2\pi j \gamma t} - \tfrac{1}{2j}e^{-2\pi j \gamma t}$ we have
 \[
- \calF\big( \sin(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2j}\calF x(f - \gamma) - \frac{1}{2j}\calF x( f + \gamma)
+ \calF\big( \sin(2\pi \gamma t) x(t)\big)\big( f \big) =  \frac{1}{2j}\calF x(f - \gamma) - \frac{1}{2j}\calF x( f + \gamma).
  \]
-These results are sometimes called the \term{modulation property} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  This property is of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the following Fourier transforms to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals,
+These results are sometimes called the \term{modulation properties} of the Fourier transform~\cite[page~61]{Papoulis_signal_analysis_1977}.  These properties are of particular importance in communications engineering~\citep{Proakis_digital_comms}.  Combing the frequency shift rule with the convention $\calF \delta = 1$ motivates assigning the following Fourier transforms to the complex exponential signal $e^{2\pi j \gamma t}$ and the cosine and sine signals,
 \[
  \calF(e^{2\pi j  \gamma t}) = \delta(f - \gamma).
  \]
