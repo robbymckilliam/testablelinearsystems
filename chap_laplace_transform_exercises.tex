@@ -232,9 +232,13 @@ The mathemtica command
 \begin{verbatim}
 Apart[1/s/(s - a)/(s - b)/(s - c), s]
 \end{verbatim}
+or the maxima command
+\begin{verbatim}
+partfrac(1/s/(s - a)/(s - b)/(s - c), s)
+\end{verbatim}
 returns the equation
 \[
-\frac{1}{s(s-a)(s-b)(s-c)} = \frac{A_0}{s} + \frac{A_1}{s-a} + \frac{A_2}{s-b} + \frac{A_3}{s-b^*} -\frac{1}{a b c s}+\frac{1}{}+\frac{1}{}+\frac{1}{ (s-c)}
+\frac{1}{s(s-a)(s-b)(s-c)} = \frac{A_0}{s} + \frac{A_1}{s-a} + \frac{A_2}{s-b} + \frac{A_3}{s-c}
 \]
 where
 \[
