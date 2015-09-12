@@ -133,7 +133,7 @@ If $\hat{x}$ is absolutely integrable, then $x$ can be recovered using the \term
 \begin{equation}\label{eq:inversefouriertransform}
 x(t) = \calF^{-1}\hat{x}(t) =  \int_{-\infty}^\infty \hat{x}(f) e^{j2\pi ft} df.
 \end{equation}
-For example, let $\hat{x} = \calF x = \rect$ be the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
+For example, suppose that $\hat{x} = \calF x = \rect$ is the rectangular pulse.  By working analogous to that from~\eqref{eq:sincandrect},
 \[
 x(t) = \int_{-\infty}^\infty \rect(f) e^{j2\pi ft} df = \sinc(-t) = \sinc(t).
 \]
@@ -153,7 +153,7 @@ Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that
 \begin{equation}\label{eq:parseval}
 \|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt = \int_{-\infty}^{\infty} \abs{\hat{x}(f)}^2 dt = \|\hat{x}\|_2^2.
 \end{equation}
-These results are known as the \term{Plancherel theorem}~\cite[Th.~9.13]{Rudin_real_and_complex_analysis}.  The equality of energies in~\eqref{eq:parseval} is often called~\term{Parseval's identity}.  For our purposes it will suffice to remember only that the Fourier transform of the $\sinc$ function is the rectangular pulse $\rect$.
+These results are known as the \term{Plancherel theorem}~\cite[Th.~9.13]{Rudin_real_and_complex_analysis}.  The equality of energies in~\eqref{eq:parseval} is often called~\term{Parseval's identity}.  For our purposes it will suffice to remember only that the Fourier transform of the $\sinc$ function is the rectangular pulse $\rect$.  In this text, the $\sinc$ function is by far the most regularly occuring example of a signal that is square integrable, but not absolutely integrable.  
 If $x$ and $y$ are square integrable signals with Fourier transforms $\hat{x}$ and $\hat{y}$, then a consequence of~\eqref{eq:parseval} is
 \begin{equation} \label{eq:parsevalxy}
 \int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt \qquad \text{(Exercise~\ref{})}
@@ -184,11 +184,18 @@ Evaluating the Fourier transform at $-t$ we find that
 \begin{equation}\label{eq:dualityft}
 \calF x(-t) = \int_{-\infty}^{\infty} x(\tau) e^{j2\pi t \tau} d\tau = \calF^{-1} x(t).
 \end{equation}
-This is the called the \term{duality} property of the Fourier transform.  In words, if $\hat{x}$ is the Fourier transform of $x$, then $x$ is the Fourier transform of $\hat{x}$ reflected in time.    %Another way to express duality is
+This is the called the \term{duality} property of the Fourier transform.  In words, if $\hat{x}$ is the Fourier transform of $x$, then $x$ is the Fourier transform of $\hat{x}$ reflected in time.  Another way to express duality is
+\[
+\calF( \hat{x} ) = \calF( \calF(x)) = \calF^2(x) = x(-t) \qquad a.e.
+\]
+that is, twice application of the Fourier transform to a signal $x$ results in $x$ reflected in time.
+
+%TODO: Should get the multiplication theorem in here (even though I never use it).  Could leave showing it as an exercise, but need to get conditions right.  Presumably if x and y are square integrable everything works.  This is then quite distinct from the convolution theorem. 
+
+% Combining the duality property with the convolution theorem we find that
 % \[
-% \calF( \hat{x} ) = \calF( \calF(x)) = \calF^2(x) = x(-t),
+% \calF(x\,y) = \calF x * \calF y = \hat{x} * \hat{y}.
 % \]
-% that is, twice application of the Fourier transform to a signal $x$ results in $x$ reflected in time.
 
 % %BLERG: You can only really apply $\calF$ is \hat{x} is absolutely integrable, otherwise need a.e. qualifier.
 % Equivalently, if we define 

@@ -76,15 +76,13 @@ since both limits converge to zero.  Unravelling the above recursive equation gi
 since $\calL\big(u(t)\big) = \tfrac{1}{s}$ when $\Re(s) >0$. 
 \end{solution}
 
-\item Let $n \geq 0$ be an integer.  Show that the Laplace transform of the signal $- t^n u(-t)$ is the same as the Laplace transform of the signal $t^n u(t)$, but with a different region of convergence.
+\item Let $n \geq 0$ be an integer.  Show that the Laplace transform of the signal $(-t)^n u(-t)$ is the same as the Laplace transform of the signal $t^n u(t)$, but with a different region of convergence.
 \begin{solution}
 We have
 \begin{align*}
-\calL\big(-t^nu(-t)\big) &= -\int_{-\infty}^{\infty} t^nu(-t) e^{-st} dt \\
-&= \int_{-\infty}^{\infty} (-t)^{n+1} u(t) e^{st} dt \qquad \text{(change variable t = -t)} \\
-&= (-1)^{n+1} \int_{-\infty}^{\infty} t^n u(t) e^{st} dt \\
-&= (-1)^{n+1} \calL( t^n u(t), -s) \qquad \Re(s) < 0 \\
-&= (-1)^{n+1} \frac{n!}{(-s)^{n+1}} \qquad \Re(s) < 0 \\
+\calL\big((-t)^nu(-t)\big) &= \int_{-\infty}^{\infty} (-t)^n u(-t) e^{-st} dt \\
+&= \int_{-\infty}^{\infty} t^{n} u(t) e^{st} dt \qquad \text{(change variable t = -t)} \\
+&= \calL( t^n u(t), -s) \qquad \Re(s) < 0 \\
 &= \frac{n!}{s^{n+1}} \qquad \Re(s) < 0.
 \end{align*}
 \end{solution}
@@ -104,7 +102,10 @@ Put $y = T_\tau x = x(t- \tau)$.  Taking Laplace transforms
 as required.  Observe that the region of convergence of $\calL y$ is the same as that of $\calL x$.
 \end{solution}
 
-\item \label{exer:laplacetransdiffproperty} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ is the differentiator under the added assumption that the limits $\lim_{t\to\infty} x(t) e^{-st}$ and $\lim_{t\to-\infty} x(t) e^{-st}$ both converge to zero when $s \in \roc(x)$. 
+\item \label{exer:laplacetransdiffproperty} Show that equation~\zeqref{eq:transferLaplcetheorem} on page~\zpageref{eq:transferLaplcetheorem} holds when the system $H$ is the differentiator under the added assumption that 
+\[]
+\lim_{t\to\infty} x(t) e^{-st} = \lim_{t\to-\infty} x(t) e^{-st} = 0 \qquad \text{when $s \in \roc(x)$}.
+\] 
 \begin{solution}
 % We now show the result for the differentiator $D$.  The argument we use is based on that of \citet[page~179]{Rudin_real_and_complex_analysis}.  We have just shown that the Laplace transform of the time shifted $T_{-\tau}(x,t) = x(t + \tau)$ is $e^{\tau s}\calL(x,s)$ with region of convergence $R_x$.  Since the Laplace transform is linear
 % \[
@@ -218,7 +219,7 @@ Putting $s = -a$ gives $c-a = A(b-a)$, and pitting $s=-b$ gives $c-b = B(a-b)$, 
 \]
 \end{solution}
 
-\item \label{exer:partialfracfourthorder} By partial fractions, or otherwise, assert that
+\harditem \label{exer:partialfracfourthorder} By partial fractions, or otherwise, assert that
 \[
 \frac{1}{s(s-a)(s-b)(s-b^*)} = \frac{A_0}{s} + \frac{A_1}{s-a} + \frac{A_2}{s-b} + \frac{A_2^*}{s-b^*}
 \]
@@ -293,7 +294,7 @@ y(t) = - e^{-2t} u(-t) - e^{t} u(-t) \qquad \Re(s) < -2.
 \]
 \end{solution}
 
-\item \label{excer:timescalelaplace} Let $x$ be a signal with region of convergence $R$.  Show that the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ satisfies equation~\zeqref{eq:timescalingpropertrylaplacetrans} on page~\zpageref{eq:timescalingpropertrylaplacetrans}.
+\item \label{excer:timescalelaplace} Let $x$ be a signal.  Show that the time scaled signal $x(\alpha t)$ with $\alpha \neq 0$ satisfies equation~\zeqref{eq:timescalingpropertrylaplacetrans} on page~\zpageref{eq:timescalingpropertrylaplacetrans}.
 \begin{solution}
 First consider when $\alpha = -1$ so that $x(-t)$ is the reflection of the signal $x$ in time (see Section~\zref{sec:some-import-syst}).  We have 
 \begin{align*}
@@ -407,7 +408,7 @@ H(x) = H_1(x) + H_2(x) = -\gamma x + h_2 * x.
 The system is not regular because the $H_1$ is not regular.  The system is stable because $H_1$ is stable and $H_2$ is stable because the impulse response $h_2$ is absolutely integrable since $\beta = \tfrac{1}{R_2C_2} > 0$.  Equivalently the system is not regular because the transfer function does not have more poles than zero, and the system is stable because the transfer function has at least as many poles as zeros (equal in this case), and because all the poles lie strictly in the left half plane. 
 \end{solution}
 
-\item \label{exer:massspringdamperrect} Given the mass spring damper system described by~\zeqref{eq:masspringeqseclapltrans}, find the position signal $p$ given that the force signal 
+\harditem \label{exer:massspringdamperrect} Given the mass spring damper system described by~\zeqref{eq:masspringeqseclapltrans}, find the position signal $p$ given that the force signal 
 \[
 f(t) = \rect\big(t-\tfrac{1}{2}\big) = \begin{cases}
 1 & 0 < t \leq 1 \\
@@ -424,16 +425,16 @@ Plot the solution in each case, and comment on whether the system is underdamped
 \begin{solution}
 Observe that the input force signal can be written as the sum of the step function $u$ and its negated time-shift, that is,
 \[
-f(t) = u(t) - u(t - 1) = u(t) - T_{1}(u,t)
+f(t) = u(t) - u(t - 1) = u(t) - T_{1} u(t)
 \]
 and so, the response of the linear, time invariant system $H$ modelling the mass spring damper to input force signal $f$ is
 \[
-H(f) = H\big(u - T_{1}(u)\big) = H(u) - T_{1}\big(H(u)\big),
+Hf = H(u - T_{1}u) = Hu - T_{1}Hu,
 \]
-and so, $H(f,t) = H(u,t) - H(u,t-1)$, where $H(u)$ is the step response of the system.  The step responses are described in Section~\zref{sec:second-order-systems}.  As described in Section~\zref{sec:second-order-systems}, the system is underdamped when $B = \tfrac{\pi}{3}$, critically damped when $B = \pi$ and overdamped when $B = 2\pi$.
+and so, $Hf(t) = Hu(t) - Hu(t-1)$, where $Hu$ is the step response of the system.  The step responses are described in Section~\zref{sec:second-order-systems}.  As described in Section~\zref{sec:second-order-systems}, the system is underdamped when $B = \tfrac{\pi}{3}$, critically damped when $B = \pi$ and overdamped when $B = 2\pi$.
 \end{solution}
 
-\item Plot the signal $x(t) = \sin(t e^t) u(t)$ and find and plot its derivative $D x$.  Show that the region of convergence of $x$ contains those complex numbers $s$ with $\Re(s) > 0$ and that the region of convergence of $D x$ contains those with $\Re(s) > 1$.
+\item Plot the signal $x(t) = \sin(t e^t) u(t)$ and find and plot its derivative $D x$.  Show that the region of convergence of $x$ contains those complex numbers $s$ with $\Re s > 0$ and that the region of convergence of $D x$ contains those with $\Re s > 1$.
 \begin{solution}
 By application of the chain rule the derivative of $\sin(t e^t)$ is $(t+1)e^t \cos(e^t) u(t)$.  These signals are plotted below.
 \begin{center}
@@ -488,7 +489,7 @@ which is finite for all $s$ with $\Re(s) > 1$ as required.
 \]
 is equal to $1$.
 
-\item \label{exer:twomassspringtwowallstranfuncpolezeros} Consider the mechanical system in Figure~\ref{mech:twomassspringtwowalls} from Exercise~\ref{exer:twomassspringtwowalls}.  After solving Exercise~\ref{exer:twomassspringtwowalls}, find the transfer function of a linear shift-invariant $H$ system mapping $f$ to $p$.  Now suppose that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$.  Find the poles and zeros of $H$ and draw a pole zero plot.  Determine whether $H$ is stable and/or regular.  Find and plot the impulse response and the step response of $H$ if they exist.
+\harditem \label{exer:twomassspringtwowallstranfuncpolezeros} Consider the mechanical system in Figure~\ref{mech:twomassspringtwowalls} from Exercise~\ref{exer:twomassspringtwowalls}.  After solving Exercise~\ref{exer:twomassspringtwowalls}, find the transfer function of a linear shift-invariant $H$ system mapping $f$ to $p$.  Now suppose that $M_1 = K_1 = K_2 = B = 1$ and $M_2 = 2$.  Find the poles and zeros of $H$ and draw a pole zero plot.  Determine whether $H$ is stable and/or regular.  Find and plot the impulse response and the step response of $H$ if they exist.
 
 \begin{solution}
 Let $H$ be a linear time invariant system mapping $f$ to $p$.  The transfer function of $H$ is
@@ -544,7 +545,7 @@ h(t) = u(t) \left( A_0 e^{\beta_0 t} + A_1 e^{\beta_1 t} + A_2 e^{\beta_2 t} + A
 \]
 The step response is
 \[
-H u = I_\infty(h) = u(t) \left( C_0 e^{ \beta_0 t} + C_1 e^{\beta_1 t} + C_2 e^{\beta_2 t} + C_3 e^{\beta_3 t} - B  \right)
+H u = I_\infty h = u(t) \left( C_0 e^{ \beta_0 t} + C_1 e^{\beta_1 t} + C_2 e^{\beta_2 t} + C_3 e^{\beta_3 t} - B  \right)
 \]
 where $C_n = A_n/\beta_n$, $n = 0,1,2,3$ and $B=C_0+C_1+C_2+C_3$.  These responses are plotted below.
 
@@ -665,7 +666,7 @@ These responses are plotted below
 
 \end{solution}
 
-\item \label{exer:finhandroch} Let $x$ be a signal.  Show that the complex exponential signal $e^{st} \in \dom x$ if and only if the signal $x(t)e^{-st}$ is absolutely integrable.
+\reallyharditem \label{exer:finhandroch} Let $x$ be a signal.  Show that the complex exponential signal $e^{st} \in \dom x$ if and only if the signal $x(t)e^{-st}$ is absolutely integrable.
 \begin{solution}
 The set $\dom x$ contains all those signals such that
 \[
@@ -687,7 +688,7 @@ since $e^{st}$ is finite for all $t$, and so, $e^{st} \in \dom x$.
 \end{solution}
 
 
-\item \label{exer:domfgrocfrocg} Show that the complex exponential signal $e^{st} \in \dom f\;g$ if and only if $s \in \roc f \cap \roc g$, that is $\cep \dom f\;g = \roc f \cap \roc g$.
+\reallyharditem \label{exer:domfgrocfrocg} Show that the complex exponential signal $e^{st} \in \dom f\;g$ if and only if $s \in \roc f \cap \roc g$, that is $\cep \dom f\;g = \roc f \cap \roc g$.
 
 
 \end{excersizelist}
