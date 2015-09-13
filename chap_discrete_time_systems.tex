@@ -14,7 +14,7 @@ We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the 
 Discrete time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
 
-\section{The discrete time impulse response} \label{sec:discr-time-impulse}
+\section{The discrete impulse response} \label{sec:discr-time-impulse}
 
 We first describe a suitable domain for each discrete time system.  It is worth considering an example.  Suppose that $H$ has discrete impulse response given by the step sequence $u$~\eqref{eq:stepsequence}.  The signal $x(t) = 1$ that takes the value $1$ for all $t \in \reals$ will not be in the domain of $H$ because, in this case,
 \[
@@ -24,24 +24,24 @@ is not finite for any $t \in \reals$.  Given a sequence $h$ denote by $\dom_z h$
 \[
 \sum_{m \in \ints} \abs{h_m x(t - m)} < \infty \qquad \text{for all $t \in \reals$}.
 \]
-If $H$ has discrete impulse response $h$ then, for all signals $x \in \dom_z h$, we have
+If $H$ has discrete impulse response $h$ then, for all signals $x \in \dom_z h$,
 \[
-\abs{Hx(t)} = \abs{\sum_{m \in \ints} h_m T_{ P m} x(t)} \leq \sum_{m \in \ints}  \abs{ h_m T_{ P m} x} < \infty
+\abs{Hx(t)} = \abs{\sum_{m \in \ints} h_m T_{ P m} x(t)} \leq \sum_{m \in \ints}  \abs{ h_m T_{ P m} x} < \infty \qquad \text{for all $t \in \reals$}
 \]
-for all $t \in \reals$ and so $Hx(t)$ is finite for all $t \in \reals$.  We take $\dom_z h$ as the domain of the discrete time system with discrete impulse response $h$ unless otherwise stated.  %Be aware that set $\dom_z h$ is now defined for both signals $h$ and sequences $h$.  %This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
+and so $Hx(t)$ is finite for all $t \in \reals$.  We take $\dom_z h$ as the domain of the discrete time system with discrete impulse response $h$ unless otherwise stated.  %Be aware that set $\dom_z h$ is now defined for both signals $h$ and sequences $h$.  %This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
 
-The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_m = 0$ for all $m < 0$, then $H$ is causal because 
+The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_m = 0$ for all $m < 0$, then $H$ is causal because the response 
 \[
 Hx(t) = \sum_{m \in \ints} h_m T_{ P m}x(t) = \sum_{m =0}^\infty h_m x(t - Pm)
 \] 
-only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
+at time $t$ only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
-Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be the system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom_z f \cap \dom_z g$ is
+Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be a system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom_z f \cap \dom_z g$ is
 \begin{align*}
 Hx &= a \sum_{n \in \ints} f_{n} T_{ P n}x + b \sum_{n \in \ints} g_{n} T_{ P n}x \\
 &=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}x,
 \end{align*}
-and so $H$ is a discrete time system with domain $\dom_z f \cap \dom_z g$ and discrete impulse response given by the linear combination of sequences $af + ag$.
+and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.  We take the domain of $H$ to be $\dom_z f \cap \dom_z g$ unless otherwise stated.
 
 Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  Denote by $\dom_z f\,g$ the set of signals $x$ such that
 \[
@@ -53,7 +53,7 @@ H x &= \sum_{m \in \ints} f_m T_{Pm} G x  \\
 &= \sum_{m \in \ints} f_m  G T_{Pm} x  \qquad \text{(shift-invariance of $G$)} \\
 &= \sum_{m \in \ints} \sum_{k \in \ints} f_m g_k T_{P(m+k)}x.
 \end{align*}
-Since $x \in \dom_z f\,g$ Fubini's theorem~\cite[Theorem~8.8]{Rudin_real_and_complex_analysis} can be used to justify swapping the order of summation so that
+Since $x \in \dom_z f\,g$, Fubini's theorem~\cite[Theorem~8.8]{Rudin_real_and_complex_analysis} can be used to justify swapping the order of summation so that
 \[
 H x = \sum_{k \in \ints} \sum_{m \in \ints} f_m g_k T_{P(m+k)}x
 \]
@@ -140,7 +140,27 @@ It follows that the transfer function of $H$ satisfies
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_z h.
 \]
 
-Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  The signal $e^{2\pi j f t} \in \dom_z h$ for all $f \in \reals$ since
+For example, consider the discrete time system $H$ with impulse response given by the step sequence $u$.  The transfer function is
+\[
+\lambda H(s) = \sum_{n \in \ints} u_n e^{-sPn} = \sum_{n = 0}^\infty e^{-sPn} = \frac{1}{1 - e^{-sP}} \qquad \Re s > 0.
+\]
+The domain $\cep \dom_z u$ is all those complex numbers with real part greater than zero.  The identity system $T_0$ is a discrete time system with discrete impulse response given by the delta sequence $\delta$ with elements
+\[
+\delta_n = \begin{cases}
+1 & n = 0 \\
+0 & \text{otherwise}.
+\end{cases}
+\]  
+The transfer function is 
+\[
+\lambda T_0(s) = \sum_{n \in \ints} \delta_n e^{-sPn} = 1 \qquad s \in complex.
+\]
+with domain the entire complex plane.  This is in agreement~\eqref{eq:timeshiftertransferfunction}.
+
+%TODO: examples.
+
+
+Now suppose that $H$ is a stable discrete time system with absolutely summable discrete impulse response $h$.  The signal $e^{2\pi j f t} \in \dom_z h$ for all $f \in \reals$ since
 \[
 \sum_{m \in \ints} \abs{h_m e^{2\pi j f (t - m)}} = \sum_{m \in \ints} \abs{h_m} < \infty \qquad \text{for all $t \in \reals$}.
 \]
@@ -318,14 +338,7 @@ The region of convergence is an open disc of radius $\frac{3}{2}$ with the origi
 \]
 with region of convergence all those complex numbers such that $\tfrac{1}{2} < \abs{z} < \tfrac{3}{2}$.  The region of convergence is an annulus (a doughnut) in the complex plane with inner radius $\tfrac{1}{2}$ and outer radius $\tfrac{3}{2}$.
 
-The delta sequence $\delta$ with elements
-\[
-\delta_n = \begin{cases}
-1 & n = 0 \\
-0 & \text{otherwise}
-\end{cases}
-\]  
-has z-transform
+The delta sequence $\delta$ has z-transform
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
