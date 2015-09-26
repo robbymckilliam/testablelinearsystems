@@ -125,7 +125,7 @@ Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Four
 \end{figure}
 
 
-T\section{The inverse transform and the Plancherel theorem}\label{sec:square-integr-sign}
+\section{The inverse transform and the Plancherel theorem}\label{sec:square-integr-sign}
 
 Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \calF x$.  Observe that $\hat{x}$, like $x$, is a function that maps a real number to a complex number, that is, $\hat{x}$ is a \term{signal} with independent variable representing frequency.  It is usual to call $\hat{x}$ the \term{frequency-domain} representation of the signal and $x$ the \term{time-domain} representation although the signal $x$ need not be a function of ``time''.  
 
@@ -156,7 +156,7 @@ Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that
 These results are known as the \term{Plancherel theorem}~\cite[Th.~9.13]{Rudin_real_and_complex_analysis}.  The equality of energies in~\eqref{eq:parseval} is often called~\term{Parseval's identity}.  For our purposes it will suffice to remember only that the Fourier transform of the $\sinc$ function is the rectangular pulse $\rect$.  In this text, the $\sinc$ function is by far the most regularly occuring example of a signal that is square integrable, but not absolutely integrable.  
 If $x$ and $y$ are square integrable signals with Fourier transforms $\hat{x}$ and $\hat{y}$, then a consequence of~\eqref{eq:parseval} is
 \begin{equation} \label{eq:parsevalxy}
-\int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt \qquad \text{(Exercise~\ref{})}
+\int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt \qquad \text{(Exercise~\ref{exer:parsevaltoparsevalxy})}
 \end{equation}
 where the superscript $^*$ denotes the complex cojugate. This result often also goes by the name of Parseval's identity.
 
@@ -186,9 +186,20 @@ Evaluating the Fourier transform at $-t$ we find that
 \end{equation}
 This is the called the \term{duality} property of the Fourier transform.  In words, if $\hat{x}$ is the Fourier transform of $x$, then $x$ is the Fourier transform of $\hat{x}$ reflected in time.  Another way to express duality is
 \[
-\calF( \hat{x} ) = \calF( \calF(x)) = \calF^2(x) = x(-t) \qquad a.e.
+\calF \hat{x}(t) = \calF \calF x(t) = \calF^2 x(t) = x(-t) \qquad \text{a.e}.
 \]
-that is, twice application of the Fourier transform to a signal $x$ results in $x$ reflected in time.
+that is, twice application of the Fourier transform to a signal $x$ results in $x$ reflected in time.  Pointwise equality holds in the case that $\hat{x}$ is absolutely integrable.
+
+Suppose that $x$ and $y$ are square integrable with absolutely integrable Fourier transforms $\hat{x}$ and $\hat{y}$.  Because $\calF \hat{x}(t) = x(-t)$ and $\calF \hat{y}(t) = y(-t)$, the convolution property asserts that
+\[
+\calF(\hat{x} * \hat{y})(-t) = x(t)y(t).
+\]
+The product $x y$ is an absolutely integrable signal by~\term{Holder's inequality}~\cite[Theorem~3.5]{Rudin_real_and_complex_analysis}.  Applying the Fourier transform to both sides and using the duality property we find that
+\begin{equation}\label{eq:multiplicationtheoremfouriertransform}
+\calF(x y) = \hat{x} * \hat{y}
+\end{equation}
+This is called the \term{multiplication property} of the Fourier transform.  In words, the Fourier transform of a multiplication of signals is the convolution of the Fourier transforms of those signals.  The multiplication property can be shown to hold under only the assumption that $x$ and a $y$ are square integrable provided that equality in~\eqref{eq:multiplicationtheoremfouriertransform} is replaced by equality almost everywhere (Exercise~\ref{exer:multiplicationtheoremsqrint}).  
+%It is not necessary to assume that the Fourier transforms $\hat{x}$ and $\hat{y}$ be absolutely integrable.
 
 %TODO: Should get the multiplication theorem in here (even though I never use it).  Could leave showing it as an exercise, but need to get conditions right.  Presumably if x and y are square integrable everything works.  This is then quite distinct from the convolution theorem. 
 
@@ -627,7 +638,6 @@ and the hypothesised phase spectrum $\angle{\Lambda B_{2}^c(f)}$.
 % \includegraphics{tests/butterworth/plot-2.mps}
 % 
 % \end{center}
-
 \end{test}
 %\end{randomfloat}
 
@@ -664,7 +674,7 @@ Let $x$ be a signal with Fourier transform $\hat{x} = \calF x$.  The signal $x$ 
 The value $b$ is called the \term{bandwidth} of the signal $x$.  For example, the $\sinc$ function is bandlimited with bandwidth $\tfrac{1}{2}$ because its Fourier transform $\calF \sinc(f) = \rect(f) = 0$ for all $\abs{f} > \tfrac{1}{2}$.
 Bandlimited signals have a number of properties that make them suitable for representation and manipulation by a computer.  They are of particular importance for this reason.  Before we can study bandlimited signals we first require some properties of real and complex valued~\term{sequences}.
 
-A \term{sequence} is a function with domain given by the integers $\ints$.  The value of a sequence $x$ at integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take complex (or real) values, that is, functions the set $\ints \to \complex$.  For example,
+A \term{sequence} is a function with domain given by the integers $\ints$.  The value of a sequence $x$ at integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take complex (or real) values, that is, functions from the set $\ints \to \complex$.  For example,
 \[
 \sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad e^{-\sabs{n}/2}
 \]
@@ -956,10 +966,10 @@ This motivated use of this recontruction method in Tests~\ref{test:voltagedivide
 \section{The discrete time Fourier transform}
 
 Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the square summable sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  Suppose temporarily that $c$ is also absolutely summable.  
-From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is %BLERG this is using completeness of L_2
+From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is 
 \begin{align}
-\hat{x}(f) = \calF x(f) &= \calF\left( \sum_{n \in \ints} c_n \sinc(F t - n)\right)(f) 
-&= \sum_{n \in \ints} c_n \calF(\sinc(F t - n))(f)  \label{eq:ftanddftrelationshipswapsumf} \\
+\hat{x}(f) = \calF x(f) &= \calF\left( \sum_{n \in \ints} c_n \sinc(F t - n)\right) \\
+&= \sum_{n \in \ints} c_n \calF(\sinc(F t - n))  \label{eq:ftanddftrelationshipswapsumf} \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
 &= P \rect( f P ) \calD c(Pf) \qquad \label{eq:ftanddftrelationship}
 \end{align}
@@ -967,8 +977,26 @@ where
 \begin{equation}\label{eq:disctransintro}
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \end{equation}
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} can be justified using \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  
-We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  Under our assumption that $c$ is absolutely summable
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} can be justified using \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  For example, the discrete time Fourier transform of the delta sequence is $\calD \delta(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f} = 1$.  The sequence 
+\[
+\rect(n/2) = \begin{cases}
+1 & \abs{n} \leq 1 \\
+0 & \text{otherwise}
+\end{cases}
+\]
+has discrete time Fourier transform
+\[
+\calD\big( \rect(n/2) ) = e^{-2\pi j  f} + 1 + e^{2\pi j f} = 1 + 2\cos(2\pi f)
+\]
+and the sequence $2^{-n} u_n$ has discrete time Fourier transform
+\begin{align*}
+\calD\big( 2^{-n} u_n \big) &=  \sum_{n \in \ints} 2^{-n} u_n e^{-j 2\pi n f} \\
+&= \sum_{n = 0}^\infty \frac{e^{-j 2\pi n f}}{2^n} \\
+&= \frac{2}{2 -  e^{-j 2\pi f}} \qquad \text{(Exercise~\ref{eq:dftalphanun})}.
+\end{align*}
+These sequences and their discrete time Fourier transforms are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.  Test~\ref{test:ftlecturerec} uses~\eqref{eq:ftanddftrelationship} to compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} this audio signal is passed through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and the Fourier transform of the response is plotted.
+
+Under our assumption that $c$ is absolutely summable
 \[
 \abs{\calD c(f)} \leq \sum_{n \in \ints} \abs{c_n e^{-j 2\pi n f}} = \sum_{n \in \ints} \abs{c_n} = \|c\|_1 < \infty
 \]
@@ -976,12 +1004,121 @@ and so the discrete Fourier transform $\calD c(f)$ is finite for all $f$.  A dis
 \[
 \calD c(f) = \lim_{N \to \infty} \sum_{n = -N}^N c_n e^{-j 2\pi n f}.
 \]
-This is analogous to how the Fourier transform of a square integrable signal was assigned using the Cauchy principal value~\eqref{eq:cauchyprinvalint}.  The relationship~\eqref{eq:ftanddftrelationship} between $\hat{x}$ and $\hat{c} = \calD c$ still holds in this case provided that equality is weakened to equality almost everywhere (Exercise~\ref{exer:ftdftswapsummationldct}).% that is, if $c$ is square integrable, then $\hat{x}(t) = P \rect( f P ) \calD c(Pf)$
+This is analogous to how the Fourier transform of a square integrable signal was assigned using the Cauchy principal value~\eqref{eq:cauchyprinvalint}.  The relationship~\eqref{eq:ftanddftrelationship} between $\hat{x}$ and $\hat{c} = \calD c$ still holds in this case provided that equality is weakened to equality almost everywhere (Exercise~\ref{exer:ftdftswapsummationldctcompleteness}).  
+% that is, if $c$ is square integrable, then $\hat{x}(t) = P \rect( f P ) \calD c(Pf)$
 %TODO Introduce completeness in an advanced section?
 
-The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  The above equations relate the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  In Test~\ref{test:ftlecturerec} we compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} we pass the audio signal through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and plot the Fourier transform of the response.
+{
+\def\minn{-4}
+\def\maxn{4}
+\def\scalex{0.5}
+\def\scaley{2}
+\def\deltaseq(#1){((#1)==0)} %delta sequence
+%\def\rectseq(#1){(\deltaseq(#1)+\deltaseq(#1-1)+\deltaseq(#1+1))}
+\def\Dcrectseq(#1){(1+2*cos(2*3.1415926*#1))}
+\def\step(#1){(#1>=0)} %step function
+\def\ctwonstep(#1){((2**(-#1)*\step(#1)))}
+\def\Dctwostep(#1){(sqrt(4/(5-4*cos(2*3.1415926*#1))))}
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[domain=-4.8:4.8,samples=100]
+    \begin{scope}[yscale=\scaley,xscale=\scalex]
+      \draw[->] (-5.4,0) -- (5.4,0) node[above] {$t$};
+      \draw[->] (0,-0.4) -- (0,1.3) node[above] {$\delta_n$};
+      \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},samples=\maxn-\minn+1] plot function{\deltaseq(x)};
+    \end{scope}
+    \begin{scope}[yscale=\scaley]
+      \htick{1} node[pos=0.5,left] {$1$};
+    \end{scope}
+    \begin{scope}[xscale=\scalex]
+%      \vtick{1.0} node[pos=0.5,below] {$1$};
+%      \vtick{-1.0} node[pos=0.5,below] {$-1$};
+    \end{scope}
+  \end{tikzpicture} 
+\;
+\begin{tikzpicture}
+  \begin{scope}[xscale=2]
+    \draw[->] (-1.35,0) -- (1.35,0) node[above] {$f$};
+    \draw[->] (0,-0.8) -- (0,2.6) node[above] {$\calD\delta = 1$};
+    \draw[smooth,color=black,thick,domain=-1.25:1.25,samples=50] plot function{1};
+  \end{scope}
+%  \begin{scope}[yscale=2]
+    \htick{1} node[pos=0.5,above left] {$1$};
+%  \end{scope}
+  \begin{scope}[xscale=2]
+    \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \vtick{-0.5} node[pos=0.5,below] {$-\tfrac{1}{2}$};
+  \end{scope}
+\end{tikzpicture} 
+\\
+\vspace{1cm}
+  \begin{tikzpicture}[domain=-4.8:4.8,samples=100]
+    \begin{scope}[yscale=\scaley,xscale=\scalex]
+      \draw[->] (-5.4,0) -- (5.4,0) node[above] {$t$};
+      \draw[->] (0,-0.4) -- (0,1.3) node[above] {$\rect(n/2)$};
+      \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=1.5:4.5,samples=3] plot function{0};
+      \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=-1.5:1.5,samples=3] plot function{1};
+      \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},domain=-4.5:-1.5,samples=3] plot function{0};
+    \end{scope}
+    \begin{scope}[yscale=\scaley]
+      \htick{1} node[pos=0.5,left] {$1$};
+    \end{scope}
+    \begin{scope}[xscale=\scalex]
+%      \vtick{1.0} node[pos=0.5,below] {$1$};
+%      \vtick{-1.0} node[pos=0.5,below] {$-1$};
+    \end{scope}
+  \end{tikzpicture} 
+\;
+\begin{tikzpicture}
+  \begin{scope}[xscale=2,yscale=0.75]
+    \draw[->] (-1.35,0) -- (1.35,0) node[above] {$f$};
+    \draw[->] (0,-1.066) -- (0,3.466) node[above] {$\calD\big(\rect(n/2)\big)$};
+    \draw[smooth,color=black,thick,domain=-1.25:1.25,samples=50] plot function{\Dcrectseq(x)};
+  \end{scope}
+  \begin{scope}[yscale=0.75]
+    \htick{1} node[pos=0.5, left] {$1$};
+  \end{scope}
+  \begin{scope}[xscale=2]
+    \vtick{0.5} node[pos=0.5,above] {$\tfrac{1}{2}$};
+    \vtick{-0.5} node[pos=0.5,above] {$-\tfrac{1}{2}$};
+  \end{scope}
+\end{tikzpicture} 
+\\
+\vspace{1cm}
+  \begin{tikzpicture}[domain=-4.8:4.8,samples=100]
+    \begin{scope}[yscale=\scaley,xscale=\scalex]
+      \draw[->] (-5.4,0) -- (5.4,0) node[above] {$t$};
+      \draw[->] (0,-0.4) -- (0,1.3) node[above] {$2^{-n}u_n$};
+      \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},samples=\maxn-\minn+1] plot function{\ctwonstep(x)};
+    \end{scope}
+    \begin{scope}[yscale=\scaley]
+      \htick{1} node[pos=0.5,left] {$1$};
+    \end{scope}
+    \begin{scope}[xscale=\scalex]
+%      \vtick{1.0} node[pos=0.5,below] {$1$};
+%      \vtick{-1.0} node[pos=0.5,below] {$-1$};
+    \end{scope}
+  \end{tikzpicture} 
+\;
+\begin{tikzpicture}
+  \begin{scope}[xscale=2]
+    \draw[->] (-1.35,0) -- (1.35,0) node[above] {$f$};
+    \draw[->] (0,-0.8) -- (0,2.6) node[above] {$\abs{\calD(2^{-n}u_n)}$};
+    \draw[smooth,color=black,thick,domain=-1.25:1.25,samples=50] plot function{\Dctwostep(x)};
+  \end{scope}
+%  \begin{scope}[yscale=2]
+    \htick{2} node[pos=0.5,above left] {$2$};
+%  \end{scope}
+  \begin{scope}[xscale=2]
+    \vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
+    \vtick{-0.5} node[pos=0.5,below] {$-\tfrac{1}{2}$};
+  \end{scope}
+\end{tikzpicture} 
+\caption{The sequences $\delta$ and $\rect(n/2)$ and their discrete time Fourier transform (top and middle). The sequence $2^{-n} u_n$ and the magnitude of its discrete time Fourier transform $4/(5-4\cos(2\pi f))$ (bottom).  The discrete time Fourier transforms are periodic signals with fundamental period 1.} \label{fig:discretetimefouriertransexamples}
+\end{figure}
+}
 
-The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
+Equation~\eqref{eq:ftanddftrelationship} relates the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}
 c_n = x(nP) &= \calF^{-1}\hat{x}(nP) \\
 &= \int_{-\infty}^\infty P \rect(Pf) \calD c(Pf) e^{j2\pi f nP} df \\
@@ -994,6 +1131,19 @@ c_n = \int_{-1/2}^{1/2} \hat{c}(f) e^{j 2\pi f n } df.
 \]
 The right hand side of this expression is called the~\term{inverse discrete time Fourier transform}.  %The inverse discrete Fourier transform is a sequence, that is, a function from $\ints$ to $\complex$.  
 The element $c_{-n}$ is also known as the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$.
+
+%Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
+% \[
+% \calD d(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f}.
+% \]
+%  can be found using~\eqref{eq:ftanddftrelationship}.  Because $\sinc$ is bandlimited with bandwidth $\tfrac{1}{2} < F/2 = 2$ equation~\ref{q:ftanddftrelationship} gives
+% \[
+% \hat{\sinc}(f) = \tfrac{1}{4} \rect(f/4) \calD c(f/4).
+% \]
+% Because $\hat{\sinc}(f) = \rect(f)$ we find that
+% \[
+% 4\rect(4f) = \rect(f) \calD c(f).
+% \]
 
 \begin{test}\label{test:ftlecturerec}
 (\textbf{The Fourier transform of a lecture recording})

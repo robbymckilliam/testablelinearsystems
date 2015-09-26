@@ -151,24 +151,6 @@ cross/.default={1pt}
   \setfoot[][][]{}{}{}
 }
 
-%for randomly floating stuff, e.g. the tests 
-\newenvironment{randomfloat}{
-\begin{figure}
-}{
-\end{figure}
-\addtocounter{figure}{-1}
-}
-
-\newenvironment{excersizelist}{%
-  \renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
-  \newcommand\itemadvanced{\stepcounter{enumi}\item[$\ast$\, \theenumi.]}
-  %\renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
-  %\renewcommand*{\labelenumi}{(\arabic{enumi})}%
-  \begin{enumerate}
-}{%
-  \end{enumerate}
-}
-
 \usepackage{zref-xr,zref-user}
 \zexternaldocument*{main}
 \newcommand{\zeqref}[1]{(\zref{#1})}
@@ -190,8 +172,8 @@ cross/.default={1pt}
 % \chapter{Signals and systems}
 %  \input{chap_signals_and_systems_exercises.tex}
 
-% \chapter{Systems modelled by differential equations}
-%  \input{chap_differential_equations_exercises.tex}
+\chapter{Systems modelled by differential equations}
+ \input{chap_differential_equations_exercises.tex}
 
 % \chapter{Linear time-invariant systems}
 %  \input{chap_linear_time_invariant_systems_exercises.tex}
