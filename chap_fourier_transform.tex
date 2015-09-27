@@ -968,7 +968,7 @@ This motivated use of this recontruction method in Tests~\ref{test:voltagedivide
 Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the square summable sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  Suppose temporarily that $c$ is also absolutely summable.  
 From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is 
 \begin{align}
-\hat{x}(f) = \calF x(f) &= \calF\left( \sum_{n \in \ints} c_n \sinc(F t - n)\right) \\
+\hat{x}(f) = \calF x(f) &= \calF\left( \sum_{n \in \ints} c_n \sinc(F t - n)\right) \nonumber \\
 &= \sum_{n \in \ints} c_n \calF(\sinc(F t - n))  \label{eq:ftanddftrelationshipswapsumf} \\
 &= P \rect( f P ) \sum_{n \in \ints} c_n e^{-j 2\pi P n f } \nonumber \\
 &= P \rect( f P ) \calD c(Pf) \qquad \label{eq:ftanddftrelationship}
@@ -977,7 +977,7 @@ where
 \begin{equation}\label{eq:disctransintro}
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \end{equation}
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} can be justified using \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  For example, the discrete time Fourier transform of the delta sequence is $\calD \delta(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f} = 1$.  The sequence 
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} is justified by \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  For example, the discrete time Fourier transform of the delta sequence is $\calD \delta(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f} = 1$.  The sequence 
 \[
 \rect(n/2) = \begin{cases}
 1 & \abs{n} \leq 1 \\
@@ -996,13 +996,119 @@ and the sequence $2^{-n} u_n$ has discrete time Fourier transform
 \end{align*}
 These sequences and their discrete time Fourier transforms are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.  Test~\ref{test:ftlecturerec} uses~\eqref{eq:ftanddftrelationship} to compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} this audio signal is passed through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and the Fourier transform of the response is plotted.
 
+
+\begin{test}\label{test:ftlecturerec}
+(\textbf{The Fourier transform of a lecture recording})
+
+In this test we consider a \SI{20}{\second} segment of audio taken from the lecture video \href{www.itr.unisa.edu.au/~mckillrg/videos/lectures/signalsandsystems2014/ch1sec3.mp4}{\texttt{ch1sec3.mp4}}.  
+%available at:
+% %\vspace{0.1cm}
+% \begin{center}
+% \parbox[][][c]{12cm}{
+% \url{www.itr.unisa.edu.au/~mckillrg/videos/lectures/signalsandsystems2014/ch1sec3.mp4}
+% }
+% \end{center}
+% %\vspace{0.1cm}
+This \SI{34.8}{\mega\byte} file contains both compressed video (H.264 codec) and audio (mp3 codec) of duration \SI{23}{\minute} and \SI{36}{\second}.  The audio is mono and sampled at rate $F = \SI{22050}{\hertz}$.  The \href{https://www.ffmpeg.org/}{\texttt{ffmpeg}} program is used to extract a \SI{20}{\second} segment of audio starting at time \SI{85}{\second} and ending at time \SI{105}{\second}.  The segment is decompressed to wav format.  The command used is:
+%\vspace{0.1cm}
+\begin{center}
+\parbox[][][c]{10cm}{
+\texttt{ffmpeg -i ch1sec3.mp4 -ss 85 -t 20 audio.wav}
+}
+\end{center}
+%\vspace{0.1cm}
+The resulting file \texttt{audio.wav} is \SI{882}{\kilo\byte} in size and contains $N = 440998$ samples that we denote by $c_0,c_1,\dots,c_{N-1}$.  Each sample takes a value in the interval $[-1,1]$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  The reconstructed audio signal is given by
+\[
+x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n) = \sum_{n=0}^{N-1} c_n \sinc(Ft - n).
+\]
+From~\eqref{eq:ftanddftrelationship} the Fourier transform of this signal is $\hat{x}(f) = P \rect(P f) \hat{c}(Pf)$ where 
+\begin{equation}\label{eq:dftsumNterms}
+\hat{c}(f) = \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}  = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n f}
+\end{equation}
+is the discrete time Fourier transform of the sequence of samples.  Figure~\ref{fig:test:fouriertransformlecturevideo} shows a plot of the magnitude of the Fourier transform for frequencies in the interval \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz}.  The plot is constructed by evaluting $\abs{\hat{c}(f)}$ at all $K = 1201$ frequencies
+\[
+f_k = -12000 + 20k \qquad k = 0, \dots, K-1,
+\]
+that is, from \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz} in steps of \SI{20}{\hertz}.  It takes approximately \SI{137}{\second} to compute the Fourier transform at all of these frequencies.  Evaluating the Fourier transform at a particular frequency requires calculating and accumlating each of the $N$ terms in the sum~\eqref{eq:dftsumNterms}.  We hypothesise it to take approximately
+\[
+\frac{\SI{137}{\second}}{NK} \approx \SI{260}{\nano\second}
+\]
+to compute each term.   The computer used is an Intel Core 2 running at \SI{2.4}{\giga\hertz} and the software is written in the \href{http://scala-lang.org/}{\texttt{Scala}} programming language.
+
+The audio recording contains human voice that primarily resides at lower frequencies below \SI{5}{\kilo\hertz}.  Audible in the recording is a faint high pitched hum.  The cause of this is unknown.  It might be a feature of the (probably low quality) webcam microphone used to record the audio.  This hum is represented in Figure~\ref{fig:test:fouriertransformlecturevideo} by the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and also by the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude of the Fourier transform is elevated.  Figure~\ref{fig:test:fouriertransformlecturevideozoomed} is a plot of the Fourier transform for frequencies from \SI{7998}{\hertz} to \SI{8002}{\hertz} in steps of \SI{5}{\milli\hertz}.  This gives a high resolution view of the spike that occurs near \SI{8}{\kilo\hertz}.  The magnitude of the Fourier transform is precisely zero for frequencies $\abs{f} > F/2 = \SI{11025}{\hertz}$ due to $\rect(Pf)$ occurring in the definition of $\hat{x}$.  However, in Figure~\ref{fig:test:fouriertransformlecturevideo} it is apparent that the Fourier transform is small if $\abs{f}$ is a little larger than $\SI{8}{\kilo\hertz}$.  This audio signal appears approximately bandlimited with bandwidth a little larger $\SI{8}{\kilo\hertz}$.
+
+% \begin{center}
+% \captionsetup{type=figure}
+% %\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
+%   \begin{tikzpicture}
+%     \selectcolormodel{gray} 
+%     \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=4900,xmax=5900]
+%       \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fouriertransformlecturevideo/ft4900.csv};
+%     \end{axis}
+%   \end{tikzpicture} 
+% \captionof{figure}{A plot of the magnitude of the Fourier transform zoomed in on the the interval $[\SI{4900}{\hertz}, \SI{5900}{\hertz}]$.}\label{fig:test:fouriertransformlecturevideozoomed}
+% \end{center}
+
+\end{test}
+
+\begin{randomfloat}[p]
+\begin{shaded}
+\begin{center}
+%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
+  \begin{tikzpicture}
+    \selectcolormodel{gray} 
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
+      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fouriertransformlecturevideo/ft.csv};
+    \end{axis}
+  \end{tikzpicture}
+\captionsetup{type=figure}
+\captionof{figure}{Magnitude of the Fourier transform of \SI{20}{\second} of audio from a lecture recording.  The human voice signal is primarily contained in the low frequency region below \SI{5}{\kilo\hertz}.  The spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude is elevated are audible in the recording as a high pitched hum.}\label{fig:test:fouriertransformlecturevideo}
+\end{center}
+
+\begin{center}
+%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps} 
+  \begin{tikzpicture}
+    \selectcolormodel{gray} 
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=7997.9,xmax=8002.1,xtick={7998,7999,8000,8001,8002},x tick label style={/pgf/number format/.cd,set thousands separator={},fixed}]
+      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fouriertransformlecturevideo/ft8k.csv};
+    \end{axis}
+  \end{tikzpicture}
+\captionsetup{type=figure} 
+\captionof{figure}{A plot of the magnitude of the Fourier transform zoomed in on the spike at \SI{8}{\kilo\hertz}.}\label{fig:test:fouriertransformlecturevideozoomed}
+\refstepcounter{figure} %for some reason the figure counter does not step here. Might have something to do with randomfloat.  Steping manually
+\end{center}
+\end{shaded}
+\end{randomfloat}
+
+\begin{randomfloat}[p]
+\begin{test}\label{test:butterworthfilteredlecturerec}
+(\textbf{Butterworth filtered lecture recording})
+
+We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlecturerec}.  In this test we pass this signal through the second order Butterworth filter from Test~\ref{test:butterworthfilter} with cuttoff frequency approximately \SI{3041}{\hertz}.  The output of the Butterworth filter is fed back to the soundcard input and recorded at \SI{22050}{\hertz}.  The recorded samples are written to the file \texttt{filtered.wav}.  Listening to \texttt{filtered.wav} confirms that the high pitched hum is weaker than it is in the original audio signal.  The Fourier transform of the Butterworth filtered signal is plotted in Figure~\ref{fig:test:butterworthedfouriertransformlecturevideo}.  This figure is constructed by the same procedure as used for Figure~\ref{fig:test:fouriertransformlecturevideo} from Test~\ref{test:ftlecturerec}.  Observe that the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ are less prominent than in Figure~\ref{fig:test:fouriertransformlecturevideo}.
+
+\begin{center}
+%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
+  \begin{tikzpicture}
+    \selectcolormodel{gray} 
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
+      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/butterworthfilteredlecturerecording/ft.csv};
+    \end{axis}
+  \end{tikzpicture}
+\captionof{figure}{Magnitude of the Fourier transform of \SI{20}{\second} of audio from Test~\ref{test:ftlecturerec} after being passed through the second order Butterworth filter from Test~\ref{test:butterworthfilter} with cuttoff frequency approximately \SI{3041}{\hertz}.  The magnitude of the Fourier transform at higher frequencies is attenuated when compared with the Fourier transform of the original audio signal (Figure~\ref{fig:test:fouriertransformlecturevideo}).  In particular, the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ are less prominent than in Figure~\ref{fig:test:fouriertransformlecturevideo}.  The high pitched hum that is audible in the original audio signal is significantly weaker in the Butterworth filtered audio signal.}\label{fig:test:butterworthedfouriertransformlecturevideo}
+\end{center}
+
+\end{test}
+\end{randomfloat}
+
+\clearpage
+
 Under our assumption that $c$ is absolutely summable
 \[
-\abs{\calD c(f)} \leq \sum_{n \in \ints} \abs{c_n e^{-j 2\pi n f}} = \sum_{n \in \ints} \abs{c_n} = \|c\|_1 < \infty
+\abs{\hat{c}(f)} = \abs{\calD c(f)} \leq \sum_{n \in \ints} \abs{c_n e^{-j 2\pi n f}} = \sum_{n \in \ints} \abs{c_n} = \|c\|_1 < \infty
 \]
 and so the discrete Fourier transform $\calD c(f)$ is finite for all $f$.  A discrete time Fourier transform can also be assigned to sequences that are only square summable and not necessarily absolutely summable.  In this case one interprets the sum in~\eqref{eq:disctransintro} as
 \[
-\calD c(f) = \lim_{N \to \infty} \sum_{n = -N}^N c_n e^{-j 2\pi n f}.
+\hat{c}(f) = \calD c(f) = \lim_{N \to \infty} \sum_{n = -N}^N c_n e^{-j 2\pi n f}.
 \]
 This is analogous to how the Fourier transform of a square integrable signal was assigned using the Cauchy principal value~\eqref{eq:cauchyprinvalint}.  The relationship~\eqref{eq:ftanddftrelationship} between $\hat{x}$ and $\hat{c} = \calD c$ still holds in this case provided that equality is weakened to equality almost everywhere (Exercise~\ref{exer:ftdftswapsummationldctcompleteness}).  
 % that is, if $c$ is square integrable, then $\hat{x}(t) = P \rect( f P ) \calD c(Pf)$
@@ -1132,6 +1238,41 @@ c_n = \int_{-1/2}^{1/2} \hat{c}(f) e^{j 2\pi f n } df.
 The right hand side of this expression is called the~\term{inverse discrete time Fourier transform}.  %The inverse discrete Fourier transform is a sequence, that is, a function from $\ints$ to $\complex$.  
 The element $c_{-n}$ is also known as the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$.
 
+% %Suppose now that the Fourier transform $\hat{x}$ is absolutely integrable.  
+Because $\hat{c}(f)$ has period $1$ it follows that $\hat{c}(Pf)$ has period $F = \tfrac{1}{P}$.  The rectangle function $\rect(Pf)$ occuring in~\eqref{eq:ftanddftrelationship} takes the value $1$ on the interval $(-F/2, F/2)$ and so the product $\rect(Pf)\hat{c}(Pf)$ corresponds with a single period centered at the origin.  This suggests reconstructing $\hat{c}(f) = D c(Pf)$ by summing shifts of $\hat{x}$ by $F$, that is,
+\[
+P \hat{c}(Pf) = \sum_{m \in \ints} P \rect(Pf + m) \calD c(Pf + m) = \sum_{m \in \ints} \hat{x}(f + mF) \qquad \text{a.e.}
+\]
+The right hand side is called a \term{periodic summation} of $\hat{x}$.  Examples of periodic summations are plotted in Figure~\ref{fig:periodisedfunctions}.  Replacing $Pf$ with $f$ and multiplying both sides by $F$ we find
+\begin{equation}\label{eq:dftsignalperiodicsumP}
+\hat{c}(f) = \calD c(f) = F \sum_{m \in \ints} \hat{x}(Ff + Fm) \qquad \text{a.e.}
+\end{equation}
+This relationship provides a convenient means of determining the discrete time Fourier transform of a sequence by considering it as the samples of a signal $x$ for which the Fourier transform is already known.  We will find this relationship particularly convient for design of digital filters in Section~\ref{sec:finite-impulse-resp}. 
+
+In the case that $x$ is bandlimited with bandwidth $b < F/2$ the Fourier transform $\hat{x}$ can be recovered from its periodic summation by multiplying by the rectangle function $\rect(Pf)$. Equation~\eqref{eq:ftanddftrelationship} is reobtained in this way.  This effect can be seen in the top plot in Figure~\ref{eq:ftanddftrelationship} whereby multiplication of the periodic summation on the right by $\rect(f)$ recovers the rectangular pulse centered and the origin.  Recovery of $\hat{x}$ in this way is not possible of $x$ has bandwidth larger than $F/2$.  Consider, for example, the middle and bottom plots in Figure~\ref{fig:periodisedfunctions} where multiplication of periodic summation on the right by $\rect(f)$ would not recover the original signals on the left.  However, the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ with period $P$.    
+
+To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a signal.  This will be the case if $\hat{x}$ is absolutely integrable, for example.  In this case, applying the inverse discrete time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
+\[
+c_n = \int_{-1/2}^{1/2} F \sum_{m \in \ints} \hat{x}(Ff + Fm)  e^{j 2\pi f n } df.
+\]
+Under our assumption that $\hat{x}$ is absolutely integrable the dominated convergence theorem can be used to justify exchanging infinite summation and integration~\cite[Section~4.2]{Pinsky_Wavelets_2002} and so
+\begin{align*}
+c_n &=  F \sum_{m \in \ints} \int_{-1/2}^{1/2} \hat{x}(Ff + Fm)  e^{j 2\pi f n } df \\
+&= \sum_{m\in \ints} \int_{Fm-F/2}^{Fm+F/2} \hat{x}(\gamma)  e^{j 2\pi \gamma n/F}  e^{-j 2\pi m n} d\gamma
+\end{align*}
+where the second line follows by the change of variables $\gamma = F(f + m)$.  The term $e^{-j 2\pi m n} = 1$ because both $m$ and $n$ are integers. The sum of integrals combines into a single integral over the entire real line leading to
+\[
+c_n = \int_{-\infty}^{\infty} \hat{x}(\gamma)  e^{j 2\pi \gamma n/F} d\gamma = \calF^{-1} \hat{x}(n/F) = x(Pn)
+\]
+where the integral is identified as the inverse Fourier transform of $\hat{x}$~\eqref{eq:inversefouriertransform}.  We have found that the sequence $c$ with discrete time Fourier transform $F \sum_{n\in\ints} \hat{x}(Ff + Fm)$ is precisely the samples of the signal $x$ at period $P = \tfrac{1}{F}$.  This does not require that $x$ be bandlimited.  
+
+However, the reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform
+\[
+\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)
+\]
+and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = P e^{-\pi P^2 f^2}$.  This signal is not bandlimited.  The samples and corresponding discrete time Fourier transform are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is refered to as \term{aliasing}.
+
+
 %Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
 % \[
 % \calD d(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f}.
@@ -1145,110 +1286,245 @@ The element $c_{-n}$ is also known as the $n$th~\term{Fourier coefficient} of th
 % 4\rect(4f) = \rect(f) \calD c(f).
 % \]
 
-\begin{test}\label{test:ftlecturerec}
-(\textbf{The Fourier transform of a lecture recording})
-
-In this test we consider a \SI{20}{\second} segment of audio taken from the lecture video \href{www.itr.unisa.edu.au/~mckillrg/videos/lectures/signalsandsystems2014/ch1sec3.mp4}{\texttt{ch1sec3.mp4}}.  
-%available at:
-% %\vspace{0.1cm}
-% \begin{center}
-% \parbox[][][c]{12cm}{
-% \url{www.itr.unisa.edu.au/~mckillrg/videos/lectures/signalsandsystems2014/ch1sec3.mp4}
-% }
-% \end{center}
-% %\vspace{0.1cm}
-This \SI{34.8}{\mega\byte} file contains both compressed video (H.264 codec) and audio (mp3 codec) of duration \SI{23}{\minute} and \SI{36}{\second}.  The audio is mono and sampled at rate $F = \SI{22050}{\hertz}$.  The \href{https://www.ffmpeg.org/}{\texttt{ffmpeg}} program is used to extract a \SI{20}{\second} segment of audio starting at time \SI{85}{\second} and ending at time \SI{105}{\second}.  The segment is decompressed to wav format.  The command used is:
-%\vspace{0.1cm}
-\begin{center}
-\parbox[][][c]{10cm}{
-\texttt{ffmpeg -i ch1sec3.mp4 -ss 85 -t 20 audio.wav}
+\begin{figure}[p]
+\centering
+{
+  \def\ifthenelset(#1,#2,#3){(#1*#2 + !#1*#3)}
+  \def\step(#1){\ifthenelset(((#1)>0),1,0)} %step function
+  \def\bandwidth{0.3333}
+  \def\rectangle(#1){(\step(#1+\bandwidth)-\step(#1-\bandwidth))}
+  %\def\f(#1){\rectangle(#1)*(1+cos(3*pi*(#1)))}
+  \def\f(#1){\rectangle(#1)}
+  \def\scaley{1.8}
+  \newcommand{\drawrectanglepeice}[1]{(#1-\bandwidth,0)--(#1-\bandwidth,1)--(#1+\bandwidth,1)--(#1+\bandwidth,0)}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\rect(3Pf/2)$};
+    %\draw[smooth,color=black,thick] plot function{\f(x)};
+    \draw[thick] (-2.4,0)--\drawrectanglepeice{0}--(2.4,0);
+    % \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$F$};
+      \vtick{-1} node[pos=0.5,below] {$-F$};
+      \vtick{2} node[pos=0.5,below] {$2F$};
+      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {};
+    %\draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \draw[thick] (-2.4,0)--\drawrectanglepeice{-2}--\drawrectanglepeice{-1}--\drawrectanglepeice{0}--\drawrectanglepeice{1}--\drawrectanglepeice{2}--(2.4,0);
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$F$};
+      \vtick{-1} node[pos=0.5,below] {$-F$};
+      \vtick{2} node[pos=0.5,below] {$2F$};
+      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+} 
+\\
+\vspace{1cm}
+{
+  \def\ifthenelset(#1,#2,#3){(#1*#2 + !#1*#3)}
+  \def\step(#1){\ifthenelset(((#1)>0),1,0)} %step function
+  \def\rectangle(#1){(\step(#1+1)-\step(#1-1))}
+  \def\f(#1){\rectangle(#1)*(1+cos(pi*(#1)))}
+  \def\scaley{1}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\rect(Pf/2)\big(1 + \cos(\pi P f)\big)$};
+    \draw[smooth,color=black,thick] plot function{\f(x)};
+    % \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$F$};
+      \vtick{-1} node[pos=0.5,below] {$-F$};
+      \vtick{2} node[pos=0.5,below] {$2F$};
+      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {};
+    \draw[smooth,color=black,dashed] plot function{\f(x)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+    \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$F$};
+      \vtick{-1} node[pos=0.5,below] {$-F$};
+      \vtick{2} node[pos=0.5,below] {$2F$};
+      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+} 
+\\
+\vspace{1cm}
+{
+  \def\PI{3.141592}
+  \def\f(#1){exp(-(#1)*(#1)*\PI)}
+  \def\scaley{2}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {$e^{-\pi P^2 f^2}$};
+    \draw[smooth,color=black,thick] plot function{\f(x)};
+    % \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$F$};
+      \vtick{-1} node[pos=0.5,below] {$-F$};
+      \vtick{2} node[pos=0.5,below] {$2F$};
+      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {};
+    \draw[smooth,color=black,dashed] plot function{\f(x)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+    \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$F$};
+      \vtick{-1} node[pos=0.5,below] {$-F$};
+      \vtick{2} node[pos=0.5,below] {$2F$};
+      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
 }
-\end{center}
-%\vspace{0.1cm}
-The resulting file \texttt{audio.wav} is \SI{882}{\kilo\byte} in size and contains $N = 440998$ samples that we denote by $c_0,c_1,\dots,c_{N-1}$.  Each sample takes a value in the interval $[-1,1]$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  The reconstructed audio signal is given by
-\[
-x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n) = \sum_{n=0}^{N-1} c_n \sinc(Ft - n).
-\]
-From~\eqref{eq:ftanddftrelationship} the Fourier transform of this signal is $\hat{x}(f) = P \rect(P f) \hat{c}(Pf)$ where 
-\begin{equation}\label{eq:dftsumNterms}
-\hat{c}(f) = \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}  = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n f}
-\end{equation}
-is the discrete time Fourier transform of the sequence of samples.  Figure~\ref{fig:test:fouriertransformlecturevideo} shows a plot of the magnitude of the Fourier transform for frequencies in the interval \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz}.  The plot is constructed by evaluting $\abs{\hat{c}(f)}$ at all $K = 1201$ frequencies
-\[
-f_k = -12000 + 20k \qquad k = 0, \dots, K-1,
-\]
-that is, from \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz} in steps of \SI{20}{\hertz}.  It takes approximately \SI{137}{\second} to compute the Fourier transform at all of these frequencies.  Evaluating the Fourier transform at a particular frequency requires calculating and accumlating each of the $N$ terms in the sum~\eqref{eq:dftsumNterms}.  We hypothesise it to take approximately
-\[
-\frac{\SI{137}{\second}}{NK} \approx \SI{260}{\nano\second}
-\]
-to compute each term.   The computer used is an Intel Core 2 running at \SI{2.4}{\giga\hertz} and the software is written in the \href{http://scala-lang.org/}{\texttt{Scala}} programming language.
+\caption{Signals $\rect(3Pf/2)$ (top), $\rect(Pf/2)\big(1 + \cos(\pi P f)\big)$ (middle), and $e^{-\pi P^2 f^2}$ (bottom)  and periodic summations $\sum_{m\in\ints}x(f + Fm)$ where $F = 1/P$. The periodic summation is shown by the solid lines on the left.  The dashed lines are the individual translations being summed.} \label{fig:periodisedfunctions}
+\end{figure}
 
-The audio recording contains human voice that primarily resides at lower frequencies below \SI{5}{\kilo\hertz}.  Audible in the recording is a faint high pitched hum.  The cause of this is unknown.  It might be a feature of the (probably low quality) webcam microphone used to record the audio.  This hum is represented in Figure~\ref{fig:test:fouriertransformlecturevideo} by the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and also by the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude of the Fourier transform is elevated.  Figure~\ref{fig:test:fouriertransformlecturevideozoomed} is a plot of the Fourier transform for frequencies from \SI{7998}{\hertz} to \SI{8002}{\hertz} in steps of \SI{5}{\milli\hertz}.  This gives a high resolution view of the spike that occurs near \SI{8}{\kilo\hertz}.  The magnitude of the Fourier transform is precisely zero for frequencies $\abs{f} > F/2 = \SI{11025}{\hertz}$ due to $\rect(Pf)$ occurring in the definition of $\hat{x}$.  However, in Figure~\ref{fig:test:fouriertransformlecturevideo} it is apparent that the Fourier transform is small if $\abs{f}$ is a little larger than $\SI{8}{\kilo\hertz}$.  This audio signal appears approximately bandlimited with bandwidth a little larger $\SI{8}{\kilo\hertz}$.
 
-% \begin{center}
-% \captionsetup{type=figure}
-% %\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
-%   \begin{tikzpicture}
-%     \selectcolormodel{gray} 
-%     \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=4900,xmax=5900]
-%       \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fouriertransformlecturevideo/ft4900.csv};
-%     \end{axis}
-%   \end{tikzpicture} 
-% \captionof{figure}{A plot of the magnitude of the Fourier transform zoomed in on the the interval $[\SI{4900}{\hertz}, \SI{5900}{\hertz}]$.}\label{fig:test:fouriertransformlecturevideozoomed}
-% \end{center}
+\begin{figure}[p]
+\centering
+{
+  \def\PI{3.141592}
+  \def\f(#1){exp(-(#1)*(#1)*\PI)}
+  \def\scaley{2}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {$e^{-\pi P^2 f^2}$};
+    \draw[smooth,color=black,thick] plot function{\f(x)};
+    % \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-2} node[pos=0.5,below] {$-2$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {};
+    \draw[smooth,color=black,dashed] plot function{\f(x)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+    \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-2} node[pos=0.5,below] {$-2$};
+    \end{scope}
+  \end{tikzpicture} 
+}
+\\
+\vspace{1cm}
+{
+  \def\PI{3.141592}
+  \def\f(#1){exp(-(#1)*(#1)*\PI)}
+  \def\scaley{2}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {$e^{-\pi P^2 f^2}$};
+    \draw[smooth,color=black,thick] plot function{\f(x)};
+    % \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-2} node[pos=0.5,below] {$-2$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {};
+    \draw[smooth,color=black,dashed] plot function{\f(x)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+    \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-2} node[pos=0.5,below] {$-2$};
+    \end{scope}
+  \end{tikzpicture} 
+}
+\\
+\vspace{1cm}
+{
+  \def\PI{3.141592}
+  \def\f(#1){exp(-(#1)*(#1)*\PI)}
+  \def\scaley{2}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {$e^{-\pi P^2 f^2}$};
+    \draw[smooth,color=black,thick] plot function{\f(x)};
+    % \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-2} node[pos=0.5,below] {$-2$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35) -- (0,1.2) node[above] {};
+    \draw[smooth,color=black,dashed] plot function{\f(x)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x+3)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-1)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-2)};
+    \draw[smooth,color=black,dashed] plot function{\f(x-3)};
+    \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-2} node[pos=0.5,below] {$-2$};
+    \end{scope}
+  \end{tikzpicture} 
+}
+\caption{TODO.} \label{fig:aliasingexp}
+\end{figure}
 
-\end{test}
 
-\begin{randomfloat}[p]
-\begin{shaded}
-\begin{center}
-%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
-  \begin{tikzpicture}
-    \selectcolormodel{gray} 
-    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
-      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fouriertransformlecturevideo/ft.csv};
-    \end{axis}
-  \end{tikzpicture}
-\captionsetup{type=figure}
-\captionof{figure}{Magnitude of the Fourier transform of \SI{20}{\second} of audio from a lecture recording.  The human voice signal is primarily contained in the low frequency region below \SI{5}{\kilo\hertz}.  The spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude is elevated are audible in the recording as a high pitched hum.}\label{fig:test:fouriertransformlecturevideo}
-\end{center}
-
-\begin{center}
-%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps} 
-  \begin{tikzpicture}
-    \selectcolormodel{gray} 
-    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=7997.9,xmax=8002.1,xtick={7998,7999,8000,8001,8002},x tick label style={/pgf/number format/.cd,set thousands separator={},fixed}]
-      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fouriertransformlecturevideo/ft8k.csv};
-    \end{axis}
-  \end{tikzpicture}
-\captionsetup{type=figure} 
-\captionof{figure}{A plot of the magnitude of the Fourier transform zoomed in on the spike at \SI{8}{\kilo\hertz}.}\label{fig:test:fouriertransformlecturevideozoomed}
-\refstepcounter{figure} %for some reason the figure counter does not step here. Might have something to do with randomfloat.  Steping manually
-\end{center}
-\end{shaded}
-\end{randomfloat}
-
-\begin{randomfloat}[p]
-\begin{test}\label{test:butterworthfilteredlecturerec}
-(\textbf{Butterworth filtered lecture recording})
-
-We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlecturerec}.  In this test we pass this signal through the second order Butterworth filter from Test~\ref{test:butterworthfilter} with cuttoff frequency approximately \SI{3041}{\hertz}.  The output of the Butterworth filter is fed back to the soundcard input and recorded at \SI{22050}{\hertz}.  The recorded samples are written to the file \texttt{filtered.wav}.  Listening to \texttt{filtered.wav} confirms that the high pitched hum is weaker than it is in the original audio signal.  The Fourier transform of the Butterworth filtered signal is plotted in Figure~\ref{fig:test:butterworthedfouriertransformlecturevideo}.  This figure is constructed by the same procedure as used for Figure~\ref{fig:test:fouriertransformlecturevideo} from Test~\ref{test:ftlecturerec}.  Observe that the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ are less prominent than in Figure~\ref{fig:test:fouriertransformlecturevideo}.
-
-\begin{center}
-%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
-  \begin{tikzpicture}
-    \selectcolormodel{gray} 
-    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\hat{x}(f)}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
-      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/butterworthfilteredlecturerecording/ft.csv};
-    \end{axis}
-  \end{tikzpicture}
-\captionof{figure}{Magnitude of the Fourier transform of \SI{20}{\second} of audio from Test~\ref{test:ftlecturerec} after being passed through the second order Butterworth filter from Test~\ref{test:butterworthfilter} with cuttoff frequency approximately \SI{3041}{\hertz}.  The magnitude of the Fourier transform at higher frequencies is attenuated when compared with the Fourier transform of the original audio signal (Figure~\ref{fig:test:fouriertransformlecturevideo}).  In particular, the spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ are less prominent than in Figure~\ref{fig:test:fouriertransformlecturevideo}.  The high pitched hum that is audible in the original audio signal is significantly weaker in the Butterworth filtered audio signal.}\label{fig:test:butterworthedfouriertransformlecturevideo}
-\end{center}
-
-\end{test}
-\end{randomfloat}
-
-\clearpage
+%\clearpage
 
 \section{The fast Fourier transform}\label{sec:fast-four-transf}
 
