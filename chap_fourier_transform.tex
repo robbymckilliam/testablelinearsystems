@@ -125,7 +125,7 @@ Like the Laplace transform~\eqref{eq:timescalingpropertrylaplacetrans}, the Four
 \end{figure}
 
 
-T\section{The inverse transform and the Plancherel theorem}\label{sec:square-integr-sign}
+\section{The inverse transform and the Plancherel theorem}\label{sec:square-integr-sign}
 
 Given a signal $x$ we will often denote its Fourier transform by $\hat{x} = \calF x$.  Observe that $\hat{x}$, like $x$, is a function that maps a real number to a complex number, that is, $\hat{x}$ is a \term{signal} with independent variable representing frequency.  It is usual to call $\hat{x}$ the \term{frequency-domain} representation of the signal and $x$ the \term{time-domain} representation although the signal $x$ need not be a function of ``time''.  
 
@@ -156,7 +156,7 @@ Infact, the energy of $x$ and its Fourier transform $\hat{x}$ are the same, that
 These results are known as the \term{Plancherel theorem}~\cite[Th.~9.13]{Rudin_real_and_complex_analysis}.  The equality of energies in~\eqref{eq:parseval} is often called~\term{Parseval's identity}.  For our purposes it will suffice to remember only that the Fourier transform of the $\sinc$ function is the rectangular pulse $\rect$.  In this text, the $\sinc$ function is by far the most regularly occuring example of a signal that is square integrable, but not absolutely integrable.  
 If $x$ and $y$ are square integrable signals with Fourier transforms $\hat{x}$ and $\hat{y}$, then a consequence of~\eqref{eq:parseval} is
 \begin{equation} \label{eq:parsevalxy}
-\int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt \qquad \text{(Exercise~\ref{})}
+\int_{-\infty}^{\infty} x(t)y^*(t) dt = \int_{-\infty}^{\infty} \hat{x}(f)\hat{y}^*(f) dt \qquad \text{(Exercise~\ref{exer:parsevalconsq})}
 \end{equation}
 where the superscript $^*$ denotes the complex cojugate. This result often also goes by the name of Parseval's identity.
 
