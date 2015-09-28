@@ -43,5 +43,36 @@
 \newcommand{\calF}{{\mathcal F}}
 \newcommand{\calZ}{{\mathcal Z}}
 
-\newcommand{\harditem}{\stepcounter{enumi}\item[$*$\theenumi.]}
-\newcommand{\reallyharditem}{\stepcounter{enumi}\item[$**$\theenumi.]}
+%for randomly floating stuff, e.g. the tests 
+\newenvironment{randomfloat}{
+\begin{figure}
+}{
+\end{figure}
+\addtocounter{figure}{-1}
+}
+
+\newenvironment{hardexercise}{
+\renewcommand{\labelenumi}{$*$\theenumi.}
+}
+{
+\renewcommand{\labelenumi}{\theenumi}
+}
+
+\newenvironment{reallyhardexercise}{
+\renewcommand{\labelenumi}{$**$\theenumi.}
+}
+{
+\renewcommand{\labelenumi}{\theenumi}
+}
+
+\newenvironment{excersizelist}{%
+  \renewcommand{\theenumi}{\thechapter.\arabic{enumi}}%       
+%  \renewcommand{\labelenumi}{\theenumi}
+%  \newcommand\itemadvanced{\stepcounter{enumi}\item[$\ast$\, \theenumi.]}
+%  \newcommand{\harditem}{\stepcounter{enumi}\item[$*$\theenumi.]}
+  %\renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
+  %\renewcommand*{\labelenumi}{(\arabic{enumi})}%
+  \begin{enumerate}
+}{%
+  \end{enumerate}
+}

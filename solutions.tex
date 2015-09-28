@@ -151,24 +151,6 @@ cross/.default={1pt}
   \setfoot[][][]{}{}{}
 }
 
-%for randomly floating stuff, e.g. the tests 
-\newenvironment{randomfloat}{
-\begin{figure}
-}{
-\end{figure}
-\addtocounter{figure}{-1}
-}
-
-\newenvironment{excersizelist}{%
-  \renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
-  \newcommand\itemadvanced{\stepcounter{enumi}\item[$\ast$\, \theenumi.]}
-  %\renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
-  %\renewcommand*{\labelenumi}{(\arabic{enumi})}%
-  \begin{enumerate}
-}{%
-  \end{enumerate}
-}
-
 \usepackage{zref-xr,zref-user}
 \zexternaldocument*{main}
 \newcommand{\zeqref}[1]{(\zref{#1})}

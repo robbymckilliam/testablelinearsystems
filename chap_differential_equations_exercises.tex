@@ -15,7 +15,7 @@ y &= v_o + A(v_+ - v_-)
 \end{align*}
 The next two equations apply Kirchoff's current law to each node betweeen resistors.  The currents into the 3 way connection between $R_i, R_1$ and $R_2$ sum to zero, and so
 \[
-\frac{v_1}{R_1} + \frac{v_i}{R_i} = \frac{v_2}{R_2}
+\frac{v_1}{R_1} = \frac{v_2}{R_2} + \frac{v_i}{R_i}
 \]
 by Ohm's law.  Finally the currents through $R_o$ and $R_2$ are the same, and so
 \[
@@ -31,7 +31,7 @@ Simplify[Solve[{x == vm + v1,
    vm == y + v2,
    vm == vp + vi,
    y == vo + A*(vp - vm),
-   v1/r1 + vi/ri == v2/r2,
+   v1/r1 == vi/ri + v2/r2,
    vo/ro == v2/r2,
    vp == 0,
    r1 > 0, r2 > 0, ro > 0, ri > 0, A > 0},

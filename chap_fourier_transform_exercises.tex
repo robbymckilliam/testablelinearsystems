@@ -631,7 +631,7 @@ The sequence is bounded below any number greater than 1 because $\abs{\cos(x)} \
 
 \end{solution}
 
-\item Find the discrete time Fourier transform of the sequence $\alpha^n u_n$ where $\abs{\alpha} < 1$ and $u_n$ is the step sequence.  Plot the sequence and the magnitude of the discrete time Fourier transform when $\alpha = \tfrac{4}{5}, \tfrac{1}{2}, \tfrac{1}{10}$.
+\item \label{eq:dftalphanun} Find the discrete time Fourier transform of the sequence $\alpha^n u_n$ where $\abs{\alpha} < 1$ and $u_n$ is the step sequence.  Plot the sequence and the magnitude of the discrete time Fourier transform when $\alpha = \tfrac{4}{5}, \tfrac{1}{2}, \tfrac{1}{10}$.
 \begin{solution}
 The discrete time Fourier transform is
 \begin{align*}
@@ -720,7 +720,7 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
 \end{solution}
 
 
-\item \label{exer:parsevalconsq} Given~\eqref{eq:parseval} show that~\eqref{eq:parsevalxy} holds.
+\item \label{exer:parsevaltoparsevalxy} Given~\eqref{eq:parseval} show that~\eqref{eq:parsevalxy} holds.
 \begin{solution}
 \newcommand{\dotprod}[2]{\langle #1, #2 \rangle}
 From~\eqref{eq:parseval} we have that
@@ -746,7 +746,14 @@ And since $\|x\|_2^2 = \|\hat{x}\|_2^2$ and $\|y\|_2^2 = \|\hat{y}\|_2^2$ as a r
 which is precisely~\eqref{eq:parsevalxy}.
 \end{solution}
 
-\reallyharditem \label{exer:ftdftswapsummationldct}Let $c$ be an absolutely summable sequence.  Show that 
+\begin{reallyhardexercise}
+
+\item \label{exer:multiplicationtheoremsqrint} Let $x$ and $y$ be square integrable signals.  Show that $\calF(x y) = \hat{x} * \hat{y}$.
+\begin{solution}
+See~\url{http://math.stackexchange.com/questions/605232/fourier-transform-of-convolution-for-l2-functions#}.
+\end{solution}
+
+\item \label{exer:ftdftswapsummationldct} Let $c$ be an absolutely summable sequence.  Show that 
 \[
 \calF \sum_{n \in \ints} c_n \sinc(t-n) = \sum_{n \in \ints} c_n \calF (\sinc(t-n)).
 \]
@@ -799,7 +806,7 @@ which is precisely~\eqref{eq:parsevalxy}.
 %\end{solution}
 
 
-\reallyharditem \label{exer:ftdftswapsummationldct}Let $c$ be a square summable sequence and let  
+\item \label{exer:ftdftswapsummationldctcompleteness} Let $c$ be a square summable sequence and let  
 \[
 x(t) = \sum_{n \in \ints} c_n \sinc(t - n)
 \]
@@ -811,6 +818,8 @@ Find an example where equality does not hold pointwise.
 % \begin{solution}
 %TODO.  Use completeness
 % \end{solution}
+
+\end{reallyhardexercise}
 
 %BLERG. I'm pretty sure the exercise below requires the completeness of L^2, that's probably too hard!
 %\item \label{excer:sqrintseqtosqrintinterp} Let $\{x_n\}$ be a square summable sequence.  Show that the interpolated signal $x(t) = \sum_{n \in \ints} x_n \sinc(R t - n)$ where $R$ is a positive real number is square integrable. 

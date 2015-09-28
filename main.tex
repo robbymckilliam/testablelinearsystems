@@ -1,4 +1,3 @@
-
 %\RequirePackage[l2tabu, orthodox]{nag}
 \documentclass[11pt,a4paper]{book}
 %\documentclass[11pt,a4paper]{memoir}
@@ -154,24 +153,6 @@ cross/.default={1pt}
   \setfoot[][][]{}{}{}
 }
 
-%for randomly floating stuff, e.g. the tests 
-\newenvironment{randomfloat}{
-\begin{figure}
-}{
-\end{figure}
-\addtocounter{figure}{-1}
-}
-
-\newenvironment{excersizelist}{%
-  \renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
-  \newcommand\itemadvanced{\stepcounter{enumi}\item[$\ast$\, \theenumi.]}
-  %\renewcommand*{\theenumi}{\thechapter.\arabic{enumi}}%
-  %\renewcommand*{\labelenumi}{(\arabic{enumi})}%
-  \begin{enumerate}
-}{%
-  \end{enumerate}
-}
-
 %this is a bit nasty, but rewire zref to usual references for main document.  Exercises will use the zref package
 %when building solutions.
 \newcommand{\zref}[1]{\ref{#1}}
@@ -192,29 +173,29 @@ cross/.default={1pt}
 \mainmatter
 \pagestyle{main}
 
-\chapter{Signals and systems}
- \input{chap_signals_and_systems.tex}
- \input{chap_signals_and_systems_exercises.tex}
+% \chapter{Signals and systems}
+%  \input{chap_signals_and_systems.tex}
+%  \input{chap_signals_and_systems_exercises.tex}
 
-\chapter{Systems modelled by differential equations}\label{sec:syst-modell-diff}
- \input{chap_differential_equations.tex}
- \input{chap_differential_equations_exercises.tex}
+% \chapter{Systems modelled by differential equations}\label{sec:syst-modell-diff}
+%  \input{chap_differential_equations.tex}
+%  \input{chap_differential_equations_exercises.tex}
 
-\chapter{Linear shift-invariant systems} \label{sec:prop-line-time}
- \input{chap_linear_time_invariant_systems.tex}
- \input{chap_linear_time_invariant_systems_exercises.tex}
+% \chapter{Linear shift-invariant systems} \label{sec:prop-line-time}
+%  \input{chap_linear_time_invariant_systems.tex}
+%  \input{chap_linear_time_invariant_systems_exercises.tex}
 
-\chapter{The Laplace transform} \label{sec:laplace-transform}
- \input{chap_laplace_transform.tex}
- \input{chap_laplace_transform_exercises.tex}
+% \chapter{The Laplace transform} \label{sec:laplace-transform}
+%  \input{chap_laplace_transform.tex}
+%  \input{chap_laplace_transform_exercises.tex}
 
 \chapter{The Fourier transform}\label{sec:fourier-transform}
  \input{chap_fourier_transform.tex}
  \input{chap_fourier_transform_exercises.tex}
 
-\chapter{Discrete time systems} \label{cha:discr-time-syst}
- \input{chap_discrete_time_systems.tex}
- \input{chap_discrete_time_systems_exercises.tex}
+% \chapter{Discrete time systems} \label{cha:discr-time-syst}
+%  \input{chap_discrete_time_systems.tex}
+%  \input{chap_discrete_time_systems_exercises.tex}
 
 %\clearpage
 

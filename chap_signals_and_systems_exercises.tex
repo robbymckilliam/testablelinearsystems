@@ -223,6 +223,9 @@ for some $T > 0$.  Differentiating both sides twice with respect to $t$ gives
 \sin(t) + \pi^2 \sin(\pi t) = \sin(t + T) + \pi^2\sin(\pi t + T)
 \]
 Subtracting the first equation from the second gives $\sin(t) = \sin(t + T)$ and substituting this into the second equation gives $\sin(\pi t) = \sin(\pi t + T)$.  The equation $\sin(t) = \sin(t + T)$ implies that $T = 2\pi k$ for some integer $k \neq 0$.  The equation $\sin(\pi t) = \sin(\pi t + T)$ implies that $T = 2 \ell$ for some integer $\ell \neq 0$.  We would thus have $2\pi k = 2 \ell$ and so $\pi = \tfrac{\ell}{k}$. However, this is impossible because $\pi$ is irrational.  Thus $\sin(t) + \sin(\pi t)$ is not periodic.
+
+%An alternative argument derives from \citet[p~13]{Oppenheiim_sigs_sys_1996}.  Thanks to student Jerome De Vera for spotting this.  Observe that $\sin(t) + \sin(\pi t) = 0$ only when both $sin(t) = \sin(\pi t) = 0$.  This occurs only at $t = 0$ because $sin(t) = 0$ only for $t = \pi q$ with $q \in \int$ and $\sin(\pi t) = 0$ only for $t = p \in \ints$.  Suppose that both $\sin(t) = \sin(\pi t) = 0$ for some nonzero $t = \pi p = q$.  Then $\pi = p/q$ would be rational.  However, $\pi$ is not rational and so no such $p$ and $q$ exist.
+
 \end{solution}
 
 %\item \label{exer:triangleineq} (Triangle inequality) With $a$ and $b$ complex numbers show that $\abs{a + b} \leq \abs{a} + \abs{b}$ and that $\tfrac{1}{2}\abs{a + %b}^2 \leq \abs{a}^2 + \abs{b}^2$.
