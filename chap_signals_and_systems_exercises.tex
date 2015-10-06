@@ -340,7 +340,24 @@ I_au(t+a) = \int_{-a}^t u(\tau + a)d\tau = \begin{cases}
 and this is not a bounded signal, that is, for every $K$ we have $t + a > K$ whenever $t > K - a$.
 \end{solution}
 
-\item \label{excer:domainintegrator} Show that if the signal $x$ is locally integrable and $\int_{-\infty}^0\abs{x(t)}dt < \infty$ then $I_\infty x(t) = \int_{-\infty}^t x(t) dt < \infty$ for all $t \in \reals$.
+% \item \label{exer:absintleqintabs}Let $x$ be a locally integrable signal.  Show that
+% \[
+% \abs{\int_a^b x(t) dt} \leq \int_a^b \abs{x(t)} dt
+% \]
+% for all real constants $a$ and $b$.  Show that the same result applies with $a$ and/or $b$ set to $\pm \infty$ when $x$ is absolutely integrable.
+% \begin{solution}
+% This is Theorem~1.33 of \cite{Rudin_real_and_complex_analysis}.  Let $\alpha$ be the complex number 
+% \[
+% \alpha = \int_a^b x(t) dt
+% \]
+% (the existance/finiteness of $\alpha$ is guaranteed by our assumption that $x$ is locally integrable).  Let $\theta = \angle \alpha$ be the complex argument of $\alpha$ so that $e^{-j \theta}\alpha = \abs{\alpha}$ is the real valued magnitude of $\alpha$. Now
+% \[
+% \abs{\alpha} = \abs{\int_a^b x(t) dt} = e^{-j\theta} \int_a^b x(t) dt \leq \int_a^b e^{-j\theta} x(t) dt = \int_a^b \abs{x(t)} dt
+% \]
+% as required.  The result follows in the same maner if $x$ is absolutely integrable and 
+% \end{solution}
+
+\item \label{excer:domainintegrator} Show that if the signal $x$ is locally integrable and $\int_{-\infty}^0\abs{x(t)}dt < \infty$ then $I_\infty x(t) = \int_{-\infty}^t x(t) dt < \infty$ for all $t \in \reals$. %(Hint: solve Exercise~\ref{exer:absintleqintabs} first).
 \begin{solution}
 We have
 \begin{align*}

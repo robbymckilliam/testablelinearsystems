@@ -602,6 +602,7 @@ as required.
 
 \end{solution}
 
+
 \item Plot the sequence $\cos(n)$ and determine whether it is bounded or periodic.
 \begin{solution}
 A plot is below.  
@@ -819,10 +820,41 @@ Find an example where equality does not hold pointwise.
 %TODO.  Use completeness
 % \end{solution}
 
-\end{reallyhardexercise}
+\item \label{exer:absintperiodsumexists} Let $x$ be an absolutely integrable signal.  Show that the periodic summation $\sum_{m \in \ints} x(t + mP)$ is a locally integrable signal.  Show that this is not necessarily true if $x$ is square integrable, but not absolutely integrable.
+% \begin{solution}
+%TODO: Use monotone convergence followed by dominated convergence (actually used Theorem 1.38 from Rudin).  
+%For square integrable, use $x(t) = 1/(\abs{t}+1)$
+% Define signals
+% \[
+% y_M(t) = \sum_{m = -M}^M x(t + mP).
+% \]
+% so that the periodic summation is represented by $y(t) = \lim_{M \to \infty} y_M(t)$.  We will show that
+% \[
+% \int_{0}^P \abs{y(t)} < \infty.
+% \]
+% The locally integrability of $y$ will then follow from the fact that $y$ is periodic with period $P$.  Define the sequence of signals
+% \[
+% g_M(t) = \sum_{m = -M}^M \abs{x(t + mP)}
+% \]
+% and the let $g(t) = \lim_{M \to \infty} g_M(t)$.  We have $0 \leq g_1(t) \leq g_2(t) \leq \dots$ for all $t \in [a,b]$.  The monotone convergence theorem~\cite[Theorem~1.26]{Rudin_real_and_complex_analysis} now ensures that
+% \[
+% \int_{0}^F g(t) = \lim_{M \to \infty}  \int_{0}^P g_M(t) dt = \lim_{M \to \infty}  \sum_{m = -M}^M \int_{0}^P \abs{x(k)} dt.
+% \]
+% By the change of variables $k = t + mP$ the right hand side becomes
+% \[
+% \lim_{M \to \infty}  \sum_{m = -M}^M \int_{mP}^{P + mP} \abs{x(k)} dk = \int_{-\infty}^\infty \abs{x(k)} dk = \|x\|_1 < \infty
+% \]
+% by our assumption that $x$ is absolutely integrable.  It follows that $\int_{0}^F g(t) = \|x\|_1$ is finite.  Now 
+% so that $y(t) = \lim_{M\to\infty} y_M(t)$.  Observe that $g(t)$
+%\end{solution}
+
 
 %BLERG. I'm pretty sure the exercise below requires the completeness of L^2, that's probably too hard!
 %\item \label{excer:sqrintseqtosqrintinterp} Let $\{x_n\}$ be a square summable sequence.  Show that the interpolated signal $x(t) = \sum_{n \in \ints} x_n \sinc(R t - n)$ where $R$ is a positive real number is square integrable. 
+
+
+\end{reallyhardexercise}
+
 
 
 \end{excersizelist}

@@ -978,7 +978,7 @@ where
 \begin{equation}\label{eq:disctransintro}
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \end{equation}
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} is justified by \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal.  The fundamental period of $\hat{c}$ is $1$.  For example, the discrete time Fourier transform of the delta sequence is 
+is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} is justified by \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal with period $1$.  For example, the discrete time Fourier transform of the delta sequence is 
 \[
 \calD \delta(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f} = 1. 
 \]
@@ -993,11 +993,9 @@ has discrete time Fourier transform
 \[
 \calD\big( \rect(n/2) ) = e^{-2\pi j  f} + 1 + e^{2\pi j f} = 1 + 2\cos(2\pi f)
 \]
-and the sequence $2^{-n} u_n$ has discrete time Fourier transform
+and the sequence $2^{-n} u_n$ has discrete time Fourier transform (Exercise~\ref{eq:dftalphanun})
 \begin{align*}
-\calD\big( 2^{-n} u_n \big) &=  \sum_{n \in \ints} 2^{-n} u_n e^{-j 2\pi n f} \\
-&= \sum_{n = 0}^\infty \frac{e^{-j 2\pi n f}}{2^n} \\
-&= \frac{2}{2 -  e^{-j 2\pi f}} \qquad \text{(Exercise~\ref{eq:dftalphanun})}.
+\calD\big( 2^{-n} u_n \big) =  \sum_{n \in \ints} 2^{-n} u_n e^{-j 2\pi n f} = \sum_{n = 0}^\infty \frac{e^{-j 2\pi n f}}{2^n} = \frac{2}{2 -  e^{-j 2\pi f}}.
 \end{align*}
 These sequences and their discrete time Fourier transforms are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.  
 
@@ -1226,7 +1224,7 @@ This is analogous to how the Fourier transform of a square integrable signal was
     \vtick{-0.5} node[pos=0.5,below] {$-\tfrac{1}{2}$};
   \end{scope}
 \end{tikzpicture} 
-\caption{The sequences $\delta$ and $\rect(n/2)$ and their discrete time Fourier transform (top and middle). The sequence $2^{-n} u_n$ and the magnitude of its discrete time Fourier transform $4/(5-4\cos(2\pi f))$ (bottom).  The discrete time Fourier transforms are periodic signals with fundamental period 1.} \label{fig:discretetimefouriertransexamples}
+\caption{The sequences $\delta$ and $\rect(n/2)$ and their discrete time Fourier transforms (top and middle). The sequence $2^{-n} u_n$ and the magnitude of its discrete time Fourier transform $4/(5-4\cos(2\pi f))$ (bottom).  The discrete time Fourier transforms are periodic signals with period 1.} \label{fig:discretetimefouriertransexamples}
 \end{figure}
 }
 
@@ -1245,7 +1243,7 @@ The right hand side of this expression is called the~\term{inverse discrete time
 The element $c_{-n}$ is also known as the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$.
 
 % %Suppose now that the Fourier transform $\hat{x}$ is absolutely integrable.  
-Because $\hat{c}(f)$ has period $1$ it follows that $\hat{c}(Pf)$ has period $F = \tfrac{1}{P}$.  The rectangle function $\rect(Pf)$ occuring in~\eqref{eq:ftanddftrelationship} takes the value $1$ on the interval $(-F/2, F/2)$ and so the product $\rect(Pf)\hat{c}(Pf)$ corresponds with a single period centered at the origin.  This suggests reconstructing $\hat{c}(f) = D c(Pf)$ by summing shifts of $\hat{x}$ by $F$, that is,
+Because $\hat{c}(f)$ has period $1$ it follows that $\hat{c}(Pf)$ has period $F = \tfrac{1}{P}$.  The rectangle function $\rect(Pf)$ occuring in~\eqref{eq:ftanddftrelationship} takes the value $1$ on the interval $(-F/2, F/2)$ and so the product $\rect(Pf)\hat{c}(Pf)$ corresponds with a single period centered at the origin.  This suggests reconstructing $\hat{c}$ by summing shifts of $\hat{x}$ by $F$, that is,
 \[
 P \hat{c}(Pf) = \sum_{m \in \ints} P \rect(Pf + m) \calD c(Pf + m) = \sum_{m \in \ints} \hat{x}(f + mF) \qquad \text{a.e.}
 \]
@@ -1257,7 +1255,7 @@ This relationship provides a convenient means of determining the discrete time F
 
 In the case that $x$ is bandlimited with bandwidth $b < F/2$ the Fourier transform $\hat{x}$ can be recovered from its periodic summation by multiplying by the rectangle function $\rect(Pf)$. Equation~\eqref{eq:ftanddftrelationship} is reobtained in this way.  This effect can be seen in the top plot in Figure~\ref{eq:ftanddftrelationship} whereby multiplication of the periodic summation on the right by $\rect(f)$ recovers the rectangular pulse centered and the origin.  Recovery of $\hat{x}$ in this way is not possible if $x$ has bandwidth larger than $F/2$.  Consider, for example, the middle and bottom plots in Figure~\ref{fig:periodisedfunctions} where multiplication of the periodic summation on the right by $\rect(f)$ would not recover the original signals on the left.  
 
-While the relationship~\eqref{eq:ftanddftrelationship} requires $x$ to be bandlimited with bandwidth $b < F/2$,  the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ at period $P$.  To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a well defined signal.  This will be the case if $\hat{x}$ is absolutely integrable, for example.  In this case, applying the inverse discrete time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
+While the relationship~\eqref{eq:ftanddftrelationship} requires $x$ to be bandlimited with bandwidth $b < F/2$,  the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ at period $P$.  To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a well defined signal.  This will be the case if $\hat{x}$ is absolutely integrable, for example (Exercise~\ref{exer:absintperiodsumexists}).  In this case, applying the inverse discrete time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
 \[
 c_n = \int_{-1/2}^{1/2} F \sum_{m \in \ints} \hat{x}(Ff + Fm)  e^{j 2\pi f n } df.
 \]
@@ -1275,11 +1273,7 @@ c_n = \int_{-\infty}^{\infty} \hat{x}(\gamma)  e^{j 2\pi \gamma n/F} d\gamma = \
 \]
 where the integral is identified as the inverse Fourier transform of $\hat{x}$~\eqref{eq:inversefouriertransform}.  We have found that the sequence $c$ with discrete time Fourier transform $F \sum_{n\in\ints} \hat{x}(Ff + Fm)$ is precisely the samples of the signal $x$ at period $P = \tfrac{1}{F}$.  This does not require that $x$ be bandlimited.  
 
-The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform
-\[
-\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)
-\]
-and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples and corresponding discrete time Fourier transform are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is refered to as \term{aliasing}.
+The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform $\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)$ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples $c_n = x(nP)$ and corresponding discrete time Fourier transform $\hat{c}$ are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is refered to as \term{aliasing}.
 
 
 %Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
@@ -1411,7 +1405,7 @@ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b <
     \end{scope}
   \end{tikzpicture} 
 } 
-\caption{Signals $\rect(3Pf/2)$ (top), $e^{-\pi P^2 f^2}$ (middle), and $f \rect(Pf/2)\big(1 + \cos(\pi P f)\big)$ (bottom) and periodic summations $\sum_{m\in\ints}x(f + Fm)$ where $F = 1/P$. The periodic summation is shown by the solid lines on the left.  The dashed lines are the individual translations being summed.} \label{fig:periodisedfunctions}
+\caption{Signals $x$ and their periodic summations $\sum_{m\in\ints}x(f + Fm)$ where $F = 1/P$. The periodic summation is shown by the solid lines on the left.  The dashed lines are the individual translations being summed.} \label{fig:periodisedfunctions}
 \end{figure}
 
 
