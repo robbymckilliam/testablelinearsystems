@@ -1279,7 +1279,7 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
 \[
 \rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)
 \]
-and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = P e^{-\pi P^2 f^2}$.  This signal is not bandlimited.  The samples and corresponding discrete time Fourier transform are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is refered to as \term{aliasing}.
+and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples and corresponding discrete time Fourier transform are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is refered to as \term{aliasing}.
 
 
 %Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
@@ -1424,93 +1424,97 @@ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b <
   \def\expsig(#1){exp(-(#1)*(#1)*\F*\F*\PI/2)}
   \def\Fexpsig(#1){sqrt(2)*\P*exp(-(#1)*(#1)*\P*\P*\PI*2)}
   \def\rectangle(#1){(\step(#1+1)-\step(#1-1))}
+  \def\sincfunc(#1){(sin(\PI*(#1))/(\PI*(#1)))}
   \def\scaley{2}
+  \def\scalex{0.75}
   \def\scaleyF{2/sqrt(2)}
-  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
-    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$x(t) = e^{-\pi F^2 t^2/4}$};
+  \begin{tikzpicture}[xscale=\scalex,yscale=\scaley,domain=-2.5/\scalex:2.5/\scalex,samples=100]
+    \draw[->] (-2.8/\scalex,0) -- (2.8/\scalex,0) node[above] {$t$};
+    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$x(t) = e^{-\pi F^2 t^2/2}$};
     \draw[smooth,color=black,thick] plot function{\expsig(x)};
     \htick{1} node[pos=0.5,above left] {$1$};
     \begin{scope}[yscale=1/\scaley]
       \vtick{1} node[pos=0.5,below] {$P$};
       \vtick{-1} node[pos=0.5,below] {$-P$};
-      \vtick{2} node[pos=0.5,below] {$2P$};
-      \vtick{-2} node[pos=0.5,below] {$-2P$};
+      %\vtick{2} node[pos=0.5,below] {$2P$};
+      %\vtick{-2} node[pos=0.5,below] {$-2P$};
     \end{scope}
   \end{tikzpicture} 
   \;\;
   \begin{tikzpicture}[yscale=\scaleyF,domain=-2.4:2.4,samples=100]
     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.35) -- (0,1.4*1.4142) node[above] {$\hat{x}(f) = 2Pe^{-4\pi P^2 t^2}$};
+    \draw[->] (0,-0.35*1.4142) -- (0,1.4*1.4142) node[above] {$\hat{x}(f) = \sqrt{2}Pe^{-2\pi P^2 t^2}$};
     \draw[smooth,color=black,thick] plot function{\Fexpsig(x)};
-    \htick{1} node[pos=0.5,above left] {$P$};
+    \htick{1.41412} node[pos=0.5,above left] {$\sqrt{2} P$};
     \begin{scope}[yscale=1/\scaley]
       \vtick{1} node[pos=0.5,below] {$F$};
       \vtick{-1} node[pos=0.5,below] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,below] {$-2F$};
+      %\vtick{2} node[pos=0.5,below] {$2F$};
+      %\vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
  \\
  \vspace{1cm}
-  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
-    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$x(t) = e^{-\pi F^2 t^2}$};
-    \draw[smooth,color=black,thick] plot function{\expsig(x)};
+  \begin{tikzpicture}[xscale=\scalex,yscale=\scaley,domain=-3:3]
+    \draw[->] (-2.8/\scalex,0) -- (2.8/\scalex,0) node[above] {$t$};
+    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$c_n = x(nP) = e^{-\pi n^2/2}$};
+    \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},samples=7] plot function{\expsig(x)};
+    \htick{1} node[pos=0.5,above left] {$1$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      %\vtick{2} node[pos=0.5,below] {$2P$};
+      %\vtick{-2} node[pos=0.5,below] {$-2P$};
+    \end{scope}
+  \end{tikzpicture} 
+  \;\;
+  \begin{tikzpicture}[yscale=\scaleyF,domain=-2.5:2.5,samples=100]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (0,-0.35*1.4142) -- (0,1.4*1.4142) node[above] {$\hat{c}(f) = F \sum_{m \in \ints} \hat{x}(Ff + Fm)$};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x-3)};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x-2)};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x-1)};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x)};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x+1)};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x+2)};
+    \draw[smooth,color=black,dashed] plot function{\Fexpsig(x+3)};
+    \draw[smooth,color=black,thick] plot function{\Fexpsig(x-3)+\Fexpsig(x-2)+\Fexpsig(x-1)+\Fexpsig(x)+\Fexpsig(x+1)+\Fexpsig(x+2)+\Fexpsig(x+3)};
+    \htick{1.41412} node[pos=0.5,above left] {$\sqrt{2}$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+      %\vtick{2} node[pos=0.5,below] {$2F$};
+      %\vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+ \\
+  \vspace{1cm}
+  \begin{tikzpicture}[xscale=\scalex,yscale=\scaley,domain=-2.5/\scalex:2.5/\scalex,samples=100]
+    \draw[->] (-2.8/\scalex,0) -- (2.8/\scalex,0) node[above] {$t$};
+    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$\sum_{n \in \ints} c_n \sinc(Ft - n)$};
+    \draw[smooth,color=black,thick] plot function{(\expsig(-2)*\sincfunc(\F*x+2)) + (\expsig(-1)*\sincfunc(\F*x+1)) + (\expsig(0)*\sincfunc(\F*x)) + (\expsig(1)*\sincfunc(\F*x-1)) + (\expsig(2)*\sincfunc(\F*x-2))};
+%     \draw[smooth,color=black,thick] plot function{(\expsig(0)*\sincfunc(x))};
     \htick{1} node[pos=0.5,above left] {$1$};
     \begin{scope}[yscale=1/\scaley]
       \vtick{1} node[pos=0.5,below] {$P$};
       \vtick{-1} node[pos=0.5,below] {$-P$};
-      \vtick{2} node[pos=0.5,below] {$2P$};
-      \vtick{-2} node[pos=0.5,below] {$-2P$};
+      %\vtick{2} node[pos=0.5,below] {$2P$};
+      %\vtick{-2} node[pos=0.5,below] {$-2P$};
     \end{scope}
   \end{tikzpicture} 
   \;\;
-  \begin{tikzpicture}[yscale=\scaleyF,domain=-2.4:2.4,samples=100]
+  \begin{tikzpicture}[yscale=\scaleyF]
     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.35) -- (0,1.4*1.4142) node[above] {$\hat{x}(f) = Pe^{-\pi P^2 t^2}$};
-    \draw[smooth,color=black,thick] plot function{\Fexpsig(x)};
-    \htick{1} node[pos=0.5,above left] {$P$};
+    \draw[->] (0,-0.35*1.4142) -- (0,1.4*1.4142) node[above] {$P \rect( f P ) \hat{c}(Pf)$};
+    \draw[color=black,thick] (-2.5,0) -- (-0.5,0) -- plot[smooth,domain=-0.5:0.5,samples=50] function{\Fexpsig(x)}-- (0.5,0) -- (2.5,0);
+    \htick{1.41412} node[pos=0.5,above left] {$\sqrt{2} P$};
     \begin{scope}[yscale=1/\scaley]
       \vtick{1} node[pos=0.5,below] {$F$};
       \vtick{-1} node[pos=0.5,below] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,below] {$-2F$};
+      %\vtick{2} node[pos=0.5,below] {$2F$};
+      %\vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
-% \\
-% \vspace{1cm}
-%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-%     \draw[->] (0,-0.35) -- (0,1.2) node[above] {$e^{-\pi P^2 f^2}$};
-%     \draw[smooth,color=black,thick] plot function{\f(x)};
-%     % \htick{1} node[pos=0.5,above left] {$1$};
-%     \begin{scope}[yscale=1/\scaley]
-%       \vtick{1} node[pos=0.5,below] {$1$};
-%       \vtick{-1} node[pos=0.5,below] {$-1$};
-%       \vtick{2} node[pos=0.5,below] {$2$};
-%       \vtick{-2} node[pos=0.5,below] {$-2$};
-%     \end{scope}
-%   \end{tikzpicture} 
-%   \;\;
-%   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-%     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-%     \draw[->] (0,-0.35) -- (0,1.2) node[above] {};
-%     \draw[smooth,color=black,dashed] plot function{\f(x)};
-%     \draw[smooth,color=black,dashed] plot function{\f(x+1)};
-%     \draw[smooth,color=black,dashed] plot function{\f(x+2)};
-%     \draw[smooth,color=black,dashed] plot function{\f(x+3)};
-%     \draw[smooth,color=black,dashed] plot function{\f(x-1)};
-%     \draw[smooth,color=black,dashed] plot function{\f(x-2)};
-%     \draw[smooth,color=black,dashed] plot function{\f(x-3)};
-%     \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
-%     \begin{scope}[yscale=1/\scaley]
-%       \vtick{1} node[pos=0.5,below] {$1$};
-%       \vtick{-1} node[pos=0.5,below] {$-1$};
-%       \vtick{2} node[pos=0.5,below] {$2$};
-%       \vtick{-2} node[pos=0.5,below] {$-2$};
-%     \end{scope}
-%   \end{tikzpicture} 
 }
 \caption{TODO.} \label{fig:aliasingexp}
 \end{figure}
@@ -1551,7 +1555,7 @@ c_n = (\calD_N^{-1}d)_n = \frac{1}{N}\sum_{k = 0}^{N-1} d_k e^{j 2\pi n k / N} \
 \]
 This is called the \term{inverse discrete Fourier transform} (Excersise~\ref{exer:inversedft}). Taking complex conjugates on both sides gives
 \[
-c_n^* = \frac{1}{N} \sum_{k = 0}^{N-1} d_k^* e^{-j 2\pi n k / N} = \frac{1}{N} \calD_N(d^*, n)  \qquad n = 0, \dots, N-1.
+c_n^* = \frac{1}{N} \sum_{k = 0}^{N-1} d_k^* e^{-j 2\pi n k / N} = \frac{1}{N} (\calD_N d^*)_n  \qquad n = 0, \dots, N-1.
 \]
 A practical consequence of this is that the inverse discrete Fourier transform can be evaluted by applying the complex conjugate, taking the discrete Fourier transform, applying the complex conjugate again, and finally dividing by $N$.  That is, if $d$ is a sequence, then $\calD_N^{-1} d = \tfrac{1}{N}\calD_N^* d^*$.
 
