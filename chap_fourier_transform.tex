@@ -1273,7 +1273,7 @@ c_n = \int_{-\infty}^{\infty} \hat{x}(\gamma)  e^{j 2\pi \gamma n/F} d\gamma = \
 \]
 where the integral is identified as the inverse Fourier transform of $\hat{x}$~\eqref{eq:inversefouriertransform}.  We have found that the sequence $c$ with discrete time Fourier transform $F \sum_{n\in\ints} \hat{x}(Ff + Fm)$ is precisely the samples of the signal $x$ at period $P = \tfrac{1}{F}$.  This does not require that $x$ be bandlimited.  
 
-The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform $\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)$ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples $c_n = x(nP)$ and corresponding discrete time Fourier transform $\hat{c}$ are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is refered to as \term{aliasing}.
+The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform $\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)$ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples $c_n = x(nP)$ and corresponding discrete time Fourier transform $\hat{c}$ are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is referred to as \term{aliasing}.
 
 
 %Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
@@ -1510,7 +1510,7 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
     \end{scope}
   \end{tikzpicture} 
 }
-\caption{TODO.} \label{fig:aliasingexp}
+\caption{Top: the signal $x(t) = e^{-\pi F^2 t^2/2}$ and its Fourier transform $\hat{x}(f) = \sqrt{2}Pe^{-2\pi P^2 t^2}$.  Middle: the sequence of samples $c_n = x(nP)$ and discrete time Fourier transform $\hat{c}$ related to the periodic summation of $\hat{x}$.  Bottom: The bandlimited signal reconstructed from the sequence $c$ and its Fourier transform.  Observe that the reconstructed bandlimited signal is not equal to the original signal $x$.  The translates of the Fourier transform $\hat{x}$ overlap the translate at the origin, a phenomenon referred to as \term{aliasing}.} \label{fig:aliasingexp}
 \end{figure}
 
 
