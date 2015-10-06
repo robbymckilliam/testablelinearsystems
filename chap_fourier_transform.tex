@@ -1421,13 +1421,14 @@ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b <
   \def\PI{3.141592}
   \def\F{1.0}
   \def\P{(1/\F)}
-  \def\expsig(#1){exp(-(#1)*(#1)*\F*\F*\PI)}
-  \def\Fexpsig(#1){\P*exp(-(#1)*(#1)*\P*\P*\PI)}
+  \def\expsig(#1){exp(-(#1)*(#1)*\F*\F*\PI/2)}
+  \def\Fexpsig(#1){sqrt(2)*\P*exp(-(#1)*(#1)*\P*\P*\PI*2)}
   \def\rectangle(#1){(\step(#1+1)-\step(#1-1))}
   \def\scaley{2}
+  \def\scaleyF{2/sqrt(2)}
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
-    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$x(t) = e^{-\pi F^2 t^2}$};
+    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$x(t) = e^{-\pi F^2 t^2/4}$};
     \draw[smooth,color=black,thick] plot function{\expsig(x)};
     \htick{1} node[pos=0.5,above left] {$1$};
     \begin{scope}[yscale=1/\scaley]
@@ -1438,9 +1439,9 @@ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b <
     \end{scope}
   \end{tikzpicture} 
   \;\;
-  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+  \begin{tikzpicture}[yscale=\scaleyF,domain=-2.4:2.4,samples=100]
     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$\hat{x}(f) = Pe^{-\pi P^2 t^2}$};
+    \draw[->] (0,-0.35) -- (0,1.4*1.4142) node[above] {$\hat{x}(f) = 2Pe^{-4\pi P^2 t^2}$};
     \draw[smooth,color=black,thick] plot function{\Fexpsig(x)};
     \htick{1} node[pos=0.5,above left] {$P$};
     \begin{scope}[yscale=1/\scaley]
@@ -1465,9 +1466,9 @@ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b <
     \end{scope}
   \end{tikzpicture} 
   \;\;
-  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
+  \begin{tikzpicture}[yscale=\scaleyF,domain=-2.4:2.4,samples=100]
     \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$\hat{x}(f) = Pe^{-\pi P^2 t^2}$};
+    \draw[->] (0,-0.35) -- (0,1.4*1.4142) node[above] {$\hat{x}(f) = Pe^{-\pi P^2 t^2}$};
     \draw[smooth,color=black,thick] plot function{\Fexpsig(x)};
     \htick{1} node[pos=0.5,above left] {$P$};
     \begin{scope}[yscale=1/\scaley]
