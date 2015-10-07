@@ -221,26 +221,36 @@ We have found that the spectrum of a stable discrete time system is periodic wit
 
 To see how this works, consider the bandlimited signal $x$ with Fourier transform
 \[
-\calF(x) = \rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2).
+\calF(x) = \rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \tfrac{1}{2} \rect(2f + 3) \big)
 \]
-The Fourier transform is plotted is Figure~\ref{fig:bandlimiteddiscretetimefiltering} (dashed line).  The Fourier transform has a raised cosine pulse centered at the origin and two rectangular pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the raised cosine at the origin and that the two rectangular pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  Because the signal has bandwidth $\tfrac{7}{4}$ the spectrum of this filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  Because of this, a discrete time system with sample rate $F > 2b = \frac{7}{2}$ (and so spectrum with period larger than $\tfrac{7}{2}$) can be configured as a low pass filter.  A discrete time system configured for this purpose is called a low pass~\term{digital filter}.
+The Fourier transform is plotted is Figure~\ref{fig:bandlimiteddiscretetimefiltering} (dashed line).  The Fourier transform has a rectangular pulse centered at the origin and raised cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two raised cosine pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  For example, an ideal lowpass filter (Section~\ref{}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{1}{2} )$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the recangular pulse at the origin and remove the two raised cosine pulses.  The impulse response of these ideal lowpass filter is $2c\sin(2ct)$.
 
-A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
+The same effect can be achieved with a discrete time system. Because the signal has bandwidth $b = \tfrac{7}{4}$ the spectrum of this filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  Let $H$ be the discrete time system with discrete impulse response $h_n = 2cP \sinc(2c Pn)$ and period $P = \tfrac{1}{F}$ with $F > 2b = \frac{7}{2}$.  The discrete time Fourier transform of $h$ is given by~\eqref{eq:dftsignalperiodicsumP},
 \[
-c_n = 3 d_n - 2 d_{n-1}.
-\]
-Let $H$ be the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with this difference equation.  The spectrum of $H$ is
+\hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right)
+\] 
+and so the spectrum of $H$ is
 \[
-\Lambda(H,f) = \frac{e^{\pi f j/2}}{3 e^{\pi f j/2} - 2}.
+\Lambda H(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
 \]
-The magnitude spectrum is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (gray).  The magnitude spectrum takes its maximum value $\abs{\Lambda(H,0)} = 1$ at $f$ a multiple of $F = 4$ and minimum value $\abs{\Lambda(H,2)} = \tfrac{1}{5}$ at frequencies $f = (k + \tfrac{1}{2})F$ for $k \in \ints$.  The magnitude spectrum takes the value $\frac{1}{\sqrt{2}}$ at frequences of the form
-\[
-f = 4k + \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 4k + 0.167754.
-\]
-On the interval $[-F/2,F/2]$ this discrete time system acts as a lowpass filter with cuttoff frequency approximately 
-\[
-\frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 0.167754.
-\]
+The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$.  Observe that A discrete time system configured for this purpose is called a low pass~\term{digital filter}.
+
+% A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
+% \[
+% c_n = 3 d_n - 2 d_{n-1}.
+% \]
+% Let $H$ be the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with this difference equation.  The spectrum of $H$ is
+% \[
+% \Lambda(H,f) = \frac{e^{\pi f j/2}}{3 e^{\pi f j/2} - 2}.
+% \]
+% The magnitude spectrum is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (gray).  The magnitude spectrum takes its maximum value $\abs{\Lambda(H,0)} = 1$ at $f$ a multiple of $F = 4$ and minimum value $\abs{\Lambda(H,2)} = \tfrac{1}{5}$ at frequencies $f = (k + \tfrac{1}{2})F$ for $k \in \ints$.  The magnitude spectrum takes the value $\frac{1}{\sqrt{2}}$ at frequences of the form
+% \[
+% f = 4k + \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 4k + 0.167754.
+% \]
+% On the interval $[-F/2,F/2]$ this discrete time system acts as a lowpass filter with cuttoff frequency approximately 
+% \[
+% \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 0.167754.
+% \]
 
 \begin{figure}[tp]
   \centering

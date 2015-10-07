@@ -80,7 +80,7 @@ These results are sometimes called the \term{modulation properties} of the Fouri
 \calF\big( \cos(2\pi \gamma t) \big) = \tfrac{1}{2} \delta(f - \gamma) + \tfrac{1}{2} \delta(f + \gamma),
 \]
 \[
-\calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(f - \gamma) - \tfrac{1}{2j} \delta(f + \gamma),
+\calF\big( \sin(2\pi \gamma t) \big) = \tfrac{1}{2j} \delta(f - \gamma) - \tfrac{1}{2j} \delta(f + \gamma).
 \]
 These conventions are common in the literature~\citep{Oppenheiim_sigs_sys_1996,Proakis_digital_comms}, but must be treated with caution.  There is no guarantee that mechanical mathematical manipulations involving these conventions will lead to sensible results.
 %  and the following
@@ -867,7 +867,7 @@ This result known as the \term{Nyquist sampling theorem}.  %When a signal $x$ is
 This motivated use of this recontruction method in Tests~\ref{test:voltagedividertest1},~\ref{test:opampinvertingamplifiertest1},~\ref{test:activeRCtest}, and~\ref{test:activeRCtestagain}.
 
 {
-\def\sincf(#1){sin(pi*(#1))/(pi*(#1))} %step function
+\def\sincf(#1){sin(pi*(#1))/(pi*(#1))} %sinc function
 \begin{figure}[p]
   \centering
   \begin{tikzpicture}[domain=-4.8:4.8,samples=100]
@@ -1182,7 +1182,7 @@ This is analogous to how the Fourier transform of a square integrable signal was
 \begin{tikzpicture}
   \begin{scope}[xscale=2,yscale=0.75]
     \draw[->] (-1.35,0) -- (1.35,0) node[above] {$f$};
-    \draw[->] (0,-1.066) -- (0,3.466) node[above] {$\calD\big(\rect(n/2)\big)$};
+    \draw[->] (0,-1.066) -- (0,3.466) node[above] {$\calD\big(\rect(n/2)\big) = 1 + 2\cos(2\pi f)$};
     \draw[smooth,color=black,thick,domain=-1.25:1.25,samples=50] plot function{\Dcrectseq(x)};
   \end{scope}
   \begin{scope}[yscale=0.75]
@@ -1232,8 +1232,8 @@ Equation~\eqref{eq:ftanddftrelationship} relates the Fourier transform of the ba
 \begin{align*}
 c_n = x(nP) &= \calF^{-1}\hat{x}(nP) \\
 &= \int_{-\infty}^\infty P \rect(Pf) \calD c(Pf) e^{j2\pi f nP} df \\
-&= P \int_{-F/2}^{F/2} \hat{c}(Pf) e^{j2\pi f nP } df \\
-&= \int_{-1/2}^{1/2} \hat{c}(\gamma) e^{j 2\pi \gamma n } d\gamma \qquad \text{(change variable $\gamma = fP$)}.
+&= \int_{-\infty}^{\infty} \rect(\gamma) \hat{c}(\gamma) e^{j2\pi \gamma n } d\gamma \qquad \text{(change variable $\gamma = fP$)} \\
+&= \int_{-1/2}^{1/2} \hat{c}(\gamma) e^{j 2\pi \gamma n } d\gamma.
 \end{align*}
 We obtain the following relationship between the square integrable sequence $c$ and its periodic discrete time Fourier transform $\hat{c} = \calD c$,
 \[
@@ -1243,19 +1243,70 @@ The right hand side of this expression is called the~\term{inverse discrete time
 The element $c_{-n}$ is also known as the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$.
 
 % %Suppose now that the Fourier transform $\hat{x}$ is absolutely integrable.  
-Because $\hat{c}(f)$ has period $1$ it follows that $\hat{c}(Pf)$ has period $F = \tfrac{1}{P}$.  The rectangle function $\rect(Pf)$ occuring in~\eqref{eq:ftanddftrelationship} takes the value $1$ on the interval $(-F/2, F/2)$ and so the product $\rect(Pf)\hat{c}(Pf)$ corresponds with a single period centered at the origin.  This suggests reconstructing $\hat{c}$ by summing shifts of $\hat{x}$ by $F$, that is,
+Replacing $Pf$ with $f$ in~\eqref{eq:ftanddftrelationship} and multiplying by $F$ we obtain
 \[
-P \hat{c}(Pf) = \sum_{m \in \ints} P \rect(Pf + m) \calD c(Pf + m) = \sum_{m \in \ints} \hat{x}(f + mF) \qquad \text{a.e.}
+\rect(f) \hat{c}(f) = F \hat{x}(Ff).
 \]
-The right hand side is called a \term{periodic summation} of $\hat{x}$.  Examples of periodic summations are plotted in Figure~\ref{fig:periodisedfunctions}.  Replacing $Pf$ with $f$ and multiplying both sides by $F$ we find
+Because $\hat{c}(f)$ has period $1$ and because the rectangle function $\rect(f)$ takes the value $1$ on the interval $(-\tfrac{1}{2}, \tfrac{1}{2})$ the product $\rect(f)\hat{c}(f)$ corresponds with a single period of $\hat{c}$ centered at the origin.  This suggests reconstructing $\hat{c}$ by summing shifts of $\hat{x}(Ff)$ by integers, that is,
 \begin{equation}\label{eq:dftsignalperiodicsumP}
 \hat{c}(f) = \calD c(f) = F \sum_{m \in \ints} \hat{x}(Ff + Fm) \qquad \text{a.e.}
 \end{equation}
-This relationship provides a convenient means of determining the discrete time Fourier transform of a sequence by considering it as the samples of a signal $x$ for which the Fourier transform is already known.  We will find this relationship particularly convient for the design of digital filters in Section~\ref{sec:finite-impulse-resp}. 
+The right hand side is called a \term{periodic summation} of $\hat{x}$.  Examples of periodic summations are plotted in Figure~\ref{fig:periodisedfunctions}.  The relationship~\eqref{eq:dftsignalperiodicsumP} provides a convenient means of determining the discrete time Fourier transform of a sequence by considering it as the samples of a signal $x$ for which the Fourier transform is already known.  For example, consider the sequence $c_n = \sinc(n/3)$ given by sampling the $\sinc$ function at rate $F = 3$.  Computing the discrete time Fourier transform of $c$ directly using~\eqref{eq:disctransintro} is not straightforward.  However, we know that $\calF\sinc(f) = \rect(f)$ and so~\eqref{eq:dftsignalperiodicsumP} gives $\hat{c}(f) = 3 \sum_{m \in \ints} \rect(3f + 3m)$.  The sequence $\sinc(n/3)$ and its discrete time Fourier transform are plotted in Figure~\ref{fig:sincsampleddft}.  We will find the relationship~\eqref{eq:dftsignalperiodicsumP} particularly convient for the design of digital filters in Section~\ref{sec:finite-impulse-resp}. 
 
-In the case that $x$ is bandlimited with bandwidth $b < F/2$ the Fourier transform $\hat{x}$ can be recovered from its periodic summation by multiplying by the rectangle function $\rect(Pf)$. Equation~\eqref{eq:ftanddftrelationship} is reobtained in this way.  This effect can be seen in the top plot in Figure~\ref{eq:ftanddftrelationship} whereby multiplication of the periodic summation on the right by $\rect(f)$ recovers the rectangular pulse centered and the origin.  Recovery of $\hat{x}$ in this way is not possible if $x$ has bandwidth larger than $F/2$.  Consider, for example, the middle and bottom plots in Figure~\ref{fig:periodisedfunctions} where multiplication of the periodic summation on the right by $\rect(f)$ would not recover the original signals on the left.  
+{
+  \def\PI{3.1415926}
+  \def\minn{-7}
+  \def\maxn{7}
+  \def\scalex{0.333}
+  \def\scaley{2}
+%  \def\ifthenelset(#1,#2,#3){(#1*#2 + !#1*#3)}
+  \def\sincfunc(#1){(sin(\PI*(#1))/(\PI*(#1)))}
+%  \def\sincfunczero(#1){\ifthenelset((abs(#1) < 0.01), 1.0, \sincfunc(#1))}
+  \begin{figure}[t]
+    \centering
+    \begin{tikzpicture}[domain=\minn:\maxn]
+      \begin{scope}[yscale=\scaley,xscale=\scalex]
+        \draw[->] (-2.8/\scalex,0) -- (2.8/\scalex,0) node[above] {$t$};
+        \draw[->] (0,-0.4) -- (0,1.3) node[above] {$\sinc(n/3)$};
+     \draw[color=black,thick,ycomb,mark=*,mark options={xscale=1/\scalex,yscale=1/\scaley,scale=0.75},samples=\maxn-\minn+1] plot function{\sincfunc(x/3.0)};
+     \draw[thick] (0,0) -- (0,1);
+     \end{scope}
+     \draw[fill=black] (0,\scaley) circle (0.06);
+      \begin{scope}[yscale=\scaley]
+        \htick{1} node[pos=0.5,left] {$1$};
+      \end{scope}
+      \begin{scope}[xscale=\scalex]
+        % \vtick{1.0} node[pos=0.5,below] {$1$};
+        % \vtick{-1.0} node[pos=0.5,below] {$-1$};
+      \end{scope}
+    \end{tikzpicture} 
+\;\;
+\def\bandwidth{0.33333}
+\newcommand{\drawrectanglepeice}[1]{(#1-\bandwidth,0)--(#1-\bandwidth,1)--(#1+\bandwidth,1)--(#1+\bandwidth,0)}
+  \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
+    \draw[->] (0,-0.4) -- (0,1.3) node[above] {};
+    %\draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
+    \draw[thick] (-2.4,0)--\drawrectanglepeice{-2}--\drawrectanglepeice{-1}--\drawrectanglepeice{0}--\drawrectanglepeice{1}--\drawrectanglepeice{2}--(2.4,0);
+    \htick{1} node[pos=0.5,above left] {$3$};
+    \begin{scope}[yscale=1/\scaley]
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+%      \vtick{2} node[pos=0.5,below] {$2F$};
+%      \vtick{-2} node[pos=0.5,below] {$-2F$};
+    \end{scope}
+  \end{tikzpicture} 
+    \caption{The sequence $\sinc(n/3)$ and its discrete time Fourier transform $3 \sum_{m\in\ints}\rect(3f+3m)$.} \label{fig:sincsampleddft}
+  \end{figure}
+}
 
-While the relationship~\eqref{eq:ftanddftrelationship} requires $x$ to be bandlimited with bandwidth $b < F/2$,  the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ at period $P$.  To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a well defined signal.  This will be the case if $\hat{x}$ is absolutely integrable, for example (Exercise~\ref{exer:absintperiodsumexists}).  In this case, applying the inverse discrete time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
+Substituting $Pf$ for $f$ in~\eqref{eq:dftsignalperiodicsumP} and multiplying by $P$ we find that
+\[
+P \hat{c}(Pf) = \sum_{m \in \ints} \hat{x}(f + Fm) \qquad \text{a.e.}
+\]
+In the case that $x$ is bandlimited with bandwidth $b < F/2$ the Fourier transform $\hat{x}$ can be recovered by multiplying both sides of this equation by the rectangle function $\rect(Pf)$. Equation~\eqref{eq:ftanddftrelationship} is reobtained in this way.  This effect can be seen in the top plot in Figure~\ref{eq:ftanddftrelationship} whereby multiplication of the periodic summation on the right by $\rect(f)$ recovers the rectangular pulse centered and the origin.  Recovery of $\hat{x}$ in this way is not possible if $x$ has bandwidth larger than $F/2$.  Consider, for example, the middle and bottom plots in Figure~\ref{fig:periodisedfunctions} where multiplication of the periodic summation on the right by $\rect(f)$ would not recover the original signals on the left.  
+
+While the relationship~\eqref{eq:ftanddftrelationship} requires $x$ to be bandlimited with bandwidth $b < F/2$,  the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ at period $P$.  To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a well defined signal.  This will be the case if $\hat{x}$ is absolutely integrable (Exercise~\ref{exer:absintperiodsumexists}).  In this case, applying the inverse discrete time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
 \[
 c_n = \int_{-1/2}^{1/2} F \sum_{m \in \ints} \hat{x}(Ff + Fm)  e^{j 2\pi f n } df.
 \]
@@ -1274,6 +1325,7 @@ c_n = \int_{-\infty}^{\infty} \hat{x}(\gamma)  e^{j 2\pi \gamma n/F} d\gamma = \
 where the integral is identified as the inverse Fourier transform of $\hat{x}$~\eqref{eq:inversefouriertransform}.  We have found that the sequence $c$ with discrete time Fourier transform $F \sum_{n\in\ints} \hat{x}(Ff + Fm)$ is precisely the samples of the signal $x$ at period $P = \tfrac{1}{F}$.  This does not require that $x$ be bandlimited.  
 
 The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform $\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)$ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples $c_n = x(nP)$ and corresponding discrete time Fourier transform $\hat{c}$ are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is referred to as \term{aliasing}.
+
 
 
 %Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
@@ -1301,29 +1353,29 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
   \def\scaley{1.8}
   \newcommand{\drawrectanglepeice}[1]{(#1-\bandwidth,0)--(#1-\bandwidth,1)--(#1+\bandwidth,1)--(#1+\bandwidth,0)}
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\rect(3Pf/2)$};
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
+    \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {$\rect(3t/2)$};
     %\draw[smooth,color=black,thick] plot function{\f(x)};
     \draw[thick] (-2.4,0)--\drawrectanglepeice{0}--(2.4,0);
     % \htick{1} node[pos=0.5,above left] {$1$};
     \begin{scope}[yscale=1/\scaley]
-      \vtick{1} node[pos=0.5,below] {$F$};
-      \vtick{-1} node[pos=0.5,below] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,below] {$-2F$};
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+%      \vtick{2} node[pos=0.5,below] {$2F$};
+%      \vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
   \;\;
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=500]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
     \draw[->] (0,-0.7/\scaley) -- (0,2.4/\scaley) node[above] {};
     %\draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
     \draw[thick] (-2.4,0)--\drawrectanglepeice{-2}--\drawrectanglepeice{-1}--\drawrectanglepeice{0}--\drawrectanglepeice{1}--\drawrectanglepeice{2}--(2.4,0);
     \begin{scope}[yscale=1/\scaley]
-      \vtick{1} node[pos=0.5,below] {$F$};
-      \vtick{-1} node[pos=0.5,below] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,below] {$-2F$};
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+%      \vtick{2} node[pos=0.5,below] {$2F$};
+%      \vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
 } 
@@ -1334,20 +1386,20 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
   \def\f(#1){exp(-(#1)*(#1)*\PI)}
   \def\scaley{2}
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$e^{-\pi P^2 f^2}$};
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
+    \draw[->] (0,-0.35) -- (0,1.4) node[above] {$e^{-\pi t^2}$};
     \draw[smooth,color=black,thick] plot function{\f(x)};
     % \htick{1} node[pos=0.5,above left] {$1$};
     \begin{scope}[yscale=1/\scaley]
-      \vtick{1} node[pos=0.5,below] {$F$};
-      \vtick{-1} node[pos=0.5,below] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,below] {$-2F$};
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+  %    \vtick{2} node[pos=0.5,below] {$2F$};
+  %    \vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
   \;\;
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
     \draw[->] (0,-0.35) -- (0,1.4) node[above] {};
     \draw[smooth,color=black,dashed] plot function{\f(x)};
     \draw[smooth,color=black,dashed] plot function{\f(x+1)};
@@ -1358,10 +1410,10 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
     \draw[smooth,color=black,dashed] plot function{\f(x-3)};
     \draw[smooth,color=black,thick] plot function{\f(x-3)+\f(x-2)+\f(x-1)+\f(x)+\f(x+1)+\f(x+2)+\f(x+3)};
     \begin{scope}[yscale=1/\scaley]
-      \vtick{1} node[pos=0.5,below] {$F$};
-      \vtick{-1} node[pos=0.5,below] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,below] {$-2F$};
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,below] {$-1$};
+%      \vtick{2} node[pos=0.5,below] {$2F$};
+%      \vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
 }
@@ -1374,20 +1426,20 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
   \def\f(#1){(\rectangle(#1)*(#1)*(1+cos(pi*(#1))))}
   \def\scaley{3}
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
-    \draw[->] (0,-0.7) -- (0,0.7) node[above] {$f \rect(Pf/2)\big(1 + \cos(\pi P f)\big)$};
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
+    \draw[->] (0,-0.7) -- (0,0.7) node[above] {$t \rect(\tfrac{t}{2})\big(1 + \cos(\pi t)\big)$};
     \draw[smooth,color=black,thick] plot function{\f(x)};
     \htick{0.5} node[pos=0.5,left] {$\tfrac{1}{2}$};
     \begin{scope}[yscale=1/\scaley]
-      \vtick{1} node[pos=0.5,below] {$F$};
-      \vtick{-1} node[pos=0.5,above] {$-F$};
-      \vtick{2} node[pos=0.5,below] {$2F$};
-      \vtick{-2} node[pos=0.5,above] {$-2F$};
+      \vtick{1} node[pos=0.5,below] {$1$};
+      \vtick{-1} node[pos=0.5,above] {$-1$};
+ %     \vtick{2} node[pos=0.5,below] {$2F$};
+ %     \vtick{-2} node[pos=0.5,above] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
   \;\;
   \begin{tikzpicture}[yscale=\scaley,domain=-2.4:2.4,samples=100]
-    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$f$};
+    \draw[->] (-2.8,0) -- (2.8,0) node[above] {$t$};
     \draw[->] (0,-0.7) -- (0,0.7) node[above] {};
     \draw[smooth,color=black,dashed] plot function{\f(x)};
     \draw[smooth,color=black,dashed] plot function{\f(x+1)};
@@ -1405,7 +1457,7 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
     \end{scope}
   \end{tikzpicture} 
 } 
-\caption{Signals $x$ and their periodic summations $\sum_{m\in\ints}x(f + Fm)$ where $F = 1/P$. The periodic summation is shown by the solid lines on the left.  The dashed lines are the individual translations being summed.} \label{fig:periodisedfunctions}
+\caption{Signals $x$ and their periodic summations $\sum_{m\in\ints}x(t + m)$. The periodic summation is shown by the solid lines on the left.  The dashed lines are the individual translations being summed.} \label{fig:periodisedfunctions}
 \end{figure}
 
 
