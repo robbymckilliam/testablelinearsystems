@@ -24,11 +24,11 @@ is not finite for any $t \in \reals$.  Given a sequence $h$ denote by $\dom_P h$
 \[
 \sum_{m \in \ints} \abs{h_m x(t - Pm)} < \infty \qquad \text{for all $t \in \reals$}.
 \]
-If $H$ has discrete impulse response $h$ then, for all signals $x \in \dom_P h$,
+It can be confirmed that $\dom_P h$ is a linear shift-invariant space.  If $H$ has discrete impulse response $h$ then, for all signals $x \in \dom_P h$,
 \[
 \abs{Hx(t)} = \abs{\sum_{m \in \ints} h_m T_{ P m} x(t)} \leq \sum_{m \in \ints}  \abs{ h_m x(t - Pm)} < \infty \qquad \text{for all $t \in \reals$}
 \]
-and so $Hx(t)$ is finite for all $t \in \reals$.  We take $\dom_P h$ as the domain of the discrete time system with discrete impulse response $h$ unless otherwise stated.  %Be aware that set $\dom_P h$ is now defined for both signals $h$ and sequences $h$.  %This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
+and so $Hx(t)$ is finite for all $t \in \reals$.  From here on, we take $\dom_P h$ as the domain of the discrete time system with discrete impulse response $h$ unless otherwise stated.  %Be aware that set $\dom_P h$ is now defined for both signals $h$ and sequences $h$.  %This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
 
 The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_m = 0$ for all $m < 0$, then $H$ is causal because the response 
 \[
@@ -36,7 +36,7 @@ Hx(t) = \sum_{m \in \ints} h_m T_{ P m}x(t) = \sum_{m =0}^\infty h_m x(t - Pm)
 \] 
 at time $t$ only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
-Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be a system formed by a linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom_P f \cap \dom_P g$ is
+Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be a system formed by linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom_P f \cap \dom_P g$ is
 \begin{align*}
 Hx &= a \sum_{n \in \ints} f_{n} T_{ P n}x + b \sum_{n \in \ints} g_{n} T_{ P n}x \\
 &=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}x,
@@ -123,7 +123,7 @@ In what follows we will often use the term convolution and impulse response rath
 
 \section{The transfer function and the spectrum}
 
-Recall that complex exponential signals are eigenfunctions of linear shift-invariant systems, that is, if $H$ is a linear-shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
+Recall that complex exponential signals are eigenfunctions of linear shift-invariant systems, that is, if $H$ is a linear shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
  \[
 He^{st} = \lambda H(s) e^{st}
 \]
@@ -140,11 +140,15 @@ It follows that the transfer function of $H$ satisfies
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_P h.
 \]
 
-For example, consider the discrete time system $H$ with discrete impulse response given by the step sequence $u$.  The transfer function is
+For example, consider the discrete time system $H$ with discrete impulse response given by the step sequence $u$.  The domain of the transfer function $\cep \dom_P u$ contains all those complex numbers $s$ for which
+\[
+\sum_{n \in \ints} \abs{u_n e^{-sPn}} = \sum_{n = 0}^\infty e^{-\Re s Pn} < \infty.
+\]
+This is precisely those $s \in \complex$ with strictly positive real part.  The transfer function is
 \[
 \lambda H(s) = \sum_{n \in \ints} u_n e^{-sPn} = \sum_{n = 0}^\infty e^{-sPn} = \frac{1}{1 - e^{-sP}} \qquad \Re s > 0.
 \]
-The domain $\cep \dom_P u$ is all those complex numbers with real part greater than zero.  The identity system $T_0$ is a discrete time system with discrete impulse response given by the delta sequence
+The identity system $T_0$ is a discrete time system with discrete impulse response given by the delta sequence
 \[
 \delta_n = \begin{cases}
 1 & n = 0 \\
@@ -172,7 +176,7 @@ The domain of $\lambda T_0$ is the entire complex plane $\complex$.  This is in 
 
 %TODO: examples.
 
-Now suppose that $H$ is a stable discrete time system with absolutely summable discrete impulse response $h$.  The signal $e^{2\pi j f t} \in \dom_P h$ for all $f \in \reals$ because
+Now suppose that $H$ is a stable discrete time system with absolutely summable discrete impulse response $h$.  The oscillatory complex exponential signal $e^{2\pi j f t}$ is in the domain $\dom_P h$ for all $f \in \reals$ because
 \[
 \sum_{m \in \ints} \abs{h_m e^{2\pi j f (t - m)}} = \sum_{m \in \ints} \abs{h_m} < \infty \qquad \text{for all $t \in \reals$}.
 \]
@@ -180,14 +184,14 @@ Equivalently, the domain of the transfer function $\lambda H$ contains the imagi
 \[
 \Lambda H(f) = \lambda H (j2\pi f) = \sum_{n \in \ints} h_n e^{-2\pi j f P n} \qquad f \in \reals.
 \]
-Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  The spectrum is related to the discrete time Fourier transform of $h$ by
+Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  
+
+The spectrum is related to the discrete time Fourier transform of $h$ by
 \[
 \calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
 %TODO. \calD h isa defined even when h is square integrable and not necessary abs integrable, i.e., sinc functions etc.  Some example where the order summation is taken is important would be a good idea. 
-
 %TODO: Examples, rect, sinc, truncated sinc, truncated rrc. 
-
 As an example, suppse that $H$ is the system with period $P$ and discrete impulse response
 \[
 h_n = \rect(n/2) = \begin{cases}
@@ -197,8 +201,18 @@ h_n = \rect(n/2) = \begin{cases}
 \]
 The spectrum of $H$ is
 \[
-\Lambda H(f) = \calD h(Pf) = e^{-2\pi j P f} + 1 + e^{2\pi j P f} = 1 + 2\cos(2\pi P f)
+\Lambda H(f) = \calD h(Pf) = e^{-2\pi j P f} + 1 + e^{2\pi j P f} = 1 + 2\cos(2\pi P f).
 \]
+Now suppose that $H$ has discrete impulse response $h_n = \sinc(n/4)$ given by sampling the sinc function with period $\tfrac{1}{4}$.  The Fourier transform of $\sinc(t/4)$ is $4 \calF\sinc(4f) = 4\rect(4f)$ by the time scaling property~\eqref{eq:timescalingpropertryfouriertrans}.  The discrete time Fourier transform of $h$ is given by periodically summing this Fourier transform~\eqref{eq:dftsignalperiodicsumP}, that is,
+\[
+\calD h(f) = 4 \sum_{m\in\ints} \rect(4f - m).
+\]
+We are lead to believe that the spectrum of this system $H$ is
+\[
+\lambda H(f) = \calD h(Pf) = 4 \sum_{m\in\ints} \rect(4Pf - m).
+\]
+%This is plotted in Figure~\ref{}.  
+This conclusion needs to be taken with some degree of scepticism because the discrete impulse response $h_n = \sinc(n/4)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Fortunately We will not have direct use of this system in what follows and so this caveat will not affect the results that follow.
 
 
 \section{Finite impulse response filters}\label{sec:finite-impulse-resp}
