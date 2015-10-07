@@ -129,7 +129,7 @@ He^{st} = \lambda H(s) e^{st}
 \]
 where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that the signal $e^{st} \in X$ and this set is denoted by $\cep X$.
 
-Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom_P h$.  The response of $H$ to $e^{st} \in \dom_P h$ satifies
+Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom_P h$.  The response of $H$ to $e^{st} \in \dom_P h$ satisfies
 \begin{align*}
 H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
 &= \sum_{n \in \ints} h_n e^{s(t-Pn)} \\
@@ -144,7 +144,7 @@ For example, consider the discrete time system $H$ with discrete impulse respons
 \[
 \sum_{n \in \ints} \abs{u_n e^{-sPn}} = \sum_{n = 0}^\infty e^{-\Re s Pn} < \infty.
 \]
-This is precisely those $s \in \complex$ with strictly positive real part.  The transfer function is
+This is precisely those $s \in \complex$ with positive real part.  The transfer function is
 \[
 \lambda H(s) = \sum_{n \in \ints} u_n e^{-sPn} = \sum_{n = 0}^\infty e^{-sPn} = \frac{1}{1 - e^{-sP}} \qquad \Re s > 0.
 \]
@@ -186,13 +186,13 @@ Equivalently, the domain of the transfer function $\lambda H$ contains the imagi
 \]
 Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  
 
-The spectrum is related to the discrete time Fourier transform of $h$ by
+The spectrum is related to the discrete time Fourier transform~\eqref{eq:disctransintro} of $h$ by
 \[
 \calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
 %TODO. \calD h isa defined even when h is square integrable and not necessary abs integrable, i.e., sinc functions etc.  Some example where the order summation is taken is important would be a good idea. 
 %TODO: Examples, rect, sinc, truncated sinc, truncated rrc. 
-As an example, suppse that $H$ is the system with period $P$ and discrete impulse response
+As an example, suppose that $H$ is the system with period $P$ and discrete impulse response
 \[
 h_n = \rect(n/2) = \begin{cases}
 1 & \abs{n} \leq 1 \\
@@ -203,17 +203,17 @@ The spectrum of $H$ is
 \[
 \Lambda H(f) = \calD h(Pf) = e^{-2\pi j P f} + 1 + e^{2\pi j P f} = 1 + 2\cos(2\pi P f).
 \]
-Now suppose that $H$ has discrete impulse response $h_n = \sinc(n/4)$ given by sampling the sinc function with period $\tfrac{1}{4}$.  The Fourier transform of $\sinc(t/4)$ is $4 \calF\sinc(4f) = 4\rect(4f)$ by the time scaling property~\eqref{eq:timescalingpropertryfouriertrans}.  The discrete time Fourier transform of $h$ is given by periodically summing this Fourier transform~\eqref{eq:dftsignalperiodicsumP}, that is,
-\[
-\calD h(f) = 4 \sum_{m\in\ints} \rect(4f - m).
-\]
-We are lead to believe that the spectrum of this system $H$ is
-\[
-\lambda H(f) = \calD h(Pf) = 4 \sum_{m\in\ints} \rect(4Pf - m).
-\]
-%This is plotted in Figure~\ref{}.  
-This conclusion needs to be taken with some degree of scepticism because the discrete impulse response $h_n = \sinc(n/4)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Fortunately We will not have direct use of this system in what follows and so this caveat will not affect the results that follow.
-
+The sequence $\rect(n/2)$ and its discrete Fourier transform are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.
+% Now suppose that $H$ has discrete impulse response $h_n = \sinc(n/4)$ given by sampling the sinc function with period $\tfrac{1}{4}$.  The Fourier transform of $\sinc(t/4)$ is $4 \calF\sinc(4f) = 4\rect(4f)$ by the time scaling property~\eqref{eq:timescalingpropertryfouriertrans}.  The discrete time Fourier transform of $h$ is given by periodically summing this Fourier transform~\eqref{eq:dftsignalperiodicsumP}, that is,
+% \[
+% \calD h(f) = 4 \sum_{m\in\ints} \rect(4f - m).
+% \]
+% We are lead to believe that the spectrum of this system $H$ is
+% \[
+% \lambda H(f) = \calD h(Pf) = 4 \sum_{m\in\ints} \rect(4Pf - m).
+% \]
+% %This is plotted in Figure~\ref{}.  
+% 
 
 \section{Finite impulse response filters}\label{sec:finite-impulse-resp}
 
@@ -221,19 +221,43 @@ We have found that the spectrum of a stable discrete time system is periodic wit
 
 To see how this works, consider the bandlimited signal $x$ with Fourier transform
 \[
-\calF(x) = \rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \tfrac{1}{2} \rect(2f + 3) \big)
+\hat{x}(f) = \calF x(f) = \rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \tfrac{1}{2} \rect(2f + 3) \big)
 \]
-The Fourier transform is plotted is Figure~\ref{fig:bandlimiteddiscretetimefiltering} (dashed line).  The Fourier transform has a rectangular pulse centered at the origin and raised cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two raised cosine pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  For example, an ideal lowpass filter (Section~\ref{}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{1}{2} )$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the recangular pulse at the origin and remove the two raised cosine pulses.  The impulse response of these ideal lowpass filter is $2c\sin(2ct)$.
+that is plotted by the dashed line in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  The Fourier transform has a rectangular pulse centered at the origin and raised cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two raised cosine pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  For example, an ideal lowpass filter (Section~\ref{sec:analogue-filters}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{5}{4})$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the recangular pulse at the origin and remove the two raised cosine pulses.  The impulse response of this ideal lowpass filter is $2c\sin(2ct)$.
 
-The same effect can be achieved with a discrete time system. Because the signal has bandwidth $b = \tfrac{7}{4}$ the spectrum of this filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  Let $H$ be the discrete time system with discrete impulse response $h_n = 2cP \sinc(2c Pn)$ and period $P = \tfrac{1}{F}$ with $F > 2b = \frac{7}{2}$.  The discrete time Fourier transform of $h$ is given by~\eqref{eq:dftsignalperiodicsumP},
+Because the signal has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property will be find that the same lowpass filtering can be achieved with a discrete time system.  Let $H$ be the discrete time system with discrete impulse response $h_n = 2cP \sinc(2c Pn)$ and period $P = \tfrac{1}{F}$ with $F > 2b = \frac{7}{2}$.  The discrete time Fourier transform of $h$ is given by~\eqref{eq:dftsignalperiodicsumP},
 \[
-\hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right)
+\hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right).
 \] 
-and so the spectrum of $H$ is
-\[
+We are lead to believe that the spectrum of $H$ is
+\begin{equation}\label{eq:LambdaHidealklowpassdigitalsceptical}
 \Lambda H(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
+\end{equation}
+The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $H$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  
+
+The conclusion that the spectrum of $H$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filter will not be useful in practice and so this caveat will not affect the results that follow. The concept of an ideal digital filter is nonetheless a valuable aid to intuition.  
+
+We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or FIR filters.  One feature preventing practical implementation of ideal digital filters is that the discrete impulse response $2c\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require an infinite number of operations.  A pragramtic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter by one with impulse response
+\[
+2c w(t) \sinc(2ct)
 \]
-The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$.  Observe that A discrete time system configured for this purpose is called a low pass~\term{digital filter}.
+where $w(t)$ is called a \term{window function} (sometimes also called an \term{apodisation function}) that is zero outside an interval $(-W/2, W/2)$ where $W > 0$ is the \term{window width}.  Because of the window function this impulse response has finite support.  Common window functions include the rectangular window $w(t) = \rect(t/W)$, the raised cosine window
+\[
+w(t)  = \frac{1}{2} \rect\left(\frac{t}{W}\right)\left( 1 + \cos\left(\frac{2\pi t}{W}\right) \right)
+\]
+also known as the \term{Hann window}, and the \term{Blackman window}~\cite{BlackmanTukeywindows}
+\[
+w(t) = \rect\left(\frac{t}{W}\right) \left( a_0 + a_1 \cos\left(\frac{2\pi t}{W}\right) + a_2 \cos\left(\frac{4\pi t}{W}\right) \right) 
+\]   
+where $a_0 = \tfrac{21}{50}$, $a_1 = \tfrac{1}{2}$, and $a_2 = \tfrac{2}{25}$.
+
+
+\begin{test}\label{test:firfilteredlecturerec}
+(\textbf{Finite impulse response filtered lecture recording})
+
+We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlecturerec}.
+
+\end{test}
 
 % A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
 % \[
@@ -255,47 +279,46 @@ The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$.  Observe that A di
 \begin{figure}[tp]
   \centering
   \def\sx{1.4}
-  \def\sy{2}
+  \def\sy{3}
   \def\P{0.25}
   \def\F{(1/\P)}
-  \def\a{(2.0/3.0)}
+  \def\c{1}
   \colorlet{lightgray}{black!25}
-  \newcommand{\dplot}[1]{\draw[thick,smooth,samples=200,domain=-4:4] plot function{(1-#1)/sqrt(1 - 2*#1*cos(2*\P*pi*x) + #1*#1)}}
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
       % draw light gray region for magnitude spectrum of the discrete time system. 
-      \fill[fill=lightgray] (-4,0) -- plot[samples=200,domain=-4:4] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) -- (4,0) -- cycle;
+      \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
       
       % draw axis
       \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
-      \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {};  
+      \draw[->] (0,-0.2) -- (0,1.3) node[above,font=\footnotesize] {};  
       
-      % draw filtered Fourier transform magnitude
-      \draw[thick,dashed] (-4,0) -- (-1.75,0) -- (-1.75,1) -- (-1.25,1) -- (-1.25,0) -- (-0.5,0) 
-      -- plot[smooth,domain=-0.5:0.5,samples=50] (\x,{1 + cos(2*pi*\x r)}) 
-      -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1) -- (0.5,1) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      %  
+      % -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
       
-      % draw filtered Fourier transform magnitude
-      \draw[thick] (-4,0) -- (-1.75,0) 
-      -- plot[samples=40,domain=-1.75:-1.25] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
-      -- (-1.25,0) -- (-0.5,0)
-      -- plot[samples=50,domain=-0.5:0.5] (\x,{(1 + cos(2*pi*\x r))*(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
-      -- (0.5,0) -- (1.25,0) 
-      -- plot[samples=40,domain=1.25:1.75] (\x,{(1-\a)/sqrt(1 - 2*\a*cos(2*\P*pi*\x r) + \a*\a)}) 
-      -- (1.75,0) -- (4,0);
-
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4,0) -- (-0.5,0) -- (-0.5,1) -- (0.5,1) -- (0.5,0) -- (4,0);
+      
       % add some axis ticks
     \end{scope}
     \begin{scope}[xscale=\sx]
       \vtick{-2.0} node[pos=0.5,below] {$-2$};
       \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
     \end{scope}
     \begin{scope}[yscale=\sy]
-      \htick{2} node[pos=0.5,above left] {$2$};
+      \htick{1} node[pos=0.5,above left] {$1$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Fourier transform $\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect(3f - 2) + \rect(3f + 2)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with the first order difference equation $c_n = 3 d_n - 2 d_{n-1}$.  Observe that the higher frequency rectangular pulses centered at $f = \pm \tfrac{3}{2}$ are weakened considerably, but the raised cosine pulse at the origin is minimally affected.  The system acts as a low pass filter on this bandlimited signal.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+  \caption{Fourier transform $\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \tfrac{1}{2} \rect(2f + 3) \big)$ (dashed) of a bandlimited signal with bandwidth $b < 2$. The solid line shows the magnitude of the Fourier transform of the response (solid) to this signal of the ideal low pass digital filter with cuttoff frequency $c = 1$ and sample rate $F = \tfrac{1}{P} = 4$.  The discrete impulse response of this filter is $\tfrac{1}{2} \sinc(n/2)$.  Observe that the higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse centered at the origin is unaffected.  The shaded region shows the periodic magnitude spectrum of the system.  The periodicity of the spectrum is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
 \end{figure}
 
 \begin{itemize}
