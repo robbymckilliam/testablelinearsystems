@@ -229,7 +229,7 @@ that is plotted by the dashed line in Figure~\ref{fig:bandlimiteddiscretetimefil
 \]
 This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
 
-Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property will be find that the same lowpass filtering can be achieved with a discrete time system.  Let $H$ be the discrete time system with discrete impulse response $h_n = 2cP \sinc(2c Pn)$ and period $P = \tfrac{1}{F}$ with $F > 2b = \frac{7}{2}$.  The discrete time Fourier transform of $h$ is given by~\eqref{eq:dftsignalperiodicsumP},
+Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property we will find that the same lowpass filtering can be achieved with a discrete time system.  Let $H$ be the discrete time system with sample rate period $F = \tfrac{1}{P} > 2b = \frac{7}{2}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$ given by sampling the impulse response of the ideal low pass filter $L_c$.  The discrete time Fourier transform of $h$ is given by~\eqref{eq:dftsignalperiodicsumP},
 \[
 \hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right).
 \] 
@@ -237,19 +237,31 @@ We are lead to believe that the spectrum of $H$ is
 \begin{equation}\label{eq:LambdaHidealklowpassdigitalsceptical}
 \Lambda H(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
 \end{equation}
-The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $H$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  
+The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $H$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  The response of $H$ to input signal $x$ has Fourier transform
+\[
+\calF H x = \Lambda H \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{3}{2} \rect(f)
+\]
+exactly as with the ideal lowpass filter $L_c$.  This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering} where only the period at the origin of the spectrum $\Lambda H$ overlaps with the Fourier transform of the bandlimited signal $x$.
 
-The conclusion that the spectrum of $H$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filter will not be useful in practice and so this caveat will not affect the results that follow. The concept of an ideal digital filter is nonetheless a valuable aid to intuition.  
+The conclusion that the spectrum of $H$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
 
-We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or FIR filters.  One feature preventing practical implementation of ideal digital filters is that the discrete impulse response $2c\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require an infinite number of operations.  A pragramtic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter by one with impulse response
+We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or \term{FIR filters} for short.  One feature preventing practical implementation of the ideal lowpass digital filter is that the discrete impulse response $h_n = 2c\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require an infinite number of computational operations.  A pragramtic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter by one with impulse response
 \[
 2c w(t) \sinc(2ct)
 \]
-where $w(t)$ is called a \term{window function} (sometimes also called an \term{apodisation function}) that is zero outside an interval $(-W/2, W/2)$ where $W > 0$ is the \term{window width}.  Because of the window function this impulse response has finite support.  Common window functions include the rectangular window $w(t) = \rect(t/W)$, the raised cosine window
+where $w(t)$ is called a \term{window function} (sometimes also called an \term{apodization function}) that is zero outside an interval $(-W/2, W/2)$ where $W > 0$ is the \term{window width}.  Because of the window function this impulse response has finite support and is absolutely integrable.  Common window functions include the rectangular window $w(t) = \rect(t/W)$, the triangular (or \term{Bartlett}) window $w(t) = \bigtriangleup(t/2W)$ where 
 \[
-w(t)  = \frac{1}{2} \rect\left(\frac{t}{W}\right)\left( 1 + \cos\left(\frac{2\pi t}{W}\right) \right)
+\bigtriangleup(t) = (\rect * \rect)(t)  = \begin{cases}
+t + 1 & -1 < t < 0 \\
+1 - t & 0 \leq t < 1 \\
+0 & \text{otherwise}, 
+\end{cases} \qquad (Exercise~\ref{exer:triangle_pulse_ft})
 \]
-also known as the \term{Hann window}, and the \term{Blackman window}~\cite{BlackmanTukeywindows}
+the raised cosine (or \term{Hann}) window
+\[
+w(t)  = \frac{1}{2} \rect\left(\frac{t}{W}\right)\left( 1 + \cos\left(\frac{2\pi t}{W}\right) \right),
+\]
+and the \term{Blackman window}~\cite{BlackmanTukeywindows}
 \[
 w(t) = \rect\left(\frac{t}{W}\right) \left( a_0 + a_1 \cos\left(\frac{2\pi t}{W}\right) + a_2 \cos\left(\frac{4\pi t}{W}\right) \right) 
 \]   
