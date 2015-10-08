@@ -227,7 +227,8 @@ that is plotted by the dashed line in Figure~\ref{fig:bandlimiteddiscretetimefil
 \[
 \calF L_c x = \Lambda L_c \, \calF x = \rect(\tfrac{f}{2c}) \hat{x}(f) = \tfrac{3}{2} \rect(f).
 \]
-This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
+%This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  
+The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
 
 Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property we will find that the same lowpass filtering can be achieved with a discrete time system.  Let $H$ be the discrete time system with sample rate period $F = \tfrac{1}{P} > 2b = \frac{7}{2}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$ given by sampling the impulse response of the ideal low pass filter $L_c$.  The discrete time Fourier transform of $h$ is given by~\eqref{eq:dftsignalperiodicsumP},
 \[
@@ -300,8 +301,8 @@ where $a_0 = \tfrac{21}{50}$, $a_1 = \tfrac{1}{2}$, and $a_2 = \tfrac{2}{25}$.
       \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
 
       % draw hatched region for magnitude spectrum of the ideal low pass filter. 
-      \tikzstyle{idealowpass}=[fill,pattern=north west lines,draw=none]
-      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
+%      \tikzstyle{idealowpass}=[fill,pattern=north west lines,draw=none]
+%      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
       
       % draw axis
       \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
@@ -332,7 +333,195 @@ where $a_0 = \tfrac{21}{50}$, $a_1 = \tfrac{1}{2}$, and $a_2 = \tfrac{2}{25}$.
       \htick{1} node[pos=0.5,above left] {$1$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Fourier transform $\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \tfrac{1}{2} \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b < 2$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal low pass filter with cuttoff frequency $c = 1$.  The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{3}{2}$ centered at the origin is unaffected.  The same affect is had by inputing this signal to an ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  The shaded region shows the periodic magnitude spectrum of the filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+  \caption{Fourier transform $\tfrac{3}{2}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b < 2$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal low pass filter with cuttoff frequency $c = 1$.  %The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  
+The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{3}{2}$ centered at the origin is unaffected.  The same affect is had by inputing this signal to an ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  The shaded region shows the periodic magnitude spectrum of this digital filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+\end{figure}
+
+
+\begin{figure}[p]
+  \centering
+  \def\sx{1.4}
+  \def\sy{3}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\c{1}
+  \colorlet{lightgray}{black!25}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+      \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W2.0_c1.0.csv} -- (4.3,0) --cycle;
+
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.8) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.5) -- (0.5,1.5) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4,0) -- (-1.75,0) 
+       -- plot[] file {data/windowandfir/rect_periodised_W2.0_c1.0_left.csv}
+       -- (-1.25,0) -- (-0.5,0)
+       -- plot[] file {data/windowandfir/rect_periodised_W2.0_c1.0_middle.csv}
+       -- (0.5,0) -- (1.25, 0)
+       -- plot[] file {data/windowandfir/rect_periodised_W2.0_c1.0_right.csv}
+       -- (1.75,0) -- (4,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+\\
+\vspace{1cm}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+      \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0.csv} -- (4.3,0) --cycle;
+
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.8) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.5) -- (0.5,1.5) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4,0) -- (-1.75,0) 
+       -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_left.csv}
+       -- (-1.25,0) -- (-0.5,0)
+       -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_middle.csv}
+       -- (0.5,0) -- (1.25, 0)
+       -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_right.csv}
+       -- (1.75,0) -- (4,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Window width $W = 3$.} \label{fig:bandlimiteddiscretetimefiltering}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \def\sx{1.4}
+  \def\sy{3}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\c{1}
+  \colorlet{lightgray}{black!25}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+      \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
+
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.8) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.5) -- (0.5,1.5) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4,0) -- (-1.75,0) 
+       -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0_left.csv}
+       -- (-1.25,0) -- (-0.5,0)
+       -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0_middle.csv}
+       -- (0.5,0) -- (1.25, 0)
+       -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0_right.csv}
+       -- (1.75,0) -- (4,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+\\
+\vspace{1cm}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+      \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
+
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.8) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.5) -- (0.5,1.5) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4,0) -- (-1.75,0) 
+       -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0_left.csv}
+       -- (-1.25,0) -- (-0.5,0)
+       -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0_middle.csv}
+       -- (0.5,0) -- (1.25, 0)
+       -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0_right.csv}
+       -- (1.75,0) -- (4,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Window width $W = 8$.} \label{fig:bandlimiteddiscretetimefiltering}
 \end{figure}
 
 
