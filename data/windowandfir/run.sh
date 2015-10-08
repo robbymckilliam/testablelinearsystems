@@ -5,3 +5,5 @@ CP=$CP:${f}
 done
 
 scala -cp $CP computespectra.scala
+
+gnuplot plot.gnuplot

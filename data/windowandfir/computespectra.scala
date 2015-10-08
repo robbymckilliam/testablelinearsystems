@@ -7,13 +7,14 @@ import scala.math.min
 import scala.math.max
 import scala.math.floor
 import scala.math.ceil
+import scala.math.cos
 import scala.math.Pi
 import sounder.Util.sinc
 
 println("Generating spectra of windows finite impulse response filters")
 
 //window width
-val W = 10.0
+val W = 3.0
 
 //cuttoff frequency
 val c = 1.0;
@@ -26,6 +27,15 @@ def bartlett(t : Double) = {
   if( abs(t) > W/2) Complex.zero 
   else if( t < 0.0) RectComplex(1.0 + 2*t/W,0)
   else RectComplex(1.0 - 2*t/W,0)
+}
+
+def hann(t : Double) = rect(t)*(1 + cos(2*Pi*t/W))/2.0
+
+def blackman(t : Double) = {
+val a0 = 21.0/50
+val a1 = 1.0/2
+val a2 = 2.0/25
+rect(t)*(a0 + a1*cos(2*Pi*t/W) + a2*cos(4*Pi*t/W))
 }
 
 def mod2pi(x : Double) = x - floor(x/2/Pi)*2*Pi
@@ -49,8 +59,10 @@ def F(x : Double => Complex) : Double => Complex = {
   val fmax = 4.1
   val fstep = 0.01
 
-  print("Writing rectangular window ... "); writetofile( t => rect(t)*2*c*sinc(2*c*t), "rect" ); println("done");
-  print("Writing Bartlett window ... "); writetofile( t => bartlett(t)*2*c*sinc(2*c*t), "bartlett" ); println("done");
+  print("Writing rectangular window ... "); writetofile( F(t => rect(t)*2*c*sinc(2*c*t)), "rect" ); println("done");
+  print("Writing Bartlett window ... "); writetofile( F(t => bartlett(t)*2*c*sinc(2*c*t)), "bartlett" ); println("done");
+  print("Writing Hann window ... "); writetofile( F(t => hann(t)*2*c*sinc(2*c*t)), "hann" ); println("done");
+  print("Writing Blackman window ... "); writetofile( F(t => blackman(t)*2*c*sinc(2*c*t)), "blackman" ); println("done");
 
   /// Format Doubles string to a reasonable number of decimal places
   def fmt(x : Double) = "%f" format x
@@ -59,6 +71,7 @@ def F(x : Double => Complex) : Double => Complex = {
   def writetofile( Fx : Double => Complex, fname : String) = {
     val filetfun = new java.io.FileWriter(fname + ".csv")
     (fmin to fmax by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt(Fx(f).magnitude) + "\n") )
+    filetfun.close
   }
 }
 
