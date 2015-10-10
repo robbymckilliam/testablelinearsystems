@@ -272,7 +272,7 @@ From the multiplication property of the Fourier transform~\eqref{eq:multiplicati
 \[
 \calF\big( 2c w(t) \sinc(2ct)  \big) = \hat{w}(f) * \rect(f/2c).
 \]
-These Fourier transforms for the rectangular and Blackman windows when the cuttoff $c = 1$ are plotted in Figure~\ref{?}.  Observe that the Fourier transform approaches the spectrum of the ideal lowpass filter as the window width $W$ increases.
+These Fourier transforms for the rectangular and Blackman windows when the cuttoff $c = 1$ are plotted in Figure~\ref{fig:windowfunctionsasWincrease}.  The Fourier transform approaches the spectrum of the ideal lowpass filter as the window width $W$ increases.
 
 A low pass finite impulse response filter with period $P$, cuttoff frequency $c$, and window $w$ is a discrete time system $H$ with period $P$ having impulse response $h_n = 2c w(nP) \sinc(2c nP)$ given by sampling the windowed sinc function.  Becasuse $w(t)$ is zero outside the interval $(-W/2, W/2)$ the impulse response $h_n = 0$ when $n P \notin (-FW/2, FW/2)$.  Only a finite number of elements of the impulse response $h$ are nonzero and so the response of $H$ to input signal $x$ can be computed by the finite sum
 \[
@@ -282,6 +282,58 @@ and $\floor{FW/2}$ denotes the greatest integer less than or equal to $FW/2$.  T
 \[
 \Lambda H(f) = \sum_{m \in \ints} \big(\hat{w}(t) *  \rect(f/2c) \big)(Ff + Fm)
 \]
+
+\begin{figure}[tp]
+  \centering
+  \def\sx{1.4}
+  \def\sy{3}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\c{1}
+  \colorlet{lightgray}{black!25}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+      \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+
+      % draw hatched region for magnitude spectrum of the ideal low pass filter. 
+%      \tikzstyle{idealowpass}=[fill,pattern=north west lines,draw=none]
+%      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      %  
+      % -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4.1,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (4.1,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Fourier transform $\tfrac{3}{2}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b \leq \tfrac{7}{4}$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  %The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  
+The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{3}{2}$ centered at the origin is unaffected.  The shaded region shows the periodic magnitude spectrum of this digital filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b \leq \tfrac{7}{4} < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+\end{figure}
+
 
 {
 \def\sincf(#1){sin(pi*(#1))/(pi*(#1))} %sinc function
@@ -529,57 +581,6 @@ and $\floor{FW/2}$ denotes the greatest integer less than or equal to $FW/2$.  T
 % \[
 % \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 0.167754.
 % \]
-
-\begin{figure}[tp]
-  \centering
-  \def\sx{1.4}
-  \def\sy{3}
-  \def\P{0.25}
-  \def\F{(1/\P)}
-  \def\c{1}
-  \colorlet{lightgray}{black!25}
-  \begin{tikzpicture}
-    \begin{scope}[yscale=\sy,xscale=\sx]
-
-      % draw light gray region for magnitude spectrum of the discrete time system. 
-      \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
-
-      % draw hatched region for magnitude spectrum of the ideal low pass filter. 
-%      \tikzstyle{idealowpass}=[fill,pattern=north west lines,draw=none]
-%      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
-      
-      % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
-      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
-      \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
-      
-      % draw unfiltered Fourier transform magnitude
-       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
-       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
-       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
-       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
-       -- (1.75,0) -- (4,0);
-      %  
-      % -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
-      
-       %draw filtered Fourier transform magnitude
-       \draw[thick] (-4.1,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (4.1,0);
-      
-      % add some axis ticks
-    \end{scope}
-    \begin{scope}[xscale=\sx]
-      \vtick{-2.0} node[pos=0.5,below] {$-2$};
-      \vtick{2} node[pos=0.5,below] {$2$};
-      \vtick{-4.0} node[pos=0.5,below] {$-4$};
-      \vtick{4} node[pos=0.5,below] {$4$};
-    \end{scope}
-    \begin{scope}[yscale=\sy]
-      \htick{1} node[pos=0.5,above left] {$1$};
-    \end{scope}
-  \end{tikzpicture}
-  \caption{Fourier transform $\tfrac{3}{2}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b \leq \tfrac{7}{4}$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  %The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  
-The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{3}{2}$ centered at the origin is unaffected.  The shaded region shows the periodic magnitude spectrum of this digital filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b \leq \tfrac{7}{4} < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
-\end{figure}
 
 
 \begin{figure}[p]
