@@ -266,7 +266,7 @@ and the \term{Blackman window}~\citep{BlackmanTukeywindows}
 \begin{equation}\label{eq:blackmanwindow}
 w(t) = \rect\left(\frac{t}{W}\right) \left( a_0 + a_1 \cos\left(\frac{2\pi t}{W}\right) + a_2 \cos\left(\frac{4\pi t}{W}\right) \right) 
 \end{equation}
-where $a_0 = \tfrac{21}{50}$, $a_1 = \tfrac{1}{2}$, and $a_2 = \tfrac{2}{25}$.  These window functions and their Fourier transform are plotted in Figure~\ref{fig:windowfunctions}.  The Fourier transform of the Blackman window decays to zero particularly rapidly as $\abs{f}$ increases.
+where $a_0 = \tfrac{21}{50}$, $a_1 = \tfrac{1}{2}$, and $a_2 = \tfrac{2}{25}$.  These window functions and their Fourier transform are plotted in Figure~\ref{fig:windowfunctions}.  The Fourier transform of the Blackman window decays to zero particularly rapidly as $\abs{f}$ increases (Exercise~\ref{exer:blackmawindowfouriertransform}).
 
 From the multiplication property of the Fourier transform~\eqref{eq:multiplicationtheoremfouriertransform} we find the Fourier transform of the windowed sinc function $2c w(t) \sinc(2ct)$ to be the convolution of the Fourier transform of the window function $\calF w = \hat{w}$ and the Fourier transform $\calF\big( 2c\sinc(2ct) \big) = \rect(f/2c)$, that is,  
 \[
@@ -481,7 +481,7 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
 \begin{figure}[tp]
   \centering
   \def\sx{3}
-  \def\sy{3}
+  \def\sy{5}
   \def\P{0.25}
   \def\F{(1/\P)}
   \def\c{1}
@@ -497,13 +497,16 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
 
       \draw[->] (-0.4,0) -- (3.3,0) node[above] {$f$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
-      \draw[->] (0,-0.25) -- (0,1.3) node[above,font=\footnotesize] {};  
+      \draw[->] (0,-0.15) -- (0,1.3) node[above,font=\footnotesize] {};  
+      \node[font=\footnotesize] at (0.9,1.15) {$10$};
+      \node[font=\footnotesize] at (0.68,1.15) {$3$};
+      \node[font=\footnotesize] at (0.3,1.15) {$1$};
       
       % add some axis ticks
     \end{scope}
     \begin{scope}[xscale=\sx]
       \vtick{3} node[pos=0.5,below] {$3$};
-      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{2} node[pos=0.5,above] {$2$};
       \vtick{1} node[pos=0.5,below] {$1$};
     \end{scope}
     \begin{scope}[yscale=\sy]
@@ -549,8 +552,12 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
 
       \draw[->] (-0.4,0) -- (3.3,0) node[above] {$f$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
-      \draw[->] (0,-0.25) -- (0,1.3) node[above,font=\footnotesize] {};  
-      
+      \draw[->] (0,-0.15) -- (0,1.15) node[above,font=\footnotesize] {};  
+      \node[font=\footnotesize] at (0.9,1.02) {$10$};
+      \node[font=\footnotesize] at (0.7,0.88) {$3$};
+      \node[font=\footnotesize] at (0.3,0.73) {$1$};
+
+
       % add some axis ticks
     \end{scope}
     \begin{scope}[xscale=\sx]
