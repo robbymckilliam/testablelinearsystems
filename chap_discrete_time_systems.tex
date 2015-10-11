@@ -220,37 +220,37 @@ The sequence $\rect(n/2)$ and its discrete Fourier transform are plotted in Figu
 We have found that the spectrum of a stable discrete time system is periodic with period equal to the sample rate $F = \tfrac{1}{P}$.  Because of this periodicity it is not immediately apparent that any useful filters can be constructed from discrete time systems.  For example, periodicity makes it impossible to build a lowpass filter (Section~\ref{sec:analogue-filters}).  However, many signals occuring in practice are approximately bandlimited with some bandwidth $b > 0$ (Section~\ref{sec:bandlimited-signals}).  We will find that it is possible to perform useful filtering operations on bandlimited signals using discrete time systems.  This is most easily achieved when the bandwidth is less than half the sample rate of the system, that is, when $b < \tfrac{F}{2}$.
 
 To see how this works, consider the bandlimited signal $x$ with Fourier transform
-\[
+\begin{equation}\label{eq:examplebandlimtedsignalforfiltering}
 \hat{x}(f) = \calF x(f) = \tfrac{4}{3}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)
-\]
-that is plotted by the dashed line in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  The Fourier transform has a rectangular pulse of height $\tfrac{4}{3}$ centered at the origin and raised cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two raised cosine pulses would preferably not exist.  A low pass filter could be used to filter out the rectangular pulses.  For example, an ideal lowpass filter $L_c$ (Section~\ref{sec:analogue-filters}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{5}{4})$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the recangular pulse at the origin and remove the two raised cosine pulses.  The response of $x$ to $L_c$ has Fourier transform~\eqref{eq:fouriertransoutputsig}
+\end{equation}
+plotted by the dashed line in Figures~\ref{fig:bandlimiteddiscretetimefiltering} and~\ref{fig:bandlimiteddiscretetimefilteringW3}.  The Fourier transform has a rectangular pulse of height $\tfrac{4}{3}$ centered at the origin and raised cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two raised cosine pulses would preferably not exist.  A low pass filter could be used to filter out the raised cosine pulses.  For example, an ideal lowpass filter $L_c$ (Section~\ref{sec:analogue-filters}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{5}{4})$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the recangular pulse at the origin and remove the two raised cosine pulses.  The response of $x$ to $L_c$ has Fourier transform~\eqref{eq:fouriertransoutputsig}
 \[
 \calF L_c x = \Lambda L_c \, \calF x = \rect(\tfrac{f}{2c}) \hat{x}(f) = \tfrac{3}{2} \rect(f).
 \]
 %This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  
 The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
 
-Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property we will find that the same lowpass filtering can be achieved with a discrete time system.  Let $H$ be the discrete time system with sample rate $F = \tfrac{1}{P} > 2b = \frac{7}{2}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$ given by sampling the impulse response of the ideal low pass filter $L_c$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
+Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property we will find that the same lowpass filtering can be achieved with a discrete time system.  Denote by $L_{c,P}$ the discrete time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$ given by sampling the impulse response of the ideal low pass filter $L_c$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
 \[
 \hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right).
 \] 
-We are lead to believe that the spectrum of $H$ is
+We are lead to believe that the spectrum of $L_{c,P}$ is
 \begin{equation}\label{eq:LambdaHidealklowpassdigitalsceptical}
-\Lambda H(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
+\Lambda L_{c,P}(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
 \end{equation}
-The spectrum is periodic with period $F > 2b = \tfrac{7}{2}$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $H$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  The response of $H$ to input signal $x$ has Fourier transform
+The spectrum is periodic with period $F$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $L_{c,P}$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  If $c \in (\tfrac{1}{2}, \tfrac{5}{4})$ and $F > \tfrac{7}{2}$ then the response of $L_{c,P}$ to input signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} has Fourier transform
 \[
-\calF H x = \Lambda H \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{3}{2} \rect(f)
+\calF L_{c,P} x = \Lambda H \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{3}{2} \rect(f)
 \]
-exactly as with the ideal lowpass filter $L_c$.  This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering} where only the period at the origin of the spectrum $\Lambda H$ overlaps with the Fourier transform of the bandlimited signal $x$.
+exactly as with the ideal lowpass filter $L_c$.  This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering} where only the period at the origin of the spectrum $\Lambda L_{1,0.25}$ overlaps with the Fourier transform of the bandlimited signal $x$.
 
-The conclusion that the spectrum of $H$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
+The conclusion that the spectrum of $L_{c,P}$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
 
-We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or \term{FIR filters} for short.  One feature preventing practical implementation of the ideal lowpass digital filter is that the discrete impulse response $h_n = 2c\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require an infinite number of computational operations.  A pragramtic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter by one with impulse response
+We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or \term{FIR filters} for short.  One feature preventing practical implementation of the ideal lowpass digital filter is that the discrete impulse response $h_n = 2c\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require summing an infinite number of terms.  A pragramtic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter by one with impulse response
 \[
 2c w(t) \sinc(2ct)
 \]
-where $w(t)$ is a bounded signal called a \term{window function} (sometimes also called an \term{apodization function}).  The window function $w(t)$ is zero outside an interval $(-W/2, W/2)$ where $W > 0$ is called the \term{window width}.  Because of the window function this impulse response has finite support and is absolutely integrable.  Common window functions include the rectangular window $w(t) = \rect(t/W)$, the triangular (or \term{Bartlett}) window $w(t) = \bigtriangleup(2t/W)$ where 
+where $w(t)$ is a bounded signal called a \term{window function} or \term{apodization function}.  The window function $w(t)$ is zero outside an interval $(-W/2, W/2)$ where $W > 0$ is called the \term{window width}.  Because of the window function this impulse response has finite support and is absolutely integrable.  Common window functions include the rectangular window $w(t) = \rect(t/W)$, the triangular (or \term{Bartlett}) window $w(t) = \bigtriangleup(2t/W)$ where 
 \[
 \bigtriangleup(t) = (\rect * \rect)(t)  = \begin{cases}
 t + 1 & -1 < t < 0 \\
@@ -268,20 +268,21 @@ w(t) = \rect\left(\frac{t}{W}\right) \left( a_0 + a_1 \cos\left(\frac{2\pi t}{W}
 \end{equation}
 where $a_0 = \tfrac{21}{50}$, $a_1 = \tfrac{1}{2}$, and $a_2 = \tfrac{2}{25}$.  These window functions and their Fourier transform are plotted in Figure~\ref{fig:windowfunctions}.  The Fourier transform of the Blackman window decays to zero particularly rapidly as $\abs{f}$ increases (Exercise~\ref{exer:blackmawindowfouriertransform}).
 
-From the multiplication property of the Fourier transform~\eqref{eq:multiplicationtheoremfouriertransform} we find the Fourier transform of the windowed sinc function $2c w(t) \sinc(2ct)$ to be the convolution of the Fourier transform of the window function $\calF w = \hat{w}$ and the Fourier transform $\calF\big( 2c\sinc(2ct) \big) = \rect(f/2c)$, that is,  
+From the multiplication property~\eqref{eq:multiplicationtheoremfouriertransform} we find the Fourier transform of the windowed sinc function $2c w(t) \sinc(2ct)$ to be the convolution of the Fourier transform of the window function $\calF w = \hat{w}$ and the Fourier transform $\calF\big( 2c\sinc(2ct) \big) = \rect(f/2c)$, that is,  
 \[
 \calF\big( 2c w(t) \sinc(2ct)  \big) = \hat{w}(f) * \rect(f/2c).
 \]
 These Fourier transforms for the rectangular and Blackman windows when the cuttoff $c = 1$ are plotted in Figure~\ref{fig:windowfunctionsasWincrease}.  The Fourier transform approaches the spectrum of the ideal lowpass filter as the window width $W$ increases.
 
-A low pass finite impulse response filter with period $P$, cuttoff frequency $c$, and window $w$ is a discrete time system $H$ with period $P$ having impulse response $h_n = 2c w(nP) \sinc(2c nP)$ given by sampling the windowed sinc function.  Becasuse $w(t)$ is zero outside the interval $(-W/2, W/2)$ the impulse response $h_n = 0$ when $n P \notin (-FW/2, FW/2)$.  Only a finite number of elements of the impulse response $h$ are nonzero and so the response of $H$ to input signal $x$ can be computed by the finite sum
+A low pass finite impulse response filter with period $P$, cuttoff frequency $c$, and window $w$ is a discrete time system $L_{c,P,w}$ with period $P$ having impulse response $h_n = 2c w(nP) \sinc(2c nP)$ given by sampling the windowed sinc function.  Becasuse $w(t)$ is zero outside the interval $(-W/2, W/2)$ the impulse response $h_n = 0$ when $n P \notin (-FW/2, FW/2)$ and only a finite number of elements of $h$ are nonzero.  For this reason, the response of $L_{c,P,w}$ to any input signal $x$ can be computed by the finite sum
 \[
-Hx(t) = \sum_{m = -a}^a h_n T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
+L_{c,P,w}x(t) = \sum_{m = -a}^a h_n T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
 \]
 and $\floor{FW/2}$ denotes the greatest integer less than or equal to $FW/2$.  The spectrum of this filter is given by periodic summation of the Fourier transform $\hat{w}(f) * \rect(f/2c)$ of the windowed sinc function, that is,
 \[
-\Lambda H(f) = \sum_{m \in \ints} \big(\hat{w}(t) *  \rect(f/2c) \big)(Ff + Fm)
+\Lambda L_{c,P,w}(f) = \sum_{m \in \ints} \big(\hat{w}(t) *  \rect(f/2c) \big)(Ff + Fm)
 \]
+Now consider filtering the signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} using a low pass finite impulse response filter $L_{c,P,w}$.  Figure~\ref{eq:blackmanwindow} shows  the response in the case that the cuttoff frequency $c = 1$, the sample rate $F = \tfrac{1}{P} = 4$, and for the rectangular window function $w(t) = \rect{t/W}$ with width $W = 3$ and $W = 8$ and with a Blackman window function with $W = 8$.
 
 \begin{figure}[tp]
   \centering
@@ -400,8 +401,8 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
   \htick{1} node[pos=0.5,above left] {$\tfrac{W}{2}$};
 \end{scope}
 \begin{scope}[xscale=0.5]
-  \vtick{1} node[pos=0.5,below] {$\tfrac{2}{W}$};
-  \vtick{-1} node[pos=0.5,below] {$-\tfrac{2}{W}$};
+  \vtick{2} node[pos=0.5,below] {$\tfrac{2}{W}$};
+  \vtick{-2} node[pos=0.5,below] {$-\tfrac{2}{W}$};
 \end{scope}
 \end{tikzpicture}
 \\
@@ -447,10 +448,14 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
     \draw[thick] (-1.2,0)--(-0.5,0);  
     \draw[thick] (0.5,0)--(1.2,0);
     \draw[smooth,color=black,thick,domain=-0.5:0.5,samples=50] plot function{21.0/50 + cos(2*3.1415926*x)/2 + 2*cos(4*3.1415926*x)/25};
-\vtick{0.5} node[pos=0.5,below] {$\tfrac{W}{2}$};
-    \vtick{-0.5} node[pos=0.5,below] {-$\tfrac{W}{2}$}; 
 \end{scope}
-    \htick{2} node[pos=0.5,above left] {$1$};
+\begin{scope}[yscale=2]
+\htick{1} node[pos=0.5,above left] {$1$};
+\end{scope}
+\begin{scope}[xscale=2]
+\vtick{0.5} node[pos=0.5,below] {$\tfrac{W}{2}$};
+\vtick{-0.5} node[pos=0.5,below] {-$\tfrac{W}{2}$}; 
+\end{scope}
 \end{tikzpicture} 
 \;
 %\def\blackmanF(#1){(0.84-0.09*(#1*#1))*\sincf(#1/2)/2/(1-(#1*#1)/4)/(1-(#1*#1))}
@@ -639,58 +644,47 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
     \end{scope}
   \end{tikzpicture}
 \\
-\vspace{1cm}
-  \begin{tikzpicture}
-    \begin{scope}[yscale=\sy,xscale=\sx]
+\vspace{0.5cm}
+  % \begin{tikzpicture}
+  %   \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
-      %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
-      \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0.csv} -- (4.3,0) --cycle;
+  %     % draw light gray region for magnitude spectrum of the discrete time system. 
+  %     %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+  %     \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0.csv} -- (4.3,0) --cycle;
 
-      % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
-      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
-      \draw[->] (0,-0.2) -- (0,1.8) node[above,font=\footnotesize] {};  
+  %     % draw axis
+  %     \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+  %     % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+  %     \draw[->] (0,-0.2) -- (0,1.8) node[above,font=\footnotesize] {};  
       
-      % draw unfiltered Fourier transform magnitude
-       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
-       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
-       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.5) -- (0.5,1.5) -- (0.5,0) -- (1.25, 0)
-       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
-       -- (1.75,0) -- (4,0);
+  %     % draw unfiltered Fourier transform magnitude
+  %      \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+  %      -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+  %      -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.5) -- (0.5,1.5) -- (0.5,0) -- (1.25, 0)
+  %      -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+  %      -- (1.75,0) -- (4,0);
       
-       %draw filtered Fourier transform magnitude
-       \draw[thick] (-4,0) -- (-1.75,0) 
-       -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_left.csv}
-       -- (-1.25,0) -- (-0.5,0)
-       -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_middle.csv}
-       -- (0.5,0) -- (1.25, 0)
-       -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_right.csv}
-       -- (1.75,0) -- (4,0);
+  %      %draw filtered Fourier transform magnitude
+  %      \draw[thick] (-4,0) -- (-1.75,0) 
+  %      -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_left.csv}
+  %      -- (-1.25,0) -- (-0.5,0)
+  %      -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_middle.csv}
+  %      -- (0.5,0) -- (1.25, 0)
+  %      -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0_right.csv}
+  %      -- (1.75,0) -- (4,0);
       
-      % add some axis ticks
-    \end{scope}
-    \begin{scope}[xscale=\sx]
-      \vtick{-2.0} node[pos=0.5,below] {$-2$};
-      \vtick{2} node[pos=0.5,below] {$2$};
-      \vtick{-4.0} node[pos=0.5,below] {$-4$};
-      \vtick{4} node[pos=0.5,below] {$4$};
-    \end{scope}
-    \begin{scope}[yscale=\sy]
-      \htick{1} node[pos=0.5,above left] {$1$};
-    \end{scope}
-  \end{tikzpicture}
-  \caption{Window width $W = 3$.} \label{fig:bandlimiteddiscretetimefiltering}
-\end{figure}
-
-\begin{figure}[p]
-  \centering
-  \def\sx{1.4}
-  \def\sy{3}
-  \def\P{0.25}
-  \def\F{(1/\P)}
-  \def\c{1}
-  \colorlet{lightgray}{black!25}
+  %     % add some axis ticks
+  %   \end{scope}
+  %   \begin{scope}[xscale=\sx]
+  %     \vtick{-2.0} node[pos=0.5,below] {$-2$};
+  %     \vtick{2} node[pos=0.5,below] {$2$};
+  %     \vtick{-4.0} node[pos=0.5,below] {$-4$};
+  %     \vtick{4} node[pos=0.5,below] {$4$};
+  %   \end{scope}
+  %   \begin{scope}[yscale=\sy]
+  %     \htick{1} node[pos=0.5,above left] {$1$};
+  %   \end{scope}
+  % \end{tikzpicture}
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
@@ -732,7 +726,7 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
     \end{scope}
   \end{tikzpicture}
 \\
-\vspace{1cm}
+\vspace{0.5cm}
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
@@ -773,8 +767,102 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
       \htick{1} node[pos=0.5,above left] {$1$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Window width $W = 8$.} \label{fig:bandlimiteddiscretetimefiltering}
+
+  \caption{Window width $W = 3$.} \label{fig:bandlimiteddiscretetimefilteringW3}
 \end{figure}
+
+% \begin{figure}[p]
+%   \centering
+%   \def\sx{1.4}
+%   \def\sy{3}
+%   \def\P{0.25}
+%   \def\F{(1/\P)}
+%   \def\c{1}
+%   \colorlet{lightgray}{black!25}
+%   \begin{tikzpicture}
+%     \begin{scope}[yscale=\sy,xscale=\sx]
+
+%       % draw light gray region for magnitude spectrum of the discrete time system. 
+%       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+%       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
+
+%       % draw axis
+%       \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+%       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+%       \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
+      
+%       % draw unfiltered Fourier transform magnitude
+%        \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+%        -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+%        -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
+%        -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+%        -- (1.75,0) -- (4,0);
+      
+%        %draw filtered Fourier transform magnitude
+%        \draw[thick] (-4,0) -- (-1.75,0) 
+%        -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0_left.csv}
+%        -- (-1.25,0) -- (-0.5,0)
+%        -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0_middle.csv}
+%        -- (0.5,0) -- (1.25, 0)
+%        -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0_right.csv}
+%        -- (1.75,0) -- (4,0);
+      
+%       % add some axis ticks
+%     \end{scope}
+%     \begin{scope}[xscale=\sx]
+%       \vtick{-2.0} node[pos=0.5,below] {$-2$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-4.0} node[pos=0.5,below] {$-4$};
+%       \vtick{4} node[pos=0.5,below] {$4$};
+%     \end{scope}
+%     \begin{scope}[yscale=\sy]
+%       \htick{1} node[pos=0.5,above left] {$1$};
+%     \end{scope}
+%   \end{tikzpicture}
+% \\
+% \vspace{1cm}
+%   \begin{tikzpicture}
+%     \begin{scope}[yscale=\sy,xscale=\sx]
+
+%       % draw light gray region for magnitude spectrum of the discrete time system. 
+%       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+%       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
+
+%       % draw axis
+%       \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+%       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+%       \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
+      
+%       % draw unfiltered Fourier transform magnitude
+%        \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+%        -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+%        -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
+%        -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+%        -- (1.75,0) -- (4,0);
+      
+%        %draw filtered Fourier transform magnitude
+%        \draw[thick] (-4,0) -- (-1.75,0) 
+%        -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0_left.csv}
+%        -- (-1.25,0) -- (-0.5,0)
+%        -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0_middle.csv}
+%        -- (0.5,0) -- (1.25, 0)
+%        -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0_right.csv}
+%        -- (1.75,0) -- (4,0);
+      
+%       % add some axis ticks
+%     \end{scope}
+%     \begin{scope}[xscale=\sx]
+%       \vtick{-2.0} node[pos=0.5,below] {$-2$};
+%       \vtick{2} node[pos=0.5,below] {$2$};
+%       \vtick{-4.0} node[pos=0.5,below] {$-4$};
+%       \vtick{4} node[pos=0.5,below] {$4$};
+%     \end{scope}
+%     \begin{scope}[yscale=\sy]
+%       \htick{1} node[pos=0.5,above left] {$1$};
+%     \end{scope}
+%   \end{tikzpicture}
+%   \caption{Window width $W = 8$.} \label{fig:bandlimiteddiscretetimefilteringW8}
+% \end{figure}
 
 
 \begin{test}\label{test:firfilteredlecturerec}
