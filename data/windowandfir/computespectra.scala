@@ -49,18 +49,21 @@ def Fwindowed(W: Double, x : Double => Complex) : Double => Complex = {
 /// Format Doubles string to a reasonable number of decimal places
 def fmt(x : Double) = "%f" format x
 
-computeall(2.0,1.0)
-//computeall(3.0,1.0)
-computeall(8.0,1.0)
+computeallresponseplot(1.0,1.0)
+computeallresponseplot(2.0,1.0)
+computeallresponseplot(3.0,1.0)
+computeallresponseplot(4.0,1.0)
+computeallresponseplot(5.0,1.0)
+//computeallresponseplot(8.0,1.0)
 //computeall(9.0,1.0)
-//computeall(10.0,1.0)
+computeallresponseplot(10.0,1.0)
 
 // Compute all windows with width W and cuttoff frequency c
-def computeall(W : Double, c : Double) = {
+def computeallresponseplot(W : Double, c : Double) = {
 
   println("Computing with window width " + W + " and cuttoff frequency " + c)
 
-  //period and sample rate of our discrete time system 
+  //period and sample rate of our discrete time system
   val Pd = 1.0/4
   val Fd = 1.0/Pd
 
@@ -68,67 +71,54 @@ def computeall(W : Double, c : Double) = {
 
   def Fper(x: Double => Complex) : Double => Complex = {
     val Ft = F(x); //compute Fourier transform
-    //return periodised Fourier transform. Summing more than 3 is overkill
+                   //return periodised Fourier transform. Summing more than 3 is overkill
     f => Ft(f - Fd) + Ft(f) + Ft(f + Fd)
   }
 
   //now write magnitude spectra to file for different windows sinc functions
-  {
-    val fmin = -4.3
-    val fstep = 0.01
-    val fmax = 4.3 + fstep/2
+  val fstep = 0.01
+  val wcstr = "_W" + W + "_c" + c
 
-    val wcstr = "_W" + W + "_c" + c
+  print("Writing rectangular window ... ")
+  writefilterandresponsetofile( F(t => rect(t/W)*2*c*sinc(2*c*t)), "rect" + wcstr )
+  writefilterandresponsetofile( Fper(t => rect(t/W)*2*c*sinc(2*c*t)), "rect_periodised" + wcstr )
+  println("done");
 
-    print("Writing rectangular window ... ") 
-    writetofile( F(t => rect(t/W)*2*c*sinc(2*c*t)), "rect" + wcstr )
-    writetofile( Fper(t => rect(t/W)*2*c*sinc(2*c*t)), "rect_periodised" + wcstr )
-    println("done");
+  print("Writing Bartlett window ... ")
+  writefilterandresponsetofile( F(t => bartlett(t/W)*2*c*sinc(2*c*t)), "bartlett" + wcstr)
+  writefilterandresponsetofile( Fper(t => bartlett(t/W)*2*c*sinc(2*c*t)), "bartlett_periodised" + wcstr)
+  println("done")
+  
+  print("Writing Hann window ... ")
+  writefilterandresponsetofile( F(t => hann(t/W)*2*c*sinc(2*c*t)), "hann" + wcstr)
+  writefilterandresponsetofile( Fper(t => hann(t/W)*2*c*sinc(2*c*t)), "hann_periodised" + wcstr)
+  println("done")
 
-    print("Writing Bartlett window ... ")
-    writetofile( F(t => bartlett(t/W)*2*c*sinc(2*c*t)), "bartlett" + wcstr)
-    writetofile( Fper(t => bartlett(t/W)*2*c*sinc(2*c*t)), "bartlett_periodised" + wcstr)
-    println("done")
-    
-    print("Writing Hann window ... ") 
-    writetofile( F(t => hann(t/W)*2*c*sinc(2*c*t)), "hann" + wcstr)
-    writetofile( Fper(t => hann(t/W)*2*c*sinc(2*c*t)), "hann_periodised" + wcstr)
-    println("done")
+  print("Writing Blackman window ... ")
+  writefilterandresponsetofile( F(t => blackman(t/W)*2*c*sinc(2*c*t)), "blackman" + wcstr)
+  writefilterandresponsetofile( Fper(t => blackman(t/W)*2*c*sinc(2*c*t)), "blackman_periodised" + wcstr)
+  println("done")
 
-    print("Writing Blackman window ... ") 
-    writetofile( F(t => blackman(t/W)*2*c*sinc(2*c*t)), "blackman" + wcstr)
-    writetofile( Fper(t => blackman(t/W)*2*c*sinc(2*c*t)), "blackman_periodised" + wcstr)
-    println("done")
-
-    //write Fourier transform to file
-    def writetofile( Fx : Double => Complex, fname : String) = {
-      {
-        val filetfun = new java.io.FileWriter(fname + ".csv")
-        (fmin to fmax by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt(Fx(f).magnitude) + "\n") )
-        filetfun.close
-      }
-      //left hand raised cosine
-      {
-        val filetfun = new java.io.FileWriter(fname + "_left.csv")
-          (-1.75 to -1.25 by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt((Fx(f)*cos(2*Pi*f)).magnitude) + "\n") )
-        filetfun.close
-      }
-      //right hand raised cosine
-      {
-        val filetfun = new java.io.FileWriter(fname + "_right.csv")
-          (1.25 to 1.75 by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt((Fx(f)*cos(2*Pi*f)).magnitude) + "\n") )
-        filetfun.close
-      }
-      //centered rectangular pulse
-      {
-        val filetfun = new java.io.FileWriter(fname + "_middle.csv")
-          (-0.5 to 0.5 by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt(Fx(f).magnitude*3.0/2.0) + "\n") )
-        filetfun.close
-      }
-    }
+  //write Fourier and response to file transform to file
+  def writefilterandresponsetofile( Fx : Double => Complex, fname : String) = {
+    writetofile(f => Fx(f).magnitude, fname + ".csv", -4.3, 4.3, fstep)
+    //left hand raised cosine
+    writetofile(f => (Fx(f)*cos(2*Pi*f)).magnitude, fname + "_left.csv", -1.75, -1.25, fstep)
+    //left hand raised cosine
+    writetofile(f => (Fx(f)*cos(2*Pi*f)).magnitude, fname + "_right.csv", 1.25, 1.75, fstep)
+    //centered rectangular pulse
+    writetofile(f => Fx(f).magnitude*4.0/3.0, fname + "_middle.csv", -0.5, 0.5, fstep)
+    //write window straight to file in range -0.5 to 3.0
+    writetofile(f=>Fx(f).real, fname + "_re", -0.2,3.1,0.005)
   }
 
+}
 
+//write Fourier transform to file
+def writetofile( x : Double => Double, fname : String, fmin : Double, fmax : Double, fstep : Double) = {
+  val filetfun = new java.io.FileWriter(fname + ".csv")
+    (fmin to fmax by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt(x(f)) + "\n") )
+  filetfun.close
 }
 
 println("Scala finished")
