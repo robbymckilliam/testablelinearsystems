@@ -270,26 +270,26 @@ and integrating by parts gives
 \end{align*}
 Because $t \rect(t)$ is absolutely integrable its region of convergence includes the imaginary axis and we can obtain the Fourier transform by evaluating the Laplace transform at $s = j2\pi f$, 
 \begin{align*}
-\calF( t \rect(t), f) &= \calL(x, j 2\pi f) \\
+\calF( t \rect(t))( f) &= \calL x(j 2\pi f) \\
 &= \frac{1}{2\pi j f}\left( -\frac{e^{j \pi f} + e^{-j\pi f}}{2} + \frac{e^{j\pi f} - e^{-j \pi f}}{2 j \pi f } \right) \\
 &= \frac{1}{2\pi j f}\left( \sinc(f) - \cos(\pi f)\right) .
 \end{align*}
 
 An alternative approach is to observe that
 \[
-\calF(D(\sinc)) =  \Lambda(D) \calF(\sinc) = j 2\pi f \rect(f),
+\calF D \sinc(f) =  \Lambda D \calF\sinc(f) = j 2\pi f \rect(f),
 \]
 and so, by duality,
 \[
-\calF( j 2\pi t \rect(t), f ) = \calF(\calF(D(\sinc)),f) = D(\sinc,-f)
+\calF( j 2\pi t \rect(t)) (f ) = \calF \calF D \sinc(f) = D\sinc(-f)
 \]
 The derivative of the $\sinc$ function is given in~\zeqref{eq:sincderivative}
 \[
-D(\sinc,-f) = \frac{1}{\pi f^2} \big( \sin(\pi f) - \pi f \cos(\pi f) \big) = \frac{1}{f} \big( \sinc(f) - \cos(\pi f) \big).
+D \sinc(-f) = \frac{1}{\pi f^2} \big( \sin(\pi f) - \pi f \cos(\pi f) \big) = \frac{1}{f} \big( \sinc(f) - \cos(\pi f) \big).
 \]
 Dividing by $j 2\pi$ we obtain
 \[
-\calF( t \rect(t), f ) = \frac{1}{2 j \pi^2 f^2} \big( \pi f \cos(\pi f) - \sin(\pi f) \big) = \frac{1}{2 j \pi f} \big( \sinc(f) - \cos(\pi f) \big)
+\calF( t \rect(t))( f ) = \frac{1}{2 j \pi^2 f^2} \big( \pi f \cos(\pi f) - \sin(\pi f) \big) = \frac{1}{2 j \pi f} \big( \sinc(f) - \cos(\pi f) \big)
 \]
 again. A plot of the Fourier transform is below.  Observe that the Fourier transform is purely imaginary so we plot the imaginary part.
 
@@ -492,7 +492,7 @@ The sum in the equation on the right is a geometric series evaluating to
 % BLERG
 % \end{solution}
 
-\item \label{excer:sumsqreexp} Show that if a sequence absolutely summable then it is also square summable.
+\item \label{excer:sumsqreexp} Show that if a sequence is absolutely summable then it is also square summable.
 \begin{solution}
 Suppose that the discrete time signal $a$ is absolutely summable so that $\|a\|_1 = \sum_{n\in\ints} \abs{a_n} < \infty$.  Let $A$ be the subset of $\ints$ such that $\abs{a_n} \geq 1$ whenever $n \in A$.  That is
 \[
