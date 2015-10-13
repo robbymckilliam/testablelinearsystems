@@ -666,7 +666,7 @@ and the hypothesised phase spectrum $\angle{\Lambda B_{2}^c(f)}$.
 \end{shaded}
 \end{figure}
 
-\section{Complex valued sequences}
+\section{Complex sequences}
 
 Let $x$ be a signal with Fourier transform $\hat{x} = \calF x$.  The signal $x$ is said to be \term{bandlimited} if there exists a positive real number $b$ such that 
 \[
@@ -675,7 +675,7 @@ Let $x$ be a signal with Fourier transform $\hat{x} = \calF x$.  The signal $x$ 
 The value $b$ is called the \term{bandwidth} of the signal $x$.  For example, the $\sinc$ function is bandlimited with bandwidth $\tfrac{1}{2}$ because its Fourier transform $\calF \sinc(f) = \rect(f) = 0$ for all $\abs{f} > \tfrac{1}{2}$.
 Bandlimited signals have a number of properties that make them suitable for representation and manipulation by a computer.  They are of particular importance for this reason.  Before we can study bandlimited signals we first require some properties of real and complex valued~\term{sequences}.
 
-A \term{sequence} is a function with domain given by the integers $\ints$.  The value of a sequence $x$ at integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take complex (or real) values, that is, functions from the set $\ints \to \complex$.  For example,
+A \term{sequence} is a function with domain given by the integers $\ints$.  The value of a sequence $x$ at integer $n$ can be denoted by $x(n)$ but it is conventional to write $x_n$.  We are primarily interested in sequences that take complex values, that is, functions from the set $\ints \to \complex$.  For example,
 \[
 \sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad e^{-\sabs{n}/2}
 \]
@@ -761,21 +761,21 @@ A sequence $x$ is even (or symmetric) if $x_n = x_{-n}$ for all $n \in \ints$ an
 %\]  
 %that is, if its real part is odd and its imaginary part is even.  For example, the signal $e^{-t^2} + j \sin(\pi t)$ where $j = \sqrt{-1}$ is conjugate symmetric and the signal $\tfrac{1}{2}t^{3} + j e^{-t^2}$ is conjugate antisymmetric.
 
-A sequence $x$ is \term{right sided} if there exists a $T \in \reals$ such that $x_n = 0$ for all $t < T$.  Correspondingly $x$ is \term{left sided} if $x_n = 0$ for all $T > t$.  For example, the \term{step sequence} $u$ with $n$th element 
+A sequence $x$ is \term{right sided} if there exists a $T \in \reals$ such that $x_n = 0$ for all $n < T$.  Correspondingly $x$ is \term{left sided} if $x_n = 0$ for all $n > T$.  For example, the \term{step sequence} $u$ with $n$th element 
 \begin{equation} \label{eq:stepsequence}
 u_n = \begin{cases} 
 1 & n \geq 0 \\
 0 & n < 0 
 \end{cases}
 \end{equation}
-is right sided  (Figure~\ref{fig:stepsided}).  The reflected sequence $u_{-n}$ is left sided.  A sequence is said to be of \term{finite support} or just \term{finite} if it is both left and right sided.  For example the sequence $\delta$ with $n$th element 
+is right sided  (Figure~\ref{fig:stepsided}).  The reflected sequence $u_{-n}$ is left sided.  A sequence is said to be of \term{finite support} or just \term{finite} if it is both left and right sided.  For example the the \term{delta sequence} $\delta$ with $n$th element 
 \begin{equation} \label{eq:deltasequence}
 \delta_n = \begin{cases}
 1 & n = 0 \\
 0 & \text{otherwise},
 \end{cases}
 \end{equation}
-called the \term{delta sequence}, is finite.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, only a notational device.  Contrastingly, the delta sequence is a well defined sequence.
+has finite support.  The delta sequence is analogous to the delta ``function'' introduced in Section~\ref{sec:conv-regul-syst}.  The delta ``function'' is not actually function, only a notational device.  Contrastingly, the delta sequence is a well defined sequence.
 
 A sequence $x$ is \term{absolutely summable} if
 \[

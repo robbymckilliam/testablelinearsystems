@@ -230,21 +230,27 @@ plotted by the dashed line in Figures~\ref{fig:bandlimiteddiscretetimefiltering}
 %This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  
 The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
 
-Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property we will find that the same lowpass filtering can be achieved with a discrete time system.  Denote by $L_{c,P}$ the discrete time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$ given by sampling the impulse response of the ideal low pass filter $L_c$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
+Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploting this property we will find that the same lowpass filtering can be achieved with a discrete time system.  Denote by $L_{c}^P$ the discrete time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$.  That is, $h$ is given by sampling with period $P$ and rescaling by $P$, the impulse response of the ideal low pass filter $L_c$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
 \[
 \hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right).
 \] 
-We are lead to believe that the spectrum of $L_{c,P}$ is
+We are lead to believe that the spectrum of $L_c^P$ is
 \begin{equation}\label{eq:LambdaHidealklowpassdigitalsceptical}
-\Lambda L_{c,P}(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
+\Lambda L_c^P(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
 \end{equation}
-The spectrum is periodic with period $F$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $L_{c,P}$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  If $c \in (\tfrac{1}{2}, \tfrac{5}{4})$ and $F > \tfrac{7}{2}$ then the response of $L_{c,P}$ to input signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} has Fourier transform
+The spectrum is periodic with period $F$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = 4$.  The system $L_c^P$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$.  If $c \in (\tfrac{1}{2}, \tfrac{5}{4})$ and $F > \tfrac{7}{2}$ then the response of $L_c^P$ to input signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} has Fourier transform
 \[
-\calF L_{c,P} x = \Lambda H \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{3}{2} \rect(f)
+\calF L_c^P x = \Lambda H \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{4}{3} \rect(f)
 \]
-exactly as with the ideal lowpass filter $L_c$.  This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering} where only the period at the origin of the spectrum $\Lambda L_{1,0.25}$ overlaps with the Fourier transform of the bandlimited signal $x$.
+exactly as with the ideal lowpass filter $L_c$.  This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (top) where only the period at the origin of the spectrum $\Lambda L_1^{1/4}$ overlaps with the Fourier transform of the bandlimited signal $x$.
 
-The conclusion that the spectrum of $L_{c,P}$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
+An ideal high pass digital filter with cuttoff frequency $c$ and period $P$ is the system $T_0 - L_c^{P}$.  The impulse response is $\delta_n - 2cP\sinc(2cnP)$.  The spectrum $1 - \Lambda L_c^{P}$ is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (middle) in the case that $c = 1$ and $F = \tfrac{1}{P} = 4$.  The Fourier transform of the response of $T_0 - L_c^P$ to the input signal $x$ with Fourier transform~\eqref{eq:examplebandlimtedsignalforfiltering} is 
+\[
+\calF( T_0 x - L_c^P x ) = (\Lambda T_0 - \Lambda H) \, \calF x = \hat{x} - \tfrac{4}{3} \rect(f) = \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)
+\]
+This response is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (middle).  The two raised cosine pulses are preserved and the rectangular pulse at the origin is removed.  An ideal bandpass digital filter with upper cuttoff frequency $u$ and lower cuttoff frequency $\ell$ is the system $L_u^P - L_\ell^P$.  The impulse response is the sequence  $2uP\sinc(2unP) -  2 \ell P\sinc(2\ell nP)$.  The spectrum is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (bottom) in the case that $u = \tfrac{3}{2}$, $\ell = \tfrac{1}{4}$, and $F = \tfrac{1}{P} = 4$.
+
+The conclusion that the spectrum of $L_{c}^P$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
 
 We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or \term{FIR filters} for short.  One feature preventing practical implementation of the ideal lowpass digital filter is that the discrete impulse response $h_n = 2c\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require summing an infinite number of terms.  A pragramtic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter by one with impulse response
 \[
@@ -287,7 +293,7 @@ Now consider filtering the signal $x$ from~\eqref{eq:examplebandlimtedsignalforf
 \begin{figure}[tp]
   \centering
   \def\sx{1.4}
-  \def\sy{3}
+  \def\sy{2.5}
   \def\P{0.25}
   \def\F{(1/\P)}
   \def\c{1}
@@ -303,7 +309,7 @@ Now consider filtering the signal $x$ from~\eqref{eq:examplebandlimtedsignalforf
 %      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
       
       % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
       \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
       
@@ -331,8 +337,99 @@ Now consider filtering the signal $x$ from~\eqref{eq:examplebandlimtedsignalforf
       \htick{1} node[pos=0.5,above left] {$1$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Fourier transform $\tfrac{3}{2}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b \leq \tfrac{7}{4}$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  %The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  
-The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{3}{2}$ centered at the origin is unaffected.  The shaded region shows the periodic magnitude spectrum of this digital filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b \leq \tfrac{7}{4} < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+\\
+\vspace{0.2cm}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+%      \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+            \fill[fill=lightgray] (-2-\c,0) -- (-2-\c,1) -- (-2+\c,1) -- (-2+\c,0) -- (2-\c,0) -- (2-\c,1) -- (2+\c,1) -- (2+\c,0) -- cycle;
+
+      % draw hatched region for magnitude spectrum of the ideal low pass filter. 
+%      \tikzstyle{idealowpass}=[fill,pattern=north west lines,draw=none]
+%      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      %  
+      % -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+%       \draw[thick] (-4.1,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (4.1,0);
+       \draw[thick] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+\\
+\vspace{0.2cm}
+\def\u{1.5}
+\def\ell{0.25}
+  \begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+
+      % draw light gray region for magnitude spectrum of the discrete time system. 
+  %    \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
+      \fill[fill=lightgray] (-2-\u,0) -- (-2-\u,1) -- (-2-\ell,1) -- (-2-\ell,0) -- (-\u,0) -- (-\u,1) -- (-\ell,1) -- (-\ell,0) -- (\ell,0) -- (\ell,1) -- (\u,1) -- (\u,0) -- (2+\ell,0) -- (2+\ell,1) -- (2+\u,1) -- (2+\u,0) -- cycle;
+
+      % draw hatched region for magnitude spectrum of the ideal low pass filter. 
+%      \tikzstyle{idealowpass}=[fill,pattern=north west lines,draw=none]
+%      \draw[idealowpass] (-4.3,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4.3,0) -- cycle;
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick,dashed] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      %  
+      % -- (0.5,0) -- (1.25,0) -- (1.25,1) -- (1.75,1) -- (1.75,0) -- (4,0);
+      
+       %draw filtered Fourier transform magnitude
+       \draw[thick] (-4.1,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (4.1,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Fourier transform $\tfrac{4}{3}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b \leq \tfrac{7}{4}$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  %The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  
+The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{4}{3}$ centered at the origin is unaffected.  The shaded region shows the periodic magnitude spectrum of this digital filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b \leq \tfrac{7}{4} < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
 \end{figure}
 
 
@@ -611,7 +708,7 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W2.0_c1.0.csv} -- (4.3,0) --cycle;
 
       % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
       \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
       
@@ -693,7 +790,7 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
 
       % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
       \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
       
@@ -735,7 +832,7 @@ The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are
       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
 
       % draw axis
-      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$t$};
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
       % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
       \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
       
