@@ -13,32 +13,24 @@ import sounder.Util.sinc
 
 println("Generating spectra of windows finite impulse response filters")
 
-//window width
-val W = 3.0
-
-//cuttoff frequency
-val c = 1.0;
-
 //rectangular window
-def rect(t : Double) = if( abs(t) > W/2 ) Complex.zero else Complex.one
+def rect(t : Double) = if( abs(t) > 0.5 ) Complex.zero else Complex.one
 
 //Triangle (Bartlett) window
 def bartlett(t : Double) = {
-  if( abs(t) > W/2) Complex.zero 
-  else if( t < 0.0) RectComplex(1.0 + 2*t/W,0)
-  else RectComplex(1.0 - 2*t/W,0)
+  if( abs(t) > 0.5) Complex.zero 
+  else if( t < 0.0) RectComplex(1.0 + 2*t,0)
+  else RectComplex(1.0 - 2*t,0)
 }
 
-def hann(t : Double) = rect(t)*(1 + cos(2*Pi*t/W))/2.0
+def hann(t : Double) = rect(t)*(1 + cos(2*Pi*t))/2.0
 
 def blackman(t : Double) = {
 val a0 = 21.0/50
 val a1 = 1.0/2
 val a2 = 2.0/25
-rect(t)*(a0 + a1*cos(2*Pi*t/W) + a2*cos(4*Pi*t/W))
+rect(t)*(a0 + a1*cos(2*Pi*t) + a2*cos(4*Pi*t))
 }
-
-def mod2pi(x : Double) = x - floor(x/2/Pi)*2*Pi
 
 // Approximates the integral of f from a to b using the trapezoidal rule with N intervals.
 def trapezoidal(f : Double => Complex, a : Double, b : Double, N : Int) : Complex = {
@@ -48,34 +40,90 @@ def trapezoidal(f : Double => Complex, a : Double, b : Double, N : Int) : Comple
 }
 
 //Fourier transform of windowed function by trapezoidal integration
-def F(x : Double => Complex) : Double => Complex = {
+def Fwindowed(W: Double, x : Double => Complex) : Double => Complex = {
   val N = (W*1000).toInt
   f => trapezoidal( t => x(t)*PolarComplex(1.0,-2*Pi*f*t), -W/2, W/2, N)
 }
 
-//now write magnitude spectra to file for different windows sinc functions
-{
-  val fmin = -4.1
-  val fmax = 4.1
-  val fstep = 0.01
 
-  print("Writing rectangular window ... "); writetofile( F(t => rect(t)*2*c*sinc(2*c*t)), "rect" ); println("done");
-  print("Writing Bartlett window ... "); writetofile( F(t => bartlett(t)*2*c*sinc(2*c*t)), "bartlett" ); println("done");
-  print("Writing Hann window ... "); writetofile( F(t => hann(t)*2*c*sinc(2*c*t)), "hann" ); println("done");
-  print("Writing Blackman window ... "); writetofile( F(t => blackman(t)*2*c*sinc(2*c*t)), "blackman" ); println("done");
+/// Format Doubles string to a reasonable number of decimal places
+def fmt(x : Double) = "%f" format x
 
-  /// Format Doubles string to a reasonable number of decimal places
-  def fmt(x : Double) = "%f" format x
+computeallresponseplot(1.0,1.0)
+computeallresponseplot(2.0,1.0)
+computeallresponseplot(3.0,1.0)
+computeallresponseplot(4.0,1.0)
+computeallresponseplot(5.0,1.0)
+//computeallresponseplot(8.0,1.0)
+//computeall(9.0,1.0)
+computeallresponseplot(10.0,1.0)
 
-  //write Fourier transform to file
-  def writetofile( Fx : Double => Complex, fname : String) = {
-    val filetfun = new java.io.FileWriter(fname + ".csv")
-    (fmin to fmax by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt(Fx(f).magnitude) + "\n") )
-    filetfun.close
+// Compute all windows with width W and cuttoff frequency c
+def computeallresponseplot(W : Double, c : Double) = {
+
+  println("Computing with window width " + W + " and cuttoff frequency " + c)
+
+  //period and sample rate of our discrete time system
+  val Pd = 1.0/4
+  val Fd = 1.0/Pd
+
+  def F(x: Double => Complex) : Double => Complex = Fwindowed(W,x)
+
+  def Fper(x: Double => Complex) : Double => Complex = {
+    val Ft = F(x); //compute Fourier transform
+                   //return periodised Fourier transform. Summing more than 3 is overkill
+    f => Ft(f - Fd) + Ft(f) + Ft(f + Fd)
   }
+
+  //now write magnitude spectra to file for different windows sinc functions
+  val fstep = 0.01
+  val wcstr = "_W" + W + "_c" + c
+
+  print("Writing rectangular window ... ")
+  writefilterandresponsetofile( F(t => rect(t/W)*2*c*sinc(2*c*t)), "rect" + wcstr )
+  writefilterandresponsetofile( Fper(t => rect(t/W)*2*c*sinc(2*c*t)), "rect_periodised" + wcstr )
+  println("done");
+
+  print("Writing Bartlett window ... ")
+  writefilterandresponsetofile( F(t => bartlett(t/W)*2*c*sinc(2*c*t)), "bartlett" + wcstr)
+  writefilterandresponsetofile( Fper(t => bartlett(t/W)*2*c*sinc(2*c*t)), "bartlett_periodised" + wcstr)
+  println("done")
+  
+  print("Writing Hann window ... ")
+  writefilterandresponsetofile( F(t => hann(t/W)*2*c*sinc(2*c*t)), "hann" + wcstr)
+  writefilterandresponsetofile( Fper(t => hann(t/W)*2*c*sinc(2*c*t)), "hann_periodised" + wcstr)
+  println("done")
+
+  print("Writing Blackman window ... ")
+  writefilterandresponsetofile( F(t => blackman(t/W)*2*c*sinc(2*c*t)), "blackman" + wcstr)
+  writefilterandresponsetofile( Fper(t => blackman(t/W)*2*c*sinc(2*c*t)), "blackman_periodised" + wcstr)
+  println("done")
+
+  //write Fourier and response to file transform to file
+  def writefilterandresponsetofile( Fx : Double => Complex, fname : String) = {
+    writetofile(f => Fx(f).magnitude, fname + ".csv", -4.3, 4.3, fstep)
+    //left hand raised cosine
+    writetofile(f => (Fx(f)*cos(2*Pi*f)).magnitude, fname + "_left.csv", -1.75, -1.25, fstep)
+    //left hand raised cosine
+    writetofile(f => (Fx(f)*cos(2*Pi*f)).magnitude, fname + "_right.csv", 1.25, 1.75, fstep)
+    //centered rectangular pulse
+    writetofile(f => Fx(f).magnitude*4.0/3.0, fname + "_middle.csv", -0.5, 0.5, fstep)
+    //write window straight to file in range -0.5 to 3.0
+    writetofile(f=>Fx(f).real, fname + "_re", -0.2,3.1,0.005)
+  }
+
+}
+
+//write Fourier transform to file
+def writetofile( x : Double => Double, fname : String, fmin : Double, fmax : Double, fstep : Double) = {
+  val filetfun = new java.io.FileWriter(fname + ".csv")
+    (fmin to fmax by fstep).foreach( f => filetfun.write(fmt(f) + "\t" + fmt(x(f)) + "\n") )
+  filetfun.close
 }
 
 println("Scala finished")
+
+
 
 
 ///// Below are some tests on the trapezoidal integration and Fourier transform
@@ -111,17 +159,19 @@ println("trapezoidal test 3 " + {if(pass) "PASSED" else "FAILED"} )
 //test Fourier transform
 //expect Fourier transform of rectangular window of width W to by Wsinc(Wf)
 {
+val W = 3.0
 val tol = 1e-3
-val Frect = F(rect)
+val Frect = Fwindowed(W,t => rect(t/W))
 val pass = (-2.0 to 2.0 by 0.1).foldLeft(true)( (p,f) => p & ( (Frect(f) - W*sinc(W*f)).magnitude < tol ) )
 println("Fourier test 1 " + {if(pass) "PASSED" else "FAILED"} )
 }
 
 //expect Fourier transform of Bartlett window of width W to by W sinc^2(Wf/2)/2
 {
+val W = 3.0
 def sqr(x : Double) = x*x; //square of a double
 val tol = 1e-3
-val Fbartlett = F(bartlett)
+val Fbartlett = Fwindowed(W,t => bartlett(t/W))
 val pass = (-2.0 to 2.0 by 0.1).foldLeft(true)( (p,f) => p & ( (Fbartlett(f) - W*sqr(sinc(W*f/2))/2).magnitude < tol ) )
 println("Fourier test 1 " + {if(pass) "PASSED" else "FAILED"} )
 }

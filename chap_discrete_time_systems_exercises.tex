@@ -3,27 +3,7 @@
 
 \begin{excersizelist}
 
-\begin{hardexercise}
-
-\item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
-
-% \item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\zeqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
-% \begin{solution}
-% Substitute $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\zeqref{eq:differenceequformsystem},
-% \begin{align*}
-% \sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
-% \sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
-% \sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
-% \end{align*}
-% Solving for $\lambda$ yeilds the transfer function of $H$,
-% \[
-% \lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
-% \]
-% \end{solution}
-
-\item \label{exer:convabssummableisabssummable}  Let $f$ and $g$ be absolutely summable sequences.  Show that the discrete convolution $f * g$ is also absolutely summable.  
-
-\end{hardexercise}
+\item \label{exer:blackmawindowfouriertransform} Find the Fourier transform of the Blackman window~\eqref{eq:blackmanwindow}.
 
 \item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $a^nu_n$ is $z/(z-a)$ with region of convergence $\abs{z} > \abs{a}$.
 \begin{solution}
@@ -162,6 +142,29 @@ Observe that $d_0 = 0$ and that $d_1 = 1$ as a result of $b - a = 1$.
 % BLERG: 
 % \end{solution}
 
+\begin{hardexercise}
+
+\item \label{excer:stableimpulserespdiscretetime} Show that a discrete time system is stable if and only if its discrete impulse response is absolutely summable. 
+
+% \item \label{exer:findtransfuncdiffeq} Suppose that $H$ is a linear time invariant system such that the response $y = H(x)$ to input $x$ satisfies~\zeqref{eq:differenceequformsystem}.  Find the transfer function of $H$.
+% \begin{solution}
+% Substitute $e^{st}$ for $x$ and $\lambda e^{st}$ for $y$ into~\zeqref{eq:differenceequformsystem},
+% \begin{align*}
+% \sum_{\ell=0}^{m} a_\ell T_{P\ell}(e^{st}) &= \sum_{\ell=0}^{k} b_\ell T_{P\ell}(\lambda e^{st}) \\
+% \sum_{\ell=0}^{m} a_\ell e^{s(t-P\ell)} &= \sum_{\ell=0}^{k} b_\ell \lambda e^{s(t-P\ell)} \\
+% \sum_{\ell=0}^{m} a_\ell e^{-sP\ell} &= \lambda \sum_{\ell=0}^{k} b_\ell e^{-sP\ell}.
+% \end{align*}
+% Solving for $\lambda$ yeilds the transfer function of $H$,
+% \[
+% \lambda(H,s) = \frac{\sum_{\ell=0}^{m} a_\ell e^{-sP\ell}}{\sum_{\ell=0}^{k} b_\ell e^{-sP\ell}}.
+% \]
+% \end{solution}
+
+\item \label{exer:convabssummableisabssummable}  Let $f$ and $g$ be absolutely summable sequences.  Show that the discrete convolution $f * g$ is also absolutely summable.  
+
+\end{hardexercise}
+
+
 \item \label{exer:roczabssummrel} Let $H$ be a discrete time system with discrete impulse response $h$.  The set $\roc_z h$ is defined as those complex numbers $z = e^{sP}$ such that $s = \cep \dom h$.  Show that $\roc_z h$ is precisely the set of nonzero complex numbers such that the sequence $h_n z^{-n}$ is absolutely summable.
 
 
@@ -186,6 +189,7 @@ Under the assumptions stated on $f,g,h$ Fubini's theorem~\cite[Theorem~8.8]{Rudi
 &= (f*(g*h))_n.
 \end{align*}
 \end{solution}
+
 
 
 \end{excersizelist}
