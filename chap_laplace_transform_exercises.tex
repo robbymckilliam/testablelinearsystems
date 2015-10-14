@@ -162,6 +162,51 @@ and unravelling this recursion gives
 \]
 \end{solution}
 
+\item Let $x$ be the signal with Laplace transform 
+\[
+\calL(x,s) = \frac{1}{(s - 1)^3} \qquad \Re(s) > 1.
+\]  
+Define the signal $y$ by
+\[
+y(t) = e^{t} x( 2t + 1  ).
+\]
+Find the Laplace transform and region of convergence of $y$.  Sketch the region of convergence of $y$.
+\begin{solution}
+The easiest approach is the write
+\begin{align*}
+\calL(y,s) &= \int_{-\infty}^\infty y(t) e^{-st} dt \\
+&= \int_{-\infty}^\infty e^{t} x( 2t + 1  ) e^{-st} dt \\
+&= \int_{-\infty}^\infty x( 2t + 1  ) e^{-(s-1)t} dt \\
+&= \tfrac{1}{2} \int_{-\infty}^\infty x( k ) e^{-(s-1)(k-1)/2} dk \qquad \text{(c.v. $k = 2t + 1$)} \\ 
+&= \tfrac{1}{2} e^{(s-1)/2}\int_{-\infty}^\infty x( k ) e^{-k(s-1)/2} dk
+\end{align*}
+The integral is the Laplace transform of $x$ evaluated as $\tfrac{s-1}{2}$ and so
+\[
+\calL(y,s) = \tfrac{1}{2} e^{(s-1)/2} \calL\big(x, \tfrac{s-1}{2}\big)  = \frac{4 e^{(s-1)/2} }{(s-3)^3} \qquad \Re\big(\tfrac{s-1}{2}\big) > 1.
+\]
+The region of convergence of $y$ is those complex numbers with real part greater than $3$.  A plot of the region of convergence is below.
+
+\begin{center}
+\begin{tikzpicture}
+  \path [draw=none,fill=lightgray] (-2.5,-2.5)--(1,-2.5)--(1,2.5)--(-2.5,2.5)--cycle;
+  \vtick{1} node[pos=0.5,below] {$3$};
+  \draw [<->] (-2.5,0) -- (2.5,0) node [above left]  {$\Re$};
+  \draw [<->] (0,-2.5) -- (0,2.5) node [below right] {$\Im$};
+\end{tikzpicture}
+\end{center}
+
+A direct approach is to apply the inverse Laplace transform (by formula~(\zref{eq:laplacetneucommon})) to find
+\[
+x(t) = \tfrac{1}{2} t^2 e^{t} u(t)
+\]
+where $u(t)$ is the step function.  Now
+\[
+y(t) = e^{t} x( 2t + 1  ) = \tfrac{1}{2} (2t + 1)^2 e^{3t + 1} u(2t + 1).
+\]
+One can now apply the Laplace transform formula to this expression for $y$.  After a lengthy integration by parts, the same answer is obtained.
+% (I checked this in Mathematica).
+\end{solution}
+
 
 \item What is the transfer function of the integrator system $I_\infty$?  What is the domain of this transfer function? 
 \begin{solution}
