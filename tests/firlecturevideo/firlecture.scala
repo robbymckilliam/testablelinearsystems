@@ -17,18 +17,19 @@ import scala.math.ceil
 import scala.math.pow
 import scala.math.Pi
 
+println("Reading file audio.wav")
+val wavereader = new MonoWavReader("../fouriertransformlecturevideo/audio.wav") //object for reading wav files
+val F = wavereader.sampleRate //sample rate
+val P = 1.0/F //sample period
+val csamples = wavereader.toArray //read samples to array c
+val N = csamples.size
+println("File contains " + N + " samples at rate " + F + "Hz")
+
+//complex valued sequence with first N elements equal to the audio samples 
+def c(n : Int) = if(n>=0 && n<N) csamples(n) else 0.0 
+
 //rectangular function
-def rect(t : Double) = if( abs(t) > 0.5 ) Complex.zero else Complex.one
-
-//Triangle (Bartlett) window
-def bartlett(t : Double) = {
-  if( abs(t) > 0.5) Complex.zero 
-  else if( t < 0.0) RectComplex(1.0 + 2*t,0)
-  else RectComplex(1.0 - 2*t,0)
-}
-
-//Hann (or raised cosine) window
-def hann(t : Double) = rect(t)*(1 + cos(2*Pi*t))/2.0
+def rect(t : Double) = if( abs(t) > 0.5 ) 0.0 else 1.0
 
 //Blackman window with width 1
 def blackman(t : Double) = {
@@ -39,47 +40,19 @@ def blackman(t : Double) = {
 }
 
 //filter parameters
-val gamma = 4900.0 //cuttoff frequency
-val W = 10.0/gamma //window width
-def w(t : Double) =  blackman(t/W) //window function.  Using Blackman window with width W
-def h(n : Int) = 2*gamma*P*w(t)*sinc(2*c*P*n) //filter impulse response
-val a = floor(F*W/2).toInt //number of taps is 2a+1
-def LcPw( x : Double => Complex
+val gamma = 4800.0; //cuttoff frequency in Hz
+val W = 10.0/gamma; //window width
+val a = floor(F*W/2).toInt; //number of taps is 2a+1
+def w(t : Double) =  blackman(t/W); //window function.  Using Blackman window with width W
+def h(n : Int) = 2*gamma*P*w(n*P)*sinc(2*gamma*n*P); //filter impulse response
 
+println(gamma, W, a)
 
-println("Reading file audio.wav")
-val wavereader = new MonoWavReader("../fouriertransformlecturevideo/audio.wav") //object for reading wav files
-val F = wavereader.sampleRate //sample rate
-val P = 1.0/F //sample period
-val csamples = wavereader.toArray //read samples to array c
-val N = csamples.size
-println("File contains " + N + " samples at rate " + F + "Hz")
-
-//complex valued sequence with first N elements equal to the audio samples 
-def c(n : Int) = if(n>=0 && n<N) RectComplex(csamples(n),0) else Complex.zero 
-
-//fast Fourier transform of length L of c
-println("Computing fast Fourier transform")
-val DLc = fft(L,c) 
-
-//zero parts of Fourier transform above 7200Hz and within [4900Hz,5900Hz]
-def d(k : Int) = {
-if(abs(fracpart((1.0*k)/L)) > 7200*P) Complex.zero 
-else if(abs(fracpart((1.0*k)/L-5400*P)) < 500*P) Complex.zero
-else if(abs(fracpart((1.0*k)/L+5400*P)) < 500*P) Complex.zero
-else DLc(k)
-}
-
-//inverse discrete Fourier transform to get samples of a signal without hum at 8kHz
-println("Computing inverse fast Fourier transform")
-val b = ifft(L,d)
-
-//we expect b to be real valued.  Throw an exception if any imaginary parts are largish
-val imagtol = 1e-2
-(0 to L-1).foreach( n => if( abs(b(n).imag) > imagtol ) throw new RuntimeException("imaginary part of b is not close to zero for some reason!") ) 
+//discrete convolution of h and c. These are the samples of the response of the filter
+def d(n : Int) = (-a to a).foldLeft(0.0)( (s, m) => s + h(m)*c(n-m) )
 
 //write first N samples to wav file nohum.wav
-println("Writing audio to file nohum.wav")
+println("Writing filtered audio to file nohum.wav")
 val wavewriter = new MonoWavWriter("nohum.wav",F)
-(0 to N-1).foreach( n => wavewriter.put(b(n).real) )
+(0 to N-1).foreach( n => wavewriter.put(d(n)) )
 wavewriter.close

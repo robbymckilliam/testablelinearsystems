@@ -1003,54 +1003,58 @@ at sample rate $F = \SI{22050}{\hertz}$.  We put $c_n = 0$ when $n < 0$ or $n \g
 
 It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{10}{\gamma} = \tfrac{1}{480}$ is used.  This filter has impulse response
 \[
-h_n = 2 \gamma P w(t) \sinc( 2\gamma P n)
+h_n = 2 \gamma P w( nP ) \sinc( 2\gamma P n)
 \]
 where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
 \[
 a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 22.
 \] 
-This filter has $2a+1 = 45$ taps.  Denote this low pass finite impulse response filter by the discrete time system $L_\gamma^{P,w}$.
+This filter has $2a+1 = 45$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
+\[
+L_\gamma^{P,w}x(t) = \sum_{m \in \ints} h_m T_{Pm}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) .
+\]
 
 Let 
 \[
 x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
 \]
-be the bandlimited signal reconstructed from the sequence $c$.  The response of the low pass filter $L_c^{P,w}$ to input $x$ is
+be the bandlimited signal reconstructed from the sequence of samples $c$.  The response of the low pass filter $L_\gamma^{P,w}$ to input $x$ is
 \begin{align*}
-L_c^{P,w}x(t) &= \sum_{m \in \ints} h_m T_{Pm}x(t) \\
-&= \sum_{m = -a}^a h_m T_{Pm}x(t) \\
-&= \sum_{m = -a}^a h_m T_{Pm} \left( \sum_{n \in \ints} c_n \sinc(F t - n) \right) \\
-&= \sum_{m = -a}^a \sum_{n \in \ints} h_m  c_n T_{Pm} \sinc(F t - n)  \\
-&= \sum_{n \in \ints} \sum_{m = -a}^a h_m  c_n T_{Pm} \sinc(F t - n)  \\
+y(t) = L_\gamma^{P,w} x(t) &= \sum_{m = -a}^a h_m T_{Pm} \left( \sum_{n \in \ints} c_n \sinc(F t - n) \right) \\
+&= \sum_{m = -a}^a \sum_{n \in \ints} h_m  c_n \sinc(F t - n - m)  
 \end{align*}
+Putting $k = n+m$ and changing the order of summation we find that
+\begin{equation}\label{eq:discsystembandlimitedsamplesonlysincinterp}
+y(t) = L_\gamma^{P,w} x(t) = \sum_{k \in \ints} \sinc(F t - k) \sum_{m = -a}^a  h_m  c_{k-m} = \sum_{k \in \ints} d_k \sinc(F t - k)
+\end{equation}
+where $d = h * c$ is the sequence with $n$th element
+\[
+d_n = (h*c)_n = \sum_{m \in \ints} h_m c_{n-m} = \sum_{m = -a}^a h_m c_{n-m}
+\]
+given by discrete convolution of $h$ and $c$.  Observe that the discrete convolution involved only a finite sum over $2a+1$ terms because $h_n = 0$ for $n > a$ or $n < -a$.  From~\eqref{eq:discsystembandlimitedsamplesonlysincinterp}, we see that the response $y = L_\gamma^{P,w} x$ is the bandlimited signal with samples $y(nP) = d_n = (h*c)_n$.  The samples $d_0, d_1, \dots, d_{N-1}$ are written to the file \texttt{nohum.wav}.
+
+The Fourier transform of $y$ can be written in a number of ways
+\[
+\calF y = \calF L_\gamma^{P,w} x = \Lambda  L_\gamma^{P,w} \calF x = P \rect(Pf) \calD d(Pf).
+\]
+The Fourier transform is plotted in Figure~\ref{fig:test:firfilteredlecturevideo}.  The spectrum of hte   As expected the Fourier tra
 
 \end{test}
 
-\begin{itemize}
+\begin{figure}
+\centering
+\begin{shaded}
+%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
+  \begin{tikzpicture}
+    \selectcolormodel{gray} 
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF(\tilde{y})}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
+      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/firlecturevideo/ft.csv};
+    \end{axis}
+  \end{tikzpicture}
+\caption{BLERG: Plot of the magnitude of the Fourier transform $\calF \tilde{y}$.  The plot looks similar to that of the magnitude of the Fourier transform of the original audio signal (Figure~\ref{fig:test:fouriertransformlecturevideo}) except that the spikes at $\pm\SI{8}{\kilo\hertz}$ and the elevated region between \SI{4900}{\hertz} and \SI{5900}{\hertz} no longer exist.}\label{fig:test:firfilteredlecturevideo}
+\end{shaded}
+\end{figure}
 
-\item Periodicity of the spectrum makes it not immediately clear how discrete time systems will be useful as filter
-
-\item However, bandlimited signals!
-
-\item Picture of 1st order discrete time system filtering something?
-
-\item Test with 1st order system filtering high frequency noise from lecture recording
-
-\item better filters that 1st order are not too hard to realise
-
-\item One approach involves mapping analogue filters, IIR filter,  Bilinear transform
-
-\item Do butterworth as an example.  Implement high order butterworth like filter this way.
-
-\item Filter lecture video with this IIR filter
-
-\item Another approach has no zeros, attempt to design impulse response directly, FIR filters, windowing.
-
-\item Filter lecture video with FIR filter.
-
-\item IIR usually computational advantageous.  FIR better if linear phase important.
-
-\end{itemize}
 
 
 \section{The z-transform}
