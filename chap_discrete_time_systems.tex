@@ -453,7 +453,7 @@ These Fourier transforms for the rectangular and Blackman windows when the cutto
 
 A \term{low pass finite impulse response filter} with period $P$, cuttoff frequency $c$, and window $w$ is a discrete time system $L_c^{P,w}$ with period $P$ having impulse response $h_n = 2c P w(nP) \sinc(2c nP)$ given by multiplying the windowed sinc function by $P$ and sampling with period $P$.  Because $w(t)$ is zero outside the interval $(-W/2, W/2)$ the impulse response $h_n = 0$ when $n P \notin (-FW/2, FW/2)$ and only a finite number of elements of $h$ are nonzero.  For this reason, the response of $L_c^{P,w}$ to any input signal $x$ can be computed by the finite sum
 \[
-L_c^{P,w}x(t) = \sum_{m = -a}^a h_n T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
+L_c^{P,w}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
 \]
 and $\floor{FW/2}$ denotes the greatest integer less than or equal to $FW/2$.  The number of terms to be summed is $2a + 1$.  This is typically called the number of filter \term{taps}.  The number of non zero terms in the impulse response is at most the number of taps.  The spectrum of this filter is given by periodic summation of the Fourier transform $\hat{w}(f) * \rect(f/2c)$ of the windowed sinc function, that is,
 \[
@@ -999,7 +999,7 @@ We consider again the \SI{20}{\second} sampled audio signal from Test~\ref{test:
 \[
 c_0,c_1,\dots,c_{N-1}
 \]
-at sample rate $F = \SI{22050}{\hertz}$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. The audio recording contains human voice primarily residing at lower frequencies below \SI{5}{\kilo\hertz} and interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as a high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
+at sample rate $F = \SI{22050}{\hertz}$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. The audio recording contains human voice primarily residing at lower frequencies below \SI{5}{\kilo\hertz} and interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as a high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
 
 It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{10}{\gamma} = \tfrac{1}{480}$ is used.  This filter has impulse response
 \[
@@ -1009,8 +1009,20 @@ where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse resp
 \[
 a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 22.
 \] 
-This filter has $2a+1 = 45$ taps.
+This filter has $2a+1 = 45$ taps.  Denote this low pass finite impulse response filter by the discrete time system $L_\gamma^{P,w}$.
 
+Let 
+\[
+x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
+\]
+be the bandlimited signal reconstructed from the sequence $c$.  The response of the low pass filter $L_c^{P,w}$ to input $x$ is
+\begin{align*}
+L_c^{P,w}x(t) &= \sum_{m \in \ints} h_m T_{Pm}x(t) \\
+&= \sum_{m = -a}^a h_m T_{Pm}x(t) \\
+&= \sum_{m = -a}^a h_m T_{Pm} \left( \sum_{n \in \ints} c_n \sinc(F t - n) \right) \\
+&= \sum_{m = -a}^a \sum_{n \in \ints} h_m  c_n T_{Pm} \sinc(F t - n)  \\
+&= \sum_{n \in \ints} \sum_{m = -a}^a h_m  c_n T_{Pm} \sinc(F t - n)  \\
+\end{align*}
 
 \end{test}
 

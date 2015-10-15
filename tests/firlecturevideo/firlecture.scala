@@ -6,6 +6,7 @@ import sounder.FileIO.MonoWavWriter
 import sounder.Sounder._
 import sounder.Util._
 import scala.math.sin
+import scala.math.cos
 import scala.math.abs
 import scala.math.sqrt
 import scala.math.min
@@ -16,24 +17,35 @@ import scala.math.ceil
 import scala.math.pow
 import scala.math.Pi
 
-/** Return element of {0,1,...,y-1} equivalent to x mod y */
-def mod(x : Int, y : Int) = (x % y + y) % y
+//rectangular function
+def rect(t : Double) = if( abs(t) > 0.5 ) Complex.zero else Complex.one
 
-/** The fast Fourier transform.  Only works for N a power of 2. */
-def fft(N : Int, c : Int => Complex) : Int => Complex = {
-  if(N==1) return k => c(0)
-  if(N%2 != 0) throw new RuntimeException("N must be a power of 2 for this FFT")
-  val Dp = fft(N/2, n => c(2*n))
-  val Dq = fft(N/2, n => c(2*n+1))
-  val d = (0 to N-1).map( k => Dp(k) + PolarComplex(1,-2*Pi*k/N)*Dq(k) ) //write the values for a single period into an array
-  k => d(mod(k,N))
+//Triangle (Bartlett) window
+def bartlett(t : Double) = {
+  if( abs(t) > 0.5) Complex.zero 
+  else if( t < 0.0) RectComplex(1.0 + 2*t,0)
+  else RectComplex(1.0 - 2*t,0)
 }
 
-/** The inverse fast Fourier transform. Only works for N a power of 2.  */
-def ifft(N : Int, d : Int => Complex) : Int => Complex = {
-  val cc = fft(N, k => d(k).conjugate)
-  k => cc(k).conjugate/N
+//Hann (or raised cosine) window
+def hann(t : Double) = rect(t)*(1 + cos(2*Pi*t))/2.0
+
+//Blackman window with width 1
+def blackman(t : Double) = {
+  val a0 = 21.0/50
+  val a1 = 1.0/2
+  val a2 = 2.0/25
+  rect(t)*(a0 + a1*cos(2*Pi*t) + a2*cos(4*Pi*t))
 }
+
+//filter parameters
+val gamma = 4900.0 //cuttoff frequency
+val W = 10.0/gamma //window width
+def w(t : Double) =  blackman(t/W) //window function.  Using Blackman window with width W
+def h(n : Int) = 2*gamma*P*w(t)*sinc(2*c*P*n) //filter impulse response
+val a = floor(F*W/2).toInt //number of taps is 2a+1
+def LcPw( x : Double => Complex
+
 
 println("Reading file audio.wav")
 val wavereader = new MonoWavReader("../fouriertransformlecturevideo/audio.wav") //object for reading wav files
@@ -41,7 +53,6 @@ val F = wavereader.sampleRate //sample rate
 val P = 1.0/F //sample period
 val csamples = wavereader.toArray //read samples to array c
 val N = csamples.size
-val L = round(pow(2, ceil(log2(N)))).toInt //smallest power of 2 larger than N
 println("File contains " + N + " samples at rate " + F + "Hz")
 
 //complex valued sequence with first N elements equal to the audio samples 
