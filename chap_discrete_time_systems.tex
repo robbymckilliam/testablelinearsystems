@@ -995,11 +995,15 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 \begin{test}\label{test:firfilteredlecturerec}
 (\textbf{Finite impulse response filtered lecture recording})
 
-We consider again the \SI{20}{\second} sampled audio signal from Test~\ref{test:ftlecturerec}.  The mono audio recording contain $N = 440998$ samples that we denote by $c_0,c_1,\dots,c_{N-1}$ at rate $F = \SI{22050}{\hertz}$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal computed was plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. It was observed that audio recording contains human voice that primarily resides at lower frequencies below \SI{5}{\kilo\hertz} and also interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as an annoying high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
-
-It will be convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio.  The cuttoff frequency is chosen to be $c = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{10}{c} = \tfrac{1}{480}$ is used.  This filter has impulse response
+We consider again the \SI{20}{\second} sampled audio signal from Test~\ref{test:ftlecturerec}.  The mono audio recording contains $N = 440998$ samples denote by 
 \[
-h_n = 2 c P w(t) \sinc( 2c P n)
+c_0,c_1,\dots,c_{N-1}
+\]
+at sample rate $F = \SI{22050}{\hertz}$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. The audio recording contains human voice primarily residing at lower frequencies below \SI{5}{\kilo\hertz} and interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as a high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
+
+It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{10}{\gamma} = \tfrac{1}{480}$ is used.  This filter has impulse response
+\[
+h_n = 2 \gamma P w(t) \sinc( 2\gamma P n)
 \]
 where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
 \[
