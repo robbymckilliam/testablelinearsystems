@@ -1001,15 +1001,15 @@ c_0,c_1,\dots,c_{N-1}
 \]
 at sample rate $F = \SI{22050}{\hertz}$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. The audio recording contains human voice primarily residing at lower frequencies below \SI{5}{\kilo\hertz} and interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as a high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
 
-It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{10}{\gamma} = \tfrac{1}{480}$ is used.  This filter has impulse response
+It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{12}{\gamma} = \tfrac{1}{400}$ is used.  This filter has impulse response
 \[
 h_n = 2 \gamma P w( nP ) \sinc( 2\gamma P n)
 \]
 where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
 \[
-a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 22.
+a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 28.
 \] 
-This filter has $2a+1 = 45$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
+This filter has $2a+1 = 56$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
 \[
 L_\gamma^{P,w}x(t) = \sum_{m \in \ints} h_m T_{Pm}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) .
 \]
@@ -1047,7 +1047,7 @@ The Fourier transform is plotted in Figure~\ref{fig:test:firfilteredlecturevideo
 %\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
   \begin{tikzpicture}
     \selectcolormodel{gray} 
-    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF(\tilde{y})}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF \tilde{y}}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
       \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/firlecturevideo/ft.csv};
     \end{axis}
   \end{tikzpicture}
@@ -1257,7 +1257,7 @@ where
 \[
 [n]_k = n (n-1) \dots (n-k+1)
 \]
-is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
+is called the~\term{falling factorial}~\cite[p.~48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
 
 Let $a \in \complex$.  The z-transforms of the sequence $c_n$ and the sequence with $n$th element $a^nc_n$ are related by 
 \[

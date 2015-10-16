@@ -40,8 +40,8 @@ def blackman(t : Double) = {
 }
 
 //filter parameters
-val gamma = 4800.0; //cuttoff frequency in Hz
-val W = 10.0/gamma; //window width
+val gamma = 4600.0; //cuttoff frequency in Hz
+val W = 12.0/gamma; //window width
 val a = floor(F*W/2).toInt; //number of taps is 2a+1
 def w(t : Double) =  blackman(t/W); //window function.  Using Blackman window with width W
 def h(n : Int) = 2*gamma*P*w(n*P)*sinc(2*gamma*n*P); //filter impulse response
