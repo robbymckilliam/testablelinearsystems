@@ -49,7 +49,8 @@ def y(t : Double) : Double = {
  */
 def trapezoidal(func : Double => Double, a : Double, b : Double, N : Int) : Double = {
   val del = (b - a)/N
-  val inner = (1 to N-1).foldLeft(0.0)( (s,n) => s+2*func(a + n*del) )
+//  val inner = (1 to N-1).foldLeft(0.0)( (s,n) => s+2*func(a + n*del) )
+  val inner = (1 to N-1).par.aggregate(0.0)( (s,n) => s+2*func(a + n*del), _ + _ ); //parallel fold
   return del/2 * ( inner + func(a) + func(b) )
 }
 

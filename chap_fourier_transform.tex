@@ -1,4 +1,4 @@
-Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
+\Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
 \begin{equation}\label{eq:fouriertransform}
 \calF x(f) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt
 \end{equation}
@@ -1776,7 +1776,7 @@ Figure~\ref{fig:test:fftfilteredlecturevideo} plots the magnitude of Fourier tra
 %\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
   \begin{tikzpicture}
     \selectcolormodel{gray} 
-    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF(\tilde{y})}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF \tilde{y}}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
       \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/fftlecturevideo/ft.csv};
     \end{axis}
   \end{tikzpicture}

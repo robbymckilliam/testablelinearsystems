@@ -5,45 +5,46 @@ We now consider linear shift-invariant systems constructed from linear combinati
 \begin{equation}\label{eq:discretimesysdefn}
 H x = \sum_{m \in \ints} h_m T_{ P m} x
 \end{equation}
-where $h \in \ints \to \complex$ is complex valued sequence.  Such systems are called \term{discrete time systems}.  It is common in the literature that the term discrete time system refers to a mapping from a complex valued sequence $x$ to another complex valued sequence $y$ of the form
+where $h \in \ints \to \complex$ is a complex valued sequence.  Such systems are called \term{discrete-time systems}.  It is common in the literature that the term discrete-time system refers to a mapping from a complex valued sequence $x$ to another complex valued sequence $y$ of the form
 \[
 y_n = \sum_{m \in \ints} h_m x_{n-m}.
 \]
-We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$ and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete time system.  We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete time systems that is closely linked with previous chapters where what are often called \term{continuous time} systems have been studied.  Complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This more general formulation of discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
+We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$ and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  %In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete-time system.
+We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete-time systems that is closely linked with previous chapters where what are often called \term{continuous-time} systems have been studied.  Complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This definition of discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
 
-Discrete time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
+discrete-time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
 
 \section{The discrete impulse response} \label{sec:discr-time-impulse}
 
-We first describe a suitable domain for each discrete time system.  It is worth considering an example.  Suppose that $H$ has discrete impulse response given by the step sequence $u$~\eqref{eq:stepsequence}.  The signal $x(t) = 1$ that takes the value $1$ for all $t \in \reals$ will not be in the domain of $H$ because, in this case,
+We first describe a suitable domain for each discrete-time system.  It is worth considering an example.  Suppose that $H$ has discrete impulse response given by the step sequence $u$~\eqref{eq:stepsequence}.  The signal $x(t) = 1$ that takes the value $1$ for all $t \in \reals$ will not be in the domain of $H$ because, in this case,
 \[
 Hx(t) =  \sum_{m \in \ints} u_m T_{ P m} x(t) = \sum_{m \in \ints} u_m = \sum_{m=0}^\infty 1
 \]
-is not finite for any $t \in \reals$.  Given a sequence $h$ denote by $\dom_P h$ the set of signals $x$ such that
+is not finite for any $t \in \reals$.  Given a sequence $h$, denote by $\dom_P h$ the set of signals $x$ such that
 \[
 \sum_{m \in \ints} \abs{h_m x(t - Pm)} < \infty \qquad \text{for all $t \in \reals$}.
 \]
 It can be confirmed that $\dom_P h$ is a linear shift-invariant space.  If $H$ has discrete impulse response $h$ then, for all signals $x \in \dom_P h$,
 \[
-\abs{Hx(t)} = \abs{\sum_{m \in \ints} h_m T_{ P m} x(t)} \leq \sum_{m \in \ints}  \abs{ h_m x(t - Pm)} < \infty \qquad \text{for all $t \in \reals$}
+\abs{Hx(t)} = \abs{\sum_{m \in \ints} h_m T_{ P m} x(t)} \leq \sum_{m \in \ints}  \abs{ h_m x(t - Pm)} < \infty \qquad \text{for all $t \in \reals$,}
 \]
-and so $Hx(t)$ is finite for all $t \in \reals$.  From here on, we take $\dom_P h$ as the domain of the discrete time system with discrete impulse response $h$ unless otherwise stated.  %Be aware that set $\dom_P h$ is now defined for both signals $h$ and sequences $h$.  %This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
+that is, $Hx(t)$ is finite for all $t \in \reals$.  From here on, we take $\dom_P h$ as the domain of the discrete-time system with discrete impulse response $h$ unless otherwise stated.  %Be aware that set $\dom_P h$ is now defined for both signals $h$ and sequences $h$.  %This reuse of notation is often called \term{overloading} in reference to the same concept used in many programming languages.
 
-The discrete impulse response $h$ immediately yields some properties of the corresponding discrete time system $H$.  For example, if $h_m = 0$ for all $m < 0$, then $H$ is causal because the response 
+The discrete impulse response $h$ immediately yields some properties of the corresponding discrete-time system $H$.  For example, if $h_m = 0$ for all $m < 0$, then $H$ is causal because the response 
 \[
 Hx(t) = \sum_{m \in \ints} h_m T_{ P m}x(t) = \sum_{m =0}^\infty h_m x(t - Pm)
 \] 
-at time $t$ only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
+at time $t$ only depends on values of the input signal $x$ at times less than or equal to $t$.  A discrete-time system is stable if and only if its discrete impulse response is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}).  This is analagous to the property of regular systems that are stable if and only if their impulse response is absolutely integrable (Exercise~\ref{excer:bibostableimpulseresp}).
 
-Let $F$ and $G$ be discrete time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be a system formed by linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom_P f \cap \dom_P g$ is
+Let $F$ and $G$ be discrete-time systems with equal sample period $P$ and discrete impulse responses $f$ and $g$.  Let $a,b\in\complex$ and let $H = a F + b G$ be a system formed by linear combination of $F$ and $G$.  The response of $H$ to input signal $x \in \dom_P f \cap \dom_P g$ is
 \begin{align*}
 Hx &= a \sum_{n \in \ints} f_{n} T_{ P n}x + b \sum_{n \in \ints} g_{n} T_{ P n}x \\
 &=  \sum_{n \in \ints} (a f_{n} + b g_{n}) T_{ P n}x,
 \end{align*}
-and so $H$ is a discrete time system with discrete impulse response given by the linear combination of sequences $af + ag$.  We take the domain of $H$ to be $\dom_P f \cap \dom_P g$ unless otherwise stated.
+and so $H$ is a discrete-time system with discrete impulse response given by the linear combination of sequences $af + ag$.  We take the domain of $H$ to be $\dom_P f \cap \dom_P g$ unless otherwise stated.
 
-Now suppose that $Hx = F Gx$ is formed by the composition of discrete time systems $F$ and $G$.  Denote by $\dom_P f\,g$ the set of signals $x$ such that
+Now suppose that $Hx = F Gx$ is formed by the composition of discrete-time systems $F$ and $G$.  Denote by $\dom_P f\,g$ the set of signals $x$ such that
 \[
 \sum_{m \in \ints} \sum_{k \in \ints} \abs{f_m g_k x(t - m - k)} < \infty \qquad \text{for all $t \in \reals$}. 
 \]  
@@ -65,7 +66,7 @@ where $h$ is the sequence with elements
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  We have found that the system $H$ constructed by composition of the discrete time systems $F$ and $G$ is a discrete time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_P f\,g$ unless otherwise stated.  
+This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  We have found that the system $H$ constructed by composition of the discrete-time systems $F$ and $G$ is a discrete-time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_P f\,g$ unless otherwise stated.  
 
 Discrete convolution has properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative and associative under approriate assumptions (Exercise~\ref{excer:discrconvassociative}).
 % \[
@@ -101,7 +102,7 @@ In what follows we will often use the term convolution and impulse response rath
 % \]
 % where $a$ and $b$ are real or complex constants.  
 
-% Discrete time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
+% discrete-time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete-time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
 % \[
 % x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n).
 % \]
@@ -129,7 +130,7 @@ He^{st} = \lambda H(s) e^{st}
 \]
 where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that the signal $e^{st} \in X$ and this set is denoted by $\cep X$.
 
-Let $H$ be a discrete time system with discrete impulse response $h$ and domain $\dom_P h$.  The response of $H$ to $e^{st} \in \dom_P h$ satisfies
+Let $H$ be a discrete-time system with discrete impulse response $h$ and domain $\dom_P h$.  The response of $H$ to $e^{st} \in \dom_P h$ satisfies
 \begin{align*}
 H e^{st} &= \sum_{n \in \ints} h_n T_{Pn} e^{st} \\
 &= \sum_{n \in \ints} h_n e^{s(t-Pn)} \\
@@ -140,7 +141,7 @@ It follows that the transfer function of $H$ satisfies
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_P h.
 \]
 
-For example, consider the discrete time system $H$ with discrete impulse response given by the step sequence $u$.  The domain of the transfer function $\cep \dom_P u$ contains all those complex numbers $s$ for which
+For example, consider the discrete-time system $H$ with discrete impulse response given by the step sequence $u$.  The domain of the transfer function $\cep \dom_P u$ contains all those complex numbers $s$ for which
 \[
 \sum_{n \in \ints} \abs{u_n e^{-sPn}} = \sum_{n = 0}^\infty e^{-\Re s Pn} < \infty.
 \]
@@ -148,7 +149,7 @@ This is precisely those $s \in \complex$ with positive real part.  The transfer 
 \[
 \lambda H(s) = \sum_{n \in \ints} u_n e^{-sPn} = \sum_{n = 0}^\infty e^{-sPn} = \frac{1}{1 - e^{-sP}} \qquad \Re s > 0.
 \]
-The identity system $T_0$ is a discrete time system with discrete impulse response given by the delta sequence
+The identity system $T_0$ is a discrete-time system with discrete impulse response given by the delta sequence
 \[
 \delta_n = \begin{cases}
 1 & n = 0 \\
@@ -159,7 +160,7 @@ The transfer function is
 \[
 \lambda T_0(s) = \sum_{n \in \ints} \delta_n e^{-sPn} = 1 \qquad s \in \complex.
 \]
-The domain of $\lambda T_0$ is the entire complex plane $\complex$.  This is in agreement with \eqref{eq:timeshiftertransferfunction}.  % Finally consider the discrete time system $H$ with impulse response 
+The domain of $\lambda T_0$ is the entire complex plane $\complex$.  This is in agreement with \eqref{eq:timeshiftertransferfunction}.  % Finally consider the discrete-time system $H$ with impulse response 
 % \[
 % h_n = \rect(\tfrac{n}{2W}) \begin{cases}
 % 1 & \abs{n} < W \\
@@ -176,7 +177,7 @@ The domain of $\lambda T_0$ is the entire complex plane $\complex$.  This is in 
 
 %TODO: examples.
 
-Now suppose that $H$ is a stable discrete time system with absolutely summable discrete impulse response $h$.  The oscillatory complex exponential signal $e^{2\pi j f t}$ is in the domain $\dom_P h$ for all $f \in \reals$ because
+Now suppose that $H$ is a stable discrete-time system with absolutely summable discrete impulse response $h$.  The oscillatory complex exponential signal $e^{2\pi j f t}$ is in the domain $\dom_P h$ for all $f \in \reals$ because
 \[
 \sum_{m \in \ints} \abs{h_m e^{2\pi j f (t - m)}} = \sum_{m \in \ints} \abs{h_m} < \infty \qquad \text{for all $t \in \reals$}.
 \]
@@ -217,7 +218,7 @@ The sequence $\rect(n/2)$ and its discrete Fourier transform are plotted in Figu
 
 \section{Ideal digital filters}\label{sec:ideal_digital_filters}
 
-We have found that the spectrum of a stable discrete time system is periodic with period equal to the sample rate $F = \tfrac{1}{P}$.  Because of this periodicity it is not immediately apparent that any useful filters can be constructed from discrete time systems.  For example, periodicity makes it impossible to build a lowpass filter (Section~\ref{sec:analogue-filters}).  However, many signals occurring in practice are approximately bandlimited with some bandwidth $b > 0$ (Section~\ref{sec:bandlimited-signals}).  We will find that it is possible to perform useful filtering operations on bandlimited signals using discrete time systems.  This is most easily achieved when the bandwidth is less than half the sample rate of the system, that is, when $b < \tfrac{F}{2}$.
+We have found that the spectrum of a stable discrete-time system is periodic with period equal to the sample rate $F = \tfrac{1}{P}$.  Because of this periodicity it is not immediately apparent that any useful filters can be constructed from discrete-time systems.  For example, periodicity makes it impossible to build a lowpass filter (Section~\ref{sec:analogue-filters}).  However, many signals occurring in practice are approximately bandlimited with some bandwidth $b > 0$ (Section~\ref{sec:bandlimited-signals}).  We will find that it is possible to perform useful filtering operations on bandlimited signals using discrete-time systems.  This is most easily achieved when the bandwidth is less than half the sample rate of the system, that is, when $b < \tfrac{F}{2}$.
 
 To see how this works, consider the bandlimited signal $x$ with Fourier transform
 \begin{equation}\label{eq:examplebandlimtedsignalforfiltering}
@@ -230,7 +231,7 @@ plotted by the dashed line in Figures~\ref{fig:bandlimiteddiscretetimefiltering}
 %This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  
 The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
 
-Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploiting this property we will find that the same lowpass filtering effect can be achieved with a discrete time system.  Denote by $L_{c}^P$ the discrete time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$.  That is, $h$ is given by multiplying the impulse response of the ideal low pass filter $L_c$ by $P$ and then sampling with period $P$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
+Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploiting this property we will find that the same lowpass filtering effect can be achieved with a discrete-time system.  Denote by $L_{c}^P$ the discrete-time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$.  That is, $h$ is given by multiplying the impulse response of the ideal low pass filter $L_c$ by $P$ and then sampling with period $P$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
 \[
 \hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right).
 \] 
@@ -283,7 +284,7 @@ The conclusion that the spectrum of the ideal lowpass digital filter $L_{c}^P$ s
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
       \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
 
       % draw hatched region for magnitude spectrum of the ideal low pass filter. 
@@ -324,7 +325,7 @@ The conclusion that the spectrum of the ideal lowpass digital filter $L_{c}^P$ s
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
 %      \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
             \fill[fill=lightgray] (-2-\c,0) -- (-2-\c,1) -- (-2+\c,1) -- (-2+\c,0) -- (2-\c,0) -- (2-\c,1) -- (2+\c,1) -- (2+\c,0) -- cycle;
 
@@ -373,7 +374,7 @@ The conclusion that the spectrum of the ideal lowpass digital filter $L_{c}^P$ s
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
   %    \fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
       \fill[fill=lightgray] (-2-\u,0) -- (-2-\u,1) -- (-2-\ell,1) -- (-2-\ell,0) -- (-\u,0) -- (-\u,1) -- (-\ell,1) -- (-\ell,0) -- (\ell,0) -- (\ell,1) -- (\u,1) -- (\u,0) -- (2+\ell,0) -- (2+\ell,1) -- (2+\u,1) -- (2+\u,0) -- cycle;
 
@@ -451,9 +452,9 @@ From the multiplication property~\eqref{eq:multiplicationtheoremfouriertransform
 \]
 These Fourier transforms for the rectangular and Blackman windows when the cuttoff $c = 1$ are plotted in Figure~\ref{fig:windowfunctionsasWincrease}.  The Fourier transform approaches the spectrum of the ideal lowpass filter as the window width $W$ increases.
 
-A \term{low pass finite impulse response filter} with period $P$, cuttoff frequency $c$, and window $w$ is a discrete time system $L_c^{P,w}$ with period $P$ having impulse response $h_n = 2c P w(nP) \sinc(2c nP)$ given by multiplying the windowed sinc function by $P$ and sampling with period $P$.  Because $w(t)$ is zero outside the interval $(-W/2, W/2)$ the impulse response $h_n = 0$ when $n P \notin (-FW/2, FW/2)$ and only a finite number of elements of $h$ are nonzero.  For this reason, the response of $L_c^{P,w}$ to any input signal $x$ can be computed by the finite sum
+A \term{low pass finite impulse response filter} with period $P$, cuttoff frequency $c$, and window $w$ is a discrete-time system $L_c^{P,w}$ with period $P$ having impulse response $h_n = 2c P w(nP) \sinc(2c nP)$ given by multiplying the windowed sinc function by $P$ and sampling with period $P$.  Because $w(t)$ is zero outside the interval $(-W/2, W/2)$ the impulse response $h_n = 0$ when $n P \notin (-FW/2, FW/2)$ and only a finite number of elements of $h$ are nonzero.  For this reason, the response of $L_c^{P,w}$ to any input signal $x$ can be computed by the finite sum
 \[
-L_c^{P,w}x(t) = \sum_{m = -a}^a h_n T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
+L_c^{P,w}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
 \]
 and $\floor{FW/2}$ denotes the greatest integer less than or equal to $FW/2$.  The number of terms to be summed is $2a + 1$.  This is typically called the number of filter \term{taps}.  The number of non zero terms in the impulse response is at most the number of taps.  The spectrum of this filter is given by periodic summation of the Fourier transform $\hat{w}(f) * \rect(f/2c)$ of the windowed sinc function, that is,
 \[
@@ -622,7 +623,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
       \draw[thick] plot[] file {data/windowandfir/rect_W1.0_c1.0_re.csv};
       \draw[thick] plot[] file {data/windowandfir/rect_W3.0_c1.0_re.csv};
       \draw[thick] plot[] file {data/windowandfir/rect_W10.0_c1.0_re.csv};
@@ -651,7 +652,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 %   \begin{tikzpicture}
 %     \begin{scope}[yscale=\sy,xscale=\sx]
 
-%       % draw light gray region for magnitude spectrum of the discrete time system. 
+%       % draw light gray region for magnitude spectrum of the discrete-time system. 
 %       \draw[thick] plot[] file {data/windowandfir/hann_W1.0_c1.0_re.csv};
 %       \draw[thick] plot[] file {data/windowandfir/hann_W3.0_c1.0_re.csv};
 %       \draw[thick] plot[] file {data/windowandfir/hann_W10.0_c1.0_re.csv};
@@ -677,7 +678,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
       \draw[thick] plot[] file {data/windowandfir/blackman_W1.0_c1.0_re.csv};
       \draw[thick] plot[] file {data/windowandfir/blackman_W3.0_c1.0_re.csv};
       \draw[thick] plot[] file {data/windowandfir/blackman_W10.0_c1.0_re.csv};
@@ -705,11 +706,11 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   \caption{Fourier transform $\hat{w}(f) * \rect(f)$ of windowed sinc functions for window width $W=1,3$, and $10$.  Top: rectangular window $w(t) = \rect(t/W)$.  Bottom: Blackman window~\eqref{eq:blackmanwindow}. The Fourier transforms approach $\rect(f)$ as $W$ increases.  The rectangular window exhibits large oscillations even when $W$ is large.} \label{fig:windowfunctionsasWincrease}
 \end{figure}
 
-% A crude low pass digital filter can be constructed from the discrete time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
+% A crude low pass digital filter can be constructed from the discrete-time system corresponding with a first order difference equation~\eqref{eq:firstorderdifferenceequation}.  Consider the first order difference equation
 % \[
 % c_n = 3 d_n - 2 d_{n-1}.
 % \]
-% Let $H$ be the discrete time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with this difference equation.  The spectrum of $H$ is
+% Let $H$ be the discrete-time system with sample rate $F = \tfrac{1}{P} = 4$ corresponding with this difference equation.  The spectrum of $H$ is
 % \[
 % \Lambda(H,f) = \frac{e^{\pi f j/2}}{3 e^{\pi f j/2} - 2}.
 % \]
@@ -717,7 +718,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 % \[
 % f = 4k + \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 4k + 0.167754.
 % \]
-% On the interval $[-F/2,F/2]$ this discrete time system acts as a lowpass filter with cuttoff frequency approximately 
+% On the interval $[-F/2,F/2]$ this discrete-time system acts as a lowpass filter with cuttoff frequency approximately 
 % \[
 % \frac{2}{\pi} \arccos\left( \frac{13 - \sqrt{2}}{12} \right) \approx 0.167754.
 % \]
@@ -734,7 +735,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W2.0_c1.0.csv} -- (4.3,0) --cycle;
 
@@ -776,7 +777,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   % \begin{tikzpicture}
   %   \begin{scope}[yscale=\sy,xscale=\sx]
 
-  %     % draw light gray region for magnitude spectrum of the discrete time system. 
+  %     % draw light gray region for magnitude spectrum of the discrete-time system. 
   %     %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
   %     \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W3.0_c1.0.csv} -- (4.3,0) --cycle;
 
@@ -816,7 +817,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
 
@@ -858,7 +859,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
   \begin{tikzpicture}
     \begin{scope}[yscale=\sy,xscale=\sx]
 
-      % draw light gray region for magnitude spectrum of the discrete time system. 
+      % draw light gray region for magnitude spectrum of the discrete-time system. 
       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
 
@@ -910,7 +911,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 %   \begin{tikzpicture}
 %     \begin{scope}[yscale=\sy,xscale=\sx]
 
-%       % draw light gray region for magnitude spectrum of the discrete time system. 
+%       % draw light gray region for magnitude spectrum of the discrete-time system. 
 %       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
 %       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/rect_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
 
@@ -952,7 +953,7 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 %   \begin{tikzpicture}
 %     \begin{scope}[yscale=\sy,xscale=\sx]
 
-%       % draw light gray region for magnitude spectrum of the discrete time system. 
+%       % draw light gray region for magnitude spectrum of the discrete-time system. 
 %       %\fill[fill=lightgray] (-4.3,0) -- (-4.3,1) -- (-4+\c,1) -- (-4+\c,0) -- (-\c,0) -- (-\c,1) -- (\c,1) -- (\c,0) -- (4-\c,0) -- (4-\c,1) -- (4.3,1) -- (4.3,0) -- cycle;
 %       \fill[fill=lightgray] (-4.3,0) -- plot[] file {data/windowandfir/blackman_periodised_W8.0_c1.0.csv} -- (4.3,0) --cycle;
 
@@ -995,51 +996,71 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 \begin{test}\label{test:firfilteredlecturerec}
 (\textbf{Finite impulse response filtered lecture recording})
 
-We consider again the \SI{20}{\second} sampled audio signal from Test~\ref{test:ftlecturerec}.  The mono audio recording contain $N = 440998$ samples that we denote by $c_0,c_1,\dots,c_{N-1}$ at rate $F = \SI{22050}{\hertz}$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal computed was plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. It was observed that audio recording contains human voice that primarily resides at lower frequencies below \SI{5}{\kilo\hertz} and also interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as an annoying high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
-
-It will be convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio.  The cuttoff frequency is chosen to be $c = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{10}{c} = \tfrac{1}{480}$ is used.  This filter has impulse response
+We consider again the \SI{20}{\second} sampled audio signal from Test~\ref{test:ftlecturerec}.  The mono audio recording contains $N = 440998$ samples denote by 
 \[
-h_n = 2 c P w(t) \sinc( 2c P n)
+c_0,c_1,\dots,c_{N-1}
+\]
+at sample rate $F = \SI{22050}{\hertz}$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. The audio recording contains human voice primarily residing at lower frequencies below \SI{5}{\kilo\hertz} and interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as a high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
+
+It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{12}{\gamma} = \tfrac{1}{400}$ is used.  This filter has impulse response
+\[
+h_n = 2 \gamma P w( nP ) \sinc( 2\gamma P n)
 \]
 where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
 \[
-a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 22.
+a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 28.
 \] 
-This filter has $2a+1 = 45$ taps.
+This filter has $2a+1 = 56$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
+\[
+L_\gamma^{P,w}x(t) = \sum_{m \in \ints} h_m T_{Pm}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) .
+\]
 
+Let 
+\[
+x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
+\]
+be the bandlimited signal reconstructed from the sequence of samples $c$.  The response of the low pass filter $L_\gamma^{P,w}$ to input $x$ is
+\begin{align*}
+y(t) = L_\gamma^{P,w} x(t) &= \sum_{m = -a}^a h_m T_{Pm} \left( \sum_{n \in \ints} c_n \sinc(F t - n) \right) \\
+&= \sum_{m = -a}^a \sum_{n \in \ints} h_m  c_n \sinc(F t - n - m)  
+\end{align*}
+Putting $k = n+m$ and changing the order of summation we find that
+\begin{equation}\label{eq:discsystembandlimitedsamplesonlysincinterp}
+y(t) = L_\gamma^{P,w} x(t) = \sum_{k \in \ints} \sinc(F t - k) \sum_{m = -a}^a  h_m  c_{k-m} = \sum_{k \in \ints} d_k \sinc(F t - k)
+\end{equation}
+where $d = h * c$ is the sequence with $n$th element
+\[
+d_n = (h*c)_n = \sum_{m \in \ints} h_m c_{n-m} = \sum_{m = -a}^a h_m c_{n-m}
+\]
+given by discrete convolution of $h$ and $c$.  Observe that the discrete convolution involved only a finite sum over $2a+1$ terms because $h_n = 0$ for $n > a$ or $n < -a$.  From~\eqref{eq:discsystembandlimitedsamplesonlysincinterp}, we see that the response $y = L_\gamma^{P,w} x$ is the bandlimited signal with samples $y(nP) = d_n = (h*c)_n$.  The samples $d_0, d_1, \dots, d_{N-1}$ are written to the file \texttt{nohum.wav}.
+
+The Fourier transform of $y$ can be written in a number of ways
+\[
+\calF y = \calF L_\gamma^{P,w} x = \Lambda  L_\gamma^{P,w} \calF x = P \rect(Pf) \calD d(Pf).
+\]
+The Fourier transform is plotted in Figure~\ref{fig:test:firfilteredlecturevideo}.  The spectrum of hte   As expected the Fourier tra
 
 \end{test}
 
-\begin{itemize}
+\begin{figure}
+\centering
+\begin{shaded}
+%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
+  \begin{tikzpicture}
+    \selectcolormodel{gray} 
+    \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF \tilde{y}}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
+      \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/firlecturevideo/ft.csv};
+    \end{axis}
+  \end{tikzpicture}
+\caption{BLERG: Plot of the magnitude of the Fourier transform $\calF \tilde{y}$.  The plot looks similar to that of the magnitude of the Fourier transform of the original audio signal (Figure~\ref{fig:test:fouriertransformlecturevideo}) except that the spikes at $\pm\SI{8}{\kilo\hertz}$ and the elevated region between \SI{4900}{\hertz} and \SI{5900}{\hertz} no longer exist.}\label{fig:test:firfilteredlecturevideo}
+\end{shaded}
+\end{figure}
 
-\item Periodicity of the spectrum makes it not immediately clear how discrete time systems will be useful as filter
-
-\item However, bandlimited signals!
-
-\item Picture of 1st order discrete time system filtering something?
-
-\item Test with 1st order system filtering high frequency noise from lecture recording
-
-\item better filters that 1st order are not too hard to realise
-
-\item One approach involves mapping analogue filters, IIR filter,  Bilinear transform
-
-\item Do butterworth as an example.  Implement high order butterworth like filter this way.
-
-\item Filter lecture video with this IIR filter
-
-\item Another approach has no zeros, attempt to design impulse response directly, FIR filters, windowing.
-
-\item Filter lecture video with FIR filter.
-
-\item IIR usually computational advantageous.  FIR better if linear phase important.
-
-\end{itemize}
 
 
 \section{The z-transform}
 
-Recall that the transfer function $\lambda H$ of a discrete time system $H$ with impulse response $h$ satisfies
+Recall that the transfer function $\lambda H$ of a discrete-time system $H$ with impulse response $h$ satisfies
 \[
 \lambda H(s) = \sum_{n \in \ints} h_n e^{-sPn} \qquad s \in \cep \dom_P h.
 \]
@@ -1237,7 +1258,7 @@ where
 \[
 [n]_k = n (n-1) \dots (n-k+1)
 \]
-is called the~\term{falling factorial}~\cite[p. 48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
+is called the~\term{falling factorial}~\cite[p.~48]{concretemath_1994}.  In the case that $k=0$ the falling factorial is defined as $[n]_0 = 1$ for all $n\in\ints$.  
 
 Let $a \in \complex$.  The z-transforms of the sequence $c_n$ and the sequence with $n$th element $a^nc_n$ are related by 
 \[
@@ -1262,7 +1283,7 @@ The z-transform of a sequence $c$ and of the shifted sequence with $n$th element
 &= \sum_{n \in \ints} c_{n} z^{-(n+\ell)} \nonumber \\
 &= z^{-\ell} \sum_{n \in \ints} c_n z^{-n} = z^{-\ell} \calZ c(z) \qquad z \in \roc_z c. \label{eq:timeshiftpropertyztransform}
 \end{align}
-This is called the \term{shifting} property of the z-transform.   % The time-shift property can also be discovered by consideration of the discrete time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
+This is called the \term{shifting} property of the z-transform.   % The time-shift property can also be discovered by consideration of the discrete-time system $H(x) = T_{P\ell}(G(x))$ formed by the composition of the time shifter $T_{P\ell}$ and the discrete-time system $G$ with period $P$ and impulse response $g$ having region of convergence $R_g$.  If $h$ is the discrete impulse response of $H$ then
 % \begin{align*}
 % H(x) = T_{P\ell}(G(x)) &= T_{P\ell}\big( \sum_{n \in \ints} g_n T_{Pn}(x) \big) \\
 % &= \sum_{n \in \ints} g_{n} T_{P(n+\ell)}(x) \\
@@ -1277,7 +1298,7 @@ This is called the \term{shifting} property of the z-transform.   % The time-shi
 % \calZ(h) = \calZ(g_{n-\ell}) = z^{-\ell} \calZ(g) \qquad z \in R_g.
 % \]
 
-The z-transform obeys a convolution property analogous to that of the Laplace transform.  Let $F$ and $G$ be discrete time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Let $H x = F G x$ be the discrete time system formed by the composition $F$ and $G$ and with domain $\dom_P f\,g$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
+The z-transform obeys a convolution property analogous to that of the Laplace transform.  Let $F$ and $G$ be discrete-time systems with periods $P$ and discrete impulse responses $f$ and $g$.  Let $H x = F G x$ be the discrete-time system formed by the composition $F$ and $G$ and with domain $\dom_P f\,g$.  As shown in Section~\ref{sec:discr-time-impulse} the discrete impulse response of $H$ is the discrete convolution $f * g$.  Recall from~\eqref{eq:composedtransferfunction} that the transfer function of a composition of linear time invariant systems is given by the product of the transfer functions, that is,
 \[
 \lambda H(s)  = \lambda G(s) \lambda F(s) \qquad e^{sP} \in \roc_z f \cap \roc_z g.
 \]
@@ -1292,7 +1313,7 @@ from which it follow that
 That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of $\calZ(f*g)$ is the intersection of the regions of convergence of $\calZ f$ and $\calZ g$.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
-Let $H$ be a stable discrete time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform of a stable discrete time system $H$ and its discrete impulse response $h$,
+Let $H$ be a stable discrete-time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform of a stable discrete-time system $H$ and its discrete impulse response $h$,
 \[
 \lambda H(j2\pi f) = \Lambda H(f) = \calD h(f) = \calZ h(e^{2\pi j P f}).
 \]
@@ -1301,7 +1322,7 @@ Let $H$ be a stable discrete time system with absolutely summable discrete impul
 
 \nocite{SolimanAndSrinath_1990}
 
-We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices (Chapter~\ref{sec:syst-modell-diff}).  We will find that interesting discrete time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
+We have previously shown that interesting systems are found by consideration of a linear differential equation with constant coefficients.  We have used these systems to model electrical and mechanical devices (Chapter~\ref{sec:syst-modell-diff}).  We will find that interesting discrete-time systems are found by consideration of a linear~\term{difference equation} with constant coefficients.  That is, an equation relating two sequences $c$ and $d$ of the form
 \begin{equation}\label{eq:differenceequform}
 \sum_{\ell=0}^{m} a_\ell c_{n - \ell} = \sum_{\ell=0}^{k} b_\ell d_{n - \ell} \qquad n \in \ints
 \end{equation}
@@ -1343,7 +1364,7 @@ where $z = e^{sP}$.  Suppose that $h$ is a sequence with z-transform
 \[
 \calZ h(z) = \lambda H(s) = z^{k-m} \frac{\sum_{\ell=0}^{m} a_\ell z^{m-\ell}}{\sum_{\ell=0}^{k} b_\ell z^{k-\ell}}.
 \]
-It follows from~\eqref{eq:reltransferfunztrans} that $H$ is a discrete time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  In the case that $m > k$ the term $z^{k-m}$ can be incorporated into the denominator obtaining
+It follows from~\eqref{eq:reltransferfunztrans} that $H$ is a discrete-time system with discrete impulse response $h$.  By applying the inverse z-transform we can find an explicit expression for $h$.  This procedure is similar to how the impulse response of a system described by a differential equation was found by application of the inverse Laplace transform in Section~\ref{sec:poles-zeros-stab}.  In the case that $m > k$ the term $z^{k-m}$ can be incorporated into the denominator obtaining
 \[
 \calZ h(z) = \frac{a_0z^m + a_1 z^{m-1} + \dots + a_m}{b_0z^m + b_1 z^{k-1} + \dots + b_k z^{m-k}}
 \]
@@ -1365,7 +1386,7 @@ where $d$ is the number of shared roots, these shared roots being
 \[
 \alpha_0 = \beta_0, \;\; \alpha_1 = \beta_1, \;\; \dots, \;\;  \alpha_{d-1} = \beta_{d-1}.
 \]
-The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_w$ are called the \term{poles}.  For a discrete time system, the number of poles and zeros are equal.   A pole-zero plot is constructed by marking the complex plane with a cross at the location of each pole and a circle at the location of each zero (Figure~\ref{fig:polezeroplotdisctime}). %If $k>m$ then there exist $k-m$ zeros located at the origin.  If $k<m$ there exist $m-k$ poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
+The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{zeros} and the roots from the denominator $\beta_d, \dots, \beta_w$ are called the \term{poles}.  For a discrete-time system, the number of poles and zeros are equal.   A pole-zero plot is constructed by marking the complex plane with a cross at the location of each pole and a circle at the location of each zero (Figure~\ref{fig:polezeroplotdisctime}). %If $k>m$ then there exist $k-m$ zeros located at the origin.  If $k<m$ there exist $m-k$ poles located at the origin.  Otherwise, if $k=m$ there are no extra poles or zeros.
 
 {
 \def\xmax{1.75}
@@ -1422,7 +1443,7 @@ The roots from the numerator $\alpha_d, \dots, \alpha_w$ are called the \term{ze
       %\vtick{0.5} node[pos=0.5,below] {$\tfrac{1}{2}$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Pole zero plots for discrete time systems corresponding with first order difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left) and $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right) and second order difference equations $z^2 - \tfrac{4}{3} x - \tfrac{4}{9}$ (bottom left) and $z^2 + \sqrt{2}z + 1$ (bottom right).  The plots of the left correspond with stable systems because all poles are contained inside the complex unit circle (dashed).  Plots on the right correspond with unstable systems because there exist poles on or outside the complex unit circle.  The small $2$'s above the zero on the lower plots indicate the existence of two zeros at the origin.}\label{fig:polezeroplotdisctime}
+  \caption{Pole zero plots for discrete-time systems corresponding with first order difference equations $c_n = d_n - \tfrac{2}{3} d_{n-1}$ (top left) and $c_n = d_n + \tfrac{3}{2} d_{n-1}$ (top right) and second order difference equations $z^2 - \tfrac{4}{3} x - \tfrac{4}{9}$ (bottom left) and $z^2 + \sqrt{2}z + 1$ (bottom right).  The plots of the left correspond with stable systems because all poles are contained inside the complex unit circle (dashed).  Plots on the right correspond with unstable systems because there exist poles on or outside the complex unit circle.  The small $2$'s above the zero on the lower plots indicate the existence of two zeros at the origin.}\label{fig:polezeroplotdisctime}
 \end{figure}
 }
 
@@ -1446,17 +1467,17 @@ Those terms of the form $A_\ell z^{1 - r_\ell}$ correspond with sequences $A_\el
 \[
 \frac{\beta_\ell^{r_\ell-1} (r_\ell-1)! z }{(z - \beta_\ell)^{r_\ell}}
 \]
-are found to correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete time system $H$ takes the form
+are found to correspond with sequences $B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n$ where $u$ is the step sequence.  Other sequences with the same z-transform are disregarded because they are not right sided and so do not correspond with a causal discrete-time system.  Combing the above results we find that the discrete impulse response $h$ of the discrete-time system $H$ takes the form
 \[
 h_n = \frac{a_0}{b_0} \sum_{\ell \in K_1} A_\ell \delta_{n+r_\ell-1} + \sum_{\ell \in K_2} B_\ell \beta_\ell^n [n]_{r_\ell-1} u_n.
 \]
-The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete time system is stable if and only if no poles lie outside or on the complex unit circle.
+The discrete impulse response is absolutely summable only if the poles satisfy $\abs{\beta_\ell} < 1$ for all $\ell = d,\dots,w$ as a result of the terms $\beta_\ell^n$ that occur when $\beta_\ell \neq 0$.  The system $H$ is stable if and only if $h$ is absolutely summable (Exercise~\ref{excer:stableimpulserespdiscretetime}) and so a discrete-time system is stable if and only if no poles lie outside or on the complex unit circle.
 
-We now consider some specific examples of difference equations and their corresponding discrete time systems.  Consider the difference equation
+We now consider some specific examples of difference equations and their corresponding discrete-time systems.  Consider the difference equation
 \begin{equation}\label{eq:firstorderdifferenceequation}
 c_n = d_n - a d_{n-1} \qquad n \in \ints
 \end{equation}
-where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete time system such that the response $y = H(x)$ to input $x$ satisfies
+where $a \in \complex$.  This is called a \term{first order difference equation}.  Suppose that $H$ is a discrete-time system such that the response $y = H(x)$ to input $x$ satisfies
 \[
 x = y - a T_{P}(y).
 \]
@@ -1464,7 +1485,7 @@ The transfer function of $H$ is
 \[
 \lambda(H,s) = \frac{1}{1 - a e^{-sP}} = \frac{1}{1 - a z^{-1}} = \frac{z}{z - a}
 \]
-where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single pole at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  The discrete impulse response is found to be $h_n = a^n u_n$ by putting $k=0$ in~\eqref{eeq:onlyztrans}.  Other sequences with this z-transform are discarded because they do not correspond with a causal system.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete time system $H$ is stable if and only if $\abs{a} < 1$.  
+where $z = e^{sP}$.  The system has a single zero at $z=0$ and a single pole at $z = a$.  The system will be stable if and only if this pole lies strictly inside the complex unit circle, that is, if and only if $\abs{a} < 1$.  The discrete impulse response is found to be $h_n = a^n u_n$ by putting $k=0$ in~\eqref{eeq:onlyztrans}.  Other sequences with this z-transform are discarded because they do not correspond with a causal system.  %The impulse response is absolutely summable if and only if when $\abs{a}< 1$ and so the discrete-time system $H$ is stable if and only if $\abs{a} < 1$.  
 When $\abs{a} < 1$ the region of convergence contains the unit circle and the system has spectrum
 \[
 \Lambda(H,f) = \lambda(H,j2\pi f) = \calZ(h, e^{2\pi j P f}) = \frac{e^{2\pi j P f}}{e^{2\pi j P f} - a}.
@@ -1475,7 +1496,7 @@ Now consider the difference equation
 \[
 c_n = d_n - a d_{n-1} - b d_{n-2} \qquad n \in \ints.
 \]
-where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P}(y) - b T_{2P}(y)$.  The transfer function is
+where $a,b \in \complex$.  This is called a~\term{second order difference equation}.  Suppose that $H$ is a discrete-time system with reponse $y=H(x)$ satisfying the equation $x = y - aT_{P}(y) - b T_{2P}(y)$.  The transfer function is
 \[
 \lambda(H) = \frac{1}{1 - a e^{-sP} - b e^{-2sP}} = \frac{z^2}{z^2 - a z - b} = \calZ(h)
 \]
