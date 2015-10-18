@@ -12,7 +12,7 @@ y_n = \sum_{m \in \ints} h_m x_{n-m}.
 We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$ and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  %In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete-time system.
 We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete-time systems that is closely linked with previous chapters where what are often called \term{continuous-time} systems have been studied.  Complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This definition of discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
 
-discrete-time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
+Discrete-time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
 
 \section{The discrete impulse response} \label{sec:discr-time-impulse}
@@ -102,18 +102,48 @@ In what follows we will often use the term convolution and impulse response rath
 % \]
 % where $a$ and $b$ are real or complex constants.  
 
-% discrete-time system have particularly convenient properties when operating upon bandlimited signals.  Let $H$ be a discrete-time system with impulse response $h$ and sample period $P$ and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
+It is often the case that we have access to a sequence of samples $c_n = x(nP)$ at rate $F = \tfrac{1}{P}$ of a signal $x$ of interest.  For example, in Test~\ref{test:voltagedividertest1} (and many of the other tests) we obtained samples of a voltage signal using a computer soundcard.  In Tests~\ref{test:ftlecturerec} and \ref{test:butterworthfilteredlecturerec} we operated on the samples from an audio recording that were stored on a computer harddisk.  If it happens that $x$ is bandlimited with bandwidth $b < F/2$ then $x$ can be recovered from the sequence of samples $c$ by sinc interpolation~\eqref{eq:sincinterformula}
+ \[
+  x(t) = \sum_{n \in \ints} c_n \sinc(F t - n).
+  \]
+
+Suppose that $H$ is a discrete-time system with impulse response $h$ and sample period $P$ and suppose that the signal $x \in \dom_P h$.  Consider the response $y = Hx$.  If all we have is the sequence of samples $c_n = x(nP)$ then it is not apparent how the response $y$ is to be computed.  However, it is often the case that we are only interested in the samples of the response $d_n = y(nP)$ and these can be computed.  To see this write,
+\begin{align*}
+d_n &= y(nP) = Hx(nP) \\
+&= \sum_{m \in \ints} h_m T_{mP}x(nP) \\
+&= \sum_{m \in \ints} h_m x(nP - mP) \\
+&= \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n.
+\end{align*}
+We see that $d = h * c$, that is, the sequence $d$ of samples of the response $y = Hx$ is the discrete convolution of the impulse response $h$ and the sequence $c$ of sample of the input signal $x$.  For this reason, we will find that the application of discrete time systems by computer will often amount to the computation of discrete convolutions.  If $y$ happens to be a bandlimited signal with bandwidth $b < F/2$ then $y$ can be recovered from $d$ by sinc interpolation.
+
+% 
+% Discrete-time systems have particularly convenient properties when operating upon bandlimited signals.  Let $x$ be a signal with bandwidth $b$ and let $c_n = x(nP)$ be the sequence of samples of $x$ at rate $F = \tfrac{1}{P} > 2b$.  Recall from Section~\ref{sec:bandlimited-signals} that the bandlimited signal $x$ can be recovered from the sequence of samples $c$ by sinc interpolation
+% \[
+% x(t) = \sum_{n \in \ints} c_n \sinc(F t - n).
+% \]
+% For this reason, when working with bandlimited signals, it is enough to know only the sequence of samples $c$.  Now suppose that $H$ is a discrete-time system with impulse response $h$ and sample period $P$ and suppose that the bandlimited signal $x \in \dom_P h$.  We will regularly be interested in computing the response $y = Hx$ and it will often be that we only require the samples $d_n = y(nP) = Hx(nP)$ of the response at period $P$ (see Test~\ref{} for example).  The samples take the form
+% \begin{align*}
+% d_n &= y(nP) = Hx(nP) \\
+% &= \sum_{m \in \ints} h_m T_{mP}x(nP) \\
+% &= \sum_{m \in \ints} h_m x(nP - mP) \\
+% &= \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n,
+% \end{align*}
+% that is, the sequence $d = h * c$. The sequence $d$ of samples of the response $y = Hx$ is the discrete convolution of the impulse response $h$ and the sequence $c$ of sample of the input signal $x$.  Observe that in computing 
+
+
+%To see why, let $H$ be a discrete-time system with impulse response $h$ and sample period $P$.  Let $x \in \dom_P h$.  Suppose that we are only interested in the samples of the response $Hx$, that is, suppose    and let $x$ be a bandlimited signal with bandwidth $b \leq \tfrac{F}{2} = \tfrac{1}{2P}$.  Let $c_n = x(nP)$ be the sequence of samples of $x$ so that
 % \[
 % x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n).
 % \]
+% %that is, $x$ my be recovered by $\sinc$ interpolation
 % The response of $H$ to $x$ is
 % \begin{align*}
-% y = H(x) &= \sum_{n \in \ints} h_n T_{Pn}\left(\sum_{m \in \ints} c_m \sinc(Ft - m) \right) \\
+% y = Hx &= \sum_{n \in \ints} h_n T_{Pn}\left(\sum_{m \in \ints} c_m \sinc(Ft - m) \right) \\
 % &=  \sum_{m \in \ints} \sum_{n \in \ints} h_n c_m \sinc(Ft - n - m),
 % \end{align*}
-% the interchange of summation being valid under appropriate assumptions about the sequence s$h$ and $c$.  Putting $k = m+n$ we have
+% the interchange of summation being valid under appropriate assumptions about the sequences $h$ and $c$.  Putting $k = m+n$ we have
 % \[
-% y = H(x) = \sum_{m \in \ints} \sum_{k \in \ints} h_n c_{k-n} \sinc(Ft - k) =  \sum_{m \in \ints} d_k \sinc(Ft - k)
+% y = H x = \sum_{m \in \ints} \sum_{k \in \ints} h_n c_{k-n} \sinc(Ft - k) =  \sum_{m \in \ints} d_k \sinc(Ft - k)
 % \]
 % where $d = h * c$, that is, $d$ is the sequence with $n$th element
 % \[
@@ -160,7 +190,7 @@ The transfer function is
 \[
 \lambda T_0(s) = \sum_{n \in \ints} \delta_n e^{-sPn} = 1 \qquad s \in \complex.
 \]
-The domain of $\lambda T_0$ is the entire complex plane $\complex$.  This is in agreement with \eqref{eq:timeshiftertransferfunction}.  % Finally consider the discrete-time system $H$ with impulse response 
+The domain of $\lambda T_0$ is the entire complex plane $\complex$.  This agrees with \eqref{eq:timeshiftertransferfunction}.  % Finally consider the discrete-time system $H$ with impulse response 
 % \[
 % h_n = \rect(\tfrac{n}{2W}) \begin{cases}
 % 1 & \abs{n} < W \\
@@ -204,7 +234,7 @@ The spectrum of $H$ is
 \[
 \Lambda H(f) = \calD h(Pf) = e^{-2\pi j P f} + 1 + e^{2\pi j P f} = 1 + 2\cos(2\pi P f).
 \]
-The sequence $\rect(n/2)$ and its discrete Fourier transform are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.
+The sequence $\rect(n/2)$ and its discrete time Fourier transform are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.
 % Now suppose that $H$ has discrete impulse response $h_n = \sinc(n/4)$ given by sampling the sinc function with period $\tfrac{1}{4}$.  The Fourier transform of $\sinc(t/4)$ is $4 \calF\sinc(4f) = 4\rect(4f)$ by the time scaling property~\eqref{eq:timescalingpropertryfouriertrans}.  The discrete time Fourier transform of $h$ is given by periodically summing this Fourier transform~\eqref{eq:dftsignalperiodicsumP}, that is,
 % \[
 % \calD h(f) = 4 \sum_{m\in\ints} \rect(4f - m).
@@ -224,7 +254,7 @@ To see how this works, consider the bandlimited signal $x$ with Fourier transfor
 \begin{equation}\label{eq:examplebandlimtedsignalforfiltering}
 \hat{x}(f) = \calF x(f) = \tfrac{4}{3}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)
 \end{equation}
-plotted by the dashed line in Figures~\ref{fig:bandlimiteddiscretetimefiltering} and~\ref{fig:bandlimiteddiscretetimefilteringW3}.  The Fourier transform has a rectangular pulse of height $\tfrac{4}{3}$ centered at the origin and raised cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two raised cosine pulses would preferably not exist.  A low pass filter could be used to filter out the raised cosine pulses.  For example, an ideal lowpass filter $L_c$ (Section~\ref{sec:analogue-filters}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{5}{4})$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the rectangular pulse at the origin and remove the two raised cosine pulses.  The response $L_c x$ of the filter $L_c$ to input signal $x$ has Fourier transform~\eqref{eq:fouriertransoutputsig}
+plotted by the dashed line in Figures~\ref{fig:bandlimiteddiscretetimefiltering} and~\ref{fig:bandlimiteddiscretetimefilteringW3}.  The Fourier transform has a rectangular pulse of height $\tfrac{4}{3}$ centered at the origin and cosine pulses of width $\tfrac{1}{2}$ at $f = \pm \tfrac{3}{2}$.  The signal is bandlimited with bandwidth $\tfrac{7}{4}$.  Suppose that the component of interest is the rectangular pulse at the origin and that the two cosine pulses would preferably not exist.  A low pass filter could be used to filter out the cosine pulses.  For example, an ideal lowpass filter $L_c$ (Section~\ref{sec:analogue-filters}) with cuttoff frequency $c$ in the interval $(\tfrac{1}{2}, \tfrac{5}{4})$ and spectrum $\rect(\tfrac{f}{2c})$ would preserve the rectangular pulse at the origin and remove the two cosine pulses.  We are lead to believe that the response $L_c x$ of the filter $L_c$ to input signal $x$ has Fourier transform~\eqref{eq:fouriertransoutputsig}
 \[
 \calF L_c x = \Lambda L_c \, \calF x = \rect(\tfrac{f}{2c}) \hat{x}(f) = \tfrac{3}{2} \rect(f).
 \]
@@ -239,39 +269,41 @@ We are lead to believe that the spectrum of $L_c^P$ is
 \begin{equation}\label{eq:LambdaHidealklowpassdigitalsceptical}
 \Lambda L_c^P(f) = \hat{h}(Pf) = \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right).
 \end{equation}
-The spectrum is periodic with period $F$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = \tfrac{1}{P} = 4$.  When $F > 2c$, the system $L_c^P$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$. Now consider applications of $L_c^P$ to the signal $x$ with Fourier transform~\ref{eq:examplebandlimtedsignalforfiltering}.  If $c \in (\tfrac{1}{2}, \tfrac{5}{4})$ and $F > \tfrac{7}{2}$ then the response of $L_c^P$ to input signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} has Fourier transform
+The spectrum is periodic with period $F$ and is plotted by the shaded region in Figure~\ref{fig:bandlimiteddiscretetimefiltering} in the case that $c = 1$ and $F = \tfrac{1}{P} = 4$.  When $F > 2c$, the system $L_c^P$ is called an \term{ideal lowpass digital filter} with cuttoff frequency $c$ and sample period $P$. Now consider the response of $L_c^P$ to the signal $x$ with Fourier transform~\ref{eq:examplebandlimtedsignalforfiltering}.  If $c \in (\tfrac{1}{2}, \tfrac{5}{4})$ and $F > \tfrac{7}{2}$ then the response $L_c^Px$ has Fourier transform
 \[
-\calF L_c^P x = \Lambda H \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{4}{3} \rect(f)
+\calF L_c^P x = \Lambda L_c^P \, \calF x = \hat{x}(f) \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right) = \tfrac{4}{3} \rect(f)
 \]
 exactly as with the ideal lowpass filter $L_c$.  This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (top) where only the period at the origin of the spectrum $\Lambda L_1^{1/4}$ overlaps with the Fourier transform of the bandlimited signal $x$.
 
-Ideal highpass and bandpass digital filters can be constructed using $L_c^P$ in much the same way that ideal analogue filters were constructed using $L_c$ in Section~\ref{sec:analogue-filters}.  An \term{ideal high pass digital filter} with cuttoff frequency $c$ and period $P = \tfrac{1}{F} < \tfrac{1}{2c}$ is the system given by the linear combination 
+The conclusion that the spectrum of the ideal lowpass digital filter $L_{c}^P$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ of $\Lambda L_c^P$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
+
+
+Ideal highpass and ideal bandpass digital filters can be constructed using $L_c^P$ in much the same way that ideal analogue filters were constructed using the ideal lowpass filter $L_c$ in Section~\ref{sec:analogue-filters}.  An \term{ideal high pass digital filter} with cuttoff frequency $c$ and period $P = \tfrac{1}{F} < \tfrac{1}{2c}$ is the system given by the linear combination 
 \[
 T_0 - L_c^{P}.
 \]  
 The impulse response is $\delta_n - 2cP\sinc(2cnP)$.  The spectrum 
 \[
-\Lambda T_0 - \Lambda L_c^P = 1 - \Lambda L_c^{P} = 1 - \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right)
+\Lambda (T_0 - L_c^P) = 1 - \Lambda L_c^{P} = 1 - \sum_{m \in \ints} \rect\left( \frac{f + Fm}{2c}\right)
 \]
-is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (middle) in the case that $c = 1$ and $F = \tfrac{1}{P} = 4$.  Because $F > 2c$ the spectrum can be identified as a periodic sum of rectangular pulses of width $2(F-c)$ centered at the real numbers $\tfrac{1}{2}F + Fm$.  That is
+is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (middle) in the case that $c = 1$ and $F = \tfrac{1}{P} = 4$.  Because $F > 2c$ the spectrum can be identified as a periodic sum of rectangular pulses of width $2(F-c)$ centered at the real numbers $\tfrac{1}{2}F + Fm$, that is
 \[
 1 - \Lambda L_c^{P} = \sum_{m \in \ints} \rect\left( \frac{f + \tfrac{1}{2}F + Fm}{2(F-c)}  \right).
 \]  
-The Fourier transform of the response of $T_0 - L_c^P$ to the input signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} is 
-\begin{align*}
-\calF( T_0 x - L_c^P x ) &= (1 - \Lambda L_c^P) \, \calF x \\
-&= \hat{x}(f) - \tfrac{4}{3} \rect(f) \\
-& = \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big).
-\end{align*}
-This response is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (middle).  The two raised cosine pulses are preserved and the rectangular pulse at the origin is removed.  
+% The Fourier transform of the response of $T_0 - L_c^P$ to the input signal $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} is 
+% \begin{align*}
+% \calF( T_0 x - L_c^P x ) &= (1 - \Lambda L_c^P) \, \calF x \\
+% &= \hat{x}(f) - \tfrac{4}{3} \rect(f) \\
+% & = \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big).
+% \end{align*}
+% This response is plotted in 
+Figure~\ref{fig:bandlimiteddiscretetimefiltering} (middle) plots the Fourier transform of the response $T_0 - L_1^{1/4}$ to input $x$ from~\ref{eq:examplebandlimtedsignalforfiltering}.  The two higher frequency cosine pulses are preserved and the rectangular pulse at the origin is removed.  
 
-An \term{ideal bandpass digital filter} with upper cuttoff frequency $u$ and lower cuttoff frequency $\ell$ is the system given by the linear combination 
+An \term{ideal bandpass digital filter} with upper cuttoff frequency $u$, lower cuttoff frequency $\ell$, and period $P$ is the system given by the linear combination 
 \[
 L_u^P - L_\ell^P.
 \]  
 The impulse response is the sequence $2uP\sinc(2unP) -  2 \ell P\sinc(2\ell nP)$.  The spectrum $\Lambda L_u^P - \Lambda L_\ell^P$ is plotted in Figure~\ref{fig:bandlimiteddiscretetimefiltering} (bottom) in the case that $u = \tfrac{3}{2}$, $\ell = \tfrac{1}{4}$, and $F = \tfrac{1}{P} = 4$.  The Fourier transform of the response of $L_u^P - L_\ell^P$ to input $x$ from~\eqref{eq:examplebandlimtedsignalforfiltering} is also plotted.
-
-The conclusion that the spectrum of the ideal lowpass digital filter $L_{c}^P$ satisfies~\eqref{eq:LambdaHidealklowpassdigitalsceptical} needs to be taken with some scepticism because the discrete impulse response $h_n = 2cP\sinc(2c P n)$ is not absolutely summable and so the domain $\cep \dom_P h$ of $\Lambda L_c^P$ does not contain the imaginary axis.  Like ideal analogue filters (Section~\ref{sec:analogue-filters}), ideal digital filters will not be useful in practice and so this caveat will not affect the results that follow. The concept of ideal filters is nonetheless a valuable aid to intuition.  
 
 \begin{figure}[tp]
   \centering
@@ -415,14 +447,13 @@ The conclusion that the spectrum of the ideal lowpass digital filter $L_{c}^P$ s
       \htick{1} node[pos=0.5,above left] {$1$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Fourier transform $\tfrac{4}{3}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b \leq \tfrac{7}{4}$ (dashed). The solid line shows the magnitude of the Fourier transform of the response to this signal of the ideal lowpass digital filter with cuttoff $c=1$ and sample rate $F = \tfrac{1}{P} = 4$.  %The spectrum of this filter is shown by the hatched rectangular pulse at the origin.  
-The higher frequency rasied cosine pulses centered at $f = \pm \tfrac{3}{2}$ are removed by the filter, but the rectangular pulse of height $\tfrac{4}{3}$ centered at the origin is unaffected.  The shaded region shows the periodic magnitude spectrum of this digital filter.  The period is $F = 4$. The periodicity is not of consequence because the signal is bandlimited with bandwidth $b \leq \tfrac{7}{4} < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
+  \caption{Fourier transform $\tfrac{4}{3}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big)$ of a bandlimited signal with bandwidth $b \leq \tfrac{7}{4}$ (dashed). The solid lines shows the magnitude of the Fourier transform of the response to this signal to the ideal lowpass digital filter $L_1^{1/4}$ (top), the ideal highpass digital filter $T_0 - L_1^{1/4}$ (middle), and the ideal bandpass digital filter $L_{3/2}^{1/4} - L_{1/4}^{1/4}$.  The spectrum of this filters is shown by shaded region. The spectra have period $P = 4$.  The periodicity is not of consequence because the signal is bandlimited with bandwidth $b \leq \tfrac{7}{4} < \tfrac{F}{2} = 2$.} \label{fig:bandlimiteddiscretetimefiltering}
 \end{figure}
 
 
 \section{Finite impulse response filters}\label{sec:finite-impulse-resp}
 
-We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or \term{FIR filters} for short.  One feature preventing practical implementation of the ideal lowpass digital filter $L_c^P$ is that the discrete impulse response $h_n = 2cP\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require summing an infinite number of terms.  A pragmatic approach to alleviate this problem is to first approximate the ideal analogue lowpass $L_c$ filter by a regular system with impulse response
+We now turn our attention to practical digital filters.  The first of these are called \term{finite impulse response filters} or \term{FIR filters} for short.  One feature preventing practical implementation of the ideal lowpass digital filter $L_c^P$ is that the discrete impulse response $h_n = 2cP\sin(2cPn)$ is not of finite support.  Computing the response $\sum_{m \in \ints} h_m T_{Pm} x(t)$ for any time $t \in \reals$ might require summing an infinite number of terms.  A pragmatic approach to alleviate this problem is to first approximate the ideal analogue lowpass filter $L_c$ by a regular system with impulse response
 \[
 2c w(t) \sinc(2ct)
 \]
@@ -1010,7 +1041,7 @@ where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse resp
 \[
 a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 28.
 \] 
-This filter has $2a+1 = 56$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
+This filter has $2a+1 = 57$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
 \[
 L_\gamma^{P,w}x(t) = \sum_{m \in \ints} h_m T_{Pm}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) .
 \]

@@ -46,7 +46,12 @@ val a = floor(F*W/2).toInt; //number of taps is 2a+1
 def w(t : Double) =  blackman(t/W); //window function.  Using Blackman window with width W
 def h(n : Int) = 2*gamma*P*w(n*P)*sinc(2*gamma*n*P); //filter impulse response
 
-println(gamma, W, a)
+println("Blackman windowed FIR low pass filter with:")
+println(" cuttoff frequency " + gamma)
+println(" window width " + W)
+println(" " + (2*a + 1) + " taps")
+println(" attenuation at 4KHz " + Lambda(4).magnitude)
+println(" attenuation at 5KHz " + Lambda(5).magnitude)
 
 //discrete convolution of h and c. These are the samples of the response of the filter
 def d(n : Int) = (-a to a).foldLeft(0.0)( (s, m) => s + h(m)*c(n-m) )

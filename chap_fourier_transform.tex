@@ -1,4 +1,4 @@
-\Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
+Let $x$ be an absolutely integrable signal.  We denote by $\calF x$ the complex valued function satisfying
 \begin{equation}\label{eq:fouriertransform}
 \calF x(f) = \int_{-\infty}^\infty x(t) e^{-j2\pi ft} dt
 \end{equation}
@@ -856,7 +856,7 @@ A surprising result is that every square integrable bandlimited signal $x$ with 
  x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
  \end{equation}
 %This sum is well defined since for fixed t the inside is the product of two square integrable sequences.
-where $c$ is a square integrable complex valued sequence and $F = 2b$.  This is a consequence of a property of the set of square integrable signals $L_2$ called \term{completeness}~\cite[Theorem~3.11 and page~91]{Rudin_real_and_complex_analysis}.  %This property is sometimes also called the \term{Riesz-Fischer theorem}~\cite[page~91]{Rudin_real_and_complex_analysis}.
+where $c$ is a square integrable complex valued sequence and $F = 2b$.  This is a consequence of a property of the set of square integrable signals $L_2$ called \term{completeness}~\cite[Theorem~3.11 and page~91]{Rudin_real_and_complex_analysis}.  The sum on the right hand side of~\eqref{eq:sincinterformula} is often called \term{sinc interpolation}.  %This property is sometimes also called the \term{Riesz-Fischer theorem}~\cite[page~91]{Rudin_real_and_complex_analysis}.
 Evaluating the signal $x$ at integer multiples of $P = \tfrac{1}{F}$ we find that
 \[
 x(\ell P) = \sum_{n \in \ints} c_n \sinc( \ell - n ) = c_\ell
