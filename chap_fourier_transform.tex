@@ -681,7 +681,7 @@ A \term{sequence} is a function with domain given by the integers $\ints$.  The 
 \[
 \sin( \tfrac{\pi}{4} n), \qquad n^3, \qquad e^{-\sabs{n}/2}
 \]
-each denote a real (and so also complex) valued sequence.  In what follows the term~\term{sequence} will always mean a complex valued sequence unless otherwise stated.  Complex valued sequences are commonly called~\term{discrete time signals} and the $n$th element in the sequence is denoted by $x[n]$ using squared brackets~\citep{Oppenheiim_sigs_sys_1996}.  Here, we use the subscript notation $x_n$. This notation is also common~\citep{vetterli_fund_sig_proc,Rudin_real_and_complex_analysis}.
+each denote a real (and so also complex) valued sequence.  In what follows the term~\term{sequence} will always mean a complex valued sequence unless otherwise stated.  Complex valued sequences are commonly called~\term{discrete-time signals} and the $n$th element in the sequence is denoted by $x[n]$ using squared brackets~\citep{Oppenheiim_sigs_sys_1996}.  Here, we use the subscript notation $x_n$. This notation is also common~\citep{vetterli_fund_sig_proc,Rudin_real_and_complex_analysis}.
 Sequences are plotted using vertical lines with dotted ends as in Figure~\ref{fig:realvaluedsequence} and have a number of properties analogous to the properties of signals (Section~\ref{sec:properties-signals}).
 
 \begin{figure}[tp]
@@ -966,7 +966,7 @@ This motivated use of this recontruction method in Tests~\ref{test:voltagedivide
 \end{figure}
 }
 
-\section{The discrete time Fourier transform}
+\section{The discrete-time Fourier transform}
 
 Let $x$ be a square integrable bandlimited signal with bandwidth $b$ and let $c$ be the square summable sequence containing samples of $x$ at sampling rate $F = \tfrac{1}{P} = 2b$, that is, $c_n = x(nP)$.  Suppose temporarily that $c$ is also absolutely summable.  
 From~\eqref{eq:sincinterformula}, the Fourier transform of $x$ is 
@@ -980,7 +980,7 @@ where
 \begin{equation}\label{eq:disctransintro}
 \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}
 \end{equation}
-is called the~\term{discrete time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} is justified by \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete time Fourier transform of $c$.  The discrete time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal with period $1$.  For example, the discrete time Fourier transform of the delta sequence is 
+is called the~\term{discrete-time Fourier transform} of the sequence $c$.  The interchange of Fourier transformation and summation on line~\eqref{eq:ftanddftrelationshipswapsumf} is justified by \term{Lebesgue's dominated convergence theorem}~\cite[Section~1.34]{Rudin_real_and_complex_analysis} (Exercise~\ref{exer:ftdftswapsummationldct}).  We write $\hat{c} = \calD c$ for the discrete-time Fourier transform of $c$.  The discrete-time Fourier transform $\hat{c} = \calD c$ is a periodic function from $\reals \to \complex$, that is, $\hat{c}$ is a periodic signal with period $1$.  For example, the discrete-time Fourier transform of the delta sequence is 
 \[
 \calD \delta(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f} = 1. 
 \]
@@ -991,17 +991,17 @@ The sequence
 0 & \text{otherwise}
 \end{cases}
 \]
-has discrete time Fourier transform
+has discrete-time Fourier transform
 \[
 \calD\big( \rect(n/2) ) = e^{-2\pi j  f} + 1 + e^{2\pi j f} = 1 + 2\cos(2\pi f)
 \]
-and the sequence $2^{-n} u_n$ has discrete time Fourier transform (Exercise~\ref{eq:dftalphanun})
+and the sequence $2^{-n} u_n$ has discrete-time Fourier transform (Exercise~\ref{eq:dftalphanun})
 \begin{align*}
 \calD\big( 2^{-n} u_n \big) =  \sum_{n \in \ints} 2^{-n} u_n e^{-j 2\pi n f} = \sum_{n = 0}^\infty \frac{e^{-j 2\pi n f}}{2^n} = \frac{2}{2 -  e^{-j 2\pi f}}.
 \end{align*}
-These sequences and their discrete time Fourier transforms are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.  
+These sequences and their discrete-time Fourier transforms are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.  
 
-We now use the discrete time Fourier transform to compute and plot the Fourier transform of some sampled audio signals.  Test~\ref{test:ftlecturerec} uses~\eqref{eq:ftanddftrelationship} to compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} this audio signal is passed through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and the Fourier transform of the response is plotted.
+We now use the discrete-time Fourier transform to compute and plot the Fourier transform of some sampled audio signals.  Test~\ref{test:ftlecturerec} uses~\eqref{eq:ftanddftrelationship} to compute the Fourier transform of a \SI{20}{\second} segment of audio from a lecture recording.  In Test~\ref{test:butterworthfilteredlecturerec} this audio signal is passed through the Butterworth filter constructed in Test~\ref{test:butterworthfilter} and the Fourier transform of the response is plotted.
 
 \begin{test}\label{test:ftlecturerec}
 (\textbf{The Fourier transform of a lecture recording})
@@ -1031,7 +1031,7 @@ From~\eqref{eq:ftanddftrelationship} the Fourier transform of this signal is $\h
 \begin{equation}\label{eq:dftsumNterms}
 \hat{c}(f) = \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}  = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n f}
 \end{equation}
-is the discrete time Fourier transform of the sequence of samples.  Figure~\ref{fig:test:fouriertransformlecturevideo} shows a plot of the magnitude of the Fourier transform for frequencies in the interval \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz}.  The plot is constructed by evaluting $\abs{\hat{c}(f)}$ at all $K = 1201$ frequencies
+is the discrete-time Fourier transform of the sequence of samples.  Figure~\ref{fig:test:fouriertransformlecturevideo} shows a plot of the magnitude of the Fourier transform for frequencies in the interval \SI{-12}{\kilo\hertz} to \SI{12}{\kilo\hertz}.  The plot is constructed by evaluting $\abs{\hat{c}(f)}$ at all $K = 1201$ frequencies
 \[
 f_k = -12000 + 20k \qquad k = 0, \dots, K-1,
 \]
@@ -1112,7 +1112,7 @@ Under our assumption that $c$ is absolutely summable
 \[
 \abs{\hat{c}(f)} = \abs{\calD c(f)} \leq \sum_{n \in \ints} \abs{c_n e^{-j 2\pi n f}} = \sum_{n \in \ints} \abs{c_n} = \|c\|_1 < \infty
 \]
-and so the discrete Fourier transform $\calD c(f)$ is finite for all $f$.  A discrete time Fourier transform can also be assigned to sequences that are only square summable and not necessarily absolutely summable.  In this case one interprets the sum in~\eqref{eq:disctransintro} as
+and so the discrete Fourier transform $\calD c(f)$ is finite for all $f$.  A discrete-time Fourier transform can also be assigned to sequences that are only square summable and not necessarily absolutely summable.  In this case one interprets the sum in~\eqref{eq:disctransintro} as
 \[
 \hat{c}(f) = \calD c(f) = \lim_{N \to \infty} \sum_{n = -N}^N c_n e^{-j 2\pi n f}.
 \]
@@ -1226,22 +1226,22 @@ This is analogous to how the Fourier transform of a square integrable signal was
     \vtick{-0.5} node[pos=0.5,below] {$-\tfrac{1}{2}$};
   \end{scope}
 \end{tikzpicture} 
-\caption{The sequences $\delta$ and $\rect(n/2)$ and their discrete time Fourier transforms (top and middle). The sequence $2^{-n} u_n$ and the magnitude of its discrete time Fourier transform $4/(5-4\cos(2\pi f))$ (bottom).  The discrete time Fourier transforms are periodic signals with period 1.} \label{fig:discretetimefouriertransexamples}
+\caption{The sequences $\delta$ and $\rect(n/2)$ and their discrete-time Fourier transforms (top and middle). The sequence $2^{-n} u_n$ and the magnitude of its discrete-time Fourier transform $4/(5-4\cos(2\pi f))$ (bottom).  The discrete-time Fourier transforms are periodic signals with period 1.} \label{fig:discretetimefouriertransexamples}
 \end{figure}
 }
 
-Equation~\eqref{eq:ftanddftrelationship} relates the Fourier transform of the bandlimited signal $x$ to the discrete time Fourier transform of its sequence of samples $c$.  The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
+Equation~\eqref{eq:ftanddftrelationship} relates the Fourier transform of the bandlimited signal $x$ to the discrete-time Fourier transform of its sequence of samples $c$.  The sequence of samples $c_n = x(nP)$ can be recovered by evaluating the inverse Fourier transform
 \begin{align*}
 c_n = x(nP) &= \calF^{-1}\hat{x}(nP) \\
 &= \int_{-\infty}^\infty P \rect(Pf) \calD c(Pf) e^{j2\pi f nP} df \\
 &= \int_{-\infty}^{\infty} \rect(\gamma) \hat{c}(\gamma) e^{j2\pi \gamma n } d\gamma \qquad \text{(change variable $\gamma = fP$)} \\
 &= \int_{-1/2}^{1/2} \hat{c}(\gamma) e^{j 2\pi \gamma n } d\gamma.
 \end{align*}
-We obtain the following relationship between the square integrable sequence $c$ and its periodic discrete time Fourier transform $\hat{c} = \calD c$,
+We obtain the following relationship between the square integrable sequence $c$ and its periodic discrete-time Fourier transform $\hat{c} = \calD c$,
 \[
 c_n = \int_{-1/2}^{1/2} \hat{c}(f) e^{j 2\pi f n } df.
 \]
-The right hand side of this expression is called the~\term{inverse discrete time Fourier transform}.  %The inverse discrete Fourier transform is a sequence, that is, a function from $\ints$ to $\complex$.  
+The right hand side of this expression is called the~\term{inverse discrete-time Fourier transform}.  %The inverse discrete Fourier transform is a sequence, that is, a function from $\ints$ to $\complex$.  
 The element $c_{-n}$ is also known as the $n$th~\term{Fourier coefficient} of the periodic function $\hat{c}$.
 
 % %Suppose now that the Fourier transform $\hat{x}$ is absolutely integrable.  
@@ -1253,7 +1253,7 @@ Because $\hat{c}(f)$ has period $1$ and because the rectangle function $\rect(f)
 \begin{equation}\label{eq:dftsignalperiodicsumP}
 \hat{c}(f) = \calD c(f) = F \sum_{m \in \ints} \hat{x}(Ff + Fm) \qquad \text{a.e.}
 \end{equation}
-The right hand side is called a \term{periodic summation} of $\hat{x}$.  Examples of periodic summations are plotted in Figure~\ref{fig:periodisedfunctions}.  The relationship~\eqref{eq:dftsignalperiodicsumP} provides a convenient means of determining the discrete time Fourier transform of a sequence by considering it as the samples of a signal $x$ for which the Fourier transform is already known.  For example, consider the sequence $c_n = \sinc(n/3)$ given by sampling the $\sinc$ function at rate $F = 3$.  Computing the discrete time Fourier transform of $c$ directly using~\eqref{eq:disctransintro} is not straightforward.  However, we know that $\calF\sinc(f) = \rect(f)$ and so~\eqref{eq:dftsignalperiodicsumP} gives $\hat{c}(f) = 3 \sum_{m \in \ints} \rect(3f + 3m)$.  The sequence $\sinc(n/3)$ and its discrete time Fourier transform are plotted in Figure~\ref{fig:sincsampleddft}.  We will find the relationship~\eqref{eq:dftsignalperiodicsumP} particularly convient for the design of digital filters in Section~\ref{sec:finite-impulse-resp}. 
+The right hand side is called a \term{periodic summation} of $\hat{x}$.  Examples of periodic summations are plotted in Figure~\ref{fig:periodisedfunctions}.  The relationship~\eqref{eq:dftsignalperiodicsumP} provides a convenient means of determining the discrete-time Fourier transform of a sequence by considering it as the samples of a signal $x$ for which the Fourier transform is already known.  For example, consider the sequence $c_n = \sinc(n/3)$ given by sampling the $\sinc$ function at rate $F = 3$.  Computing the discrete-time Fourier transform of $c$ directly using~\eqref{eq:disctransintro} is not straightforward.  However, we know that $\calF\sinc(f) = \rect(f)$ and so~\eqref{eq:dftsignalperiodicsumP} gives $\hat{c}(f) = 3 \sum_{m \in \ints} \rect(3f + 3m)$.  The sequence $\sinc(n/3)$ and its discrete-time Fourier transform are plotted in Figure~\ref{fig:sincsampleddft}.  We will find the relationship~\eqref{eq:dftsignalperiodicsumP} particularly convient for the design of digital filters in Section~\ref{sec:finite-impulse-resp}. 
 
 {
   \def\PI{3.1415926}
@@ -1298,7 +1298,7 @@ The right hand side is called a \term{periodic summation} of $\hat{x}$.  Example
 %      \vtick{-2} node[pos=0.5,below] {$-2F$};
     \end{scope}
   \end{tikzpicture} 
-    \caption{The sequence $\sinc(n/3)$ and its discrete time Fourier transform $3 \sum_{m\in\ints}\rect(3f+3m)$.} \label{fig:sincsampleddft}
+    \caption{The sequence $\sinc(n/3)$ and its discrete-time Fourier transform $3 \sum_{m\in\ints}\rect(3f+3m)$.} \label{fig:sincsampleddft}
   \end{figure}
 }
 
@@ -1308,7 +1308,7 @@ P \hat{c}(Pf) = \sum_{m \in \ints} \hat{x}(f + Fm) \qquad \text{a.e.}
 \]
 In the case that $x$ is bandlimited with bandwidth $b < F/2$ the Fourier transform $\hat{x}$ can be recovered by multiplying both sides of this equation by the rectangle function $\rect(Pf)$. Equation~\eqref{eq:ftanddftrelationship} is reobtained in this way.  This effect can be seen in the top plot in Figure~\ref{eq:ftanddftrelationship} whereby multiplication of the periodic summation on the right by $\rect(f)$ recovers the rectangular pulse centered and the origin.  Recovery of $\hat{x}$ in this way is not possible if $x$ has bandwidth larger than $F/2$.  Consider, for example, the middle and bottom plots in Figure~\ref{fig:periodisedfunctions} where multiplication of the periodic summation on the right by $\rect(f)$ would not recover the original signals on the left.  
 
-While the relationship~\eqref{eq:ftanddftrelationship} requires $x$ to be bandlimited with bandwidth $b < F/2$,  the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ at period $P$.  To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a well defined signal.  This will be the case if $\hat{x}$ is absolutely integrable (Exercise~\ref{exer:absintperiodsumexists}).  In this case, applying the inverse discrete time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
+While the relationship~\eqref{eq:ftanddftrelationship} requires $x$ to be bandlimited with bandwidth $b < F/2$,  the relationship~\eqref{eq:dftsignalperiodicsumP} between the discrete-time Fourier transform $\hat{c}$ and the periodic summation of $\hat{x}$ can still hold even when $x$ is not bandlimited and, in this case, the sequence $c$ does still correspond with samples of the signal $x$ at period $P$.  To see this, care must first be taken to ensure that the periodic summation of $\hat{x}$ is a well defined signal.  This will be the case if $\hat{x}$ is absolutely integrable (Exercise~\ref{exer:absintperiodsumexists}).  In this case, applying the inverse discrete-time Fourier transform to both sides of~\eqref{eq:dftsignalperiodicsumP} gives
 \[
 c_n = \int_{-1/2}^{1/2} F \sum_{m \in \ints} \hat{x}(Ff + Fm)  e^{j 2\pi f n } df.
 \]
@@ -1324,13 +1324,13 @@ The term $e^{-j 2\pi m n} = 1$ because both $m$ and $n$ are integers and the sum
 \[
 c_n = \int_{-\infty}^{\infty} \hat{x}(\gamma)  e^{j 2\pi \gamma n/F} d\gamma = \calF^{-1} \hat{x}(n/F) = x(Pn)
 \]
-where the integral is identified as the inverse Fourier transform of $\hat{x}$~\eqref{eq:inversefouriertransform}.  We have found that the sequence $c$ with discrete time Fourier transform $F \sum_{n\in\ints} \hat{x}(Ff + Fm)$ is precisely the samples of the signal $x$ at period $P = \tfrac{1}{F}$.  This does not require that $x$ be bandlimited.  
+where the integral is identified as the inverse Fourier transform of $\hat{x}$~\eqref{eq:inversefouriertransform}.  We have found that the sequence $c$ with discrete-time Fourier transform $F \sum_{n\in\ints} \hat{x}(Ff + Fm)$ is precisely the samples of the signal $x$ at period $P = \tfrac{1}{F}$.  This does not require that $x$ be bandlimited.  
 
-The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform $\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)$ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples $c_n = x(nP)$ and corresponding discrete time Fourier transform $\hat{c}$ are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is referred to as \term{aliasing}.
+The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will not be equal to $x$ if $x$ has bandwidth $b > F/2$.  The reconstructed signal will have Fourier transform $\rect(Pf) \sum_{m \in \ints} \hat{x}(f + mF) = P \hat{c}(Pf)$ and this will only be equal to $\hat{x}$ in the case that $x$ has bandwidth $b < F/2$.  Figure~\ref{fig:aliasingexp} shows the affect of reconstructing the signal $x(t) = e^{-\pi F^2 f^2/2}$ from samples taken at rate $F = \tfrac{1}{P}$.  The Fourier transform of $x$ can be shown to be $\hat{x}(f) = \sqrt{2} P e^{-2 \pi P^2 f^2}$.  This signal is not bandlimited.  The samples $c_n = x(nP)$ and corresponding discrete-time Fourier transform $\hat{c}$ are shown in the middle plot.  Observe that the translates of the Fourier transform $\hat{x}$ overlap the translate at the origin causing the Fourier transform of the reconstructed signal (bottom of Figure~\ref{fig:aliasingexp}) to differ from that of the original signal.  This phenomenon is referred to as \term{aliasing}.
 
 
 
-%Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete time Fourier transform is
+%Denote by $d$ the sequence with elements $d_n = \sinc(n/4)$ given by sampling the $\sinc$ function with period $P = \tfrac{1}{4} = \tfrac{1}{F}$.  The discrete-time Fourier transform is
 % \[
 % \calD d(f) = \sum_{n \in \ints} \delta_n e^{-j 2\pi n f}.
 % \]
@@ -1564,7 +1564,7 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
     \end{scope}
   \end{tikzpicture} 
 }
-\caption{Top: the signal $x(t) = e^{-\pi F^2 t^2/2}$ and its Fourier transform $\hat{x}(f) = \sqrt{2}Pe^{-2\pi P^2 t^2}$.  Middle: the sequence of samples $c_n = x(nP)$ and discrete time Fourier transform $\hat{c}$ related to the periodic summation of $\hat{x}$.  Bottom: The bandlimited signal reconstructed from the sequence $c$ and its Fourier transform.  Observe that the reconstructed bandlimited signal is not equal to the original signal $x$.  The translates of the Fourier transform $\hat{x}$ overlap the translate at the origin, a phenomenon referred to as \term{aliasing}.} \label{fig:aliasingexp}
+\caption{Top: the signal $x(t) = e^{-\pi F^2 t^2/2}$ and its Fourier transform $\hat{x}(f) = \sqrt{2}Pe^{-2\pi P^2 t^2}$.  Middle: the sequence of samples $c_n = x(nP)$ and discrete-time Fourier transform $\hat{c}$ related to the periodic summation of $\hat{x}$.  Bottom: The bandlimited signal reconstructed from the sequence $c$ and its Fourier transform.  Observe that the reconstructed bandlimited signal is not equal to the original signal $x$.  The translates of the Fourier transform $\hat{x}$ overlap the translate at the origin, a phenomenon referred to as \term{aliasing}.} \label{fig:aliasingexp}
 \end{figure}
 
 
@@ -1574,7 +1574,7 @@ The reconstructed bandlimited signal $\sum_{n \in \ints} c_n \sinc(Ft - n)$ will
 
 In Test~\ref{test:ftlecturerec} the Fourier transform of a \SI{20}{\second} audio signal consisting of $N=440998$ consecutive samples was evaluated.  This scenario where only a finite number, say $N$, of consecutive samples of a signal is available is common in practice.  Let $c$ be a sequence with elements $c_0,c_1,\dots, c_{N-1}$ equal to the $N$ samples.  A convenient assumption is that the remaining samples are equal to zero, that is, $c_n = 0$ when $n < 0$ or $n \geq N$.  This assumption was made in Test~\ref{test:ftlecturerec}.
 
-With this assumption the discrete time Fourier transform of the sequence $c$ is given by the finite sum
+With this assumption the discrete-time Fourier transform of the sequence $c$ is given by the finite sum
 \[
 \hat{c}(f) = \calD c(f) = \sum_{n \in \ints} c_n e^{-j 2\pi n f}  = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n f}.
 \]
@@ -1582,11 +1582,11 @@ The values of $\hat{c}(f)$ for $f$ a multiple of $\tfrac{1}{N}$ have a number of
 \begin{equation}\label{eq:dftdefn}
 (\calD_N c)_k = \calD c\big(\tfrac{k}{N}\big) = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n k/N} \qquad k \in \ints. 
 \end{equation}
-This is called the~\term{discrete Fourier transform} (as opposed to the discrete \emph{time} Fourier transform).  The discrete Fourier transform $\calD_N c$ is a sequence with elements given by the discrete time Fourier transform $\calD c$ evaluated at multiples of $\tfrac{1}{N}$.  As usual we include write $\calD_N c_k$ to denote the value of $\calD_N c$ at $k \in \ints$.  We will regularly include brackets and use $(\calD_N c)_k$ to denote this value.  The positive integer $N$ is called the~\term{length} of the transform.  In practical applications $N$ often corresponds with the number of samples of a signal that have been obtained.
+This is called the~\term{discrete Fourier transform} (as opposed to the discrete \emph{time} Fourier transform).  The discrete Fourier transform $\calD_N c$ is a sequence with elements given by the discrete-time Fourier transform $\calD c$ evaluated at multiples of $\tfrac{1}{N}$.  As usual we include write $\calD_N c_k$ to denote the value of $\calD_N c$ at $k \in \ints$.  We will regularly include brackets and use $(\calD_N c)_k$ to denote this value.  The positive integer $N$ is called the~\term{length} of the transform.  In practical applications $N$ often corresponds with the number of samples of a signal that have been obtained.
 
 %\renewcommand{\mod}{\operatorname{mod}}
 
-The discrete Fourier transform is a periodic sequence with period $N$ as a result of the discrete time Fourier transform $\hat{c} = \calD c$ having period $1$, that is,
+The discrete Fourier transform is a periodic sequence with period $N$ as a result of the discrete-time Fourier transform $\hat{c} = \calD c$ having period $1$, that is,
 \[
 (\calD_N c)_k = \hat{c}\left( \frac{k}{N} \right) = \hat{c}\left( \frac{k + mN}{N} \right) = (\calD_N c)_{k+mN} \;\;\; \text{for all $k,m\in\ints$}.
 \]
@@ -1665,7 +1665,7 @@ the smallest power of $2$ greater than $N$.  We can use the fast Fourier transfo
 \[
 (\calD_L c)_k = \hat{c}\left(\frac{k}{L}\right) = \sum_{n = 0}^{L-1} c_n e^{-j 2\pi n k/L} = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n k/L} \qquad k \in \ints.
 \]
-The second sum follows from our assumption that $c_n = 0$ for $n \geq N$.  The elements of $\calD_L c$ are the values of the discrete time Fourier transform $\hat{c}$ at multiples of $\tfrac{1}{L}$ rather than $\tfrac{1}{N}$.  This fact is often of no significant consequence and can even be of benefit for some applications~\citep{Quinn2001,Quinn2008maximizing_the_periodogram}.  The original samples $c_0, \dots, c_{N-1}$ can still be recovered by application of the inverse transform of length $L$, that is, 
+The second sum follows from our assumption that $c_n = 0$ for $n \geq N$.  The elements of $\calD_L c$ are the values of the discrete-time Fourier transform $\hat{c}$ at multiples of $\tfrac{1}{L}$ rather than $\tfrac{1}{N}$.  This fact is often of no significant consequence and can even be of benefit for some applications~\citep{Quinn2001,Quinn2008maximizing_the_periodogram}.  The original samples $c_0, \dots, c_{N-1}$ can still be recovered by application of the inverse transform of length $L$, that is, 
 \[
 c_n = (\calD_L^{-1} \calD_L c)_n \qquad  n = 0, \dots, N-1.
 \]  
@@ -1725,7 +1725,7 @@ That is, $y$ is the signal with Fourier transform equal to $\hat{x}$ except for 
 \[
 y(t) = \sum_{n \in \ints} b_n \sinc(Ft - n)
 \]
-where $b$ is the sequence with elements $b_n = y(nP)$ given by samples of $y$ at sample period $P$.  Now $\hat{y} = P \rect(Pf) \hat{b}(Pf)$ where $\hat{b}=\calD b$ is the discrete time Fourier transform of $b$.  For $f$ inside the interval $[-\tfrac{1}{2},\tfrac{1}{2})$, the discrete time Fourier transforms $\hat{c}$ and $\hat{b}$ are related by
+where $b$ is the sequence with elements $b_n = y(nP)$ given by samples of $y$ at sample period $P$.  Now $\hat{y} = P \rect(Pf) \hat{b}(Pf)$ where $\hat{b}=\calD b$ is the discrete-time Fourier transform of $b$.  For $f$ inside the interval $[-\tfrac{1}{2},\tfrac{1}{2})$, the discrete-time Fourier transforms $\hat{c}$ and $\hat{b}$ are related by
 \[
 \hat{b}(f) = \begin{cases}
 0 & \abs{f} > 7200P \\

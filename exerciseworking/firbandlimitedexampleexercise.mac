@@ -1,0 +1,13 @@
+/*plot2d( [ cos(3*%pi*t-3*%pi), cos(3*%pi*t+3*%pi) ], [t, -2, 2]);*/
+
+rect(t):= if abs(t) >0.5 then 0 else 1;
+Fx(f):= 4*rect(f)/3 - cos(2*%pi*f)*(rect(2*f - 3) + rect(2*f+3));
+
+
+realx(t):=quad_qag( Fx(f)*exp(2*%i*%pi*f*t), f, -2,2,1);
+
+print( x(0) );
+print( x(1) );
+
+/*plot2d( Fx(f), [f, -2, 2]);*/
+/*plot2d( x(t), [t, -5, 5]);*/
