@@ -53,7 +53,7 @@ a(t) = \tfrac{1}{2} \sinc\big(\tfrac{t}{2}\big).
 \]
 From the modulation property of the Fourier transform
 \[
-\calF\big( 2 \cos(3\pi t)  a(t) \big) = \hat{a}(f - \tfrac{3}{2}) + \hat{a}(f + \tfrac{3}{2}) =  \rect(2f - 3) + \rect(2f +3)
+\calF\big( \cos(3\pi t)  a(t) \big) = \tfrac{1}{2} \hat{a}(f - \tfrac{3}{2}) + \tfrac{1}{2} \hat{a}(f + \tfrac{3}{2}) =  \tfrac{1}{2} \rect(2f - 3) + \tfrac{1}{2} \rect(2f +3)
 \]
 Let $b(t) = \cos(3\pi t)  a(t)$ so that $\hat{b}(f) = \tfrac{1}{2}\rect(2f - 3) + \tfrac{1}{2} \rect(2f +3)$.  Now, put 
 \begin{align*}
@@ -72,13 +72,13 @@ c(t) = -\cos(3\pi t)  \big( a(t+1) +  a(t-1) \big).
 From the time shift property of the Fourier transform
 \begin{align*}
 \hat{c}(f) &= \calF( T_{-1} b + T_{1} b ) \\
-&= e^{2\pi f t} \hat{b}(f) + e^{-2\pi f t} \hat{b}(f) \\
+&= e^{2\pi f j } \hat{b}(f) + e^{-2\pi f j } \hat{b}(f) \\
 &= 2\cos(2\pi f) \hat{b}(f) \\
 &= \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big).
 \end{align*}
 It remains to observe that
 \[
-\hat{x}(f) = \tfrac{4}{3}\rect(f) + \hat{c}(f)
+\hat{x}(f) = \tfrac{4}{3}\rect(f) - \hat{c}(f)
 \]
 and so
 \begin{align*}
