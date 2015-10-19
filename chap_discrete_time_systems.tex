@@ -1,16 +1,32 @@
 We have so far studied linear shift-invariant systems and inparticular those systems described by linear differential equations with constant coefficients.  Such systems are useful for modelling electrical circuits, mechanical machines, electro-mechanical devices, and many other real world devices.  %One particular linear time invariant system has so far been absent. 
 The time-shifter $T_\tau$ with non zero time shift $\tau \neq 0$ has so far been absent.  %These systems describe pure delays or advances in time of a signal.  %It turns out to be difficult to construct systems, for example, an electrical circuit, that accurately model a time shifter $T_\tau, \tau \neq 0$.
-
 We now consider linear shift-invariant systems constructed from linear combinations of time-shifters of the form $T_{Pm}$ where $m \in \ints$ and $P$ is a positive real number called the~\term{sample period} or simply the \term{period}.  That is, we consider systems of the form
 \begin{equation}\label{eq:discretimesysdefn}
 H x = \sum_{m \in \ints} h_m T_{ P m} x
 \end{equation}
-where $h \in \ints \to \complex$ is a complex valued sequence.  Such systems are called \term{discrete-time systems}.  It is common in the literature that the term discrete-time system refers to a mapping from a complex valued sequence $x$ to another complex valued sequence $y$ of the form
-\[
-y_n = \sum_{m \in \ints} h_m x_{n-m}.
-\]
-We can recover this definition from~\eqref{eq:discretimesysdefn} by setting the period $P = 1$ and identifying $y_n$ with $Hx(n)$ and $x_n$ with $x(n)$.  %In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete-time system.
-We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete-time systems that is closely linked with previous chapters where what are often called \term{continuous-time} systems have been studied.  Complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This definition of discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations further in Section~\ref{sec:difference-equations}.
+where $h \in \ints \to \complex$ is a complex valued sequence.  Such systems are called \term{discrete-time systems}.  
+
+It is common in the literature that the term discrete-time system refers to a mapping from a complex valued sequence $c$ to another complex valued sequence $d$ of the form
+\begin{equation}\label{eq:discretimesysdefnusual}
+d_n = \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n
+\end{equation}
+The sum is called the \term{discrete convolution} of sequences $h$ and $c$.  The notation $h * c$ is reused to denote discrete convolution so that $d = h * c$.
+We can recover this definition from~\eqref{eq:discretimesysdefn} by identifying $d_n$ with $Hx(nP)$ and $c_n$ with $x(nP)$.  %In this way,~\eqref{eq:discretimesysdefn} is a more general definition of discrete-time system.
+We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study of discrete-time systems that is closely linked with previous chapters where what are often called \term{continuous-time} systems have been studied.  Complex exponetial signals $e^{st}$ remain the eigenfunctions and the notions of the transfer function and spectrum carry through unchanged.  This definition of discrete-time system~\eqref{eq:discretimesysdefn} is connected with what \citet[Sec.~9.5]{Zemanian_dist_theory_1965} calls the continuous variable case of a linear \term{difference equation} with constant coefficients.  We will study difference equations in Section~\ref{sec:difference-equations}.
+
+It is often the case that we have access to a sequence of samples $c_n = x(nP)$ at sample rate $F = \tfrac{1}{P}$ of a signal $x$ of interest.  For example, in Tests~\ref{test:voltagedividertest1},~\ref{test:opampinvertingamplifiertest1},~\ref{test:activeRCtest}, and \ref{test:activeRCspectrumtest} we obtained samples of a voltage signal using a computer soundcard.  In Tests~\ref{test:ftlecturerec} and \ref{test:butterworthfilteredlecturerec} we operated on the samples from an audio recording that were stored on a computer harddisk.  %If it happens that $x$ is bandlimited with bandwidth $b < F/2$ then $x$ can be recovered from the sequence of samples $c$ by sinc interpolation~\eqref{eq:sincinterformula}.  
+A convenient property of discrete-time systems is that can operate directly on sampled signals.  To see this, let $H$ be a discrete-time system with period $P$ defined as in~\eqref{eq:discretimesysdefn} and let $y = Hx$ be the response of $H$ to $x$.  It is often the case that we are only interested in the samples of the response $d_n = y(nP) = Hx(nP)$ at sample rate $F = \tfrac{1}{P}$.  For example, in Test~\ref{test:firfilteredlecturerec} we will apply a discrete-time system to a sampled audio recording and the samples of the response will be written to an audio file in \texttt{wav} format.  If only the samples $d_n = y(nP)$ are required then,
+\begin{align*}
+d_n &= y(nP) \\
+&= Hx(nP) \\
+&= \sum_{m \in \ints} h_m T_{mP}x(nP) \\
+&= \sum_{m \in \ints} h_m x(nP - mP) \\
+&= \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n
+\end{align*}
+We see that computing $d_n$ requires only the samples $c_n = x(nP)$ of the input signal $x$.  The values $x(t)$ at times $t$ not a multiple of the sample period are not required.  This property makes discrete-time systems particularly convenient for implementation within a computer.  Computers are good a storing sequences of numbers and computing sums and products.  Observe that by considering only the samples of the response we have recovered the common definition~\eqref{eq:discretimesysdefnusual} of a discrete-time system.
+
+%We see that $d = h * c$, that is, the sequence $d$ of samples of the response $y = Hx$ is the discrete convolution of the impulse response $h$ and the sequence $c$ of sample of the input signal $x$.  For this reason, we will find that the application of discrete-time systems by computer will often amount to the computation of discrete convolutions.  If $y$ happens to be a bandlimited signal with bandwidth $b < F/2$ then $y$ can be recovered from $d$ by sinc interpolation.
+
 
 Discrete-time systems are not regular because the time-shifter is not regular.  However, we will find that the sequence $h$ plays a role analogous to that of the impulse response of a regular system.  For this reason $h$ is called the~\term{discrete impulse response} of $H$.
 
@@ -66,7 +82,7 @@ where $h$ is the sequence with elements
 \[
 h_n = \sum_{m \in \ints} f_m g_{n-m} = (f * g)_n .
 \]
-This is called the \term{discrete convolution} of sequences $f$ and $g$.  The notation $f * g$ is reused to denote discrete convolution so that $h = f * g$.  We have found that the system $H$ constructed by composition of the discrete-time systems $F$ and $G$ is a discrete-time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_P f\,g$ unless otherwise stated.  
+We have found that the system $H$ constructed by composition of the discrete-time systems $F$ and $G$ is a discrete-time system.  The discrete impulse response of $H$ is the discrete convolution of the discrete impulse responses of $F$ and $G$.  The domain of $H$ is taken to be $\dom_P f\,g$ unless otherwise stated.  
 
 Discrete convolution has properties analogous to that of the convolution of signals described in Section~\ref{sec:prop-conv}.  For example, discrete convolution is commutative and associative under approriate assumptions (Exercise~\ref{excer:discrconvassociative}).
 % \[
@@ -102,19 +118,6 @@ In what follows we will often use the term convolution and impulse response rath
 % \]
 % where $a$ and $b$ are real or complex constants.  
 
-It is often the case that we have access to a sequence of samples $c_n = x(nP)$ at rate $F = \tfrac{1}{P}$ of a signal $x$ of interest.  For example, in Test~\ref{test:voltagedividertest1} (and many of the other tests) we obtained samples of a voltage signal using a computer soundcard.  In Tests~\ref{test:ftlecturerec} and \ref{test:butterworthfilteredlecturerec} we operated on the samples from an audio recording that were stored on a computer harddisk.  If it happens that $x$ is bandlimited with bandwidth $b < F/2$ then $x$ can be recovered from the sequence of samples $c$ by sinc interpolation~\eqref{eq:sincinterformula}
- \[
-  x(t) = \sum_{n \in \ints} c_n \sinc(F t - n).
-  \]
-
-Suppose that $H$ is a discrete-time system with impulse response $h$ and sample period $P$ and suppose that the signal $x \in \dom_P h$.  Consider the response $y = Hx$.  If all we have is the sequence of samples $c_n = x(nP)$ then it is not apparent how the response $y$ is to be computed.  However, it is often the case that we are only interested in the samples of the response $d_n = y(nP)$ and these can be computed.  To see this write,
-\begin{align*}
-d_n &= y(nP) = Hx(nP) \\
-&= \sum_{m \in \ints} h_m T_{mP}x(nP) \\
-&= \sum_{m \in \ints} h_m x(nP - mP) \\
-&= \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n.
-\end{align*}
-We see that $d = h * c$, that is, the sequence $d$ of samples of the response $y = Hx$ is the discrete convolution of the impulse response $h$ and the sequence $c$ of sample of the input signal $x$.  For this reason, we will find that the application of discrete time systems by computer will often amount to the computation of discrete convolutions.  If $y$ happens to be a bandlimited signal with bandwidth $b < F/2$ then $y$ can be recovered from $d$ by sinc interpolation.
 
 % 
 % Discrete-time systems have particularly convenient properties when operating upon bandlimited signals.  Let $x$ be a signal with bandwidth $b$ and let $c_n = x(nP)$ be the sequence of samples of $x$ at rate $F = \tfrac{1}{P} > 2b$.  Recall from Section~\ref{sec:bandlimited-signals} that the bandlimited signal $x$ can be recovered from the sequence of samples $c$ by sinc interpolation
@@ -217,7 +220,7 @@ Equivalently, the domain of the transfer function $\lambda H$ contains the imagi
 \]
 Observe that the spectrum $\Lambda H$ is a periodic signal with period equal to the reciprocal of the sample period $F = \frac{1}{P}$ called the \term{sample rate}.  
 
-The spectrum is related to the discrete time Fourier transform~\eqref{eq:disctransintro} of $h$ by
+The spectrum is related to the discrete-time Fourier transform~\eqref{eq:disctransintro} of $h$ by
 \[
 \calD h(f) = \Lambda H(\tfrac{f}{P}) =\sum_{n \in \ints} h_n e^{-2\pi j f n}.
 \]
@@ -234,8 +237,8 @@ The spectrum of $H$ is
 \[
 \Lambda H(f) = \calD h(Pf) = e^{-2\pi j P f} + 1 + e^{2\pi j P f} = 1 + 2\cos(2\pi P f).
 \]
-The sequence $\rect(n/2)$ and its discrete time Fourier transform are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.
-% Now suppose that $H$ has discrete impulse response $h_n = \sinc(n/4)$ given by sampling the sinc function with period $\tfrac{1}{4}$.  The Fourier transform of $\sinc(t/4)$ is $4 \calF\sinc(4f) = 4\rect(4f)$ by the time scaling property~\eqref{eq:timescalingpropertryfouriertrans}.  The discrete time Fourier transform of $h$ is given by periodically summing this Fourier transform~\eqref{eq:dftsignalperiodicsumP}, that is,
+The sequence $\rect(n/2)$ and its discrete-time Fourier transform are plotted in Figure~\ref{fig:discretetimefouriertransexamples}.
+% Now suppose that $H$ has discrete impulse response $h_n = \sinc(n/4)$ given by sampling the sinc function with period $\tfrac{1}{4}$.  The Fourier transform of $\sinc(t/4)$ is $4 \calF\sinc(4f) = 4\rect(4f)$ by the time scaling property~\eqref{eq:timescalingpropertryfouriertrans}.  The discrete-time Fourier transform of $h$ is given by periodically summing this Fourier transform~\eqref{eq:dftsignalperiodicsumP}, that is,
 % \[
 % \calD h(f) = 4 \sum_{m\in\ints} \rect(4f - m).
 % \]
@@ -261,7 +264,7 @@ plotted by the dashed line in Figures~\ref{fig:bandlimiteddiscretetimefiltering}
 %This is seen in Figure~\ref{fig:bandlimiteddiscretetimefiltering}.  
 The impulse response of this ideal lowpass filter $L_c$ is $2c\sin(2ct)$.
 
-Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploiting this property we will find that the same lowpass filtering effect can be achieved with a discrete-time system.  Denote by $L_{c}^P$ the discrete-time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$.  That is, $h$ is given by multiplying the impulse response of the ideal low pass filter $L_c$ by $P$ and then sampling with period $P$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
+Because the signal $x$ has bandwidth $b = \tfrac{7}{4}$ the spectrum of the filter for frequencies $\abs{f} > \tfrac{7}{4}$ is not important.  By exploiting this property we will find that the same lowpass filtering effect can be achieved with a discrete-time system.  Denote by $L_{c}^P$ the discrete-time system with sample period $P = \tfrac{1}{F}$ and discrete impulse response $h_n = 2cP \sinc(2c Pn)$.  That is, $h$ is given by multiplying the impulse response of the ideal low pass filter $L_c$ by $P$ and then sampling with period $P$.  From~\eqref{eq:dftsignalperiodicsumP}, the discrete-time Fourier transform of $h$ is given by periodic summation of $\rect(Ff/2c)$, that is,
 \[
 \hat{h}(f) = \calD h(f) = \sum_{m \in \ints} \rect\left( \frac{Ff + Fm}{2c}\right).
 \] 
@@ -1159,19 +1162,19 @@ The delta sequence $\delta$ has z-transform
 \[
 \calZ(\delta) = \sum_{n \in \ints} \delta_n z^{-n} = 1.
 \]
-The region of convergence is the entire complex plane with the origin removed, that is, $\roc_z \delta = \complex \\ 0$.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  Because $\sum_{n \in \ints} \abs{z}^{-n}$ does not converge for any $z \in \complex$ the region of convergence $\roc_z \onebf$ is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
+The region of convergence is the entire complex plane with the origin removed, that is, $\roc_z \delta = \complex \backslash 0$.  Finally, consider the sequence $\onebf$ that has every element equal to $1$.  Because $\sum_{n \in \ints} \abs{z}^{-n}$ does not converge for any $z \in \complex$ the region of convergence $\roc_z \onebf$ is the empty set.  The sequence $\onebf$ is said not to have a z-transform.
 
 {
 \def\minn{-4}
 \def\maxn{4}
-\def\ymax{4}
+\def\ymax{2.5}
 \def\ymin{-0.5}
 \def\scalex{0.6}
 \def\step(#1){(#1>=0)} %step function
 \begin{figure}[tp]
 \centering
 \begin{tikzpicture}
-  \def\scaley{3}
+  \def\scaley{2}
   \begin{scope}[xscale=\scalex,yscale=\scaley]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
@@ -1185,7 +1188,7 @@ The region of convergence is the entire complex plane with the origin removed, t
   \htick{1*\scaley} node[pos=0.5,left] {$1$};
 \end{tikzpicture} \;\;
 \begin{tikzpicture}
-  \def\scaley{3}
+  \def\scaley{2}
   \begin{scope}[xscale=\scalex,yscale=\scaley]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
@@ -1199,7 +1202,7 @@ The region of convergence is the entire complex plane with the origin removed, t
 \end{tikzpicture}
  \\ \vspace{0.5cm}
 \begin{tikzpicture}
-  \def\scaley{3}
+  \def\scaley{2}
   \begin{scope}[xscale=\scalex,yscale=\scaley]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
@@ -1213,7 +1216,7 @@ The region of convergence is the entire complex plane with the origin removed, t
   \htick{1*\scaley} node[pos=0.5,right] {$1$};
 \end{tikzpicture} \;\;
 \begin{tikzpicture}
-   \def\scaley{1.5}
+   \def\scaley{1}
   \begin{scope}[xscale=\scalex,yscale=\scaley]
     %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
     \draw[->] (\minn-0.5,0) -- (\maxn+0.5,0) node[above] {$n$};
@@ -1348,7 +1351,7 @@ from which it follow that
 That is, the z-transform of a convolution of sequences is the multiplication of the z-transforms of those sequences.  The region of convergence of $\calZ(f*g)$ is the intersection of the regions of convergence of $\calZ f$ and $\calZ g$.  This is called the \term{convolution property} of the z-transform.
 %BLERG needs region of convergence done better.
 
-Let $H$ be a stable discrete-time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  We have the following relationships between the transfer function, the spectrum, the discrete time Fourier transform, and the z-transform of a stable discrete-time system $H$ and its discrete impulse response $h$,
+Let $H$ be a stable discrete-time system with absolutely summable discrete impulse response $h$.  Because $h$ is absolutely summable we have that $\roc_z h$ contains the complex unit circle, that is, $\roc_z h$ contains all those complex numbers with magnitude equal to one.  We have the following relationships between the transfer function, the spectrum, the discrete-time Fourier transform, and the z-transform of a stable discrete-time system $H$ and its discrete impulse response $h$,
 \[
 \lambda H(j2\pi f) = \Lambda H(f) = \calD h(f) = \calZ h(e^{2\pi j P f}).
 \]
@@ -1587,7 +1590,7 @@ where $h$ is the discrete impulse response of $H$.  The system has two zeros at 
     %\vtick{-\F} node[pos=0.5,below] {$-F$};
     \vtick{\F} node[pos=0.5,above right] {$F$};
   \end{tikzpicture}
-\caption{Magnitude and phase spectrum of the discrete time $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.  This system corresponds with the first order difference equation $c_n = d_n - 2 d_{n-1}$.} \label{fig:spectrumdiscresystem1}
+\caption{Magnitude and phase spectrum of the discrete-time $H$ with discrete implulse response $h_n = a^nu_n$ for $a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.  This system corresponds with the first order difference equation $c_n = d_n - 2 d_{n-1}$.} \label{fig:spectrumdiscresystem1}
 \end{figure}
 
 % \begin{figure}[tp]
@@ -1634,7 +1637,7 @@ where $h$ is the discrete impulse response of $H$.  The system has two zeros at 
 %     %\vtick{-\F} node[pos=0.5,below] {$-F$};
 %     \vtick{\F} node[pos=0.5,above right] {$F$};
 %   \end{tikzpicture}
-% \caption{Magnitude and phase spectrum of the discrete time $H$ for corresponds with the second order difference equation $c_n = d_n - 2 d_{n-1}$$a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.  This system corresponds with the first order difference equation $c_n = d_n - 2 d_{n-1}$.} \label{fig:spectrumdiscresystem2}
+% \caption{Magnitude and phase spectrum of the discrete-time $H$ for corresponds with the second order difference equation $c_n = d_n - 2 d_{n-1}$$a=\tfrac{1}{2}$ and $\tfrac{1}{10}$ and period $P = \tfrac{1}{F}$.  The spectrum is periodic with period $F = \tfrac{1}{P}$.  This system corresponds with the first order difference equation $c_n = d_n - 2 d_{n-1}$.} \label{fig:spectrumdiscresystem2}
 % \end{figure}
 
 
