@@ -16,13 +16,13 @@ We will find that~\eqref{eq:discretimesysdefn} provides a setting for the study 
 
 It is often the case that we have access to a sequence of samples $c_n = x(nP)$ at sample rate $F = \tfrac{1}{P}$ of a signal $x$ of interest.  For example, in Tests~\ref{test:voltagedividertest1},~\ref{test:opampinvertingamplifiertest1},~\ref{test:activeRCtest}, and \ref{test:activeRCspectrumtest} we obtained samples of a voltage signal using a computer soundcard.  In Tests~\ref{test:ftlecturerec} and \ref{test:butterworthfilteredlecturerec} we operated on the samples from an audio recording that were stored on a computer harddisk.  %If it happens that $x$ is bandlimited with bandwidth $b < F/2$ then $x$ can be recovered from the sequence of samples $c$ by sinc interpolation~\eqref{eq:sincinterformula}.  
 A convenient property of discrete-time systems is that can operate directly on sampled signals.  To see this, let $H$ be a discrete-time system with period $P$ defined as in~\eqref{eq:discretimesysdefn} and let $y = Hx$ be the response of $H$ to $x$.  It is often the case that we are only interested in the samples of the response $d_n = y(nP) = Hx(nP)$ at sample rate $F = \tfrac{1}{P}$.  For example, in Test~\ref{test:firfilteredlecturerec} we will apply a discrete-time system to a sampled audio recording and the samples of the response will be written to an audio file in \texttt{wav} format.  If only the samples $d_n = y(nP)$ are required then,
-\begin{align*}
-d_n &= y(nP) \\
-&= Hx(nP) \\
-&= \sum_{m \in \ints} h_m T_{mP}x(nP) \\
-&= \sum_{m \in \ints} h_m x(nP - mP) \\
-&= \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n
-\end{align*}
+\begin{align}
+d_n &= y(nP) \nonumber \\
+&= Hx(nP) \nonumber  \\
+&= \sum_{m \in \ints} h_m T_{mP}x(nP) \nonumber \\
+&= \sum_{m \in \ints} h_m x(nP - mP) \nonumber \\
+&= \sum_{m \in \ints} h_m c_{n-m} = (h * c)_n \label{eq:disctimesyssamplesonly}
+\end{align}
 We see that computing $d_n$ requires only the samples $c_n = x(nP)$ of the input signal $x$.  The values $x(t)$ at times $t$ not a multiple of the sample period are not required.  This property makes discrete-time systems particularly convenient for implementation within a computer.  Computers are good a storing sequences of numbers and computing sums and products.  Observe that by considering only the samples of the response we have recovered the common definition~\eqref{eq:discretimesysdefnusual} of a discrete-time system.
 
 %We see that $d = h * c$, that is, the sequence $d$ of samples of the response $y = Hx$ is the discrete convolution of the impulse response $h$ and the sequence $c$ of sample of the input signal $x$.  For this reason, we will find that the application of discrete-time systems by computer will often amount to the computation of discrete convolutions.  If $y$ happens to be a bandlimited signal with bandwidth $b < F/2$ then $y$ can be recovered from $d$ by sinc interpolation.
@@ -488,9 +488,9 @@ that is, the convolution of the Fourier transform of the window function $\calF 
 This Fourier transforms is plotted in Figure~\ref{fig:windowfunctionsasWincrease} for the rectangular and Blackman windows when the cuttoff $c = 1$ and the width $W=1,3,10$.  The Fourier transform approaches the spectrum of the ideal lowpass filter as the window width $W$ increases.
 
 A \term{low pass finite impulse response filter} with period $P$, cuttoff frequency $c$, and window $w$ is a discrete-time system $L_c^{P,w}$ with period $P$ having impulse response $h_n = 2c P w(nP) \sinc(2c nP)$.  That is, $h$ is given by multiplying the windowed sinc function by $P$ and sampling with period $P$.  Because $w(t)$ is zero outside the interval $(-W/2, W/2)$, it follows that $h_n = 0$ when $n P \notin (-FW/2, FW/2)$ and so only a finite number of elements of $h$ are nonzero.  For this reason, the response of $L_c^{P,w}$ to any input signal $x$ can be computed by the finite sum
-\[
+\begin{equation}\label{eq:firfilterfinitesum}
 L_c^{P,w}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) \qquad \text{where $a = \floor{FW/2}$}
-\]
+\end{equation}
 and $\floor{FW/2}$ denotes the greatest integer less than or equal to $FW/2$.  The number of terms to be summed is $2a + 1$.  This is typically called the number of filter \term{taps}.  The number of non zero terms in the impulse response is at most the number of taps.  
 
 The spectrum of this filter is given by periodic summation of the Fourier transform $\hat{w}(f) * \rect(f/2c)$ of the windowed sinc function, that is,
@@ -1034,65 +1034,72 @@ In the following Test~\ref{test:firfilteredlecturerec} we design a low pass digi
 \begin{test}\label{test:firfilteredlecturerec}
 (\textbf{Finite impulse response filtered lecture recording})
 
-We consider again the \SI{20}{\second} sampled audio signal from Test~\ref{test:ftlecturerec}.  The mono audio recording contains $N = 440998$ samples denote by 
+We consider again the \SI{20}{\second} audio signal from Test~\ref{test:ftlecturerec}.  The mono audio recording contains $N = 440998$ samples denote by $c_0,c_1,\dots,c_{N-1}$ at sample rate $F = \SI{22050}{\hertz}$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  Let $x$ be the bandlimited signal with samples $c_n = x(nP)$, that is,
 \[
-c_0,c_1,\dots,c_{N-1}
-\]
-at sample rate $F = \SI{22050}{\hertz}$.  We put $c_n = 0$ when $n < 0$ or $n \geq N$.  In Test~\ref{test:ftlecturerec} the Fourier transform of the audio signal was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}. The audio recording contains human voice primarily residing at lower frequencies below \SI{5}{\kilo\hertz} and interfering signals occuring at approximately $\pm\SI{8}{\kilo\hertz}$ and between \SI{4900}{\hertz} and \SI{5900}{\hertz}.  The interference is audible in the recording as a high pitched hum.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
+x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n).
+\]  
+In Test~\ref{test:ftlecturerec} the Fourier transform of $x$ was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}.  The audio recording contains human voice primarily residing at lower frequencies below \SI{4}{\kilo\hertz}.  Audible in the recording is a faint high pitched hum.  This hum is represented in the Fourier transform by spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and also by the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude of the Fourier transform is elevated.  In this test, a low pass digital finite impulse response filter will be used to $L_{c}^{P,w}$ remove this hum.
 
-It is convenient to choose period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4800}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{12}{\gamma} = \tfrac{1}{400}$ is used.  This filter has impulse response
+It is convenient to choose the period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4600}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{12}{\gamma} = \tfrac{1}{400}$ is used.  This filter has impulse response
 \[
 h_n = 2 \gamma P w( nP ) \sinc( 2\gamma P n)
 \]
-where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
+where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response satisfies $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
 \[
 a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 28.
 \] 
-This filter has $2a+1 = 57$ taps.  This low pass finite impulse response filter $L_\gamma^{P,w}$ can be implemented by the finite sum
+This filter has $2a+1 = 57$ taps and can be implemented by a finite sum of 56 terms~\eqref{eq:firfilterfinitesum}.  The spectrum of the filter is
 \[
-L_\gamma^{P,w}x(t) = \sum_{m \in \ints} h_m T_{Pm}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) .
+\Lambda L_{\gamma}^{P,w}(f) = \calD h(Pf) = \sum_{n = -a}^a h_n e^{-2\pi j P f n}. 
 \]
+The magnitude spectrum $\abs{\Lambda L_{\gamma}^{P,w}}$ is plotted in Figure~\ref{fig:test:magspecfirlowpass}.
+% \[
+% L_\gamma^{P,w}x(t) = \sum_{m \in \ints} h_m T_{Pm}x(t) = \sum_{m = -a}^a h_m T_{Pm}x(t) .
+% \]
 
-Let 
+Let $y = L_\gamma^{P,w} x$ be the response of the filter to the the audio signal $x$.  We will only have need of the samples of the filter response $d_n = y(nP) = L_\gamma^{P,w} x(nP)$.  From~\eqref{eq:disctimesyssamplesonly} the sequence of samples satisfies is given discrete convolution of the impulse response $h$ and the sequence $c$ of audio samples, that is, 
 \[
-x(t) = \sum_{n \in \ints} c_n \sinc(F t - n)
+d_n = (h*c)_n = \sum_{m \in \ints} h_m c_{n-m} = \sum_{m = -a}^a h_m c_{n-m}.
 \]
-be the bandlimited signal reconstructed from the sequence of samples $c$.  The response of the low pass filter $L_\gamma^{P,w}$ to input $x$ is
-\begin{align*}
-y(t) = L_\gamma^{P,w} x(t) &= \sum_{m = -a}^a h_m T_{Pm} \left( \sum_{n \in \ints} c_n \sinc(F t - n) \right) \\
-&= \sum_{m = -a}^a \sum_{n \in \ints} h_m  c_n \sinc(F t - n - m)  
-\end{align*}
-Putting $k = n+m$ and changing the order of summation we find that
-\begin{equation}\label{eq:discsystembandlimitedsamplesonlysincinterp}
-y(t) = L_\gamma^{P,w} x(t) = \sum_{k \in \ints} \sinc(F t - k) \sum_{m = -a}^a  h_m  c_{k-m} = \sum_{k \in \ints} d_k \sinc(F t - k)
-\end{equation}
-where $d = h * c$ is the sequence with $n$th element
+Observe that computing $d_n$ for any $n$ involves only a finite sum of $2a+1 = 57$ terms because $h_n = 0$ for $n > a$ or $n < -a$.  The samples $d_0, d_1, \dots, d_{N-1}$ are written to the file \texttt{nohum.wav}.  Listening to this file confirms that the high pitched hum is no longer audible.  The response $y$ is the bandlimited signal with samples $d_n = L_\gamma^{P,w}$, that is, 
 \[
-d_n = (h*c)_n = \sum_{m \in \ints} h_m c_{n-m} = \sum_{m = -a}^a h_m c_{n-m}
-\]
-given by discrete convolution of $h$ and $c$.  Observe that the discrete convolution involved only a finite sum over $2a+1$ terms because $h_n = 0$ for $n > a$ or $n < -a$.  From~\eqref{eq:discsystembandlimitedsamplesonlysincinterp}, we see that the response $y = L_\gamma^{P,w} x$ is the bandlimited signal with samples $y(nP) = d_n = (h*c)_n$.  The samples $d_0, d_1, \dots, d_{N-1}$ are written to the file \texttt{nohum.wav}.
-
-The Fourier transform of $y$ can be written in a number of ways
+y(t) = \sum_{n \in \ints} d_n \sinc(Ft - n).
+\]  
+The Fourier transform of $y$ is given by
 \[
-\calF y = \calF L_\gamma^{P,w} x = \Lambda  L_\gamma^{P,w} \calF x = P \rect(Pf) \calD d(Pf).
+\calF y(f) = P \rect(Pf) \calD d(Pf)
 \]
-The Fourier transform is plotted in Figure~\ref{fig:test:firfilteredlecturevideo}.  The spectrum of hte   As expected the Fourier tra
+where $\calD d$ is the discrete Fourier transform of the sequence $d$.  The magnitude of the Fourier transform is plotted in Figure~\ref{fig:test:firfilteredlecturevideo}.  The spikes at $\pm\SI{8}{\kilo\hertz}$ and the elevated region between \SI{4900}{\hertz} and \SI{5900}{\hertz} no longer exist.
 
 \end{test}
 
-\begin{figure}
+\begin{randomfloat}[p]
 \centering
 \begin{shaded}
-%\includegraphics{tests/fouriertransformlecturevideo/plot-1.mps}
+
+    \begin{tikzpicture}
+    \selectcolormodel{gray}
+    \begin{axis}[font=\footnotesize,ymode=log,height=8cm,width=12cm,xlabel={frequency},ylabel={$\abs{L_{\gamma}^{P,w}(f)}$},xmin=0,xmax=8000]
+	\addplot[mark= ] table {tests/firlecturevideo/magnitude.csv};
+     %   \addplot[mark= ,dashed] coordinates {(0,0.1) (8000,0.1)};
+     %  \addplot[mark= ,dashed] coordinates {(0,1e-3) (8000,1e-3)};
+   \end{axis}  
+  \end{tikzpicture}   
+\captionsetup{type=figure} 
+\captionof{figure}{Magnitude spectrum of  the low pass finite impulse response digital filter $L_{\gamma}^{P,w}$ with cuttoff frequency $\gamma = \SI{4600}{\hertz}$, sample rate $F = \tfrac{1}{P} = \SI{22050}{\hertz}$, and Blackman window of width $W = \tfrac{12}{\gamma} = \tfrac{1}{400}$.  The vertical axis uses a logarithmic scale.}\label{fig:test:magspecfirlowpass}
+
+\vspace{0.5cm}
+
   \begin{tikzpicture}
     \selectcolormodel{gray} 
     \begin{axis}[compat=newest,font=\small,height=8cm,width=12cm,ylabel={$\abs{\calF \tilde{y}}$},xlabel={$f\;\;(\si{\hertz})$},legend style={draw=none},xmin=-11800,xmax=11800]
       \addplot+[mark=none,color=black,mark options={solid,fill=black,scale=0.7}] table[x index=0, y index=1] {tests/firlecturevideo/ft.csv};
     \end{axis}
   \end{tikzpicture}
-\caption{BLERG: Plot of the magnitude of the Fourier transform $\calF \tilde{y}$.  The plot looks similar to that of the magnitude of the Fourier transform of the original audio signal (Figure~\ref{fig:test:fouriertransformlecturevideo}) except that the spikes at $\pm\SI{8}{\kilo\hertz}$ and the elevated region between \SI{4900}{\hertz} and \SI{5900}{\hertz} no longer exist.}\label{fig:test:firfilteredlecturevideo}
+\captionsetup{type=figure} 
+\captionof{figure}{Plot of the magnitude of the Fourier transform $\calF y$ of the bandlimited signal .  The plot looks similar to that of the magnitude of the Fourier transform of the original audio signal (Figure~\ref{fig:test:fouriertransformlecturevideo}) except that the spikes at $\pm\SI{8}{\kilo\hertz}$ and the elevated region between \SI{4900}{\hertz} and \SI{5900}{\hertz} no longer exist.}\label{fig:test:firfilteredlecturevideo}
 \end{shaded}
-\end{figure}
+\end{randomfloat}
 
 
 

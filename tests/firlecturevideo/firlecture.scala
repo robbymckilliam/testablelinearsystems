@@ -46,12 +46,25 @@ val a = floor(F*W/2).toInt; //number of taps is 2a+1
 def w(t : Double) =  blackman(t/W); //window function.  Using Blackman window with width W
 def h(n : Int) = 2*gamma*P*w(n*P)*sinc(2*gamma*n*P); //filter impulse response
 
+//discrete time Fourier transform of the impulse response h
+def Dh(f : Double) = (-a to a).foldLeft(Complex.zero)( (s, n) => s + h(n)*PolarComplex(1,-2*Pi*f*n) )
+
+//spectrum of this FIR filter
+def Lambda(f : Double) = Dh(P*f)
+
 println("Blackman windowed FIR low pass filter with:")
 println(" cuttoff frequency " + gamma)
 println(" window width " + W)
 println(" " + (2*a + 1) + " taps")
-println(" attenuation at 4KHz " + Lambda(4).magnitude)
-println(" attenuation at 5KHz " + Lambda(5).magnitude)
+println(" attenuation at 4KHz " + Lambda(4000).magnitude)
+println(" attenuation at 5KHz " + Lambda(5000).magnitude)
+
+//write the magnitdue spectrum of this filter to file 
+println("Writing magnitude spectrum on interval [0,8kHz] to file magnitude.csv")
+def fmt(x : Double) = "%f" format x; /// Format Doubles string to a reasonable number of decimal places
+val magLambdafile = new java.io.FileWriter("magnitude.csv")
+(0 to 8000 by 2).foreach( f => magLambdafile.write(fmt(f) + "\t" + fmt(Lambda(f).magnitude) + "\n") )
+magLambdafile.close
 
 //discrete convolution of h and c. These are the samples of the response of the filter
 def d(n : Int) = (-a to a).foldLeft(0.0)( (s, m) => s + h(m)*c(n-m) )
