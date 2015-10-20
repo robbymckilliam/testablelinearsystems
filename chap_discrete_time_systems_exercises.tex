@@ -3,6 +3,91 @@
 
 \begin{excersizelist}
 
+\item \label{eq:bandlimitedexampleforfir} Let $x$ be the signal with Fourier transform 
+\[
+\hat{x}(t) = \tfrac{4}{3}\rect(f) - \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big).
+\]
+Plot the Fourier transform.  Find and plot $x$.
+\begin{solution}
+A plot of the Fourier transform is below.
+
+{
+\centering
+  \def\sx{1.2}
+  \def\sy{2.5}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\c{1}
+\begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,1.6) node[above,font=\footnotesize] {};  
+      
+      % draw unfiltered Fourier transform magnitude
+       \draw[thick] (-4,0) -- (-1.75,0) 
+       -- plot[smooth,domain=-1.75:-1.25,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (-1.25,0) -- (-0.5,0) -- (-0.5,1.3333) -- (0.5,1.3333) -- (0.5,0) -- (1.25, 0)
+       -- plot[smooth,domain=1.25:1.75,samples=50] (\x,{-cos(2*pi*\x r)})
+       -- (1.75,0) -- (4,0);
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+}
+
+The time domain signal $x$ can be found by direct application of the inverse Fourier transform, but a simpler approach uses the time shifting, time scaling properties, and modulation properties of the Fourier transform (Section~\ref{sec:fourier-transform}).  Let $a$ be the signal with Fourier transform $\hat{a}(f) = \rect(2f)$.  The time scaling property asserts that
+\[
+a(t) = \tfrac{1}{2} \sinc\big(\tfrac{t}{2}\big).
+\]
+From the modulation property of the Fourier transform
+\[
+\calF\big( \cos(3\pi t)  a(t) \big) = \tfrac{1}{2} \hat{a}(f - \tfrac{3}{2}) + \tfrac{1}{2} \hat{a}(f + \tfrac{3}{2}) =  \tfrac{1}{2} \rect(2f - 3) + \tfrac{1}{2} \rect(2f +3)
+\]
+Let $b(t) = \cos(3\pi t)  a(t)$ so that $\hat{b}(f) = \tfrac{1}{2}\rect(2f - 3) + \tfrac{1}{2} \rect(2f +3)$.  Now, put 
+\begin{align*}
+c(t) &= T_{-1} b(t) + T_{1} b(t) \\
+&= b(t+1) + b(t-1) \\
+&= \cos(3\pi t + 3\pi)  a(t+1) + \cos(3\pi t - 3\pi)  a(t-1)
+\end{align*}
+and because 
+\[
+-\cos(3\pi t) = \cos(3\pi t + 3\pi) = \cos(3\pi t - 3\pi) 
+\]
+we have
+\[
+c(t) = -\cos(3\pi t)  \big( a(t+1) +  a(t-1) \big).
+\]
+From the time shift property of the Fourier transform
+\begin{align*}
+\hat{c}(f) &= \calF( T_{-1} b + T_{1} b ) \\
+&= e^{2\pi f j } \hat{b}(f) + e^{-2\pi f j } \hat{b}(f) \\
+&= 2\cos(2\pi f) \hat{b}(f) \\
+&= \cos(2\pi f) \big( \rect(2f - 3) + \rect(2f + 3) \big).
+\end{align*}
+It remains to observe that
+\[
+\hat{x}(f) = \tfrac{4}{3}\rect(f) - \hat{c}(f)
+\]
+and so
+\begin{align*}
+x(t) &= \tfrac{4}{3} \sinc(f) - c(t) \\
+&= \tfrac{4}{3} \sinc(f) + \cos(3\pi t)  \big( a(t+1) +  a(t-1) \big) \\
+&= \tfrac{4}{3} \sinc(f) + \tfrac{1}{2} \cos(3\pi t) \left( \sinc\big(\tfrac{t+1}{2}\big) + \sinc\big(\tfrac{t-1}{2}\big) \right)
+\end{align*}
+\end{solution}
+
 \item \label{exer:blackmawindowfouriertransform} Find the Fourier transform of the Blackman window~\eqref{eq:blackmanwindow}.
 
 \item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $a^nu_n$ is $z/(z-a)$ with region of convergence $\abs{z} > \abs{a}$.
