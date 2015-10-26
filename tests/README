@@ -37,3 +37,6 @@ Contains scripts to the test "Butterworth filtered lecture recording"
 
 fftlecturevideo:
 Contains scripts for the test "Filtering a lecture recording by fast Fourier transform".
+
+firlecturevideo:
+Contains scripts for the test "Finite impulse response filtered lecture recording".
