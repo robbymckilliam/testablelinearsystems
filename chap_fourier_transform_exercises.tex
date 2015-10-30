@@ -726,10 +726,10 @@ Plots of the sequence and the discrete time Fourier transform for $\alpha = \tfr
 \end{solution}
 
 
-\item \label{exer:parsevaltoparsevalxy} Given~\eqref{eq:parseval} show that~\eqref{eq:parsevalxy} holds.
+\item \label{exer:parsevaltoparsevalxy} Given~\zeqref{eq:parseval} show that~\zeqref{eq:parsevalxy} holds.
 \begin{solution}
 \newcommand{\dotprod}[2]{\langle #1, #2 \rangle}
-From~\eqref{eq:parseval} we have that
+From~\zeqref{eq:parseval} we have that
 \[
 \|x\|_2^2 = \int_{-\infty}^{\infty} \abs{x(t)}^2 dt = \int_{-\infty}^{\infty} \abs{\hat{x}(f)}^2 dt = \|\hat{x}\|_2^2.
 \]
@@ -745,11 +745,11 @@ Replacing $x$ with $x + y$ we have
 \[
 \|x + y\|^2 = \|x\|^2 + 2\dotprod{x}{y} + \|y\|^2 = \| \hat{x} + \hat{y} \|^2 =  \|\hat{x}\|^2 + 2\dotprod{\hat{x}}{\hat{y}} + \|\hat{y}\|^2.
 \]
-And since $\|x\|_2^2 = \|\hat{x}\|_2^2$ and $\|y\|_2^2 = \|\hat{y}\|_2^2$ as a result of~\eqref{eq:parseval} we find that
+And since $\|x\|_2^2 = \|\hat{x}\|_2^2$ and $\|y\|_2^2 = \|\hat{y}\|_2^2$ as a result of~\zeqref{eq:parseval} we find that
 \[
 \dotprod{x}{y} = \dotprod{\hat{x}}{\hat{y}}
 \]
-which is precisely~\eqref{eq:parsevalxy}.
+which is precisely~\zeqref{eq:parsevalxy}.
 \end{solution}
 
 \begin{reallyhardexercise}
