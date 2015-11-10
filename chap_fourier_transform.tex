@@ -1582,7 +1582,7 @@ The values of $\hat{c}(f)$ for $f$ a multiple of $\tfrac{1}{N}$ have a number of
 \begin{equation}\label{eq:dftdefn}
 (\calD_N c)_k = \calD c\big(\tfrac{k}{N}\big) = \sum_{n = 0}^{N-1} c_n e^{-j 2\pi n k/N} \qquad k \in \ints. 
 \end{equation}
-This is called the~\term{discrete Fourier transform} (as opposed to the discrete \emph{time} Fourier transform).  The discrete Fourier transform $\calD_N c$ is a sequence with elements given by the discrete-time Fourier transform $\calD c$ evaluated at multiples of $\tfrac{1}{N}$.  As usual we include write $\calD_N c_k$ to denote the value of $\calD_N c$ at $k \in \ints$.  We will regularly include brackets and use $(\calD_N c)_k$ to denote this value.  The positive integer $N$ is called the~\term{length} of the transform.  In practical applications $N$ often corresponds with the number of samples of a signal that have been obtained.
+This is called the~\term{discrete Fourier transform} (as opposed to the discrete \emph{time} Fourier transform).  The discrete Fourier transform $\calD_N c$ is a sequence with elements given by the discrete-time Fourier transform $\calD c$ evaluated at multiples of $\tfrac{1}{N}$.  We could write $\calD_N c_k$ to denote the value of $\calD_N c$ at $k \in \ints$.  However, we will regularly include brackets and write $(\calD_N c)_k$ to denote this value.  The positive integer $N$ is called the~\term{length} of the transform.  In practical applications $N$ often corresponds with the number of samples of a signal that have been obtained.
 
 %\renewcommand{\mod}{\operatorname{mod}}
 
@@ -1595,7 +1595,7 @@ The discrete Fourier transform is a periodic sequence with period $N$ as a resul
 %  \hat{d}_{k} = \hat{d}_{k \bmod N} \qquad k \in \ints
 %  \]
 % where $k \bmod N$ denotes $k$ taken modulo $N$ into the set $\{0,1\dots,N-1\}$.
-Because of this it is sufficient to know only $(\calD_N c)k$ for $k = 0,\dots,N-1$ in order to know the entire sequence $\calD_N c$.  Given $d = \calD_N c$ the original samples $c_0, \dots, c_{N-1}$ can be recovered by 
+Because of this it is sufficient to know only $(\calD_N c)_k$ for $k = 0,\dots,N-1$ in order to know the entire sequence $\calD_N c$.  Given $d = \calD_N c$ the original samples $c_0, \dots, c_{N-1}$ can be recovered by 
 \[
 %\begin{equation}\label{eq:inversedft}
 c_n = (\calD_N^{-1}d)_n = \frac{1}{N}\sum_{k = 0}^{N-1} d_k e^{j 2\pi n k / N} \qquad n = 0, \dots, N-1.

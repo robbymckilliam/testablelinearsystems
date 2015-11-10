@@ -47,7 +47,7 @@ A plot of the Fourier transform is below.
   \end{tikzpicture}
 }
 
-The time domain signal $x$ can be found by direct application of the inverse Fourier transform, but a simpler approach uses the time shifting, time scaling properties, and modulation properties of the Fourier transform (Section~\ref{sec:fourier-transform}).  Let $a$ be the signal with Fourier transform $\hat{a}(f) = \rect(2f)$.  The time scaling property asserts that
+The time domain signal $x$ can be found by direct application of the inverse Fourier transform, but a simpler approach uses the time shifting, time scaling properties, and modulation properties of the Fourier transform (Section~\zref{sec:fourier-transform}).  Let $a$ be the signal with Fourier transform $\hat{a}(f) = \rect(2f)$.  The time scaling property asserts that
 \[
 a(t) = \tfrac{1}{2} \sinc\big(\tfrac{t}{2}\big).
 \]
@@ -86,9 +86,49 @@ x(t) &= \tfrac{4}{3} \sinc(f) - c(t) \\
 &= \tfrac{4}{3} \sinc(f) + \cos(3\pi t)  \big( a(t+1) +  a(t-1) \big) \\
 &= \tfrac{4}{3} \sinc(f) + \tfrac{1}{2} \cos(3\pi t) \left( \sinc\big(\tfrac{t+1}{2}\big) + \sinc\big(\tfrac{t-1}{2}\big) \right)
 \end{align*}
+This signal is plotted below.
+
+{
+\centering
+  \def\sx{1.2}
+  \def\sy{1.5}
+  \def\P{0.25}
+  \def\F{(1/\P)}
+  \def\c{1}
+  \def\sincf(#1){(sin(pi*(#1))/(pi*(#1)))} %sinc function
+  \def\cfsig(#1){ 0.5*cos(3*pi*#1)*((\sincf(#1/0.5+0.5)) + (\sincf(#1/0.5-0.5))) }
+  \def\xsig(#1){(4.0*\sincf(#1)/3.0) + \cfsig(#1)}
+\begin{tikzpicture}
+    \begin{scope}[yscale=\sy,xscale=\sx]
+      
+      % draw axis
+      \draw[->] (-4.3,0) -- (4.3,0) node[above] {$f$};
+      % \draw[->] (0,-0.35) -- (0,2.3) node[above,font=\footnotesize] {$\rect(f) \big(1 + \cos( 2 \pi f )\big) + \rect{3f - 2} + \rect{3f + 2}$};    
+      \draw[->] (0,-0.2) -- (0,2.3) node[above,font=\footnotesize] {};  
+      
+      % draw time domain signal
+       \draw[thick,smooth,domain=-4:4,samples=200] plot function{\xsig(x)};
+%       \draw[thick,smooth,domain=-4:4,samples=100] plot function{\cfsig(x)};
+
+      
+      % add some axis ticks
+    \end{scope}
+    \begin{scope}[xscale=\sx]
+      \vtick{-2.0} node[pos=0.5,below] {$-2$};
+      \vtick{2} node[pos=0.5,below] {$2$};
+      \vtick{-4.0} node[pos=0.5,below] {$-4$};
+      \vtick{4} node[pos=0.5,below] {$4$};
+    \end{scope}
+    \begin{scope}[yscale=\sy]
+      \htick{1} node[pos=0.5,above left] {$1$};
+    \end{scope}
+  \end{tikzpicture}
+}
+
+
 \end{solution}
 
-\item \label{exer:blackmawindowfouriertransform} Find the Fourier transform of the Blackman window~\eqref{eq:blackmanwindow}.
+\item \label{exer:blackmawindowfouriertransform} Find the Fourier transform of the Blackman window~\zeqref{eq:blackmanwindow}.
 
 \item \label{exer:stepseqZtrans} Show that the z-transform of the sequence  $a^nu_n$ is $z/(z-a)$ with region of convergence $\abs{z} > \abs{a}$.
 \begin{solution}

@@ -514,7 +514,7 @@ The circuit can be considered as a system mapping the signal $x$ representing th
     \draw[dspconn] (x) -- (H);
     \draw[dspflow] (H) -- (y);
 \end{tikzpicture}
-\caption{System block diagram with input signal $x$ and output signal $H(x)$.}\label{fig:blockdiagramH1}
+\caption{System block diagram with input signal $x$ and output signal $H x$.}\label{fig:blockdiagramH1}
 \end{figure}
 
 
@@ -534,7 +534,7 @@ The circuit can be considered as a system mapping the signal $x$ representing th
 % \caption{A \term{voltage divider} circuit including input resistance $R_i$ and output resistance $R_o$.} \label{circ:voltagedividerinpout}
 % \end{figure}
 
-Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be sets of signals.  We denote systems with capital letters such as $H$ and $G$.  A system is a function $H \in X \to Y$ that maps each signal from the domain $X$ to a signal from $Y$.  Given \term{input signal} $x \in X$ the \term{output signal} of the system is denoted by $H(x)$.  The output signal is often called the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$\footnote{In the literature it is customary to drop the brackets only when $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  In this text the we occasionally drop the brackets even when $H$ is not linear.  Since we deal primarily with linear systems this faux pas will occur rarely.}.  The value of the output signal $Hx$ at $t \in \reals$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.   %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
+Let $X \subseteq \reals \to \complex$ and $Y \subseteq \reals \to \complex$ be sets of signals.  We denote systems with capital letters such as $H$ and $G$.  A system is a function $H \in X \to Y$ that maps each signal from the domain $X$ to a signal from $Y$.  Given \term{input signal} $x \in X$ the \term{output signal} of the system is denoted by $H(x)$.  The output signal is often called the \term{response} of system $H$ to signal $x$.  We will often drop the brackets and write simply $Hx$ for the response of $H$ to $x$\footnote{In the literature it is customary to drop the brackets only when $H$ is a \term{linear} system (Section~\ref{sec:properties-systems}).  In this text we occasionally drop the brackets even when $H$ is not linear.  Since we deal primarily with linear systems this faux pas will occur rarely.}.  The value of the output signal $Hx$ at $t \in \reals$ is denoted by $Hx(t)$ or $H(x)(t)$ or $H(x,t)$ and we do not distinguish between these notations.   %~\citep{Schönfinkel_currying_1924,Currying_1968}.  
 It is sometimes useful to depict systems with a block diagram as in Figure~\ref{fig:blockdiagramH1}.  The electric circuit in Figure~\ref{circ:voltagedivider} corresponds with the system
 \[
 Hx = \frac{R_2}{R_1 + R_2} x = y.
