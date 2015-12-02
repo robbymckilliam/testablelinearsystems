@@ -36,7 +36,7 @@ rect(t)*(a0 + a1*cos(2*Pi*t) + a2*cos(4*Pi*t))
 val F = 8000.0
 val P = 1/F
 val gamma = 2400.0; //cuttoff frequency in Hz
-val W = 24.0/gamma; //window width
+val W = 30.0/gamma; //window width
 val a = floor(F*W/2).toInt; //number of taps is 2a+1
 
 writemagspectrum(rect, "rectangular")

@@ -158,7 +158,7 @@ In what follows we will often use the term convolution and impulse response rath
 \section{The transfer function and the spectrum}
 
 Recall that complex exponential signals are eigenfunctions of linear shift-invariant systems, that is, if $H$ is a linear shift-invariant system with domain $X$, then the response of $H$ to input signal $e^{st} \in X$ satisfies
- \[
+\[
 He^{st} = \lambda H(s) e^{st}
 \]
 where $\lambda H(s)$ is a complex number that depends on $s \in \complex$, but not on $t \in \reals$.  Considered as a function of $s$, the expression $\lambda H$ is called the transfer function of the system $H$.  The domain of $\lambda H$ is the set of complex numbers $s$ such that the signal $e^{st} \in X$ and this set is denoted by $\cep X$.
@@ -1045,13 +1045,13 @@ x(t) = \sum_{n \in \ints} c_n \sinc(Ft - n).
 \]  
 In Test~\ref{test:ftlecturerec} the Fourier transform of $x$ was computed and plotted in Figure~\ref{fig:test:fouriertransformlecturevideo}.  The audio recording contains human voice primarily residing at lower frequencies below \SI{4}{\kilo\hertz}.  Audible in the recording is a faint high pitched hum.  This hum is represented in Figure~\ref{fig:test:fouriertransformlecturevideo} by spikes occurring at approximately $\pm\SI{8}{\kilo\hertz}$ and also by the region between \SI{4900}{\hertz} and \SI{5900}{\hertz} where the magnitude of the Fourier transform is elevated.  In this test, a low pass digital finite impulse response filter $L_{\gamma}^{P,w}$ will be used to remove this hum.
 
-We choose the period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4600}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{12}{\gamma} = \tfrac{1}{400}$ is used.  This filter has impulse response
+We choose the period of the filter to be $P = \tfrac{1}{F}$ where $F = \SI{22050}{\hertz}$ is the sample rate of the audio recording.  The cuttoff frequency is chosen to be $\gamma = \SI{4600}{\hertz}$ and a Blackman window~\eqref{eq:blackmanwindow} of width $W=\tfrac{12}{\gamma} = \tfrac{3}{1150}$ is used.  This filter has impulse response
 \[
 h_n = 2 \gamma P w( nP ) \sinc( 2\gamma P n)
 \]
 where $w(t)$ is the Blackman window~\eqref{eq:blackmanwindow}.  The impulse response satisfies $h_n = 0$ for those $n$ outside the interval $[-a,a]$ where
 \[
-a = \floor{\frac{FW}{2}} = \floor{\frac{735}{32}} = 28.
+a = \floor{\frac{FW}{2}} = \floor{\frac{1323}{46}} = 28.
 \] 
 This filter has $2a+1 = 57$ taps and can be implemented by a finite sum of 57 terms~\eqref{eq:firfilterfinitesum}.  The spectrum of the filter is
 \[
